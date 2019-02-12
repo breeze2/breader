@@ -1,18 +1,28 @@
 {
+  "author": "Breeze Lin",
   "name": "breader",
   "version": "0.1.0",
   "private": true,
+  "description": "A simple RSS reader.",
   "dependencies": {
     "@types/jest": "24.0.1",
     "@types/node": "11.9.0",
     "@types/react": "16.8.2",
     "@types/react-dom": "16.8.0",
+    "electron-is-dev": "^1.0.1",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
     "react-scripts": "2.1.5",
     "typescript": "3.3.3"
   },
+  "homepage": "./",
+  "main": "public/electron.js",
   "scripts": {
+    "preelectron-pack": "yarn build",
+    "preelectron-dist": "yarn build",
+    "electron-pack": "electron-builder --dir",
+    "electron-dist": "electron-builder",
+    "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -26,5 +36,20 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "electron": "^4.0.4",
+    "electron-builder": "^20.38.5",
+    "wait-on": "^3.2.0"
+  },
+  "build": {
+    "appId": "io.github.breeze2.breader",
+    "mac": {
+      "category": "news"
+    },
+    "files": [
+      "build/**/*"
+    ]
+  }
 }
