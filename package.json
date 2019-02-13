@@ -45,6 +45,10 @@
     "concurrently": "^4.1.0",
     "electron": "^4.0.4",
     "electron-builder": "^20.38.5",
+    "tslint": "^5.12.1",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-react": "^3.6.0",
     "wait-on": "^3.2.0"
   },
   "build": {
