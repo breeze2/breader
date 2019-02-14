@@ -16,6 +16,7 @@
     "react": "^16.8.1",
     "react-app-rewired": "^2.1.0",
     "react-dom": "^16.8.1",
+    "react-intl": "^2.8.0",
     "react-scripts": "2.1.5",
     "typescript": "3.3.3"
   },
@@ -43,6 +44,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@types/react-intl": "^2.3.17",
     "concurrently": "^4.1.0",
     "electron": "^4.0.4",
     "electron-builder": "^20.38.5",
