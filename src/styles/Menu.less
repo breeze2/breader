@@ -1,0 +1,95 @@
+.app-menu {
+    @white-text-color: rgba(255, 255, 255, .65);
+    @white-text-color-light: rgba(255, 255, 255, .85);
+    @white-text-color-dark : rgba(255, 255, 255, .45);
+    @null-color: rgba(0, 0, 0, 0);
+    @menu-selected-color: rgba(136, 136, 136, 0.6);
+    @dark-background-color: rgba(28, 28, 28, 0.35);
+
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+    background-color: @dark-background-color;
+    color: @white-text-color;
+    position: relative;
+    padding: 42px 0 43px 0;
+    height: 100%;
+    width: 226px;
+    flex: 0 0 auto;
+    
+    .ant-menu {
+        background-color: @null-color;
+        color: @white-text-color;
+    }
+    .ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left {
+        border-right: none;
+    }
+    .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+        background-color: @menu-selected-color;
+    }
+    .ant-menu-item:hover, .ant-menu-item-active, .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open, .ant-menu-submenu-active, .ant-menu-submenu-title:hover {
+        color: @white-text-color-light;
+    }
+    .ant-menu-submenu-inline > .ant-menu-submenu-title:hover .ant-menu-submenu-arrow:after, .ant-menu-submenu-inline > .ant-menu-submenu-title:hover .ant-menu-submenu-arrow:before {
+        background: -webkit-linear-gradient(left, @white-text-color-light, @white-text-color-light);
+        background: linear-gradient(to right, @white-text-color-light, @white-text-color-light);
+    }
+    .ant-menu-submenu-inline > .ant-menu-submenu-title .ant-menu-submenu-arrow:before, .ant-menu-submenu-inline > .ant-menu-submenu-title .ant-menu-submenu-arrow:after {
+        background: none;
+        background-image: -webkit-linear-gradient(left,@white-text-color, @white-text-color);
+        background-image: linear-gradient(to right, @white-text-color, @white-text-color);
+    }
+    .ant-menu-inline .ant-menu-item:after {
+        border-right: none;
+    }
+    .ant-menu-inline > .ant-menu-item, .ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title {
+        margin-top: 0;
+        margin-bottom: 0;
+        line-height: 32px;
+        height: 32px;
+    }
+    .ant-menu-sub.ant-menu-inline > .ant-menu-item, .ant-menu-sub.ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title {
+        height: 32px;
+        line-height: 32px;
+    }
+    .ant-menu-item-selected {
+        color: @white-text-color-light;
+    }
+
+    .menu-content {
+        -webkit-app-region: none;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+    .menu-footer {
+        // border-top: 0.5px solid #ededed;
+        position: absolute;
+        height: 42px;
+        bottom: 0;
+        right: 0;
+        left: 0;
+
+        .anticon {
+            color: @white-text-color;
+            cursor: pointer;
+            font-size: 16px;
+            &:hover {
+                color: @white-text-color-light;
+            }
+        }
+    }
+    .menu-footer-left {
+        float: left;
+        .anticon {
+            margin-top: 13px;
+            margin-left: 16px;
+        }
+    }
+    .menu-footer-right {
+        float: right;
+        .anticon {
+            margin-top: 13px;
+            margin-right: 16px;
+        }
+    }
+}

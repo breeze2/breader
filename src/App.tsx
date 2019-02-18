@@ -1,28 +1,36 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Layout } from 'antd'
+import React, { Component } from 'react'
+import { Provider as ReduxProvider } from 'react-redux'
+import { createStore } from 'redux'
+import RootReducer from './reducers'
+
+import Sider from './layouts/Sider'
+import { IntlProvider, messages } from './locales'
+import './styles/App.less'
+
+const store = createStore(RootReducer)
 
 class App extends Component {
-  render() {
+  public state = {
+    locale: 'en-US',
+  }
+  public constructor(props: any) {
+    super(props)
+  }
+  public render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+      <ReduxProvider store={store}>
+        <IntlProvider locale={this.state.locale} messages={messages[this.state.locale]}>
+          <div className="app">
+            <Layout>
+              <Sider />
+              {/* <Layout></Layout> */}
+            </Layout>
+          </div>
+        </IntlProvider>
+      </ReduxProvider>
+    )
   }
 }
 
-export default App;
+export default App
