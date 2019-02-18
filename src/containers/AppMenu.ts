@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { setMenuKeyAction } from '../actions'
-import Menu from '../components/Menu'
+import AppMenu from '../components/AppMenu'
 
 const mapStateToProps = (store: any, props: any) => {
     return {
@@ -16,4 +16,4 @@ const mapDispatchToProps = (dispatch: Dispatch<any>, props: any) => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-)(Menu)
+)(AppMenu)

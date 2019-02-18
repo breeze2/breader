@@ -4,7 +4,7 @@ import { Provider as ReduxProvider } from 'react-redux'
 import { createStore } from 'redux'
 import RootReducer from './reducers'
 
-import Sider from './layouts/Sider'
+import AppSider from './layouts/AppSider'
 import { IntlProvider, messages } from './locales'
 import './styles/App.less'
 
@@ -23,7 +23,7 @@ class App extends Component {
         <IntlProvider locale={this.state.locale} messages={messages[this.state.locale]}>
           <div className="app">
             <Layout>
-              <Sider />
+              <AppSider />
               {/* <Layout></Layout> */}
             </Layout>
           </div>

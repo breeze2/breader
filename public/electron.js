@@ -11,8 +11,12 @@ let mainWindow
 function createWindow() {
     // Create the browser window.
     mainWindow = new BrowserWindow({
-        width: 800,
+        webPreferences: {
+            nodeIntegration: false,
+        },
+        width: 490,
         height: 600,
+        titleBarStyle: 'hiddenInset',
         vibrancy: 'dark'
     })
 
