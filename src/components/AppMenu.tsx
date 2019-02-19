@@ -1,21 +1,45 @@
 import { Icon, Menu } from 'antd'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import logo from '../images/logo.png'
 import '../styles/AppMenu.less'
+import AddFeedModal from './AddFeedModal'
 
 const MenuItem = Menu.Item
 const SubMenu = Menu.SubMenu
-interface InterfaceMenuProps {
+interface InterfaceAppMenuProps {
     selectedKey: string,
     handleSelect: (e: any) => any
 }
-interface InterfaceMenuState {
+interface InterfaceAppMenuState {
     feeds: string[]
+    isAddFeedModalVisible: boolean
 }
 
-class AppMenu extends Component<InterfaceMenuProps> {
-    public render() {
+class AppMenu extends Component<InterfaceAppMenuProps> {
+    public state: InterfaceAppMenuState
+    public constructor (props: any) {
+        super(props)
+        this.state = {
+            feeds: [],
+            isAddFeedModalVisible: false,
+        }
+    }
+    public handleAddFeedClick = () => {
+        this.setState({
+            isAddFeedModalVisible: true,
+        })
+    }
+    public handleAddFeedModalCancel = () => {
+        this.setState({
+            isAddFeedModalVisible: false,
+        })
+    }
+    public handleAddFeedModalOk = () => {
+        this.setState({
+            isAddFeedModalVisible: false,
+        })
+    }
+    public render () {
         return (
             <div className="app-menu">
                 <div className="menu-content">
@@ -55,8 +79,9 @@ class AppMenu extends Component<InterfaceMenuProps> {
                         <Icon type="sync" className="sync-rss" />
                     </div>
                     <div className="menu-footer-right">
-                        <Icon type="plus" className="add-rss" />
+                        <Icon type="plus" className="add-rss" onClick={this.handleAddFeedClick} />
                     </div>
+                    <AddFeedModal visible={this.state.isAddFeedModalVisible} onOk={this.handleAddFeedModalOk} onCancel={this.handleAddFeedModalCancel} />
                 </div>
             </div>
         )
