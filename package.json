@@ -14,7 +14,10 @@
     "antd": "^3.13.2",
     "babel-plugin-import": "^1.11.0",
     "customize-cra": "^0.2.11",
+    "detect-character-encoding": "^0.7.0",
     "electron-is-dev": "^1.0.1",
+    "feedparser": "^2.2.9",
+    "iconv-lite": "^0.4.24",
     "react": "^16.8.1",
     "react-app-rewired": "^2.1.0",
     "react-dom": "^16.8.1",
@@ -28,6 +31,7 @@
   "homepage": "./",
   "main": "public/electron.js",
   "scripts": {
+    "postinstall": "yarn electron-rebuild -f -w sqlite3",
     "preelectron-pack": "yarn build",
     "preelectron-dist": "yarn build",
     "electron-pack": "electron-builder --dir",
