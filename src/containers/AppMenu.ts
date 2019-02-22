@@ -1,16 +1,19 @@
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
-import { setMenuKeyAction } from '../actions'
+import { setFeedsAction, setMenuKeyAction } from '../actions'
 import AppMenu from '../components/AppMenu'
+import InterfaceFeed from '../schemas/InterfaceFeed'
 
 const mapStateToProps = (store: any, props: any) => {
     return {
+        feeds: store.feeds,
         selectedKey: store.menuKey,
     }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>, props: any) => ({
-    handleSelect: (e: any) => dispatch(setMenuKeyAction(e.key)),
+    setFeeds: (feeds: InterfaceFeed[]) => dispatch(setFeedsAction(feeds)),
+    setMenuKey: (key: string) => dispatch(setMenuKeyAction(key)),
 })
 
 export default connect(

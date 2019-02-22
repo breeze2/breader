@@ -6,7 +6,7 @@ const db = new Sqlite3.Database(SQLITE_DB_PATH)
 const DB = {
     getAllFeeds() {
         return new Promise((resolve, reject) => {
-            db.all('select * from feeds where deleted_at is null order by created_at ase', (err: any, rows: any) => {
+            db.all('select * from feeds where deleted_at is null order by created_at asc', (err: any, rows: any) => {
                 if (err) {
                     return reject(err)
                 } else {

@@ -1,17 +1,21 @@
-import { Icon, Menu } from 'antd'
+import { Avatar, Icon, Menu } from 'antd'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
+import Logic from '../logic'
+import InterfaceFeed from '../schemas/InterfaceFeed'
 import '../styles/AppMenu.less'
 import AddFeedModal from './AddFeedModal'
+import { Interface } from 'readline';
 
 const MenuItem = Menu.Item
 const SubMenu = Menu.SubMenu
 interface InterfaceAppMenuProps {
-    selectedKey: string,
-    handleSelect: (e: any) => any
+    feeds: InterfaceFeed[]
+    selectedKey: string
+    setMenuKey: (e: any) => any
+    setFeeds: (feeds: InterfaceFeed[]) => any
 }
 interface InterfaceAppMenuState {
-    feeds: string[]
     isAddFeedModalVisible: boolean
 }
 
@@ -20,7 +24,6 @@ class AppMenu extends Component<InterfaceAppMenuProps> {
     public constructor (props: any) {
         super(props)
         this.state = {
-            feeds: [],
             isAddFeedModalVisible: false,
         }
     }
@@ -39,6 +42,17 @@ class AppMenu extends Component<InterfaceAppMenuProps> {
             isAddFeedModalVisible: false,
         })
     }
+    public handleSelect = (e: any) => {
+        this.props.setMenuKey(e.key)
+    }
+    public componentDidMount() {
+        Logic.getAllFeeds().then((feeds) => {
+            if (feeds) {
+                console.log(feeds)
+                this.props.setFeeds(feeds as InterfaceFeed[])
+            }
+        })
+    }
     public render () {
         return (
             <div className="app-menu">
@@ -49,10 +63,10 @@ class AppMenu extends Component<InterfaceAppMenuProps> {
                         <p className="date-text">{new Date().toDateString()}</p>
                     </div>
                     <Menu
-                        defaultSelectedKeys={['ALL_ITEMS']}
+                        defaultSelectedKeys={[this.props.selectedKey]}
                         defaultOpenKeys={['subscriptions']}
                         mode="inline"
-                        onSelect={this.props.handleSelect}
+                        onSelect={this.handleSelect}
                     >
                         <MenuItem key="ALL_ITEMS">
                             <Icon type="profile" />
@@ -66,11 +80,13 @@ class AppMenu extends Component<InterfaceAppMenuProps> {
                             <Icon type="file-text" />
                             <FormattedMessage id="menuUnread" />
                         </MenuItem>
-                        <SubMenu key="subscriptions" title={<span><Icon type="folder" /><FormattedMessage id="menuSubscriptions" /></span>}>
-                            <MenuItem key="5">Option 5</MenuItem>
-                            <MenuItem key="6">Option 6</MenuItem>
-                            <MenuItem key="7">Option 7</MenuItem>
-                            <MenuItem key="8">Option 8</MenuItem>
+                        <SubMenu key="subscriptions" className="feed-list" title={<span><Icon type="folder" /><FormattedMessage id="menuSubscriptions" /></span>}>
+                            {this.props.feeds.map(feed => <MenuItem key={feed.id}>
+                                {feed.favicon ? (<Avatar shape="square" size={22} src={feed.favicon} />) : (
+                                    <Avatar shape="square" size={22} >{(feed.title as string).substring(0, 1)}</Avatar>
+                                )}
+                                <span className="feed-title" title={feed.title}>{feed.title}</span>
+                            </MenuItem>)}
                         </SubMenu>
                     </Menu>
                 </div>

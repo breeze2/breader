@@ -27,6 +27,7 @@ const Logic = {
     getAllFeeds: async () => {
         try {
             const feeds = await DB.getAllFeeds()
+            return feeds
             // console.log(feeds)
         } catch (err) {
             console.error(err)

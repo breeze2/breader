@@ -54,6 +54,26 @@
     .ant-menu-item-selected {
         color: @white-text-color-light;
     }
+    .feed-list {
+        .ant-menu-item {
+            padding-left: 36px;
+            line-height: 32px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            .ant-avatar {
+                display: inline-block;
+                margin-right: 5px; 
+            }
+            .feed-title {
+                width: 108px;
+                display: inline-block;
+                overflow:hidden;
+                text-overflow:ellipsis;
+                white-space:nowrap;
+            }
+        }
+    }
 
     .menu-header {
         padding: 0 0 16px 0;
