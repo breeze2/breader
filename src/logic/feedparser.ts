@@ -53,9 +53,34 @@ function xmlHttpRequest(feedUrl: string, options: any) {
 }
 
 const FeedParser = {
+    makeArticle (post: any) {
+        return {
+            author: post.author,
+            created_at: ~~(post.pubdate.getTime() / 1000),
+            date_time: post.date.toString(),
+            description: post.description,
+            guid: post.guid,
+            link: post.link,
+            summary: post.summary,
+            time: post.date.toTimeString(),
+            title: post.title,
+            updated_at: ~~(post.date.getTime() / 1000),
+        }
+    },
     makeFaviconUrl(feedUrl: string) {
         const u = url.parse(feedUrl)
         return u.protocol + '//' + u.host + '/' + 'favicon.ico'
+    },
+    makeFeed (meta: any) {
+        return {
+            date: meta.date,
+            description: meta.description,
+            etag: meta.etag,
+            favicon: meta.favicon,
+            link: meta.link,
+            summary: meta.summary,
+            title: meta.title,
+        }
     },
     fetchFavicon (favicon: string) {
         return new Promise((resolve, reject) => {
@@ -90,20 +115,13 @@ const FeedParser = {
                     res.pipe(cv)
                     res.pipe(fp)
                     fp.on('meta', (meta: any) => {
-                        feed = {
-                            date: meta.date,
-                            description: meta.description,
-                            etag: res.headers.etag ? res.headers.etag : '',
-                            favicon: meta.favicon,
-                            link: meta.link,
-                            summary: meta.summary,
-                            title: meta.title,
-                        }
+                        meta.etag = res.headers.etag ? res.headers.etag : ''
+                        feed = FeedParser.makeFeed(meta)
                     })
                     fp.on('readable', () => {
                         let post: any = fp.read()
                         while (post) {
-                            articles.push(post)
+                            articles.push(FeedParser.makeArticle(post))
                             post = fp.read()
                         }
                     })

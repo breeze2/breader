@@ -1,7 +1,7 @@
 import { Input, Modal } from 'antd'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import Logic from '../logic'
+// import Logic from '../logic'
 
 import '../styles/AddFeedModal.less'
 
@@ -25,8 +25,8 @@ class AddFeedModal extends Component<InterfaceAddFeedModalProps> {
     }
     public handleSummit = (e: any) => {
         const feedUrl = this.state.feedUrl
-        Logic.createFeed(feedUrl)
-        this.props.onOk(e)
+        console.log(feedUrl)
+        this.props.onOk(feedUrl)
     }
     public handleChange = (e: any) => {
         this.setState({

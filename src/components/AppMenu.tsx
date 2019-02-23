@@ -5,15 +5,15 @@ import Logic from '../logic'
 import InterfaceFeed from '../schemas/InterfaceFeed'
 import '../styles/AppMenu.less'
 import AddFeedModal from './AddFeedModal'
-import { Interface } from 'readline';
 
 const MenuItem = Menu.Item
 const SubMenu = Menu.SubMenu
 interface InterfaceAppMenuProps {
     feeds: InterfaceFeed[]
     selectedKey: string
-    setMenuKey: (e: any) => any
+    addFeeds: (feeds: InterfaceFeed[]) => any
     setFeeds: (feeds: InterfaceFeed[]) => any
+    setMenuKey: (e: any) => any
 }
 interface InterfaceAppMenuState {
     isAddFeedModalVisible: boolean
@@ -37,10 +37,15 @@ class AppMenu extends Component<InterfaceAppMenuProps> {
             isAddFeedModalVisible: false,
         })
     }
-    public handleAddFeedModalOk = () => {
+    public handleAddFeedModalOk = (feedUrl: string) => {
         this.setState({
             isAddFeedModalVisible: false,
         })
+        if (feedUrl) {
+            Logic.createFeed(feedUrl).then((feed: any) => feed && this.props.addFeeds([feed]))
+        } else {
+            // TODO
+        }
     }
     public handleSelect = (e: any) => {
         this.props.setMenuKey(e.key)
@@ -48,7 +53,6 @@ class AppMenu extends Component<InterfaceAppMenuProps> {
     public componentDidMount() {
         Logic.getAllFeeds().then((feeds) => {
             if (feeds) {
-                console.log(feeds)
                 this.props.setFeeds(feeds as InterfaceFeed[])
             }
         })

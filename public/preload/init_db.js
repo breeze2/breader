@@ -18,7 +18,7 @@ function initSqlite3 () {
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     title VARCHAR(255) NOT NULL,
                     link VARCHAR(255) NOT NULL,
-                    date VARCHAR(255) DEFAULT NULL,
+                    date_time VARCHAR(255) DEFAULT NULL,
                     etag VARCHAR(255) DEFAULT NULL,
                     favicon TEXT DEFAULT NULL,
                     meta TEXT DEFAULT NULL,
@@ -33,6 +33,7 @@ function initSqlite3 () {
                 CREATE TABLE IF NOT EXISTS articles (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     feed_id INTEGER NOT NULL,
+                    author VARCHAR(255) NOT NULL, 
                     guid VARCHAR(255) NOT NULL,
                     title VARCHAR(255) NOT NULL,
                     link VARCHAR(255) NOT NULL,
@@ -41,16 +42,19 @@ function initSqlite3 () {
                     time VARCHAR(255) DEFAULT NULL,
                     description TEXT NOT NULL,
                     meta TEXT DEFAULT NULL,
+                    is_unread TINYINT DEFAULT 1,
+                    is_starred TINYINT DEFAULT 0,
                     created_at INTEGER DEFAULT NULL,
                     deleted_at INTEGER DEFAULT NULL,
                     updated_at INTEGER DEFAULT NULL
                 );
                 CREATE UNIQUE INDEX IF NOT EXISTS link ON articles(link);
                 CREATE UNIQUE INDEX IF NOT EXISTS guid ON articles(guid);
+                CREATE INDEX IF NOT EXISTS feed_id ON articles(feed_id);
                 CREATE INDEX IF NOT EXISTS created_at ON articles(created_at);
             `)
 
-            db.run(`CREATE VIRTUAL TABLE IF NOT EXISTS article_fts USING fts5(guid, title, summary, description);`)
+            db.run(`CREATE VIRTUAL TABLE IF NOT EXISTS article_fts USING fts5(guid, feed_id, title, summary, description);`)
         })
     })
     window.SQLITE_DB_PATH = SQLITE_DB_PATH
