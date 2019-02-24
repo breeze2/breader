@@ -1,6 +1,7 @@
 import InterfaceFeed from '../schemas/InterfaceFeed'
 import FeedParser from './feedparser'
 import DB from './sqlite3'
+import { async } from 'q';
 
 const Logic = {
     createFeed: async (feedUrl: string) => {
@@ -42,6 +43,14 @@ const Logic = {
         try {
             const feeds = await DB.getAllFeeds()
             return feeds
+        } catch (err) {
+            console.error(err)
+        }
+    },
+    getArticles: async (query: any, offset: number, limit: number) => {
+        try {
+            const articles = await DB.getArticles(query, offset, limit)
+            return articles
         } catch (err) {
             console.error(err)
         }

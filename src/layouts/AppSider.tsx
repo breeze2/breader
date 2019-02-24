@@ -1,9 +1,9 @@
 import { Layout } from 'antd'
 import React, { Component } from 'react'
 // import AppMenu from '../components/AppMenu'
+import AppList from '../containers/AppList'
 import AppMenu from '../containers/AppMenu'
 import '../styles/AppSider.less'
-// import List from './List'
 
 const LayoutSider = Layout.Sider
 
@@ -12,7 +12,7 @@ class AppSider extends Component {
         return (
             <LayoutSider className="app-sider" width="490">
                 <AppMenu />
-                {/* <List /> */}
+                <AppList />
             </LayoutSider>
         )
     }

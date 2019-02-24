@@ -1,7 +1,8 @@
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
-import { addFeedsAction, setFeedsAction, setMenuKeyAction, InterfaceFeedsAction } from '../actions'
+import { addFeedsAction, setArticlesAction, setFeedsAction, setMenuKeyAction } from '../actions'
 import AppMenu from '../components/AppMenu'
+import InterfaceArticle from '../schemas/InterfaceArticle'
 import InterfaceFeed from '../schemas/InterfaceFeed'
 
 const mapStateToProps = (store: any, props: any) => {
@@ -13,6 +14,7 @@ const mapStateToProps = (store: any, props: any) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<any>, props: any) => ({
     addFeeds: (feeds: InterfaceFeed[]) => dispatch(addFeedsAction(feeds)),
+    setArticles: (articles: InterfaceArticle[]) => dispatch(setArticlesAction(articles)),
     setFeeds: (feeds: InterfaceFeed[]) => dispatch(setFeedsAction(feeds)),
     setMenuKey: (key: string) => dispatch(setMenuKeyAction(key)),
 })

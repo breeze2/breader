@@ -4,6 +4,39 @@ const Sqlite3 = (window as any).require('sqlite3').verbose()
 const SQLITE_DB_PATH = (window as any).SQLITE_DB_PATH
 const db = new Sqlite3.Database(SQLITE_DB_PATH)
 
+function makeGetArticlesSql (query: any) {
+    const list = []
+    let sql = `select articles.author, articles.created_at, articles.date, articles.deleted_at,
+        articles.description, articles.feed_id, articles.guid, articles.id,
+        articles.is_starred, articles.is_unread, articles.link, articles.meta, articles.summary,
+        articles.time, articles.title, articles.updated_at, feeds.title as feed_title
+        from articles join feeds on articles.feed_id = feeds.id `
+    if (query.feed_id) {
+        list.push('articles.feed_id = $feed_id')
+    }
+    if (query.is_starred) {
+        list.push('articles.is_starred = 1')
+    }
+    if (query.is_unread) {
+        list.push('articles.is_unread = 1')
+    }
+    if (list.length) {
+        sql += list.join(' and ')
+    }
+    sql += ' order by articles.updated_at limit $limit offset $offset;'
+    return sql
+}
+
+function makeGetArticlesParams (query: any, offset: number, limit: number) {
+    const params: any = {}
+    if (query.feed_id) {
+        params.$feed_id = query.feed_id
+    }
+    params.$offset = offset
+    params.$limit = limit
+    return params
+}
+
 function makeInsertArticlesSql (length: number) {
     const last = length - 1
     let sql = `insert into articles(guid, feed_id, author, link, title, description, summary, date, time, created_at, updated_at) values `
@@ -36,7 +69,7 @@ const DB = {
     getAllFeeds() {
         const sql = 'select * from feeds where deleted_at is null order by created_at asc'
         return new Promise((resolve, reject) => {
-            db.all(sql, (err: any, rows: any) => {
+            db.all(sql, (err: any, rows: any[]) => {
                 if (err) {
                     return reject(err)
                 } else {
@@ -53,7 +86,7 @@ const DB = {
             $time: time,
         }
         return new Promise((resolve, reject) => {
-            db.all(sql, params, (err: any, rows: any) => {
+            db.all(sql, params, (err: any, rows: any[]) => {
                 if (err) {
                     return reject(err)
                 } else {
@@ -214,14 +247,14 @@ const DB = {
         return DB.createArticles(needCreated, feedId)
     },
     getArticles (query: any, offset: number, limit: number) {
-        const sql = ''
-        const params = {}
+        const sql = makeGetArticlesSql(query)
+        const params = makeGetArticlesParams(query, offset, limit)
         return new Promise((resolve, reject) => {
-            db.run(sql, params, function (this: void, err: any) {
+            db.all(sql, params, (err: any, rows: any[]) => {
                 if (err) {
                     return reject(err)
                 } else {
-                    return resolve((this as any).changes)
+                    return resolve(rows)
                 }
             })
         })

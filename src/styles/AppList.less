@@ -1,0 +1,87 @@
+.app-list {
+    @black-text-color: rgba(0, 0, 0, .65);
+    @black-text-color-light: rgba(0, 0, 0, .85);
+    @black-text-color-dark : rgba(0, 0, 0, .45);
+    @radio-checked-color: rgba(136, 136, 136, 0.6);
+    @beige-background-color: rgba(249, 248, 244, 1);
+
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+    background-color: @beige-background-color;
+    position: relative;
+    padding: 42px 0 43px 0;
+    height: 100%;
+    flex: 1 1 auto;
+
+    .list-header {
+        background-color: @beige-background-color;
+        position: absolute;
+        height: 42px;
+        right: 0;
+        left: 0;
+        top: 0;
+    }
+    .list-header-right {
+        float: right;
+        .ant-radio-group {
+            margin-top: 8px;
+            margin-right: 8px;
+        }
+        .ant-radio-group-small .ant-radio-button-wrapper {
+            padding: 0 11px;
+        }
+        .ant-radio-button-wrapper {
+            color: @black-text-color-dark;
+            &:hover {
+                color: inherit;
+                position: relative;
+            }
+            &:focus-within {
+                outline: none;
+            }
+        }
+        .ant-radio-button-wrapper-checked {
+            color: @beige-background-color;
+            box-shadow: none;
+            border-color: #d9d9d9;
+            background-color: @black-text-color-dark;
+            &:hover {
+                color: @beige-background-color;
+            }
+        }
+    }
+    .list-content {
+        -webkit-app-region: none;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+    .list-footer {
+        background-color: @beige-background-color;
+        border-top: 0.5px solid #ededed;
+        position: absolute;
+        height: 42px;
+        bottom: 0;
+        right: 0;
+        left: 0;
+
+        .anticon {
+            cursor: pointer;
+            font-size: 16px;
+        }
+    }
+    .list-footer-left {
+        float: left;
+        .anticon {
+            margin-top: 13px;
+            margin-left: 16px;
+        }
+    }
+    .list-footer-right {
+        float: right;
+        .anticon {
+            margin-top: 13px;
+            margin-right: 16px;
+        }
+    }
+}

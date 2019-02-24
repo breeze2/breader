@@ -2,6 +2,7 @@ import { Avatar, Icon, Menu } from 'antd'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import Logic from '../logic'
+import InterfaceArticle from '../schemas/InterfaceArticle'
 import InterfaceFeed from '../schemas/InterfaceFeed'
 import '../styles/AppMenu.less'
 import AddFeedModal from './AddFeedModal'
@@ -11,6 +12,7 @@ const SubMenu = Menu.SubMenu
 interface InterfaceAppMenuProps {
     feeds: InterfaceFeed[]
     selectedKey: string
+    setArticles: (articles: InterfaceArticle[]) => any
     addFeeds: (feeds: InterfaceFeed[]) => any
     setFeeds: (feeds: InterfaceFeed[]) => any
     setMenuKey: (e: any) => any
@@ -50,12 +52,32 @@ class AppMenu extends Component<InterfaceAppMenuProps> {
     public handleSelect = (e: any) => {
         this.props.setMenuKey(e.key)
     }
-    public componentDidMount() {
+    public initArticles = () => {
+        const query: any = {}
+        switch (this.props.selectedKey) {
+            case 'ALL_ITEMS':
+                break
+            case 'STARRED_ITEMS': query.is_starred = true
+                break
+            case 'UNREAD_ITEMS': query.is_unread = true
+                break
+            default: query.feed_id = parseInt(this.props.selectedKey, 10)
+                break
+        }
+        Logic.getArticles(query, 0, 10000).then((articles) => {
+            console.log(articles)
+            if (articles) {
+                this.props.setArticles(articles as InterfaceArticle[])
+            }
+        })
+    }
+    public componentWillMount() {
         Logic.getAllFeeds().then((feeds) => {
             if (feeds) {
                 this.props.setFeeds(feeds as InterfaceFeed[])
             }
         })
+        this.initArticles()
     }
     public render () {
         return (
