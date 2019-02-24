@@ -1,6 +1,6 @@
 import { Avatar } from 'antd'
 import React, { Component } from 'react'
-import InterfaceFeedItem from '../schemas/InterfaceArticle'
+import InterfaceArticle from '../schemas/InterfaceArticle'
 import '../styles/ListItem.less'
 
 interface InterfaceListItemState {
@@ -11,6 +11,7 @@ interface InterfaceListItemProps  {
     className?: string
     guid: string
     feedTitle?: string
+    time: string
     inid?: number
     title: string
     summary: string
@@ -30,8 +31,8 @@ class ListItem extends Component<InterfaceListItemProps> {
                 <div className="item-sider">1</div>
                 <div className="item-main">
                     <div className="item-header">
-                        <div className="item-header-left">2</div>
-                        <div className="item-header-right">3</div>
+                        <div className="item-header-left">{this.props.feedTitle}</div>
+                        <div className="item-header-right">{(this.props.time).substring(0, 5)}</div>
                     </div>
                     <div className="item-content">{this.props.title}</div>
                     <div className="item-footer">{this.props.summary}</div>

@@ -57,7 +57,7 @@ const FeedParser = {
         return {
             author: post.author,
             created_at: ~~(post.pubdate.getTime() / 1000),
-            date_time: post.date.toString(),
+            date: post.date.toDateString(),
             description: post.description,
             guid: post.guid,
             link: post.link,
@@ -73,7 +73,7 @@ const FeedParser = {
     },
     makeFeed (meta: any) {
         return {
-            date: meta.date,
+            date_time: meta.date.toString(),
             description: meta.description,
             etag: meta.etag,
             favicon: meta.favicon,

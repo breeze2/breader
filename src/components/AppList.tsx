@@ -13,14 +13,17 @@ interface InterfaceAppMenuProps {
     setArticles: (feeds: InterfaceArticle[]) => any
 }
 
-// interface InterfaceListState {
-//     data: string[],
-// }
+interface InterfaceListState {
+    dividingDate: string
+}
 
 class List extends Component<InterfaceAppMenuProps> {
-    // public state: InterfaceListState
+    public state: InterfaceListState
     public constructor(props: any) {
         super(props)
+        this.state = {
+            dividingDate: '',
+        }
     }
     public render() {
         return (
@@ -38,9 +41,22 @@ class List extends Component<InterfaceAppMenuProps> {
                     <AntdList
                         itemLayout="horizontal"
                         dataSource={this.props.articles}
-                        renderItem={(article: InterfaceArticle) => (
-                            <ListItem author={article.author} guid={article.guid} feedTitle={article.feed_title} inid={article.id} title={article.title} summary={article.summary} />
-                        )}
+                        renderItem={(article: InterfaceArticle, i: number) => {
+                            const flag = this.state.dividingDate === article.date
+                            if (!flag) {
+                                this.state.dividingDate = article.date
+                            }
+                            return (<div key={article.guid} className={i === 0 ? 'first-list-item' : ''}>
+                                {!flag && <div className="date-divid">{article.date}</div>}
+                                <ListItem author={article.author}
+                                    guid={article.guid}
+                                    feedTitle={article.feed_title}
+                                    time={article.time}
+                                    inid={article.id}
+                                    title={article.title}
+                                    summary={article.summary} />
+                            </div>)
+                        }}
                     />
                 </div>
                 <div className="list-footer">
