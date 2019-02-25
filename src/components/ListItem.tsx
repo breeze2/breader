@@ -6,11 +6,13 @@ import '../styles/ListItem.less'
 interface InterfaceListItemState {
     guid: string
 }
-interface InterfaceListItemProps  {
+interface InterfaceListItemProps {
+    feedFavicons: { [key: number]: string }
     author?: string
     className?: string
     guid: string
     feedTitle?: string
+    feedId?: number
     time: string
     inid?: number
     title: string
@@ -26,9 +28,17 @@ class ListItem extends Component<InterfaceListItemProps> {
         };
     };
     public render () {
+        let favicon = ''
+        if (this.props.feedId) {
+            favicon = this.props.feedFavicons[this.props.feedId]
+        }
         return (
             <div className="list-item">
-                <div className="item-sider">1</div>
+                <div className="item-sider">
+                    {favicon ? (<Avatar shape="square" size={22} src={favicon} />) : (
+                        <Avatar shape="square" size={22} >{(this.props.feedTitle as string).substring(0, 1)}</Avatar>
+                    )}
+                </div>
                 <div className="item-main">
                     <div className="item-header">
                         <div className="item-header-left">{this.props.feedTitle}</div>

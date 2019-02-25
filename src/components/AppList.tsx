@@ -1,4 +1,4 @@
-import { Avatar, Icon, List as AntdList, Radio } from 'antd'
+import { Icon, List as AntdList, Radio } from 'antd'
 import React, { Component } from 'react'
 import InterfaceArticle from '../schemas/InterfaceArticle'
 import '../styles/AppList.less'
@@ -8,6 +8,7 @@ const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 
 interface InterfaceAppMenuProps {
+    feedFavicons: {[key: number]: string}
     articles: InterfaceArticle[]
     addArticles: (articles: InterfaceArticle[]) => any
     setArticles: (feeds: InterfaceArticle[]) => any
@@ -48,11 +49,12 @@ class List extends Component<InterfaceAppMenuProps> {
                             }
                             return (<div key={article.guid} className={i === 0 ? 'first-list-item' : ''}>
                                 {!flag && <div className="date-divid">{article.date}</div>}
-                                <ListItem author={article.author}
+                                <ListItem feedFavicons={this.props.feedFavicons} author={article.author}
                                     guid={article.guid}
                                     feedTitle={article.feed_title}
                                     time={article.time}
                                     inid={article.id}
+                                    feedId={article.feed_id}
                                     title={article.title}
                                     summary={article.summary} />
                             </div>)
