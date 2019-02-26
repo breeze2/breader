@@ -1,8 +1,8 @@
-import { Icon, List as AntdList, Radio } from 'antd'
+import { Affix, Icon, List as AntdList, Radio } from 'antd'
 import React, { Component } from 'react'
 import InterfaceArticle from '../schemas/InterfaceArticle'
 import '../styles/AppList.less'
-import ListItem from './ListItem'
+import VirtualList from './VirtualList'
 
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
@@ -18,7 +18,7 @@ interface InterfaceListState {
     dividingDate: string
 }
 
-class List extends Component<InterfaceAppMenuProps> {
+class AppList extends Component<InterfaceAppMenuProps> {
     public state: InterfaceListState
     public constructor(props: any) {
         super(props)
@@ -39,27 +39,14 @@ class List extends Component<InterfaceAppMenuProps> {
                     </div>
                 </div>
                 <div className="list-content">
-                    <AntdList
-                        itemLayout="horizontal"
-                        dataSource={this.props.articles}
-                        renderItem={(article: InterfaceArticle, i: number) => {
-                            const flag = this.state.dividingDate === article.date
-                            if (!flag) {
-                                this.state.dividingDate = article.date
+                    <VirtualList articels={this.props.articles.length ?
+                        Array(1000).fill(0).map((el, i) => {
+                            return {
+                                ...(this.props.articles[0]),
+                                date: 'sdfsdfdsf+ 111' + i,
                             }
-                            return (<div key={article.guid} className={i === 0 ? 'first-list-item' : ''}>
-                                {!flag && <div className="date-divid">{article.date}</div>}
-                                <ListItem feedFavicons={this.props.feedFavicons} author={article.author}
-                                    guid={article.guid}
-                                    feedTitle={article.feed_title}
-                                    time={article.time}
-                                    inid={article.id}
-                                    feedId={article.feed_id}
-                                    title={article.title}
-                                    summary={article.summary} />
-                            </div>)
-                        }}
-                    />
+                        }) : []
+                    } feedFavicons={this.props.feedFavicons} />
                 </div>
                 <div className="list-footer">
                     <div className="list-footer-left">
@@ -71,8 +58,8 @@ class List extends Component<InterfaceAppMenuProps> {
                     </div>
                 </div>
             </div>
-        );
+        )
     }
 }
 
-export default List;
+export default AppList

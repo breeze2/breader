@@ -1,15 +1,17 @@
 import { Avatar } from 'antd'
-import React, { Component } from 'react'
+import React, { Component, PureComponent } from 'react'
 import InterfaceArticle from '../schemas/InterfaceArticle'
 import '../styles/ListItem.less'
 
 interface InterfaceListItemState {
     guid: string
 }
-interface InterfaceListItemProps {
+export interface InterfaceListItemProps {
     feedFavicons: { [key: number]: string }
     author?: string
     className?: string
+    key?: string | number
+    style?: any
     guid: string
     feedTitle?: string
     feedId?: number
@@ -19,30 +21,32 @@ interface InterfaceListItemProps {
     summary: string
 }
 
-class ListItem extends Component<InterfaceListItemProps> {
-    public state: InterfaceListItemState;
-    public constructor(props: InterfaceListItemProps) {
-        super(props);
+class ListItem<T extends InterfaceListItemProps> extends PureComponent<T> {
+    public state: InterfaceListItemState
+    public constructor(props: T) {
+        super(props)
         this.state = {
             guid: this.props.guid,
-        };
-    };
+        }
+    }
     public render () {
+        const feedTitle = this.props.feedTitle
+        const time = this.props.time
         let favicon = ''
         if (this.props.feedId) {
-            favicon = this.props.feedFavicons[this.props.feedId]
+            favicon = this.props.feedFavicons[(this.props.feedId as number)]
         }
         return (
             <div className="list-item">
                 <div className="item-sider">
                     {favicon ? (<Avatar shape="square" size={22} src={favicon} />) : (
-                        <Avatar shape="square" size={22} >{(this.props.feedTitle as string).substring(0, 1)}</Avatar>
+                        <Avatar shape="square" size={22} >{feedTitle ? feedTitle.substring(0, 1) : ''}</Avatar>
                     )}
                 </div>
                 <div className="item-main">
                     <div className="item-header">
-                        <div className="item-header-left">{this.props.feedTitle}</div>
-                        <div className="item-header-right">{(this.props.time).substring(0, 5)}</div>
+                        <div className="item-header-left">{feedTitle}</div>
+                        <div className="item-header-right">{time ? time.substring(0, 5) : ''}</div>
                     </div>
                     <div className="item-content">{this.props.title}</div>
                     <div className="item-footer">{this.props.summary}</div>
@@ -52,4 +56,4 @@ class ListItem extends Component<InterfaceListItemProps> {
     };
 }
 
-export default ListItem;
+export default ListItem

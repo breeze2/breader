@@ -25,7 +25,6 @@ class AddFeedModal extends Component<InterfaceAddFeedModalProps> {
     }
     public handleSummit = (e: any) => {
         const feedUrl = this.state.feedUrl
-        console.log(feedUrl)
         this.props.onOk(feedUrl)
     }
     public handleChange = (e: any) => {

@@ -1,7 +1,6 @@
 import InterfaceFeed from '../schemas/InterfaceFeed'
 import FeedParser from './feedparser'
 import DB from './sqlite3'
-import { async } from 'q';
 
 const Logic = {
     createFeed: async (feedUrl: string) => {

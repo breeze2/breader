@@ -65,7 +65,6 @@ class AppMenu extends Component<InterfaceAppMenuProps> {
                 break
         }
         Logic.getArticles(query, 0, 10000).then((articles) => {
-            console.log(articles)
             if (articles) {
                 this.props.setArticles(articles as InterfaceArticle[])
             }

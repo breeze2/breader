@@ -14,6 +14,7 @@ export default interface InterfaceArtilce {
     id?: number
     is_starred?: number
     is_unread?: number
+    is_dayfirst?: boolean
     link: string
     // origlink?: string
     // permalink?: string
