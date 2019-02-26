@@ -4,6 +4,7 @@ import React, { Component, PureComponent, RefObject } from 'react'
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List as VList, WindowScroller } from 'react-virtualized'
 import InterfaceArticle from '../schemas/InterfaceArticle'
 import '../styles/VirtualList.less'
+import Utils from '../utils'
 import ListItem from './ListItem'
 
 interface InterfaceVirtualListProps {
@@ -22,6 +23,7 @@ class VirtualList extends PureComponent<InterfaceVirtualListProps> {
     public vlist: RefObject<VList>
     public state: InterfaceVirtualListState
     public cache: CellMeasurerCache
+    public updateRenderStartDate: (...params: any[]) => void
     public constructor(props: InterfaceVirtualListProps) {
         super(props)
         this.vlist = React.createRef()
@@ -34,16 +36,19 @@ class VirtualList extends PureComponent<InterfaceVirtualListProps> {
             isAffixVisible: false,
             itemHeights: [],
         }
+        this.updateRenderStartDate = Utils.throttle(this._updateRenderStartDate, 100)
+
+        Object.defineProperty(window, 'updateRenderStartDate', {value: this.updateRenderStartDate})
     }
-    public componentWillReceiveProps () {
-        console.log(arguments, 22)
-    }
-    public componentWillUpdate() {
-        console.log(arguments, 11)
-    }
-    public componentDidCatch () {
-        console.log(arguments, 33)
-    }
+    // public componentWillReceiveProps () {
+    //     console.log(arguments, 22)
+    // }
+    // public componentWillUpdate() {
+    //     console.log(arguments, 11)
+    // }
+    // public componentDidCatch () {
+    //     console.log(arguments, 33)
+    // }
     public render() {
         return (
             <div className="virtual-list" >
@@ -66,16 +71,19 @@ class VirtualList extends PureComponent<InterfaceVirtualListProps> {
         )
     }
     private _onScroll (info: any) {
-        if (info.scrollTop > 6 && this.state.isAffixVisible === false) {
+        if (info.scrollTop > 3 && this.state.isAffixVisible === false) {
             this.setState({
                 isAffixVisible: true,
             })
         }
-        if (info.scrollTop < 6 && this.state.isAffixVisible === true) {
+        if (info.scrollTop <= 3 && this.state.isAffixVisible === true) {
             this.setState({
                 isAffixVisible: false,
             })
         }
+        this.updateRenderStartDate.call(this)
+    }
+    private _updateRenderStartDate() {
         const vlist = this.vlist.current
         if (vlist && vlist.Grid) {
             const startIndex = (vlist.Grid as any)._renderedRowStartIndex
@@ -85,7 +93,7 @@ class VirtualList extends PureComponent<InterfaceVirtualListProps> {
                     dateStr: startDate,
                 })
             }
-            console.log(vlist.Grid, startIndex)
+            // console.log(vlist.Grid, startIndex)
         }
     }
     private _noRowsRenderer () {
