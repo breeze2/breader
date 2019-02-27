@@ -26,7 +26,7 @@ const feeds = (state = initialFeedsState, action: InterfaceAction) => {
                     newFavicons[feed.id] = feed.favicon
                 }
             })
-            return state.set('favicons', Map<number, string>(newFavicons))
+            return state.set('favicons', Map<string, string>(newFavicons))
                 .set('list', List<InterfaceFeed>(newFeeds))
         default:
             return state

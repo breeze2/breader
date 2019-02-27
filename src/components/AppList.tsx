@@ -1,26 +1,16 @@
-import { Affix, Icon, List as AntdList, Radio } from 'antd'
-import Immutable, { List, Map } from 'immutable'
+import { Icon, Radio } from 'antd'
 import React, { Component } from 'react'
 import VirtualList from '../containers/VirtualList'
-import InterfaceArticle from '../schemas/InterfaceArticle'
 import '../styles/AppList.less'
 
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 
-interface InterfaceAppMenuProps {
-    // articleId: number
-    // feedFavicons: Map<number, string>
-    // articles: List<InterfaceArticle>
-    // setArticleId: (id: number) => any
-    // setArticles: (feeds: InterfaceArticle[]) => any
-}
-
 interface InterfaceListState {
     dividingDate: string
 }
 
-class AppList extends Component<InterfaceAppMenuProps> {
+class AppList extends Component {
     public state: InterfaceListState
     public constructor(props: any) {
         super(props)
@@ -29,11 +19,11 @@ class AppList extends Component<InterfaceAppMenuProps> {
         }
     }
     public handleVirtualListClick = (e: any) => {
-        console.log(this.props)
-        console.log(e.target)
+        // console.log(this.props)
+        // console.log(e.target)
     }
     public componentWillReceiveProps() {
-        console.log(arguments, 22)
+        // console.log(arguments, 22)
     }
     public render() {
         return (

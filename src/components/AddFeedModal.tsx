@@ -1,7 +1,6 @@
 import { Input, Modal } from 'antd'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-// import Logic from '../logic'
 
 import '../styles/AddFeedModal.less'
 

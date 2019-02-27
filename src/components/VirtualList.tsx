@@ -1,6 +1,5 @@
-// import { List } from 'antd'
 import { Affix, Empty } from 'antd'
-import Immutable, { List, Map } from 'immutable'
+import { List } from 'immutable'
 import React, { Component, PureComponent, RefObject } from 'react'
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List as VList, WindowScroller } from 'react-virtualized'
 import ListItem from '../containers/ListItem'
@@ -41,9 +40,9 @@ class VirtualList extends PureComponent<InterfaceVirtualListProps> {
 
         Object.defineProperty(window, 'updateRenderStartDate', {value: this.updateRenderStartDate})
     }
-    public componentWillReceiveProps () {
-        console.log(arguments, 22)
-    }
+    // public componentWillReceiveProps () {
+    //     console.log(arguments, 22)
+    // }
     // public componentWillUpdate() {
     //     console.log(arguments, 11)
     // }
