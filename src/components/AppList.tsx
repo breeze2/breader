@@ -8,10 +8,12 @@ const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 
 interface InterfaceAppMenuProps {
+    articleId: number
     feedFavicons: {[key: number]: string}
     articles: InterfaceArticle[]
-    addArticles: (articles: InterfaceArticle[]) => any
+    setArticleId: (id: number) => any
     setArticles: (feeds: InterfaceArticle[]) => any
+    store?: any
 }
 
 interface InterfaceListState {
@@ -26,6 +28,10 @@ class AppList extends Component<InterfaceAppMenuProps> {
             dividingDate: '',
         }
     }
+    public handleVirtualListClick = (e: any) => {
+        console.log(this.props)
+        console.log(e.target)
+    }
     public render() {
         return (
             <div className="app-list">
@@ -39,14 +45,18 @@ class AppList extends Component<InterfaceAppMenuProps> {
                     </div>
                 </div>
                 <div className="list-content">
-                    <VirtualList articels={this.props.articles.length ?
-                        Array(1000).fill(0).map((el, i) => {
-                            return {
-                                ...(this.props.articles[0]),
-                                date: 'sdfsdfdsf+ 111' + i,
-                            }
-                        }) : []
-                    } feedFavicons={this.props.feedFavicons} />
+                    <VirtualList articelId={this.props.articleId}
+                        articels={this.props.articles.length ?
+                            Array(1000).fill(0).map((el, i) => {
+                                return {
+                                    ...(this.props.articles[0]),
+                                    date: 'sdfsdfdsf+ 111' + i,
+                                }
+                            }) : []
+                        }
+                        feedFavicons={this.props.feedFavicons}
+                        onClick={this.handleVirtualListClick}
+                    />
                 </div>
                 <div className="list-footer">
                     <div className="list-footer-left">

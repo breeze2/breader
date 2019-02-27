@@ -8,9 +8,10 @@ import Utils from '../utils'
 import ListItem from './ListItem'
 
 interface InterfaceVirtualListProps {
-    feedFavicons: { [key: number]: string }
+    articelId: number
     articels: InterfaceArticle[]
-    // articels: any[]
+    feedFavicons: { [key: number]: string }
+    onClick?: (e: any) => any
 }
 
 interface InterfaceVirtualListState {
@@ -51,7 +52,7 @@ class VirtualList extends PureComponent<InterfaceVirtualListProps> {
     // }
     public render() {
         return (
-            <div className="virtual-list" >
+            <div className="virtual-list" onClick={(e: any) => {if (this.props.onClick) {this.props.onClick(e)}}}>
                 {this.state.isAffixVisible && <div className="list-affix" >{this.state.dateStr}</div>}
                 <AutoSizer>
                     {({ width, height }) => (
@@ -121,7 +122,9 @@ class VirtualList extends PureComponent<InterfaceVirtualListProps> {
                         inid={article.id}
                         feedId={article.feed_id}
                         title={article.title}
-                        summary={article.summary} />
+                        summary={article.summary}
+                        className={(article.is_unread ? 'is-unread-item' : '') + (article.id === this.props.articelId ? ' is-selected-item' : '')}
+                    />
                 </div>
             </CellMeasurer>
         )
