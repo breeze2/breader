@@ -1,6 +1,5 @@
 import { Layout } from 'antd'
 import React, { Component } from 'react'
-// import AppMenu from '../components/AppMenu'
 import AppList from '../containers/AppList'
 import AppMenu from '../containers/AppMenu'
 import '../styles/AppSider.less'

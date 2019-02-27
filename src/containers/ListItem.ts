@@ -4,7 +4,7 @@ import ListItem from '../components/ListItem'
 
 const mapStateToProps = (store: any, props: any) => {
     return {
-        feedFaicons: store.feedFaicons,
+        feedFavicons: store.feeds.get('favicons'),
     }
 }
 

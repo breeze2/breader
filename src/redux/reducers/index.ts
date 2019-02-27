@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux'
-import articleId from './articleId'
+// import articleId from './articleId'
 import articles from './articles'
-import feedFavicons from './feedFavicons'
+// import feedFavicons from './feedFavicons'
 import feeds from './feeds'
-import menuKey from './menuKey'
+import menu from './menu'
 
 export default combineReducers({
-    articleId,
+    // articleId,
     articles,
-    feedFavicons,
+    // feedFavicons,
     feeds,
-    menuKey,
+    menu,
 })

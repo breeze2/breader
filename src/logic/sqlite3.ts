@@ -27,7 +27,7 @@ function makeGetArticlesSql (query: any) {
     return sql
 }
 
-function makeGetArticlesParams (query: any, offset: number, limit: number = 99999) {
+function makeGetArticlesParams (query: any, offset: number, limit: number) {
     const params: any = {}
     if (query.feed_id) {
         params.$feed_id = query.feed_id

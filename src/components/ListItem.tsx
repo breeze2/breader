@@ -1,4 +1,5 @@
 import { Avatar } from 'antd'
+import Immutable, { List, Map } from 'immutable'
 import React, { Component, PureComponent } from 'react'
 import InterfaceArticle from '../schemas/InterfaceArticle'
 import '../styles/ListItem.less'
@@ -7,7 +8,7 @@ interface InterfaceListItemState {
     guid: string
 }
 export interface InterfaceListItemProps {
-    feedFavicons: { [key: number]: string }
+    feedFavicons: Map<number, string>
     author?: string
     className?: string
     key?: string | number
@@ -34,7 +35,8 @@ class ListItem<T extends InterfaceListItemProps> extends PureComponent<T> {
         const time = this.props.time
         let favicon = ''
         if (this.props.feedId) {
-            favicon = this.props.feedFavicons[(this.props.feedId as number)]
+            console.log(this.props.feedFavicons, this.props.feedFavicons.get(0))
+            favicon = (this.props.feedFavicons.get((this.props.feedId as number)) as string)
         }
         return (
             <div className="list-item">

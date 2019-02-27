@@ -12,9 +12,12 @@ const SubMenu = Menu.SubMenu
 interface InterfaceAppMenuProps {
     feeds: InterfaceFeed[]
     selectedKey: string
-    setArticles: (articles: InterfaceArticle[]) => any
-    addFeeds: (feeds: InterfaceFeed[]) => any
-    setFeeds: (feeds: InterfaceFeed[]) => any
+    // setArticles: (articles: InterfaceArticle[]) => any
+    asyncFetchArticles: () => any
+    asyncFetchFeeds: () => any
+    asyncParseFeed: (feedUrl: string) => any
+    // addFeed: (feeds: InterfaceFeed[]) => any
+    // setFeeds: (feeds: InterfaceFeed[]) => any
     setMenuKey: (e: any) => any
 }
 interface InterfaceAppMenuState {
@@ -44,7 +47,8 @@ class AppMenu extends Component<InterfaceAppMenuProps> {
             isAddFeedModalVisible: false,
         })
         if (feedUrl) {
-            Logic.createFeed(feedUrl).then((feed: any) => feed && this.props.addFeeds([feed]))
+            // Logic.createFeed(feedUrl).then((feed: any) => feed && this.props.addFeed([feed]))
+            this.props.asyncParseFeed(feedUrl)
         } else {
             // TODO
         }
@@ -53,30 +57,30 @@ class AppMenu extends Component<InterfaceAppMenuProps> {
         this.props.setMenuKey(e.key)
     }
     public initArticles = () => {
-        const query: any = {}
-        switch (this.props.selectedKey) {
-            case 'ALL_ITEMS':
-                break
-            case 'STARRED_ITEMS': query.is_starred = true
-                break
-            case 'UNREAD_ITEMS': query.is_unread = true
-                break
-            default: query.feed_id = parseInt(this.props.selectedKey, 10)
-                break
-        }
-        Logic.getArticles(query, 0, 10000).then((articles) => {
-            if (articles) {
-                this.props.setArticles(articles as InterfaceArticle[])
-            }
-        })
+        // const query: any = {}
+        // switch (this.props.selectedKey) {
+        //     case 'ALL_ITEMS':
+        //         break
+        //     case 'STARRED_ITEMS': query.is_starred = true
+        //         break
+        //     case 'UNREAD_ITEMS': query.is_unread = true
+        //         break
+        //     default: query.feed_id = parseInt(this.props.selectedKey, 10)
+        //         break
+        // }
+        // Logic.getArticles(query, 0, 10000).then((articles) => {
+        //     if (articles) {
+        //         this.props.setArticles(articles as InterfaceArticle[])
+        //     }
+        // })
+        // this.props.asyncFetchArticles()
     }
     public componentWillMount() {
-        Logic.getAllFeeds().then((feeds) => {
-            if (feeds) {
-                this.props.setFeeds(feeds as InterfaceFeed[])
-            }
-        })
-        this.initArticles()
+        this.props.asyncFetchFeeds()
+        this.props.asyncFetchArticles()
+    }
+    public componentWillReceiveProps (props: any) {
+        // console.log(props)
     }
     public render () {
         return (

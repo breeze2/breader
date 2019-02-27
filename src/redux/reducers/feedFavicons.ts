@@ -1,14 +1,14 @@
-import { FeedsActionTypes, InterfaceFeedsAction } from '../actions/feeds'
-import InterfaceFeed from '../schemas/InterfaceFeed'
+import InterfaceFeed from '../../schemas/InterfaceFeed'
+import { FeedsActionTypes } from '../actions/feeds'
 
 interface InterfaceFeedFavicons {
     [key: number]: string
 }
 
-const feedFavicons = (state: InterfaceFeedFavicons = {}, action: InterfaceFeedsAction) => {
+const feedFavicons = (state: InterfaceFeedFavicons = {}, action: any) => {
     let favicons: InterfaceFeedFavicons = {}
     switch (action.type) {
-        case FeedsActionTypes.ADD_FEEDS:
+        case FeedsActionTypes.ADD_FEED:
             favicons = {}
             action.feeds.forEach((feed: InterfaceFeed) => {
                 if (feed.id && feed.favicon) {

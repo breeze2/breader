@@ -1,19 +1,19 @@
 import { Affix, Icon, List as AntdList, Radio } from 'antd'
+import Immutable, { List, Map } from 'immutable'
 import React, { Component } from 'react'
+import VirtualList from '../containers/VirtualList'
 import InterfaceArticle from '../schemas/InterfaceArticle'
 import '../styles/AppList.less'
-import VirtualList from './VirtualList'
 
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 
 interface InterfaceAppMenuProps {
-    articleId: number
-    feedFavicons: {[key: number]: string}
-    articles: InterfaceArticle[]
-    setArticleId: (id: number) => any
-    setArticles: (feeds: InterfaceArticle[]) => any
-    store?: any
+    // articleId: number
+    // feedFavicons: Map<number, string>
+    // articles: List<InterfaceArticle>
+    // setArticleId: (id: number) => any
+    // setArticles: (feeds: InterfaceArticle[]) => any
 }
 
 interface InterfaceListState {
@@ -32,6 +32,9 @@ class AppList extends Component<InterfaceAppMenuProps> {
         console.log(this.props)
         console.log(e.target)
     }
+    public componentWillReceiveProps() {
+        console.log(arguments, 22)
+    }
     public render() {
         return (
             <div className="app-list">
@@ -45,18 +48,7 @@ class AppList extends Component<InterfaceAppMenuProps> {
                     </div>
                 </div>
                 <div className="list-content">
-                    <VirtualList articelId={this.props.articleId}
-                        articels={this.props.articles.length ?
-                            Array(1000).fill(0).map((el, i) => {
-                                return {
-                                    ...(this.props.articles[0]),
-                                    date: 'sdfsdfdsf+ 111' + i,
-                                }
-                            }) : []
-                        }
-                        feedFavicons={this.props.feedFavicons}
-                        onClick={this.handleVirtualListClick}
-                    />
+                    <VirtualList />
                 </div>
                 <div className="list-footer">
                     <div className="list-footer-left">

@@ -1,16 +1,16 @@
 // import { List } from 'antd'
 import { Affix, Empty } from 'antd'
+import Immutable, { List, Map } from 'immutable'
 import React, { Component, PureComponent, RefObject } from 'react'
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List as VList, WindowScroller } from 'react-virtualized'
+import ListItem from '../containers/ListItem'
 import InterfaceArticle from '../schemas/InterfaceArticle'
 import '../styles/VirtualList.less'
 import Utils from '../utils'
-import ListItem from './ListItem'
 
 interface InterfaceVirtualListProps {
-    articelId: number
-    articels: InterfaceArticle[]
-    feedFavicons: { [key: number]: string }
+    articleId: number
+    articles: List<InterfaceArticle>
     onClick?: (e: any) => any
 }
 
@@ -41,9 +41,9 @@ class VirtualList extends PureComponent<InterfaceVirtualListProps> {
 
         Object.defineProperty(window, 'updateRenderStartDate', {value: this.updateRenderStartDate})
     }
-    // public componentWillReceiveProps () {
-    //     console.log(arguments, 22)
-    // }
+    public componentWillReceiveProps () {
+        console.log(arguments, 22)
+    }
     // public componentWillUpdate() {
     //     console.log(arguments, 11)
     // }
@@ -60,7 +60,7 @@ class VirtualList extends PureComponent<InterfaceVirtualListProps> {
                             width={width}
                             height={height}
                             deferredMeasurementCache={this.cache}
-                            rowCount={this.props.articels.length}
+                            rowCount={this.props.articles.size}
                             rowHeight={this.cache.rowHeight}
                             rowRenderer={(info: any) => this._rowRenderer(info)}
                             noRowsRenderer={() => this._noRowsRenderer()}
@@ -88,10 +88,10 @@ class VirtualList extends PureComponent<InterfaceVirtualListProps> {
         const vlist = this.vlist.current
         if (vlist && vlist.Grid) {
             const startIndex = (vlist.Grid as any)._renderedRowStartIndex
-            const startDate = this.props.articels[startIndex].date
-            if (startDate !== this.state.dateStr) {
+            const startArticle = this.props.articles.get(startIndex)
+            if (startArticle && (startArticle.date !== this.state.dateStr)) {
                 this.setState({
-                    dateStr: startDate,
+                    dateStr: startArticle.date,
                 })
             }
             // console.log(vlist.Grid, startIndex)
@@ -109,13 +109,13 @@ class VirtualList extends PureComponent<InterfaceVirtualListProps> {
         const parent = info.parent
         const key = info.key
         const style = info.style
-        const article = this.props.articels[index]
+        const article = (this.props.articles.get(index) as InterfaceArticle)
 
         return (
             <CellMeasurer key={key} cache={this.cache} parent={parent} columnIndex={0} rowIndex={index} >
                 <div style={style} className={index === 0 ? 'first-list-item' : ''}>
                     {article.is_dayfirst && <div className="date-divid">{article.date}</div>}
-                    <ListItem feedFavicons={this.props.feedFavicons} author={article.author}
+                    <ListItem author={article.author}
                         guid={article.guid}
                         feedTitle={article.feed_title}
                         time={article.time}
@@ -123,7 +123,7 @@ class VirtualList extends PureComponent<InterfaceVirtualListProps> {
                         feedId={article.feed_id}
                         title={article.title}
                         summary={article.summary}
-                        className={(article.is_unread ? 'is-unread-item' : '') + (article.id === this.props.articelId ? ' is-selected-item' : '')}
+                        className={(article.is_unread ? 'is-unread-item' : '') + (article.id === this.props.articleId ? ' is-selected-item' : '')}
                     />
                 </div>
             </CellMeasurer>

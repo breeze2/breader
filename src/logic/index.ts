@@ -46,7 +46,7 @@ const Logic = {
             console.error(err)
         }
     },
-    getArticles: async (query: any, offset: number, limit: number) => {
+    getArticles: async (query: any, offset: number = 0, limit: number = 9999) => {
         try {
             const articles = await DB.getArticles(query, offset, limit)
             return articles
