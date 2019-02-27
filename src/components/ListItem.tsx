@@ -34,11 +34,10 @@ class ListItem<T extends InterfaceListItemProps> extends PureComponent<T> {
         const time = this.props.time
         let favicon = ''
         if (this.props.feedId) {
-            // console.log(this.props.feedFavicons, this.props.feedFavicons.get(0))
             favicon = (this.props.feedFavicons.get(this.props.feedId.toString()) as string)
         }
         return (
-            <div className="list-item">
+            <div className={'list-item ' + this.props.className} data-id={this.props.inid}>
                 <div className="item-sider">
                     {favicon ? (<Avatar shape="square" size={22} src={favicon} />) : (
                         <Avatar shape="square" size={22} >{feedTitle ? feedTitle.substring(0, 1) : ''}</Avatar>

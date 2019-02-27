@@ -6,21 +6,21 @@ import '../styles/AppList.less'
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 
-interface InterfaceListState {
-    dividingDate: string
+interface InterfaceListProps {
+    selectedMenuKey: string
 }
 
-class AppList extends Component {
-    public state: InterfaceListState
+interface InterfaceListState {
+    // dividingDate: string
+}
+
+class AppList extends Component<InterfaceListProps> {
+    // public state: InterfaceListState
     public constructor(props: any) {
         super(props)
-        this.state = {
-            dividingDate: '',
-        }
-    }
-    public handleVirtualListClick = (e: any) => {
-        // console.log(this.props)
-        // console.log(e.target)
+        // this.state = {
+        //     dividingDate: '',
+        // }
     }
     public componentWillReceiveProps() {
         // console.log(arguments, 22)
@@ -29,13 +29,18 @@ class AppList extends Component {
         return (
             <div className="app-list">
                 <div className="list-header">
-                    <div className="list-header-right">
-                        <RadioGroup defaultValue="a" size="small">
-                            <RadioButton value="a"><Icon type="star" theme="filled" /></RadioButton>
-                            <RadioButton value="b"><Icon type="file-text" theme="filled" /></RadioButton>
-                            <RadioButton value="c"><Icon type="profile" theme="filled" /></RadioButton>
-                        </RadioGroup>
-                    </div>
+                    {
+                        this.props.selectedMenuKey !== 'ALL_ITEMS' &&
+                        this.props.selectedMenuKey !== 'STARRED_ITEMS' &&
+                        this.props.selectedMenuKey !== 'UNREAD_ITEMS' &&
+                        <div className="list-header-right">
+                            <RadioGroup defaultValue="a" size="small">
+                                <RadioButton value="a"><Icon type="star" theme="filled" /></RadioButton>
+                                <RadioButton value="b"><Icon type="file-text" theme="filled" /></RadioButton>
+                                <RadioButton value="c"><Icon type="profile" theme="filled" /></RadioButton>
+                            </RadioGroup>
+                        </div>
+                    }
                 </div>
                 <div className="list-content">
                     <VirtualList />

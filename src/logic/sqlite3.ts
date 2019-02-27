@@ -8,7 +8,7 @@ function makeGetArticlesSql (query: any) {
     const list = []
     let sql = `select articles.author, articles.created_at, articles.date, articles.deleted_at,
         articles.description, articles.feed_id, articles.guid, articles.id,
-        articles.is_starred, articles.is_unread, articles.link, articles.meta, articles.summary,
+        articles.is_starred, articles.is_unread, articles.link, articles.meta, substr(articles.summary, 0, 30) as summary,
         articles.time, articles.title, articles.updated_at, feeds.title as feed_title
         from articles join feeds on articles.feed_id = feeds.id `
     if (query.feed_id) {
@@ -23,7 +23,7 @@ function makeGetArticlesSql (query: any) {
     if (list.length) {
         sql += list.join(' and ')
     }
-    sql += ' order by articles.updated_at limit $limit offset $offset;'
+    sql += ' order by articles.updated_at desc limit $limit offset $offset;'
     return sql
 }
 

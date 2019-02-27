@@ -9,7 +9,7 @@ export const ArticlesActionTypes = {
 
 export const selectArticleAction = (articleId: number) => ({
     payload: { articleId },
-    type: 'SET_ARTICLES',
+    type: 'SELECT_ARTICLE',
 })
 
 export const setArticlesAction = (articles: InterfaceArticle[]) => ({

@@ -9,7 +9,7 @@ const MenuItem = Menu.Item
 const SubMenu = Menu.SubMenu
 interface InterfaceAppMenuProps {
     feeds: InterfaceFeed[]
-    selectedKey: string
+    selectedMenuKey: string
     asyncFetchArticles: () => any
     asyncFetchFeeds: () => any
     asyncParseFeed: (feedUrl: string) => any
@@ -68,7 +68,7 @@ class AppMenu extends Component<InterfaceAppMenuProps> {
                         <p className="date-text">{new Date().toDateString()}</p>
                     </div>
                     <Menu
-                        defaultSelectedKeys={[this.props.selectedKey]}
+                        defaultSelectedKeys={[this.props.selectedMenuKey]}
                         defaultOpenKeys={['subscriptions']}
                         mode="inline"
                         onSelect={this.handleSelect}

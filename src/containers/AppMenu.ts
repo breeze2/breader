@@ -1,14 +1,12 @@
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import AppMenu from '../components/AppMenu'
-import { addFeedAction, asyncFetchArticlesAction, asyncFetchFeedsAction, asyncParseFeedAction, setFeedsAction, setMenuKeyAction } from '../redux/actions'
-import InterfaceArticle from '../schemas/InterfaceArticle'
-import InterfaceFeed from '../schemas/InterfaceFeed'
+import { asyncFetchArticlesAction, asyncFetchFeedsAction, asyncParseFeedAction, setMenuKeyAction } from '../redux/actions'
 
 const mapStateToProps = (store: any, props: any) => {
     return {
         feeds: store.feeds.get('list'),
-        selectedKey: store.menu.get('key'),
+        selectedMenuKey: store.menu.get('selectedkey'),
     }
 }
 

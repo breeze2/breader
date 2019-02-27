@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import VirtualList from '../components/VirtualList'
+import { selectArticleAction } from '../redux/actions'
 
 const mapStateToProps = (store: any, props: any) => {
     return {
@@ -10,6 +11,7 @@ const mapStateToProps = (store: any, props: any) => {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>, props: any) => ({
+    selectArticle: (id: number) => dispatch(selectArticleAction(id)),
 })
 
 export default connect(
