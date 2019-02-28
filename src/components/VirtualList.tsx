@@ -19,7 +19,7 @@ interface InterfaceVirtualListState {
     readItems: any
 }
 
-class VirtualList extends PureComponent<InterfaceVirtualListProps> {
+class VirtualList extends Component<InterfaceVirtualListProps> {
     public vlist: RefObject<VList>
     public state: InterfaceVirtualListState
     public cellCache: CellMeasurerCache
@@ -40,9 +40,14 @@ class VirtualList extends PureComponent<InterfaceVirtualListProps> {
 
         Object.defineProperty(window, 'updateRenderStartDate', {value: this.updateRenderStartDate})
     }
-    // public componentWillReceiveProps () {
-    //     console.log(arguments, 22)
-    // }
+    public componentWillReceiveProps(props: InterfaceVirtualListProps) {
+        if (props.articles !== this.props.articles) {
+            this.cellCache = new CellMeasurerCache({
+                defaultHeight: 80,
+                fixedWidth: true,
+            })
+        }
+    }
     // public componentWillUpdate() {
     //     console.log(arguments, 11)
     // }

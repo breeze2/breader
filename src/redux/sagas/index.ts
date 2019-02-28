@@ -1,6 +1,7 @@
 import { all, fork } from 'redux-saga/effects'
 import { watchFetchArticles, watchSelectAndReadArticles } from './articles'
 import { watchFetchFeeds, watchParseFeed } from './feeds'
+import { watchSelectMenuKey } from './menu'
 
 export default function* () {
     yield all([
@@ -8,5 +9,6 @@ export default function* () {
         fork(watchFetchArticles),
         fork(watchFetchFeeds),
         fork(watchParseFeed),
+        fork(watchSelectMenuKey),
     ])
 }

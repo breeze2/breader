@@ -3,13 +3,13 @@ import { InterfaceAction, MenuActionTypes } from '../actions'
 
 const MenuKeyDefault = 'ALL_ITEMS'
 const initialMenuState = Immutable.fromJS({
-    selectedkey: MenuKeyDefault,
+    selectedKey: MenuKeyDefault,
 })
 
 const menuKey = (state = initialMenuState, action: InterfaceAction) => {
     switch (action.type) {
-        case MenuActionTypes.SET_MENU_KEY:
-            return state.set('selectedkey', action.payload.key)
+        case MenuActionTypes.SET_SELECTED_MENU_KEY:
+            return state.set('selectedKey', action.payload.key)
         default:
             return state
     }

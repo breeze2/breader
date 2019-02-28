@@ -13,7 +13,7 @@ interface InterfaceAppMenuProps {
     asyncFetchArticles: () => any
     asyncFetchFeeds: () => any
     asyncParseFeed: (feedUrl: string) => any
-    setMenuKey: (e: any) => any
+    asyncSelectMenuKey: (e: any) => any
 }
 interface InterfaceAppMenuState {
     isAddFeedModalVisible: boolean
@@ -49,7 +49,7 @@ class AppMenu extends Component<InterfaceAppMenuProps> {
         }
     }
     public handleSelect = (e: any) => {
-        this.props.setMenuKey(e.key)
+        this.props.asyncSelectMenuKey(e.key)
     }
     public componentWillMount() {
         this.props.asyncFetchFeeds()

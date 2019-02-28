@@ -21,6 +21,7 @@ function makeGetArticlesSql (query: any) {
         list.push('articles.is_unread = 1')
     }
     if (list.length) {
+        sql += ' where '
         sql += list.join(' and ')
     }
     sql += ' order by articles.updated_at desc limit $limit offset $offset;'
