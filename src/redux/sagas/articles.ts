@@ -1,7 +1,7 @@
 import { all, call, put, select, takeEvery, takeLatest } from 'redux-saga/effects'
 import Logic from '../../logic'
 import { ArticlesActionTypes, InterfaceAction } from '../actions'
-import { getArticles, getMenu } from "./selectors"
+import { getArticles, getMenu } from './selectors'
 
 export function* fetchArticlesSaga(action: InterfaceAction) {
     try {
@@ -64,7 +64,6 @@ export function* filterArticlesSaga(action: InterfaceAction) {
         yield put({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null })
     } catch (e) {
         console.error(e)
-        // yield put({ type: "USER_FETCH_FAILED", message: e.message })
     }
 }
 

@@ -1,12 +1,13 @@
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import AppMenu from '../components/AppMenu'
-import { asyncFetchArticlesAction, asyncFetchFeedsAction, asyncParseFeedAction, asyncSelectMenuKeyAction } from '../redux/actions'
+import { asyncFetchArticlesAction, asyncFetchFeedsAction, asyncParseFeedAction, asyncSelectMenuKeyAction, asyncUpdateFeedsAction } from '../redux/actions'
 
 const mapStateToProps = (store: any, props: any) => {
     return {
         feeds: store.feeds.get('list'),
-        invalidFeedCount: store.feeds.get('invalidCount'),
+        invalidFeedsCount: store.feeds.get('invalidCount'),
+        isUpdatingFeeds: store.feeds.get('isUpdating'),
         selectedMenuKey: store.menu.get('selectedKey'),
     }
 }
@@ -16,6 +17,7 @@ const mapDispatchToProps = (dispatch: Dispatch<any>, props: any) => ({
     asyncFetchFeeds: () => dispatch(asyncFetchFeedsAction()),
     asyncParseFeed: (feedUrl: string) => dispatch(asyncParseFeedAction(feedUrl)),
     asyncSelectMenuKey: (key: string) => dispatch(asyncSelectMenuKeyAction(key)),
+    asyncUpdateFeeds: () => dispatch(asyncUpdateFeedsAction()),
 })
 
 export default connect(

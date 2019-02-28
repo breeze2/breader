@@ -47,6 +47,16 @@ class AddFeedModal extends Component<InterfaceAddFeedModalProps & InjectedIntlPr
             feedUrl: '',
         })
     }
+    public componentDidUpdate () {
+        if (this.props.visible) {
+            setTimeout(() => {
+                const input: any = document.querySelector('.input-feed-url')
+                if (input) {
+                    input.focus()
+                }
+            }, 200)
+        }
+    }
     public render() {
         return (
             <Modal className="add-feed-modal"
@@ -59,7 +69,7 @@ class AddFeedModal extends Component<InterfaceAddFeedModalProps & InjectedIntlPr
                 {/* <FormattedMessage id="feedUrl" >{ (txt) => {
                     return <Input placeholder={txt as string} value={this.state.feedUrl} onChange={this.handleChange} onPressEnter={this.handleSummit} />
                 }}</FormattedMessage> */}
-                <Input placeholder={this.props.intl.formatMessage({ id: 'feedUrl'})} value={this.state.feedUrl} onChange={this.handleChange} onPressEnter={this.handleSummit} />
+                <Input className="input-feed-url" placeholder={this.props.intl.formatMessage({ id: 'feedUrl'})} value={this.state.feedUrl} onChange={this.handleChange} onPressEnter={this.handleSummit} />
             </Modal>
         )
     }

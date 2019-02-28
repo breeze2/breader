@@ -9,12 +9,14 @@ const MenuItem = Menu.Item
 const SubMenu = Menu.SubMenu
 interface InterfaceAppMenuProps {
     feeds: InterfaceFeed[]
-    invalidFeedCount: number
+    invalidFeedsCount: number
+    isUpdatingFeeds: boolean
     selectedMenuKey: string
     asyncFetchArticles: () => any
     asyncFetchFeeds: () => any
     asyncParseFeed: (feedUrl: string) => any
     asyncSelectMenuKey: (e: any) => any
+    asyncUpdateFeeds: () => any
 }
 interface InterfaceAppMenuState {
     isAddFeedModalVisible: boolean
@@ -51,6 +53,11 @@ class AppMenu extends Component<InterfaceAppMenuProps & InjectedIntlProps> {
             // TODO
         }
     }
+    public handleUpdateFeedsClick = () => {
+        if(!this.props.isUpdatingFeeds) {
+            this.props.asyncUpdateFeeds()
+        }
+    }
     public handleSelect = (e: any) => {
         this.props.asyncSelectMenuKey(e.key)
     }
@@ -59,8 +66,8 @@ class AppMenu extends Component<InterfaceAppMenuProps & InjectedIntlProps> {
         this.props.asyncFetchArticles()
     }
     public componentWillReceiveProps (props: any) {
-        if (this.props.invalidFeedCount !== props.invalidFeedCount) {
-            Message.warning(this.props.intl.formatMessage({ id: 'unfoundFeed' }))
+        if (this.props.invalidFeedsCount !== props.invalidFeedsCount) {
+            Message.info(this.props.intl.formatMessage({ id: 'unfoundFeed' }))
         }
     }
     public render () {
@@ -101,7 +108,7 @@ class AppMenu extends Component<InterfaceAppMenuProps & InjectedIntlProps> {
                 </div>
                 <div className="menu-footer">
                     <div className="menu-footer-left">
-                        <Icon type="sync" className="sync-rss" />
+                        <Icon type={this.props.isUpdatingFeeds ? 'loading' : 'sync'} className="sync-rss" onClick={this.handleUpdateFeedsClick}/>
                     </div>
                     <div className="menu-footer-right">
                         <Icon type="plus" className="add-rss" onClick={this.handleAddFeedClick} />

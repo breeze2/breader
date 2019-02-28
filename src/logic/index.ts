@@ -79,6 +79,24 @@ const Logic = {
             console.error(err)
         }
     },
+    updateFeedArticles: async (feed: InterfaceFeed) => {
+        try {
+            const feedNarticles: any = await FeedParser.parseFeed(feed.link, '')
+            if (!feedNarticles) {
+                return
+            }
+            console.log(feedNarticles)
+            if (feed.id && feedNarticles.feed && feedNarticles.articles) {
+                DB.updateFeed(feed.id, feedNarticles.feed)
+                const lastDateTime = ~~((new Date(feed.date_time || 0)).getTime() / 1000)
+                const articles = (feedNarticles as any).articles
+                const changes = DB.saveArticles(articles, feed.id, lastDateTime)
+                return changes
+            }
+        } catch (err) {
+            console.error(err)
+        }
+    },
 }
 
 export default Logic

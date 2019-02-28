@@ -154,8 +154,8 @@ const DB = {
     },
     createFeed(feed: InterfaceFeed) {
         const time = ~~(Date.now() / 1000)
-        const sql = `insert into feeds(title, link, date_time, etag, favicon, created_at) values
-                    ($title, $link, $date_time, $etag, $favicon, $created_at)`
+        const sql = `insert into feeds(title, link, url, date_time, etag, favicon, created_at) values
+                    ($title, $link, $url, $date_time, $etag, $favicon, $created_at)`
         const params = {
             $created_at: time,
             $date_time: feed.date_time,
@@ -163,6 +163,7 @@ const DB = {
             $favicon: feed.favicon,
             $link: feed.link,
             $title: feed.title,
+            $url: feed.url,
         }
         return new Promise((resolve, reject) => {
             db.run(sql, params, function (this: void, err: any) {

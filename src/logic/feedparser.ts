@@ -74,13 +74,14 @@ const FeedParser = {
         const u = url.parse(feedUrl)
         return u.protocol + '//' + u.host + '/' + 'favicon.ico'
     },
-    makeFeed (meta: any) {
+    makeFeed(feedUrl: string, meta: any) {
         return {
             date_time: meta.date.toString(),
             description: meta.description,
             etag: meta.etag,
             favicon: meta.favicon,
             link: meta.link,
+            url: feedUrl,
             summary: meta.summary,
             title: meta.title,
         }
@@ -119,7 +120,7 @@ const FeedParser = {
                     res.pipe(fp)
                     fp.on('meta', (meta: any) => {
                         meta.etag = res.headers.etag ? res.headers.etag : ''
-                        feed = FeedParser.makeFeed(meta)
+                        feed = FeedParser.makeFeed(feedUrl, meta)
                     })
                     fp.on('readable', () => {
                         let post: any = fp.read()

@@ -18,6 +18,7 @@ function initSqlite3 () {
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     title VARCHAR(255) NOT NULL,
                     link VARCHAR(255) NOT NULL,
+                    url VARCHAR(255) NOT NULL,
                     date_time VARCHAR(255) DEFAULT NULL,
                     etag VARCHAR(255) DEFAULT NULL,
                     favicon TEXT DEFAULT NULL,
