@@ -1,6 +1,6 @@
-import { Input, Modal } from 'antd'
+import { Input, message as Message, Modal } from 'antd'
 import React, { Component } from 'react'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'react-intl'
 
 import '../styles/AddFeedModal.less'
 
@@ -14,9 +14,12 @@ interface InterfaceAddFeedModalState {
     readonly feedUrl: string
 }
 
-class AddFeedModal extends Component<InterfaceAddFeedModalProps> {
+class AddFeedModal extends Component<InterfaceAddFeedModalProps & InjectedIntlProps, {}> {
+    public static propTypes: React.ValidationMap<any> = {
+        intl: intlShape.isRequired,
+    }
     public state: InterfaceAddFeedModalState
-    public constructor(props: InterfaceAddFeedModalProps) {
+    public constructor(props: any) {
         super(props)
         this.state = {
             feedUrl: '',
@@ -24,11 +27,24 @@ class AddFeedModal extends Component<InterfaceAddFeedModalProps> {
     }
     public handleSummit = (e: any) => {
         const feedUrl = this.state.feedUrl
-        this.props.onOk(feedUrl)
+        const a = window.document.createElement('a')
+        a.href = feedUrl
+
+        if (a.host && (a.host !== window.location.host) &&
+            ((a.protocol === 'http:') || (a.protocol === 'https:'))) {
+            this.props.onOk(feedUrl)
+        } else {
+            Message.warning(this.props.intl.formatMessage({ id: 'invalidFeedUrl'}))
+        }
     }
     public handleChange = (e: any) => {
         this.setState({
             feedUrl: e.target.value,
+        })
+    }
+    public componentWillReceiveProps () {
+        this.setState({
+            feedUrl: '',
         })
     }
     public render() {
@@ -40,12 +56,13 @@ class AddFeedModal extends Component<InterfaceAddFeedModalProps> {
                 onCancel={this.props.onCancel}
                 onOk={this.handleSummit}
             >
-                <FormattedMessage id="feedUrl" >{ (txt) => {
-                    return <Input placeholder={txt as string} value={this.state.feedUrl} onChange={this.handleChange} />
-                }}</FormattedMessage>
+                {/* <FormattedMessage id="feedUrl" >{ (txt) => {
+                    return <Input placeholder={txt as string} value={this.state.feedUrl} onChange={this.handleChange} onPressEnter={this.handleSummit} />
+                }}</FormattedMessage> */}
+                <Input placeholder={this.props.intl.formatMessage({ id: 'feedUrl'})} value={this.state.feedUrl} onChange={this.handleChange} onPressEnter={this.handleSummit} />
             </Modal>
         )
     }
 }
 
-export default AddFeedModal
+export default injectIntl(AddFeedModal)

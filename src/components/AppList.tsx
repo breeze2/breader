@@ -20,12 +20,6 @@ class AppList extends Component<InterfaceListProps> {
     // public state: InterfaceListState
     public constructor(props: any) {
         super(props)
-        // this.state = {
-        //     dividingDate: '',
-        // }
-    }
-    public componentWillReceiveProps() {
-        // console.log(arguments, 22)
     }
     public handleRadioChange = (e: any) => {
         const target = e.target
@@ -57,7 +51,7 @@ class AppList extends Component<InterfaceListProps> {
                     </div>
                     <div className="list-footer-right">
                         <Icon type="search" className="search-item" />
-                        <Icon type="right" className="show-content" />
+                        {/* <Icon type="right" className="show-content" /> */}
                     </div>
                 </div>
             </div>

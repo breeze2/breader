@@ -1,5 +1,6 @@
 const BaseFeedParser = (window as any).require('feedparser')
 const http = (window as any).require('http')
+const https = (window as any).require('https')
 const url = (window as any).require('url')
 const iconv = (window as any).require('iconv-lite')
 const detectCharacterEncoding = (window as any).require('detect-character-encoding')
@@ -19,6 +20,7 @@ class IconvTransform extends Transform {
         const charset = detectCharacterEncoding(buffer)
         const output = iconv.decode(buffer, charset.encoding)
         this.push(output)
+        console.log(output)
         callback(null)
     }
 }
@@ -29,6 +31,7 @@ function xmlHttpRequest(feedUrl: string, options: any) {
         if (!u) {
             return reject(new Error('WRONG URL'))
         }
+        const client = u.protocol === 'http:' ? http : https
         const headers = options.headers ? options.headers : {}
         headers['user-agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36'
         headers.host = u.host
@@ -44,7 +47,7 @@ function xmlHttpRequest(feedUrl: string, options: any) {
             protocol: u.protocol,
             timeout: 10000,
         }
-        http.get(o, (res: any) => {
+        client.get(o, (res: any) => {
             return resolve(res)
         }).on('error', (err: any) => {
             return reject(err)
@@ -134,7 +137,7 @@ const FeedParser = {
                     })
                     fp.on('error', (err: any) => {
                         // TODO
-                        fp.end(err)
+                        return reject(err)
                     })
                 }
             })

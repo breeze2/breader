@@ -1,6 +1,6 @@
-import { Avatar, Icon, Menu } from 'antd'
+import { Avatar, Icon, Menu, message as Message } from 'antd'
 import React, { Component } from 'react'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'react-intl'
 import InterfaceFeed from '../schemas/InterfaceFeed'
 import '../styles/AppMenu.less'
 import AddFeedModal from './AddFeedModal'
@@ -9,6 +9,7 @@ const MenuItem = Menu.Item
 const SubMenu = Menu.SubMenu
 interface InterfaceAppMenuProps {
     feeds: InterfaceFeed[]
+    invalidFeedCount: number
     selectedMenuKey: string
     asyncFetchArticles: () => any
     asyncFetchFeeds: () => any
@@ -19,7 +20,10 @@ interface InterfaceAppMenuState {
     isAddFeedModalVisible: boolean
 }
 
-class AppMenu extends Component<InterfaceAppMenuProps> {
+class AppMenu extends Component<InterfaceAppMenuProps & InjectedIntlProps> {
+    public static propTypes: React.ValidationMap<any> = {
+        intl: intlShape.isRequired,
+    }
     public state: InterfaceAppMenuState
     public constructor (props: any) {
         super(props)
@@ -42,7 +46,6 @@ class AppMenu extends Component<InterfaceAppMenuProps> {
             isAddFeedModalVisible: false,
         })
         if (feedUrl) {
-            // Logic.createFeed(feedUrl).then((feed: any) => feed && this.props.addFeed([feed]))
             this.props.asyncParseFeed(feedUrl)
         } else {
             // TODO
@@ -56,14 +59,15 @@ class AppMenu extends Component<InterfaceAppMenuProps> {
         this.props.asyncFetchArticles()
     }
     public componentWillReceiveProps (props: any) {
-        // console.log(props)
+        if (this.props.invalidFeedCount !== props.invalidFeedCount) {
+            Message.warning(this.props.intl.formatMessage({ id: 'unfoundFeed' }))
+        }
     }
     public render () {
         return (
             <div className="app-menu">
                 <div className="menu-content">
                     <div className="menu-header">
-                        {/* <img src={logo} alt="Breader" height="96" /> */}
                         <div className="app-logo" />
                         <p className="date-text">{new Date().toDateString()}</p>
                     </div>
@@ -109,4 +113,4 @@ class AppMenu extends Component<InterfaceAppMenuProps> {
     }
 }
 
-export default AppMenu
+export default injectIntl(AppMenu)

@@ -4,6 +4,7 @@ import { FeedsActionTypes, InterfaceAction } from '../actions'
 
 const initialFeedsState = Immutable.fromJS({
     favicons: {},
+    invalidCount: 0,
     list: [],
 })
 
@@ -11,6 +12,8 @@ Object.defineProperty(window, 'Immutable', { value: Immutable})
 
 const feeds = (state = initialFeedsState, action: InterfaceAction) => {
     switch (action.type) {
+        case FeedsActionTypes.TIPS_PARSE_INVALID_FEED:
+            return state.set('invalidCount', state.get('invalidCount') + 1)
         case FeedsActionTypes.ADD_FEED:
             const newFeed = action.payload.feed
             return state.update('favicons', (favicons: Map<number, string>) => {

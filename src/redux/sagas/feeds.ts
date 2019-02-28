@@ -17,6 +17,8 @@ export function* parseFeedSaga(action: InterfaceAction) {
         const feed = yield call(Logic.createFeed, action.payload.feedUrl)
         if (feed) {
             yield put({ type: FeedsActionTypes.ADD_FEED, payload: { feed } })
+        } else {
+            yield put({ type: FeedsActionTypes.TIPS_PARSE_INVALID_FEED, payload: null })
         }
     } catch (e) {
         console.error(e)
