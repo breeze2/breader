@@ -8,6 +8,8 @@ const RadioGroup = Radio.Group
 
 interface InterfaceListProps {
     selectedMenuKey: string
+    articlesFilter: string
+    asyncFilterArticles: (filter: string) => any
 }
 
 interface InterfaceListState {
@@ -25,6 +27,10 @@ class AppList extends Component<InterfaceListProps> {
     public componentWillReceiveProps() {
         // console.log(arguments, 22)
     }
+    public handleRadioChange = (e: any) => {
+        const target = e.target
+        this.props.asyncFilterArticles(target.value)
+    }
     public render() {
         return (
             <div className="app-list">
@@ -34,10 +40,10 @@ class AppList extends Component<InterfaceListProps> {
                         this.props.selectedMenuKey !== 'STARRED_ITEMS' &&
                         this.props.selectedMenuKey !== 'UNREAD_ITEMS' &&
                         <div className="list-header-right">
-                            <RadioGroup defaultValue="a" size="small">
-                                <RadioButton value="a"><Icon type="star" theme="filled" /></RadioButton>
-                                <RadioButton value="b"><Icon type="file-text" theme="filled" /></RadioButton>
-                                <RadioButton value="c"><Icon type="profile" theme="filled" /></RadioButton>
+                            <RadioGroup defaultValue={this.props.articlesFilter} size="small" onChange={this.handleRadioChange}>
+                                <RadioButton value="STARRED"><Icon type="star" theme="filled" /></RadioButton>
+                                <RadioButton value="UNREAD"><Icon type="file-text" theme="filled" /></RadioButton>
+                                <RadioButton value="ALL"><Icon type="profile" theme="filled" /></RadioButton>
                             </RadioGroup>
                         </div>
                     }

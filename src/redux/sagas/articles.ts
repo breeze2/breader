@@ -1,7 +1,7 @@
 import { all, call, put, select, takeEvery, takeLatest } from 'redux-saga/effects'
 import Logic from '../../logic'
 import { ArticlesActionTypes, InterfaceAction } from '../actions'
-import { getMenu } from "./selectors"
+import { getArticles, getMenu } from "./selectors"
 
 export function* fetchArticlesSaga(action: InterfaceAction) {
     try {
@@ -20,6 +20,15 @@ export function* fetchArticlesSaga(action: InterfaceAction) {
             default:
                 query.feed_id = parseInt(menuKey, 10)
                 break
+        }
+        if (query.feed_id) {
+            const articlesStore = yield select(getArticles)
+            const filter = articlesStore.get('filter')
+            if (filter === 'STARRED') {
+                query.is_starred = 1
+            } else if (filter === 'UNREAD') {
+                query.is_unread = 1
+            }
         }
         const articles = yield call(Logic.getArticles, query)
         yield put({ type: ArticlesActionTypes.SET_ARTICLES, payload: { articles: articles || [] } })
@@ -46,14 +55,27 @@ export function* selectAndReadArticlesSaga(action: InterfaceAction) {
         ])
     } catch (e) {
         console.error(e)
+    }
+}
+
+export function* filterArticlesSaga(action: InterfaceAction) {
+    try {
+        yield put({ type: ArticlesActionTypes.SET_ARTICLES_FILTER, payload: action.payload })
+        yield put({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null })
+    } catch (e) {
+        console.error(e)
         // yield put({ type: "USER_FETCH_FAILED", message: e.message })
     }
 }
 
 export function* watchFetchArticles() {
-    yield takeEvery(ArticlesActionTypes.ASYNC_FETCH_ARTICLES, fetchArticlesSaga)
+    yield takeLatest(ArticlesActionTypes.ASYNC_FETCH_ARTICLES, fetchArticlesSaga)
 }
 
 export function* watchSelectAndReadArticles() {
     yield takeEvery(ArticlesActionTypes.ASYNC_SELECT_AND_READ_ARTICLE, selectAndReadArticlesSaga)
+}
+
+export function* watchFilterArticles() {
+    yield takeLatest(ArticlesActionTypes.ASYNC_FILTER_ARTICLES, filterArticlesSaga)
 }

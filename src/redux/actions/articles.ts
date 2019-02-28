@@ -2,36 +2,46 @@ import InterfaceArticle from '../../schemas/InterfaceArticle'
 
 export const ArticlesActionTypes = {
     SET_ARTICLES: 'SET_ARTICLES',
+    SET_ARTICLES_FILTER: 'SET_ARTICLES_FILTER',
     SET_SELECTED_ARTICLE: 'SET_SELECTED_ARTICLE',
     SET_SELECTED_ARTICLE_CONTENT: 'SET_SELECTED_ARTICLE_CONTENT',
 
     ASYNC_FETCH_ARTICLES: 'ASYNC_FETCH_ARTICLES',
+    ASYNC_FILTER_ARTICLES: 'ASYNC_FILTER_ARTICLES',
     ASYNC_SELECT_AND_READ_ARTICLE: 'ASYNC_SELECT_AND_READ_ARTICLE',
 }
 
+export const setArticlesFilterAction = (filter: string) => ({
+    payload: { filter },
+    type: ArticlesActionTypes.SET_ARTICLES_FILTER,
+})
+
 export const setSelectedArticleAction = (articleId: number, articleIndex: number) => ({
     payload: { articleId, articleIndex },
-    type: 'SET_SELECTED_ARTICLE',
+    type: ArticlesActionTypes.SET_SELECTED_ARTICLE,
 })
 
 export const setSelectedArticleContentAction = (articleContent: string) => ({
     payload: { articleContent },
-    type: 'SET_SELECTED_ARTICLE_CONTENT',
+    type: ArticlesActionTypes.SET_SELECTED_ARTICLE_CONTENT,
 })
 
 export const setArticlesAction = (articles: InterfaceArticle[]) => ({
     payload: { articles },
-    type: 'SET_ARTICLES',
+    type: ArticlesActionTypes.SET_ARTICLES,
 })
 
-export const asyncFetchArticlesAction = () => {
-    return ({
-        payload: null,
-        type: 'ASYNC_FETCH_ARTICLES',
-    })
-}
+export const asyncFetchArticlesAction = () => ({
+    payload: null,
+    type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES,
+})
+
+export const asyncFilterArticlesAction = (filter: string) => ({
+    payload: { filter },
+    type: ArticlesActionTypes.ASYNC_FILTER_ARTICLES,
+})
 
 export const asyncSelectAndReadArticlesAction = (articleId: number, articleIndex: number) => ({
     payload: { articleId, articleIndex },
-    type: 'ASYNC_SELECT_AND_READ_ARTICLE',
+    type: ArticlesActionTypes.ASYNC_SELECT_AND_READ_ARTICLE,
 })

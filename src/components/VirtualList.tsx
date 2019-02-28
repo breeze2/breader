@@ -19,7 +19,7 @@ interface InterfaceVirtualListState {
     readItems: any
 }
 
-class VirtualList extends Component<InterfaceVirtualListProps> {
+class VirtualList extends PureComponent<InterfaceVirtualListProps> {
     public vlist: RefObject<VList>
     public state: InterfaceVirtualListState
     public cellCache: CellMeasurerCache

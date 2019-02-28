@@ -10,23 +10,23 @@ export const FeedsActionTypes = {
 
 export const addFeedAction = (feed: InterfaceFeed) => ({
     payload: { feed },
-    type: 'ADD_FEED',
+    type: FeedsActionTypes.ADD_FEED,
 })
 
 export const setFeedsAction = (feeds: InterfaceFeed[]) => ({
     payload: { feeds },
-    type: 'SET_FEEDS',
+    type: FeedsActionTypes.SET_FEEDS,
 })
 
 export const asyncFetchFeedsAction = () => {
     return ({
     payload: null,
-    type: 'ASYNC_FETCH_FEEDS',
+    type: FeedsActionTypes.ASYNC_FETCH_FEEDS,
 })}
 
 export const asyncParseFeedAction = (feedUrl: string) => {
     return ({
         payload: { feedUrl },
-        type: 'ASYNC_PARSE_FEED',
+        type: FeedsActionTypes.ASYNC_PARSE_FEED,
     })
 }

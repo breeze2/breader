@@ -6,10 +6,10 @@ export const MenuActionTypes = {
 
 export const setSelectedMenuKeyAction = (key: string) => ({
     payload: { key },
-    type: 'SET_SELECTED_MENU_KEY',
+    type: MenuActionTypes.SET_SELECTED_MENU_KEY,
 })
 
 export const asyncSelectMenuKeyAction = (key: string) => ({
     payload: { key },
-    type: 'ASYNC_SELECT_MENU_KEY',
+    type: MenuActionTypes.ASYNC_SELECT_MENU_KEY,
 })
