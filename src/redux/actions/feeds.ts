@@ -3,6 +3,8 @@ import InterfaceFeed from '../../schemas/InterfaceFeed'
 export const FeedsActionTypes = {
     ADD_FEED: 'ADD_FEED',
     SET_FEEDS: 'SET_FEEDS',
+    SET_FEEDS_CHANGES: 'SET_FEEDS_CHANGES',
+    SET_FEEDS_UPDATED_AT: 'SET_FEEDS_UPDATED_AT',
     SET_IS_UPDATING_FEEDS: 'SET_IS_UPDATING_FEEDS',
     TIPS_PARSE_INVALID_FEED: 'TIPS_PARSE_INVALID_FEED',
 
@@ -14,6 +16,16 @@ export const FeedsActionTypes = {
 export const addFeedAction = (feed: InterfaceFeed) => ({
     payload: { feed },
     type: FeedsActionTypes.ADD_FEED,
+})
+
+export const setFeedsChangesAction = (changes: number) => ({
+    payload: { changes },
+    type: FeedsActionTypes.SET_FEEDS_CHANGES,
+})
+
+export const setFeedsUpdatedAtAction = (updatedAt: number) => ({
+    payload: { updatedAt },
+    type: FeedsActionTypes.SET_FEEDS_UPDATED_AT,
 })
 
 export const setFeedsAction = (feeds: InterfaceFeed[]) => ({

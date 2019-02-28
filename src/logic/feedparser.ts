@@ -20,7 +20,6 @@ class IconvTransform extends Transform {
         const charset = detectCharacterEncoding(buffer)
         const output = iconv.decode(buffer, charset.encoding)
         this.push(output)
-        console.log(output)
         callback(null)
     }
 }
@@ -36,7 +35,6 @@ function xmlHttpRequest(feedUrl: string, options: any) {
         headers['user-agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36'
         headers.host = u.host
         headers.origin = headers.referer = u.protocol + '//' + u.host + '/'
-
         const o = {
             headers,
             host: u.host,
@@ -81,9 +79,9 @@ const FeedParser = {
             etag: meta.etag,
             favicon: meta.favicon,
             link: meta.link,
-            url: feedUrl,
             summary: meta.summary,
             title: meta.title,
+            url: feedUrl,
         }
     },
     fetchFavicon (favicon: string) {
@@ -120,6 +118,8 @@ const FeedParser = {
                     res.pipe(fp)
                     fp.on('meta', (meta: any) => {
                         meta.etag = res.headers.etag ? res.headers.etag : ''
+                        meta.etag = meta.etag.toString()
+                        meta.etag = meta.etag.slice(0, 2) === "W/" ? meta.etag.slice(2) : meta.etag
                         feed = FeedParser.makeFeed(feedUrl, meta)
                     })
                     fp.on('readable', () => {

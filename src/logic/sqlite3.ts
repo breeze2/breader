@@ -194,17 +194,12 @@ const DB = {
     },
     updateFeed(feedId: number, feed: InterfaceFeed) {
         const time = ~~(Date.now() / 1000)
-        const sql = `update feeds set title = $title, date_time = $date_time, etag = $etag,
-                    description = $description, summary = $summary,
-                    updated_at = $updated_at, deleted_at = $deleted_at
-                    where feed.id = $feed_id`
+        const sql = `update feeds set title = $title, date_time = $date_time, etag = $etag, updated_at = $updated_at, deleted_at = $deleted_at where id = $feed_id`
         const params = {
             $date_time: feed.date_time,
             $deleted_at: feed.deleted_at,
-            $description: feed.description,
             $etag: feed.etag,
             $feed_id: feedId,
-            $summary: feed.summary,
             $title: feed.title,
             $updated_at: time,
         }
@@ -237,10 +232,9 @@ const DB = {
         })
     },
     updateArticle(article: InterfaceArticle) {
-        const sql = `update articles set title = $title, date = $date, time = $time,
+        const sql = `update articles set author = $author, title = $title, date = $date, time = $time,
                 description = $description, summary = $summary, link = $link,
-                created_at = $create_at
-                updated_at = $updated_at
+                created_at = $created_at, updated_at = $updated_at
                 where guid = $guid`
         const params = {
             $author: article.author,

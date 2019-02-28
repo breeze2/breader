@@ -81,11 +81,10 @@ const Logic = {
     },
     updateFeedArticles: async (feed: InterfaceFeed) => {
         try {
-            const feedNarticles: any = await FeedParser.parseFeed(feed.link, '')
+            const feedNarticles: any = await FeedParser.parseFeed(feed.url, feed.etag || '')
             if (!feedNarticles) {
                 return
             }
-            console.log(feedNarticles)
             if (feed.id && feedNarticles.feed && feedNarticles.articles) {
                 DB.updateFeed(feed.id, feedNarticles.feed)
                 const lastDateTime = ~~((new Date(feed.date_time || 0)).getTime() / 1000)

@@ -1,4 +1,4 @@
-import { call, put, select, takeEvery, takeLatest } from 'redux-saga/effects'
+import { all, call, put, select, takeEvery, takeLatest } from 'redux-saga/effects'
 import Logic from '../../logic'
 import InterfaceFeed from '../../schemas/InterfaceFeed'
 import { ArticlesActionTypes, FeedsActionTypes, InterfaceAction } from '../actions'
@@ -36,16 +36,22 @@ export function* updateFeedsSaga(action: InterfaceAction) {
         yield put({type: FeedsActionTypes.SET_IS_UPDATING_FEEDS, payload: { isUpdating: true}})
         const feedsStore = yield select(getFeeds)
         const list = feedsStore.get('list').toArray()
+        let changes = 0
         for (const feed of list) {
             try {
-                console.log(feed)
-                const changes = yield call(Logic.updateFeedArticles, feed)
-                console.log(changes)
+                changes += yield call(Logic.updateFeedArticles, feed)
             } catch (err) {
                 console.error(err)
             }
         }
-
+        yield all([
+            put({ type: FeedsActionTypes.ASYNC_FETCH_FEEDS, payload: null}),
+            put({ type: FeedsActionTypes.SET_FEEDS_CHANGES, payload: { changes } }),
+            put({ type: FeedsActionTypes.SET_FEEDS_UPDATED_AT, payload: { updatedAt: Date.now() }}),
+        ])
+        if (changes > 0) {
+            yield put({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null })
+        }
     } catch (e) {
         console.error(e)
     } finally {

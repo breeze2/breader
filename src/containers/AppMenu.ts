@@ -6,6 +6,8 @@ import { asyncFetchArticlesAction, asyncFetchFeedsAction, asyncParseFeedAction, 
 const mapStateToProps = (store: any, props: any) => {
     return {
         feeds: store.feeds.get('list'),
+        feedsChanges: store.feeds.get('changes'),
+        feedsUpdatedAt: store.feeds.get('updatedAt'),
         invalidFeedsCount: store.feeds.get('invalidCount'),
         isUpdatingFeeds: store.feeds.get('isUpdating'),
         selectedMenuKey: store.menu.get('selectedKey'),

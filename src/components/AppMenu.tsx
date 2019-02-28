@@ -9,6 +9,8 @@ const MenuItem = Menu.Item
 const SubMenu = Menu.SubMenu
 interface InterfaceAppMenuProps {
     feeds: InterfaceFeed[]
+    feedsChanges: number
+    feedsUpdatedAt: number
     invalidFeedsCount: number
     isUpdatingFeeds: boolean
     selectedMenuKey: string
@@ -54,8 +56,10 @@ class AppMenu extends Component<InterfaceAppMenuProps & InjectedIntlProps> {
         }
     }
     public handleUpdateFeedsClick = () => {
-        if(!this.props.isUpdatingFeeds) {
-            this.props.asyncUpdateFeeds()
+        if (this.props.isUpdatingFeeds || this.props.feedsUpdatedAt > Date.now() - 3 * 60 * 60 * 1000) {
+            return Message.success(this.props.intl.formatMessage({ id: 'feedIsUpdated' }))
+        } else {
+            return this.props.asyncUpdateFeeds()
         }
     }
     public handleSelect = (e: any) => {
@@ -68,6 +72,9 @@ class AppMenu extends Component<InterfaceAppMenuProps & InjectedIntlProps> {
     public componentWillReceiveProps (props: any) {
         if (this.props.invalidFeedsCount !== props.invalidFeedsCount) {
             Message.info(this.props.intl.formatMessage({ id: 'unfoundFeed' }))
+        }
+        if (this.props.feedsChanges !== props.feedsChanges && props.feedsChanges > -1) {
+            Message.success(this.props.intl.formatMessage({ id: 'feedIsUpdated' }))
         }
     }
     public render () {
