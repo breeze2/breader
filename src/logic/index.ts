@@ -46,6 +46,14 @@ const Logic = {
             console.error(err)
         }
     },
+    getArticleContent: async (articleId: number) => {
+        try {
+            const articleContent = await DB.getArticleContent(articleId)
+            return articleContent
+        } catch (err) {
+            console.error(err)
+        }
+    },
     getArticles: async (query: any, offset: number = 0, limit: number = 9999) => {
         try {
             const articles = await DB.getArticles(query, offset, limit)
@@ -59,6 +67,14 @@ const Logic = {
             const faviconData = await FeedParser.fetchFavicon(faviconUrl)
             // await DB.setFeedFavicon(feedId as number, 'data:image/x-icon;base64,' + faviconData)
             await DB.setFeedFavicon(feedId, 'data:image/gif;base64,' + faviconData)
+        } catch (err) {
+            console.error(err)
+        }
+    },
+    setArticleIsRead: async (articleId: number) => {
+        try {
+            const changes = await DB.setArticleIsRead(articleId)
+            return changes
         } catch (err) {
             console.error(err)
         }

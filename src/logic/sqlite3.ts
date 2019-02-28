@@ -78,6 +78,32 @@ const DB = {
             })
         })
     },
+    getArticleContent (articleId: number) {
+        const sql = 'select description from articles where id = $id limit 1'
+        const params = { $id: articleId }
+        return new Promise((resolve, reject) => {
+            db.get(sql, params, (err: any, row: any) => {
+                if (err) {
+                    return reject(err)
+                } else {
+                    return resolve(row.description)
+                }
+            })
+        })
+    },
+    setArticleIsRead (articleId: number) {
+        const sql = 'update articles set is_unread = 0 where id = $id'
+        const params = { $id: articleId }
+        return new Promise((resolve, reject) => {
+            db.run(sql, params, function (this: void, err: any) {
+                if (err) {
+                    return reject(err)
+                } else {
+                    return resolve((this as any).changes)
+                }
+            })
+        })
+    },
     getNeedUpdatedFeeds() {
         let time = ~~(Date.now() / 1000)
         time -= 60 * 60 * 6

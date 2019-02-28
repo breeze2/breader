@@ -10,7 +10,7 @@ import Utils from '../utils'
 interface InterfaceVirtualListProps {
     articleId: number
     articles: List<InterfaceArticle>
-    selectArticle: (id: number) => any
+    selectArticle: (id: number, index: number) => any
 }
 
 interface InterfaceVirtualListState {
@@ -53,9 +53,9 @@ class VirtualList extends PureComponent<InterfaceVirtualListProps> {
         // console.log(this.props)
         const readItems = this.state.readItems
         const target = e.target
-        const $listItem = target.closest('.list-item')
+        const $listItem = target.closest('.vlist-item')
         if ($listItem && $listItem.dataset) {
-            this.props.selectArticle(parseInt($listItem.dataset.id, 10))
+            this.props.selectArticle(parseInt($listItem.dataset.id, 10), parseInt($listItem.dataset.index, 10))
             readItems[$listItem.dataset.id] = 1
             this.setState({
                 readItems: { ...readItems },
@@ -125,7 +125,9 @@ class VirtualList extends PureComponent<InterfaceVirtualListProps> {
 
         return (
             <CellMeasurer key={key} cache={this.cellCache} parent={parent} columnIndex={0} rowIndex={index} >
-                <div style={style} className={index === 0 ? 'first-list-item' : ''}>
+                <div style={style}
+                    data-id={article.id} data-index={index}
+                    className={index === 0 ? 'vlist-item first-list-item' : 'vlist-item'}>
                     {article.is_dayfirst && <div className="date-divid">{article.date}</div>}
                     <ListItem author={article.author}
                         guid={article.guid}

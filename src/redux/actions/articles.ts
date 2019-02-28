@@ -1,15 +1,22 @@
 import InterfaceArticle from '../../schemas/InterfaceArticle'
 
 export const ArticlesActionTypes = {
-    SELECT_ARTICLE: 'SELECT_ARTICLE',
     SET_ARTICLES: 'SET_ARTICLES',
+    SET_SELECTED_ARTICLE: 'SET_SELECTED_ARTICLE',
+    SET_SELECTED_ARTICLE_CONTENT: 'SET_SELECTED_ARTICLE_CONTENT',
 
     ASYNC_FETCH_ARTICLES: 'ASYNC_FETCH_ARTICLES',
+    ASYNC_SELECT_AND_READ_ARTICLE: 'ASYNC_SELECT_AND_READ_ARTICLE',
 }
 
-export const selectArticleAction = (articleId: number) => ({
-    payload: { articleId },
-    type: 'SELECT_ARTICLE',
+export const setSelectedArticleAction = (articleId: number, articleIndex: number) => ({
+    payload: { articleId, articleIndex },
+    type: 'SET_SELECTED_ARTICLE',
+})
+
+export const setSelectedArticleContentAction = (articleContent: string) => ({
+    payload: { articleContent },
+    type: 'SET_SELECTED_ARTICLE_CONTENT',
 })
 
 export const setArticlesAction = (articles: InterfaceArticle[]) => ({
@@ -23,3 +30,8 @@ export const asyncFetchArticlesAction = () => {
         type: 'ASYNC_FETCH_ARTICLES',
     })
 }
+
+export const asyncSelectAndReadArticlesAction = (articleId: number, articleIndex: number) => ({
+    payload: { articleId, articleIndex },
+    type: 'ASYNC_SELECT_AND_READ_ARTICLE',
+})

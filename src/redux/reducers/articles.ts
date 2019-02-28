@@ -4,14 +4,18 @@ import { ArticlesActionTypes, InterfaceAction } from '../actions'
 
 const initialArticlesState = Immutable.fromJS({
     list: [],
+    selectedContent: '',
     selectedId: 0,
+    selectedIndex: -1,
 })
 
 let lastDateStr = ''
 const articles = (state = initialArticlesState, action: InterfaceAction) => {
     switch (action.type) {
-        case ArticlesActionTypes.SELECT_ARTICLE:
-            return state.set('selectedId', action.payload.articleId)
+        case ArticlesActionTypes.SET_SELECTED_ARTICLE:
+            return state.set('selectedId', action.payload.articleId).set('selectedIndex', action.payload.articleIndex)
+        case ArticlesActionTypes.SET_SELECTED_ARTICLE_CONTENT:
+            return state.set('selectedContent', action.payload.articleContent)
         case ArticlesActionTypes.SET_ARTICLES:
             lastDateStr = ''
             action.payload.articles.forEach((article: InterfaceArticle) => {
