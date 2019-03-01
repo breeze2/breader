@@ -6,6 +6,7 @@ import createSagaMiddleware from 'redux-saga'
 import RootReducer from './redux/reducers'
 import RootSaga from './redux/sagas'
 
+import AppContent from './layouts/AppContent'
 import AppSider from './layouts/AppSider'
 import { IntlProvider, messages } from './locales'
 import './styles/App.less'
@@ -31,6 +32,7 @@ class App extends Component {
           <div className="app">
             <Layout>
               <AppSider />
+              <AppContent />
               {/* <Layout></Layout> */}
             </Layout>
           </div>
