@@ -16,7 +16,7 @@ function createWindow() {
             nodeIntegration: true,
             preload: path.join(__dirname, './preload/index.js')
         },
-        width: 490,
+        width: 960,
         height: 600,
         titleBarStyle: 'hiddenInset',
         vibrancy: 'dark'
