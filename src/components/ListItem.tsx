@@ -31,21 +31,22 @@ class ListItem<T extends InterfaceListItemProps> extends PureComponent<T> {
         }
     }
     public componentWillReceiveProps(props: any) {
-        console.log(props)
+        // console.log(props)
     }
     public render () {
         const feedTitle = this.props.feedTitle
         const time = this.props.time
         let favicon = ''
         if (this.props.feedId) {
-            favicon = (this.props.feedFavicons.get(this.props.feedId.toString()) as string)
+            favicon = this.props.feedFavicons.get(this.props.feedId + '') || ''
         }
         return (
             <div className={'list-item ' + this.props.className}>
                 <div className="item-sider">
-                    {favicon ? (<Avatar shape="square" size={22} src={favicon} />) : (
+                    {/* {favicon ? (<Avatar shape="square" size={22} src={favicon} />) : (
                         <Avatar shape="square" size={22} >{feedTitle ? feedTitle.substring(0, 1) : ''}</Avatar>
-                    )}
+                    )} */}
+                    <Avatar shape="square" size={22} src={favicon} />
                 </div>
                 <div className="item-main">
                     <div className="item-header">

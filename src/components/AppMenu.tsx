@@ -1,6 +1,8 @@
 import { Avatar, Icon, Menu, message as Message } from 'antd'
+import { Map } from 'immutable'
 import React, { Component } from 'react'
 import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'react-intl'
+import defaultFavicon from '../images/rss.png'
 import InterfaceFeed from '../schemas/InterfaceFeed'
 import '../styles/AppMenu.less'
 import AddFeedModal from './AddFeedModal'
@@ -8,12 +10,14 @@ import AddFeedModal from './AddFeedModal'
 const MenuItem = Menu.Item
 const SubMenu = Menu.SubMenu
 interface InterfaceAppMenuProps {
+    feedFavicons: Map<string, string>
     feeds: InterfaceFeed[]
     feedsChanges: number
     feedsUpdatedAt: number
     invalidFeedsCount: number
     isUpdatingFeeds: boolean
     selectedMenuKey: string
+    setFeedFavicon: (id: number, favicon: string) => any
     asyncFetchArticles: () => any
     asyncFetchFeeds: () => any
     asyncParseFeed: (feedUrl: string) => any
@@ -65,6 +69,12 @@ class AppMenu extends Component<InterfaceAppMenuProps & InjectedIntlProps> {
     public handleSelect = (e: any) => {
         this.props.asyncSelectMenuKey(e.key)
     }
+    public setFeedFaviconDefault = (id: number | undefined) => {
+        if (id) {
+            this.props.setFeedFavicon(id, defaultFavicon)
+        }
+        return true
+    }
     public componentWillMount() {
         this.props.asyncFetchFeeds()
         this.props.asyncFetchArticles()
@@ -104,12 +114,13 @@ class AppMenu extends Component<InterfaceAppMenuProps & InjectedIntlProps> {
                             <FormattedMessage id="menuUnread" />
                         </MenuItem>
                         <SubMenu key="subscriptions" className="feed-list" title={<span><Icon type="folder" /><FormattedMessage id="menuSubscriptions" /></span>}>
-                            {this.props.feeds.map(feed => <MenuItem key={feed.id}>
-                                {feed.favicon ? (<Avatar shape="square" size={22} src={feed.favicon} />) : (
-                                    <Avatar shape="square" size={22} >{(feed.title as string).substring(0, 1)}</Avatar>
-                                )}
-                                <span className="feed-title" title={feed.title}>{feed.title}</span>
-                            </MenuItem>)}
+                            {this.props.feeds.map(feed => {
+                                const favicon = this.props.feedFavicons.get(feed.id + '') || ''
+                                return (<MenuItem key={feed.id}>
+                                    <Avatar shape="square" size={22} src={favicon} onError={() => this.setFeedFaviconDefault(feed.id)}/>
+                                    <span className="feed-title" title={feed.title}>{feed.title}</span>
+                                </MenuItem>)
+                            })}
                         </SubMenu>
                     </Menu>
                 </div>

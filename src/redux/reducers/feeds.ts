@@ -17,12 +17,21 @@ const feeds = (state = initialFeedsState, action: InterfaceAction) => {
     switch (action.type) {
         case FeedsActionTypes.SET_FEEDS_UPDATED_AT:
             return state.set('updatedAt', action.payload.updatedAt)
+
         case FeedsActionTypes.SET_FEEDS_CHANGES:
             return state.set('changes', action.payload.changes)
+
         case FeedsActionTypes.SET_IS_UPDATING_FEEDS:
             return state.set('isUpdating', action.payload.isUpdating)
+
         case FeedsActionTypes.TIPS_PARSE_INVALID_FEED:
             return state.set('invalidCount', state.get('invalidCount') + 1)
+
+        case FeedsActionTypes.SET_FEED_FAVICON:
+            return state.update('favicons', (favicons: Map<string, string>) => {
+                return favicons.set(action.payload.feedId + '', action.payload.favicon)
+            })
+
         case FeedsActionTypes.ADD_FEED:
             const newFeed = action.payload.feed
             return state.update('favicons', (favicons: Map<string, string>) => {

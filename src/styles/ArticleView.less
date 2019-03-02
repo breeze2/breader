@@ -3,11 +3,17 @@
 .article-view {
     -webkit-app-region: drag;
     position: relative;
-    padding: 43px 0 43px 0;
+    padding: 42px 0 42px 0;
     height: 100%;
 
     .view-header {
         .wrapper-header;
+        .anticon {
+            color: @black-text-color;
+            &:hover {
+                color: @black-text-color-light;
+            }
+        }
     }
     .view-header-right {
         .wrapper-hf-right;

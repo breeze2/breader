@@ -5,6 +5,7 @@ export const FeedsActionTypes = {
     SET_FEEDS: 'SET_FEEDS',
     SET_FEEDS_CHANGES: 'SET_FEEDS_CHANGES',
     SET_FEEDS_UPDATED_AT: 'SET_FEEDS_UPDATED_AT',
+    SET_FEED_FAVICON: 'SET_FEED_FAVICON',
     SET_IS_UPDATING_FEEDS: 'SET_IS_UPDATING_FEEDS',
     TIPS_PARSE_INVALID_FEED: 'TIPS_PARSE_INVALID_FEED',
 
@@ -31,6 +32,11 @@ export const setFeedsUpdatedAtAction = (updatedAt: number) => ({
 export const setFeedsAction = (feeds: InterfaceFeed[]) => ({
     payload: { feeds },
     type: FeedsActionTypes.SET_FEEDS,
+})
+
+export const setFeedFaviconAction = (feedId: number, favicon: string) => ({
+    payload: { feedId, favicon },
+    type: FeedsActionTypes.SET_FEED_FAVICON,
 })
 
 export const setIsUpdatingFeedsAction = (isUpdating: boolean) => ({
