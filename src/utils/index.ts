@@ -1,3 +1,5 @@
+import { closeWebView, openWebView } from './electron'
+
 export function debounce<F extends (...params: any[]) => void>(fn: F, delay: number) {
     let timeoutID: number
     const wrapper = function (this: any, ...args: any[]) {
@@ -34,6 +36,9 @@ export function throttle<F extends (...params: any[]) => void>(fn: F, delay: num
 }
 
 const Utils = {
+    closeWebView,
+    openWebView,
+
     debounce,
     throttle,
 }

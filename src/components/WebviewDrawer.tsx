@@ -24,8 +24,11 @@ class WebviewDrawer extends Component<InterfaceWebviewDrawerProps> {
                 onClose={this.props.onClose}
                 width={this.props.width}>
                 <div className="drawer-header">
-                    <div className="drawer-header-left">
-                        <Icon type="close" onClick={this.props.onClose} />
+                    <div className="drawer-header-left" onClick={this.props.onClose} >
+                        <Icon type="close" />
+                    </div>
+                    <div className="drawer-header-right" onClick={this.props.onClose} >
+                        <Icon type="compass" />
                     </div>
                 </div>
                 <div className="drawer-content">
