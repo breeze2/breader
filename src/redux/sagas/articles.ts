@@ -58,6 +58,14 @@ export function* selectAndReadArticlesSaga(action: InterfaceAction) {
     }
 }
 
+export function* starArticleSage(action: InterfaceAction) {
+    try {
+        yield call(Logic.setArticleIsStarred, action.payload.articleId, action.payload.isStarred)
+    } catch (e) {
+        console.error(e)
+    }
+}
+
 export function* filterArticlesSaga(action: InterfaceAction) {
     try {
         yield put({ type: ArticlesActionTypes.SET_ARTICLES_FILTER, payload: action.payload })
@@ -77,4 +85,8 @@ export function* watchSelectAndReadArticles() {
 
 export function* watchFilterArticles() {
     yield takeLatest(ArticlesActionTypes.ASYNC_FILTER_ARTICLES, filterArticlesSaga)
+}
+
+export function* watchStarArticle() {
+    yield takeLatest(ArticlesActionTypes.ASYNC_STAR_ARTICLE, starArticleSage)
 }

@@ -105,6 +105,20 @@ const DB = {
             })
         })
     },
+    setArticleIsStarred(articleId: number, isStarred: boolean) {
+        console.log(isStarred)
+        const sql = 'update articles set is_starred = $is where id = $id'
+        const params = { $id: articleId, $is: isStarred ? 1 : 0 }
+        return new Promise((resolve, reject) => {
+            db.run(sql, params, function (this: void, err: any) {
+                if (err) {
+                    return reject(err)
+                } else {
+                    return resolve((this as any).changes)
+                }
+            })
+        })
+    },
     getNeedUpdatedFeeds() {
         let time = ~~(Date.now() / 1000)
         time -= 60 * 60 * 6

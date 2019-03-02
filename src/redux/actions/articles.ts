@@ -9,6 +9,7 @@ export const ArticlesActionTypes = {
     ASYNC_FETCH_ARTICLES: 'ASYNC_FETCH_ARTICLES',
     ASYNC_FILTER_ARTICLES: 'ASYNC_FILTER_ARTICLES',
     ASYNC_SELECT_AND_READ_ARTICLE: 'ASYNC_SELECT_AND_READ_ARTICLE',
+    ASYNC_STAR_ARTICLE: 'ASYNC_STAR_ARTICLE',
 }
 
 export const setArticlesFilterAction = (filter: string) => ({
@@ -44,4 +45,9 @@ export const asyncFilterArticlesAction = (filter: string) => ({
 export const asyncSelectAndReadArticlesAction = (articleId: number, articleIndex: number) => ({
     payload: { articleId, articleIndex },
     type: ArticlesActionTypes.ASYNC_SELECT_AND_READ_ARTICLE,
+})
+
+export const asyncStarArticleAction = (articleId: number, isStarred: boolean) => ({
+    payload: { articleId, isStarred },
+    type: ArticlesActionTypes.ASYNC_STAR_ARTICLE,
 })

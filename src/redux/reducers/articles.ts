@@ -28,6 +28,9 @@ const articles = (state = initialArticlesState, action: InterfaceAction) => {
                 }
             })
             return state.set('list', List<InterfaceArticle>(action.payload.articles))
+                .set('selectedId', 0)
+                .set('selectedIndex', -1)
+                .set('selectedContent', '')
         default:
             return state
     }

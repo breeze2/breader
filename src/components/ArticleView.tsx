@@ -11,12 +11,15 @@ interface InterfaceArticleViewProps {
     articleIndex: number
     articleId: number
     articles: List<InterfaceArticle>
+    asyncStarArticle: (articleId: number, isStarred: boolean) => any
 }
 
 interface InterfaceArticleViewState {
     hoverLink: string
     isWebviewDrawerVisible: boolean
     webviewDrawerSrc: string,
+    isStarredsMap: any,
+    article?: InterfaceArticle,
 }
 
 class ArticleView extends PureComponent<InterfaceArticleViewProps> {
@@ -28,6 +31,7 @@ class ArticleView extends PureComponent<InterfaceArticleViewProps> {
         super(props)
         this.state = {
             hoverLink: '',
+            isStarredsMap: {},
             isWebviewDrawerVisible: false,
             webviewDrawerSrc: '',
         }
@@ -36,8 +40,27 @@ class ArticleView extends PureComponent<InterfaceArticleViewProps> {
         this._articleContentLinks = []
     }
     public componentWillReceiveProps(props: any) {
-        if (props.articleContent) {
+        if (props.articleContent !== this.props.articleContent) {
             this._parseArticleContent(props.articleContent)
+        }
+        if (props.articleIndex === -1) {
+            return this.setState({
+                article: undefined,
+            })
+        }
+        const article = props.articles.get(props.articleIndex)
+        // TODO
+        if (article) {
+            const map = this.state.isStarredsMap
+            map[article.id] = article.is_starred === 1 ? true : false
+            this.setState({
+                article,
+                isStarredsMap: {...map},
+            })
+        } else {
+            this.setState({
+                article,
+            })
         }
     }
     public componentDidUpdate() {
@@ -58,6 +81,21 @@ class ArticleView extends PureComponent<InterfaceArticleViewProps> {
         }
     }
     public handleStarIconClick = () => {
+        if (this.state.isStarredsMap[this.props.articleId]) {
+            const map = this.state.isStarredsMap
+            map[this.props.articleId] = false
+            this.setState({
+                isStarredsMap: {...map},
+            })
+            this.props.asyncStarArticle(this.props.articleId, false)
+        } else {
+            const map = this.state.isStarredsMap
+            map[this.props.articleId] = true
+            this.setState({
+                isStarredsMap: { ...map },
+            })
+            this.props.asyncStarArticle(this.props.articleId, true)
+        }
     }
     public handleContentClick = (e: any) => {
         const link = this.state.hoverLink
@@ -90,22 +128,28 @@ class ArticleView extends PureComponent<InterfaceArticleViewProps> {
     }
     public render() {
         let viewContent: any
-        if (this.props.articles && this.props.articles.size && this.props.articleIndex > -1) {
-            const article: any = this.props.articles.get(this.props.articleIndex)
-            if (article && article.id === this.props.articleId) {
-                viewContent = (
-                    <div className="view-content" onMouseLeave={this.handleMouseLeave} onClick={this.handleContentClick}>
-                        <div className="article-info" onMouseOver={() => this.handleMouseOverInfo(article.link)}>
-                            <div className="article-date"><p>{article.date}</p></div>
-                            <div className="article-title"><h1>{article.title}</h1></div>
-                            <div className="article-author"><p>{article.author} @ {article.feed_title}</p></div>
-                        </div>
-                        <div className="article-content" onMouseOver={this.handleMouseOverContent}>{' '}</div>
+        let starIcon: any
+
+        if (this.state.article) {
+            const article = this.state.article
+            viewContent = (
+                <div className="view-content" onMouseLeave={this.handleMouseLeave} onClick={this.handleContentClick}>
+                    <div className="article-info" onMouseOver={() => this.handleMouseOverInfo(article.link)}>
+                        <div className="article-date"><p>{article.date}</p></div>
+                        <div className="article-title"><h1>{article.title}</h1></div>
+                        <div className="article-author"><p>{article.author} @ {article.feed_title}</p></div>
                     </div>
-                )
+                    <div className="article-content" onMouseOver={this.handleMouseOverContent}>{' '}</div>
+                </div>
+            )
+            if (this.state.isStarredsMap[(article.id as number)]) {
+                starIcon = (<Icon type="star" theme="filled"
+                    onClick={this.handleStarIconClick} />)
+            } else {
+                starIcon = (<Icon type="star" theme="outlined"
+                    onClick={this.handleStarIconClick} />)
             }
-        }
-        if (!viewContent) {
+        } else {
             viewContent = (
                 <div className="view-content">
                     <div style={{'marginTop': '128px'}}>
@@ -113,12 +157,13 @@ class ArticleView extends PureComponent<InterfaceArticleViewProps> {
                     </div>
                 </div>
             )
+            starIcon = null
         }
         return (
             <div className="article-view" >
                 <div className="view-header">
                     <div className="view-header-right">
-                        <Icon type="star" onClick={this.handleStarIconClick} />
+                        {starIcon}
                     </div>
                 </div>
                 {viewContent}

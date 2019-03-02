@@ -77,6 +77,14 @@ const Logic = {
             console.error(err)
         }
     },
+    setArticleIsStarred: async (articleId: number, isStarred: boolean) => {
+        try {
+            const changes = await DB.setArticleIsStarred(articleId, isStarred)
+            return changes
+        } catch (err) {
+            console.error(err)
+        }
+    },
     updateFeedArticles: async (feed: InterfaceFeed) => {
         try {
             const feedNarticles: any = await FeedParser.parseFeed(feed.url, feed.etag || '')
