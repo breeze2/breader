@@ -10,17 +10,13 @@
     flex: 1 1 auto;
 
     .list-header {
-        background-color: @beige-background-color;
-        position: absolute;
-        height: 42px;
-        right: 0;
-        left: 0;
-        top: 0;
+        .wrapper-header;
+        border-bottom: none;
+        padding: 0;
     }
     .list-header-right {
-        float: right;
+        .wrapper-hf-right;
         .ant-radio-group {
-            margin-top: 8px;
             margin-right: 8px;
         }
         .ant-radio-group-small .ant-radio-button-wrapper {
@@ -53,27 +49,17 @@
         overflow-y: scroll;
     }
     .list-footer {
-        border-top: 0.5px solid #ededed;
-        position: absolute;
-        height: 42px;
-        bottom: 0;
-        right: 0;
-        left: 0;
-
-        .anticon {
-            cursor: pointer;
-            font-size: 16px;
-        }
+        .wrapper-footer;
     }
     .list-footer-left {
-        float: left;
+        .wrapper-hf-left;
         .anticon {
             margin-top: 13px;
             margin-left: 16px;
         }
     }
     .list-footer-right {
-        float: right;
+        .wrapper-hf-right;
         .anticon {
             margin-top: 13px;
             margin-right: 16px;

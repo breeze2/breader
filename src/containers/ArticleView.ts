@@ -6,6 +6,7 @@ const mapStateToProps = (store: any, props: any) => {
     return {
         articleContent: store.articles.get('selectedContent'),
         articleIndex: store.articles.get('selectedIndex'),
+        articleId: store.articles.get('selectedId'),
         articles: store.articles.get('list'),
     }
 }
