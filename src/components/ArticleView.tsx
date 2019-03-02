@@ -61,7 +61,6 @@ class ArticleView extends PureComponent<InterfaceArticleViewProps> {
     }
     public handleContentClick = (e: any) => {
         const link = this.state.hoverLink
-        // const view = document.querySelector('.view-content')
         if (link) {
             this.setState({
                 isWebviewDrawerVisible: true,
@@ -70,7 +69,7 @@ class ArticleView extends PureComponent<InterfaceArticleViewProps> {
         }
     }
     public handelWebviewClose = (e: any) => {
-        this.setState({ isWebviewDrawerVisible: false, webviewDrawerSrc: '' })
+        this.setState({ isWebviewDrawerVisible: false })
     }
     public handleMouseLeave = () => {
         this.setState({hoverLink: ''})
@@ -141,7 +140,7 @@ class ArticleView extends PureComponent<InterfaceArticleViewProps> {
         links.forEach((link, i) => {
             this._articleContentLinks.push(link.href)
             link.dataset.index = i + ''
-            link.href = 'javascript:void;'
+            link.href = 'javascript:void(0);'
         })
         this._articleContentElement = div
         this._articleContentIsAppended = false
