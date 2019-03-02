@@ -4,7 +4,6 @@ const path = require('path')
 const url = require('url')
 const isDev = require('electron-is-dev')
 const { default: installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } = require('electron-devtools-installer')
-const { initIpcMain, unsetIpcMain } = require('./main')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -39,11 +38,8 @@ function createWindow() {
         // Dereference the window object, usually you would store windows
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
-        unsetIpcMain()
         mainWindow = null
     })
-
-    initIpcMain(mainWindow)
 
     isDev && installExtension(REACT_DEVELOPER_TOOLS)
         .then((name) => console.log(`Added Extension:  ${name}`))

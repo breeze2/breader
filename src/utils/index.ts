@@ -1,4 +1,4 @@
-import { closeWebView, openWebView } from './electron'
+import { openExternalUrl } from './electron'
 
 export function debounce<F extends (...params: any[]) => void>(fn: F, delay: number) {
     let timeoutID: number
@@ -36,11 +36,10 @@ export function throttle<F extends (...params: any[]) => void>(fn: F, delay: num
 }
 
 const Utils = {
-    closeWebView,
-    openWebView,
-
     debounce,
     throttle,
+
+    openExternalUrl,
 }
 
 export default Utils

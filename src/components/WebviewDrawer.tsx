@@ -1,6 +1,7 @@
 import { Drawer, Icon } from 'antd'
 import React, { Component } from 'react'
 import '../styles/WebviewDrawer.less'
+import Utils from '../utils'
 
 interface InterfaceWebviewDrawerProps {
     visible: boolean
@@ -16,6 +17,11 @@ class WebviewDrawer extends Component<InterfaceWebviewDrawerProps> {
     public constructor(props: any) {
         super(props)
     }
+    public handleCompassClick = () => {
+        if (this.props.src) {
+            Utils.openExternalUrl(this.props.src)
+        }
+    }
     public render() {
         return (
             <Drawer className="webview-drawer"
@@ -27,7 +33,7 @@ class WebviewDrawer extends Component<InterfaceWebviewDrawerProps> {
                     <div className="drawer-header-left" onClick={this.props.onClose} >
                         <Icon type="close" />
                     </div>
-                    <div className="drawer-header-right" onClick={this.props.onClose} >
+                    <div className="drawer-header-right" onClick={this.handleCompassClick} >
                         <Icon type="compass" />
                     </div>
                 </div>
