@@ -1,5 +1,5 @@
 import { Affix, Empty } from 'antd'
-import { List } from 'immutable'
+import { List, Map } from 'immutable'
 import React, { Component, PureComponent, RefObject } from 'react'
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List as VList, WindowScroller } from 'react-virtualized'
 import ListItem from '../containers/ListItem'
@@ -55,7 +55,6 @@ class VirtualList extends PureComponent<InterfaceVirtualListProps> {
     //     console.log(arguments, 33)
     // }
     public handleVirtualListClick = (e: any) => {
-        // console.log(this.props)
         const readItems = this.state.readItems
         const target = e.target
         const $listItem = target.closest('.vlist-item')
@@ -111,7 +110,6 @@ class VirtualList extends PureComponent<InterfaceVirtualListProps> {
                     renderStartDate: startArticle.date,
                 })
             }
-            // console.log(vlist.Grid, startIndex)
         }
     }
     private _noRowsRenderer () {
@@ -127,7 +125,6 @@ class VirtualList extends PureComponent<InterfaceVirtualListProps> {
         const key = info.key
         const style = info.style
         const article = (this.props.articles.get(index) as InterfaceArticle)
-
         return (
             <CellMeasurer key={key} cache={this.cellCache} parent={parent} columnIndex={0} rowIndex={index} >
                 <div style={style}

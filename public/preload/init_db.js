@@ -49,7 +49,7 @@ function initSqlite3 () {
                     deleted_at INTEGER DEFAULT NULL,
                     updated_at INTEGER DEFAULT NULL
                 );
-                CREATE UNIQUE INDEX IF NOT EXISTS link ON articles(link);
+                CREATE UNIQUE INDEX IF NOT EXISTS link ON articles(url);
                 CREATE UNIQUE INDEX IF NOT EXISTS guid ON articles(guid);
                 CREATE INDEX IF NOT EXISTS feed_id ON articles(feed_id);
                 CREATE INDEX IF NOT EXISTS created_at ON articles(created_at);

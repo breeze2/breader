@@ -7,7 +7,7 @@ const Logic = {
         try {
             const isExists: any = await DB.isFeedExists(feedUrl, true)
             if (isExists && !isExists.deleted_at) {
-                return
+                return 'EXISTS'
             }
             const feedNarticles = await FeedParser.parseFeed(feedUrl, '')
             if (!feedNarticles) {
@@ -26,10 +26,8 @@ const Logic = {
             } else {
                 feedId = await DB.createFeed(feed)
             }
-
-            const faviconUrl = feed.favicon || FeedParser.makeFaviconUrl(feed.link)
-            Logic.saveFeedFavicon(feedId as number, faviconUrl)
-
+            // const faviconUrl = feed.favicon || FeedParser.makeFaviconUrl(feed.link)
+            // Logic.saveFeedFavicon(feedId as number, faviconUrl)
             DB.saveArticles(articles, feedId, lastDateTime)
 
             feed.id = feedId

@@ -17,6 +17,9 @@ export function* parseFeedSaga(action: InterfaceAction) {
     try {
         const feed = yield call(Logic.createFeed, action.payload.feedUrl)
         if (feed) {
+            if (feed === 'EXISTS') {
+                return
+            }
             yield put({ type: FeedsActionTypes.ADD_FEED, payload: { feed } })
             const menuStore = yield select(getMenu)
             const menuKey = menuStore.get('selectedKey')

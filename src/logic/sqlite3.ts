@@ -139,8 +139,8 @@ const DB = {
         })
     },
     isFeedExists(feedUrl: string, really = false) {
-        const sql = really ? `select * from feeds where link = ? limit 1;` :
-            `select * from feeds where link = ? and deleted_at is null limit 1;`
+        const sql = really ? `select * from feeds where url = ? limit 1;` :
+            `select * from feeds where url = ? and deleted_at is null limit 1;`
         const params = [feedUrl]
         return new Promise((resolve, reject) => {
             db.get(sql, params, (err: any, row: any) => {

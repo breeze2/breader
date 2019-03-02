@@ -10,6 +10,7 @@ export interface InterfaceListItemProps {
     feedFavicons: Map<string, string>
     author?: string
     className?: string
+    favicon?: string 
     key?: string | number
     style?: any
     guid: string
@@ -28,6 +29,9 @@ class ListItem<T extends InterfaceListItemProps> extends PureComponent<T> {
         this.state = {
             guid: this.props.guid,
         }
+    }
+    public componentWillReceiveProps(props: any) {
+        console.log(props)
     }
     public render () {
         const feedTitle = this.props.feedTitle

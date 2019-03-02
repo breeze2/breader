@@ -25,8 +25,8 @@ const feeds = (state = initialFeedsState, action: InterfaceAction) => {
             return state.set('invalidCount', state.get('invalidCount') + 1)
         case FeedsActionTypes.ADD_FEED:
             const newFeed = action.payload.feed
-            return state.update('favicons', (favicons: Map<number, string>) => {
-                return favicons.set(newFeed.id, newFeed)
+            return state.update('favicons', (favicons: Map<string, string>) => {
+                return favicons.set(newFeed.id + '', newFeed.favicon)
             }).update('list', (list: List<InterfaceFeed>) => {
                 return list.push(newFeed)
             })

@@ -77,7 +77,7 @@ const FeedParser = {
             date_time: meta.date.toString(),
             description: meta.description,
             etag: meta.etag,
-            favicon: meta.favicon,
+            favicon: meta.favicon ? meta.favicon : FeedParser.makeFaviconUrl(meta.link),
             link: meta.link,
             summary: meta.summary,
             title: meta.title,
