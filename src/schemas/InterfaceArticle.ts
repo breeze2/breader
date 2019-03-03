@@ -12,6 +12,7 @@ export default interface InterfaceArtilce {
     guid: string
     // image?: InterfaceFeedImage
     id?: number
+    index?: number
     is_starred?: number
     is_unread?: number
     is_dayfirst?: boolean

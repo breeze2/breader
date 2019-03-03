@@ -11,6 +11,7 @@ interface InterfaceVirtualListProps {
     articleId: number
     articles: List<InterfaceArticle>
     selectArticle: (id: number, index: number) => any
+    scrollToIndex?: number
 }
 
 interface InterfaceVirtualListState {
@@ -46,6 +47,22 @@ class VirtualList extends PureComponent<InterfaceVirtualListProps> {
                 defaultHeight: 80,
                 fixedWidth: true,
             })
+        }
+        if (props.scrollToIndex !== undefined && props.scrollToIndex !== undefined &&
+            props.scrollToIndex > -1 && this.props.scrollToIndex !== props.scrollToIndex) {
+            const vlist = this.vlist.current
+            const index = props.scrollToIndex
+            if (vlist) {
+                vlist.scrollToRow(props.scrollToIndex + 3)
+                setTimeout(() => {
+                    const items = document.querySelectorAll('.vlist-item')
+                    items.forEach((item: any) => {
+                        if (item.dataset.index === index || item.dataset.index === index + '') {
+                            item.click()
+                        }
+                    })
+                }, 200)
+            }
         }
     }
     // public componentWillUpdate() {

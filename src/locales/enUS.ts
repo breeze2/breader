@@ -5,10 +5,12 @@ const enUS = {
     feedIsUpdated: 'Feeds is Updated',
     feedUrl: 'Feed Url',
     invalidFeedUrl: 'Invalid Feed Url',
+    keywords: 'Keywords',
     menuAllItems: 'All Items',
     menuStarred: 'Starred',
     menuSubscriptions: 'Subscriptions',
     menuUnread: 'Unread',
+    noMatched: 'No matched',
     title: 'Breader',
     unfoundFeed: 'Unfound Feed',
 }

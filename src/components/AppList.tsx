@@ -1,6 +1,7 @@
 import { Icon, message as Message, Modal, Radio } from 'antd'
 import React, { Component } from 'react'
 import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'react-intl'
+import SearchArticleModal from '../containers/SearchArticleModal'
 import VirtualList from '../containers/VirtualList'
 import '../styles/AppList.less'
 
@@ -17,20 +18,35 @@ interface InterfaceListProps {
 }
 
 interface InterfaceListState {
-    // dividingDate: string
+    isSearchArticleModalVisible: boolean
+    chooseItemIndex: number
 }
 
 class AppList extends Component<InterfaceListProps & InjectedIntlProps> {
-    // public state: InterfaceListState
     public static propTypes: React.ValidationMap<any> = {
         intl: intlShape.isRequired,
     }
+    public state: InterfaceListState
     public constructor(props: any) {
         super(props)
+        this.state = {
+            chooseItemIndex: -1,
+            isSearchArticleModalVisible: false,
+        }
     }
     public handleRadioChange = (e: any) => {
         const target = e.target
         this.props.asyncFilterArticles(target.value)
+    }
+    public handleSearchClick = () => {
+        this.setState({
+            isSearchArticleModalVisible: true,
+        })
+    }
+    public handleSearchCancel = () => {
+        this.setState({
+            isSearchArticleModalVisible: false,
+        })
     }
     public handleCheckClick = (e: any) => {
         Confirm({
@@ -39,6 +55,16 @@ class AppList extends Component<InterfaceListProps & InjectedIntlProps> {
             },
             title: (this.props.intl.formatMessage({ id: 'doYouWantSetAllArticlesBeRead' })),
         })
+    }
+    public handleSearchItemChoose = (index: number) => {
+        this.setState({
+            isSearchArticleModalVisible: false,
+        })
+        if (index > -1 && index !== this.state.chooseItemIndex) {
+            this.setState({
+                chooseItemIndex: index,
+            })
+        }
     }
     public componentWillReceiveProps(props: any) {
         if (props.allArticlesReadAt > 0 && props.allArticlesReadAt > this.props.allArticlesReadAt) {
@@ -63,18 +89,20 @@ class AppList extends Component<InterfaceListProps & InjectedIntlProps> {
                     }
                 </div>
                 <div className="list-content">
-                    <VirtualList />
+                    <VirtualList scrollToIndex={this.state.chooseItemIndex} />
                 </div>
                 <div className="list-footer">
                     <div className="list-footer-left">
                         <Icon type="check-circle" theme="filled" className="check-all" onClick={this.handleCheckClick} />
                     </div>
                     <div className="list-footer-right">
-                        <Icon type="search" className="search-item" />
+                        <Icon type="search" className="search-item" onClick={this.handleSearchClick} />
                         {/* <Icon type="right" className="show-content" /> */}
                     </div>
                 </div>
-                <Modal  />
+                <SearchArticleModal visible={this.state.isSearchArticleModalVisible}
+                    onCancel={this.handleSearchCancel}
+                    onItemChoose={this.handleSearchItemChoose} />
             </div>
         )
     }
