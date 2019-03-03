@@ -58,9 +58,21 @@ export function* selectAndReadArticlesSaga(action: InterfaceAction) {
     }
 }
 
-export function* starArticleSage(action: InterfaceAction) {
+export function* starArticleSaga(action: InterfaceAction) {
     try {
         yield call(Logic.setArticleIsStarred, action.payload.articleId, action.payload.isStarred)
+    } catch (e) {
+        console.error(e)
+    }
+}
+
+export function* setAllArticlesReadSaga (action: InterfaceAction) {
+    try {
+        const changes = yield call(Logic.setAllAriclesIsRead)
+        if (changes) {
+            yield put({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null })
+        }
+        yield put({ type: ArticlesActionTypes.SET_ALL_ARTICLES_READ_AT, payload: { allReadAt: Date.now() }})
     } catch (e) {
         console.error(e)
     }
@@ -88,5 +100,9 @@ export function* watchFilterArticles() {
 }
 
 export function* watchStarArticle() {
-    yield takeLatest(ArticlesActionTypes.ASYNC_STAR_ARTICLE, starArticleSage)
+    yield takeLatest(ArticlesActionTypes.ASYNC_STAR_ARTICLE, starArticleSaga)
+}
+
+export function* watchSetAllArticlesRead() {
+    yield takeLatest(ArticlesActionTypes.ASYNC_SET_ALL_ARTICLES_READ, setAllArticlesReadSaga)
 }

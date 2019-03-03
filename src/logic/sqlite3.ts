@@ -105,9 +105,21 @@ const DB = {
             })
         })
     },
+    setAllAriclesIsRead() {
+        const sql = 'update articles set is_unread = 0 where is_unread = 1;'
+        const params = {}
+        return new Promise((resolve, reject) => {
+            db.run(sql, params, function (this: void, err: any) {
+                if (err) {
+                    return reject(err)
+                } else {
+                    return resolve((this as any).changes)
+                }
+            })
+        })
+    },
     setArticleIsStarred(articleId: number, isStarred: boolean) {
-        console.log(isStarred)
-        const sql = 'update articles set is_starred = $is where id = $id'
+        const sql = 'update articles set is_starred = $is where id = $id;'
         const params = { $id: articleId, $is: isStarred ? 1 : 0 }
         return new Promise((resolve, reject) => {
             db.run(sql, params, function (this: void, err: any) {

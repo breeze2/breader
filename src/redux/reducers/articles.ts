@@ -3,6 +3,7 @@ import InterfaceArticle from '../../schemas/InterfaceArticle'
 import { ArticlesActionTypes, InterfaceAction } from '../actions'
 
 const initialArticlesState = Immutable.fromJS({
+    allReadAt: 0,
     filter: 'ALL',
     list: [],
     selectedContent: '',
@@ -13,6 +14,8 @@ const initialArticlesState = Immutable.fromJS({
 let lastDateStr = ''
 const articles = (state = initialArticlesState, action: InterfaceAction) => {
     switch (action.type) {
+        case ArticlesActionTypes.SET_ALL_ARTICLES_READ_AT:
+            return state.set('allReadAt', action.payload.allReadAt)
         case ArticlesActionTypes.SET_SELECTED_ARTICLE:
             return state.set('selectedId', action.payload.articleId).set('selectedIndex', action.payload.articleIndex)
         case ArticlesActionTypes.SET_ARTICLES_FILTER:

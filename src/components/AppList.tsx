@@ -1,29 +1,49 @@
-import { Icon, Radio } from 'antd'
+import { Icon, message as Message, Modal, Radio } from 'antd'
 import React, { Component } from 'react'
+import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'react-intl'
 import VirtualList from '../containers/VirtualList'
 import '../styles/AppList.less'
 
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
+const Confirm = Modal.confirm
 
 interface InterfaceListProps {
-    selectedMenuKey: string
+    allArticlesReadAt: number
     articlesFilter: string
+    selectedMenuKey: string
     asyncFilterArticles: (filter: string) => any
+    asyncSetAllArticlesRead: () => any
 }
 
 interface InterfaceListState {
     // dividingDate: string
 }
 
-class AppList extends Component<InterfaceListProps> {
+class AppList extends Component<InterfaceListProps & InjectedIntlProps> {
     // public state: InterfaceListState
+    public static propTypes: React.ValidationMap<any> = {
+        intl: intlShape.isRequired,
+    }
     public constructor(props: any) {
         super(props)
     }
     public handleRadioChange = (e: any) => {
         const target = e.target
         this.props.asyncFilterArticles(target.value)
+    }
+    public handleCheckClick = (e: any) => {
+        Confirm({
+            onOk: () => {
+                this.props.asyncSetAllArticlesRead()
+            },
+            title: (this.props.intl.formatMessage({ id: 'doYouWantSetAllArticlesBeRead' })),
+        })
+    }
+    public componentWillReceiveProps(props: any) {
+        if (props.allArticlesReadAt > 0 && props.allArticlesReadAt > this.props.allArticlesReadAt) {
+            Message.success(this.props.intl.formatMessage({ id: 'allArticlesAreReadNow' }))
+        }
     }
     public render() {
         return (
@@ -47,16 +67,17 @@ class AppList extends Component<InterfaceListProps> {
                 </div>
                 <div className="list-footer">
                     <div className="list-footer-left">
-                        <Icon type="check-circle" theme="filled" className="check-all" />
+                        <Icon type="check-circle" theme="filled" className="check-all" onClick={this.handleCheckClick} />
                     </div>
                     <div className="list-footer-right">
                         <Icon type="search" className="search-item" />
                         {/* <Icon type="right" className="show-content" /> */}
                     </div>
                 </div>
+                <Modal  />
             </div>
         )
     }
 }
 
-export default AppList
+export default injectIntl(AppList)

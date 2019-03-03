@@ -1,6 +1,7 @@
 import InterfaceArticle from '../../schemas/InterfaceArticle'
 
 export const ArticlesActionTypes = {
+    SET_ALL_ARTICLES_READ_AT: 'SET_ALL_ARTICLES_READ_AT',
     SET_ARTICLES: 'SET_ARTICLES',
     SET_ARTICLES_FILTER: 'SET_ARTICLES_FILTER',
     SET_SELECTED_ARTICLE: 'SET_SELECTED_ARTICLE',
@@ -9,8 +10,14 @@ export const ArticlesActionTypes = {
     ASYNC_FETCH_ARTICLES: 'ASYNC_FETCH_ARTICLES',
     ASYNC_FILTER_ARTICLES: 'ASYNC_FILTER_ARTICLES',
     ASYNC_SELECT_AND_READ_ARTICLE: 'ASYNC_SELECT_AND_READ_ARTICLE',
+    ASYNC_SET_ALL_ARTICLES_READ: 'ASYNC_SET_ALL_ARTICLES_READ',
     ASYNC_STAR_ARTICLE: 'ASYNC_STAR_ARTICLE',
 }
+
+export const setAllArticlesReadAtAction = (allReadAt: number) => ({
+    payload: { allReadAt },
+    type: ArticlesActionTypes.SET_ALL_ARTICLES_READ_AT,
+})
 
 export const setArticlesFilterAction = (filter: string) => ({
     payload: { filter },
@@ -50,4 +57,9 @@ export const asyncSelectAndReadArticlesAction = (articleId: number, articleIndex
 export const asyncStarArticleAction = (articleId: number, isStarred: boolean) => ({
     payload: { articleId, isStarred },
     type: ArticlesActionTypes.ASYNC_STAR_ARTICLE,
+})
+
+export const asyncSetAllArticlesReadAction = () => ({
+    payload: null,
+    type: ArticlesActionTypes.ASYNC_SET_ALL_ARTICLES_READ,
 })

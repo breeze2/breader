@@ -167,7 +167,7 @@ class ArticleView extends PureComponent<InterfaceArticleViewProps> {
                     </div>
                 </div>
                 {viewContent}
-                <div className="view-footer"><p>{this.state.hoverLink}</p></div>
+                <div className="view-footer"><p>{this.state.hoverLink ? 'Open ' + this.state.hoverLink : ''}</p></div>
                 <WebviewDrawer width={'calc(100vw - 490px)'} onClose={this.handelWebviewClose} visible={this.state.isWebviewDrawerVisible} src={this.state.webviewDrawerSrc} />
             </div>
         )
@@ -186,6 +186,11 @@ class ArticleView extends PureComponent<InterfaceArticleViewProps> {
             this._articleContentLinks.push(link.href)
             link.dataset.index = i + ''
             link.href = 'javascript:void(0);'
+        })
+
+        const frames = div.querySelectorAll('iframe')
+        frames.forEach((frame) => {
+            frame.setAttribute('sandbox', '')
         })
         this._articleContentElement = div
         this._articleContentIsAppended = false
