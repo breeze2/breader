@@ -11,10 +11,13 @@ import AppSider from './layouts/AppSider'
 import { IntlProvider, messages } from './locales'
 import './styles/App.less'
 
+const sagaMiddleware = createSagaMiddleware()
+// const store = createStore(RootReducer, applyMiddleware(sagaMiddleware))
+
 // import { composeWithDevTools } from 'redux-devtools-extension'
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || (window as any).compose
-const sagaMiddleware = createSagaMiddleware()
-const store = createStore(RootReducer, composeEnhancers(applyMiddleware(sagaMiddleware)))
+const store = composeEnhancers ? createStore(RootReducer, composeEnhancers(applyMiddleware(sagaMiddleware))) :
+  createStore(RootReducer, applyMiddleware(sagaMiddleware))
 
 sagaMiddleware.run(RootSaga)
 

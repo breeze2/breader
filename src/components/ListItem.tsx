@@ -10,7 +10,7 @@ export interface InterfaceListItemProps {
     feedFavicons: Map<string, string>
     author?: string
     className?: string
-    favicon?: string 
+    favicon?: string
     key?: string | number
     style?: any
     guid: string

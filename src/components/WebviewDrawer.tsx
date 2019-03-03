@@ -45,7 +45,6 @@ class WebviewDrawer extends Component<InterfaceWebviewDrawerProps> {
         }, 10 * 1000)
     }
     public makeWebView(url: string) {
-        console.log(111111, this.webview)
         if (this.webview) {
             this.webview.src = url
         } else {

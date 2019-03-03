@@ -16,6 +16,7 @@
     "babel-plugin-import": "^1.11.0",
     "customize-cra": "^0.2.11",
     "detect-character-encoding": "^0.7.0",
+    "devtron": "^1.4.0",
     "electron-is-dev": "^1.0.1",
     "feedparser": "^2.2.9",
     "iconv-lite": "^0.4.24",
@@ -75,8 +76,10 @@
   },
   "build": {
     "appId": "io.github.breeze2.breader",
+    "npmRebuild": false,
     "mac": {
-      "category": "news"
+      "category": "news",
+      "icon": "build/icon.png"
     },
     "files": [
       "build/**/*"
