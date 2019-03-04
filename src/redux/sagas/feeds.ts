@@ -35,12 +35,9 @@ export function* parseFeedSaga(action: InterfaceAction) {
 }
 
 export function* deleteFeedsSaga(action: InterfaceAction) {
-    console.log(action.payload.feedIds)
     try {
         if (action.payload.feedIds.length > 0) {
-            console.log(action.payload.feedIds)
             const changes = yield call(Logic.deleteFeeds, action.payload.feedIds)
-            console.log(changes)
             if (changes) {
                 yield put({ type: FeedsActionTypes.ASYNC_FETCH_FEEDS, payload: null })
                 yield put({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null })
