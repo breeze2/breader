@@ -1,7 +1,7 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
-const isDev = require('electron-is-dev') // && false
+const isDev = require('electron-is-dev') && false
 require('./main')
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -31,7 +31,7 @@ function createWindow() {
     }
 
     // Open the DevTools.
-    // mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools()
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function () {

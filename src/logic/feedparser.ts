@@ -3,7 +3,7 @@ const http = (window as any).require('http')
 const https = (window as any).require('https')
 const url = (window as any).require('url')
 const iconv = (window as any).require('iconv-lite')
-const detectCharacterEncoding = (window as any).require('detect-character-encoding')
+const chardet = (window as any).require('chardet')
 const { Transform } = (window as any).require('stream')
 const Buffer = (window as any).Buffer
 import InterfaceFeed from '../schemas/InterfaceFeed'
@@ -17,8 +17,8 @@ class IconvTransform extends Transform {
     }
     private _flush(callback: ((err: any) => any)) {
         const buffer = Buffer.from(this.temp)
-        const charset = detectCharacterEncoding(buffer)
-        const output = iconv.decode(buffer, charset.encoding)
+        const charset = chardet.detect(buffer)
+        const output = iconv.decode(buffer, charset)
         this.push(output)
         callback(null)
     }
