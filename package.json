@@ -83,7 +83,7 @@
     },
     "win": {
       "icon": "build/icon.png",
-      "target": "nins"
+      "target": "nsis"
     },
     "nsis": {
       "allowToChangeInstallationDirectory": true,
