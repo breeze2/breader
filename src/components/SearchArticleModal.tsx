@@ -8,6 +8,8 @@ import Utils from '../utils'
 
 import '../styles/SearchArticleModal.less'
 
+const Search = Input.Search
+
 interface InterfaceSearchArticleModalProps {
     articles: List<InterfaceArticle>
     visible: boolean
@@ -52,7 +54,7 @@ class SearchArticleModal extends Component<InterfaceSearchArticleModalProps & In
     public componentDidUpdate() {
         if (this.props.visible) {
             setTimeout(() => {
-                const input: any = document.querySelector('.input-article-keywords')
+                const input: any = document.querySelector('.search-article-keywords')
                 if (input) {
                     input.focus()
                 }
@@ -69,11 +71,11 @@ class SearchArticleModal extends Component<InterfaceSearchArticleModalProps & In
                 footer={null}
                 onCancel={this.props.onCancel}
             >
-                <Input className="input-article-keywords"
+                <Search className="search-article-keywords"
                     placeholder={this.props.intl.formatMessage({ id: 'keywords' })}
                     value={this.state.keywords}
                     onChange={this.handleChange}
-                    onPressEnter={this.handleSummit} />
+                    onSearch={this.handleSummit} />
                 <div className="matched-list">
                     {this.state.matchedArticles.map((article: InterfaceArticle) => (
                         <div key={article.id} onClick={() => this.props.onItemChoose(article.index as number)}>

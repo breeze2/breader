@@ -1,7 +1,8 @@
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import AppMenu from '../components/AppMenu'
-import { asyncFetchArticlesAction, asyncFetchFeedsAction, asyncParseFeedAction, asyncSelectMenuKeyAction, asyncUpdateFeedsAction, setFeedFaviconAction } from '../redux/actions'
+import { asyncFetchArticlesAction, asyncFetchFeedsAction, asyncParseFeedAction, asyncSelectMenuKeyAction,
+    asyncUpdateFeedsAction, setFeedFaviconAction, setOnlineStatusAction } from '../redux/actions'
 
 const mapStateToProps = (store: any, props: any) => {
     return {
@@ -11,6 +12,7 @@ const mapStateToProps = (store: any, props: any) => {
         feedsUpdatedAt: store.feeds.get('updatedAt'),
         invalidFeedsCount: store.feeds.get('invalidCount'),
         isUpdatingFeeds: store.feeds.get('isUpdating'),
+        onlineStatus: store.menu.get('onlineStatus'),
         selectedMenuKey: store.menu.get('selectedKey'),
     }
 }
@@ -22,6 +24,7 @@ const mapDispatchToProps = (dispatch: Dispatch<any>, props: any) => ({
     asyncSelectMenuKey: (key: string) => dispatch(asyncSelectMenuKeyAction(key)),
     asyncUpdateFeeds: () => dispatch(asyncUpdateFeedsAction()),
     setFeedFavicon: (id: number, favicon: string) => dispatch(setFeedFaviconAction(id, favicon)),
+    setOnlineStatus: () => dispatch(setOnlineStatusAction()),
 })
 
 export default connect(

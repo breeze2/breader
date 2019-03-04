@@ -17,7 +17,9 @@ interface InterfaceAppMenuProps {
     invalidFeedsCount: number
     isUpdatingFeeds: boolean
     selectedMenuKey: string
+    onlineStatus: boolean
     setFeedFavicon: (id: number, favicon: string) => any
+    setOnlineStatus: () => any
     asyncFetchArticles: () => any
     asyncFetchFeeds: () => any
     asyncParseFeed: (feedUrl: string) => any
@@ -75,10 +77,19 @@ class AppMenu extends Component<InterfaceAppMenuProps & InjectedIntlProps> {
         }
         return true
     }
+    public handleOnlineStatus = () => {
+        this.props.setOnlineStatus()
+    }
     public componentWillMount() {
         this.props.asyncFetchFeeds()
         this.props.asyncFetchArticles()
+        window.addEventListener('online', this.handleOnlineStatus)
+        window.addEventListener('offline', this.handleOnlineStatus)
     }
+    // public componentWillUnmount () {
+    //     window.removeEventListener('online', this.handleOnlineStatus)
+    //     window.removeEventListener('offline', this.handleOnlineStatus)
+    // }
     public componentWillReceiveProps (props: any) {
         if (this.props.invalidFeedsCount !== props.invalidFeedsCount) {
             Message.info(this.props.intl.formatMessage({ id: 'unfoundFeed' }))
@@ -126,10 +137,11 @@ class AppMenu extends Component<InterfaceAppMenuProps & InjectedIntlProps> {
                 </div>
                 <div className="menu-footer">
                     <div className="menu-footer-left">
-                        <Icon type={this.props.isUpdatingFeeds ? 'loading' : 'sync'} className="sync-rss" onClick={this.handleUpdateFeedsClick}/>
+                        {this.props.onlineStatus && <Icon type={this.props.isUpdatingFeeds ? 'loading' : 'sync'} className="sync-rss" onClick={this.handleUpdateFeedsClick}/>}
                     </div>
+                    {!this.props.onlineStatus && <span><Icon type="warning" theme="twoTone" twoToneColor="#faad14" /> OFFLINE</span>}
                     <div className="menu-footer-right">
-                        <Icon type="plus" className="add-rss" onClick={this.handleAddFeedClick} />
+                        {this.props.onlineStatus && <Icon type="plus" className="add-rss" onClick={this.handleAddFeedClick} />}
                     </div>
                     <AddFeedModal visible={this.state.isAddFeedModalVisible} onOk={this.handleAddFeedModalOk} onCancel={this.handleAddFeedModalCancel} />
                 </div>

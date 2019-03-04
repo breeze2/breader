@@ -19,6 +19,7 @@ class WebviewDrawer extends Component<InterfaceWebviewDrawerProps> {
     public state: InterfaceWebviewDrawerState
     public webview: any
     public openTimes: number
+    public userAgent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1'
     private _needUpdateWebview: boolean
     public constructor(props: any) {
         super(props)
@@ -54,6 +55,7 @@ class WebviewDrawer extends Component<InterfaceWebviewDrawerProps> {
                 this.webview.addEventListener('did-start-loading', this.showProgressBar)
                 this.webview.addEventListener('did-stop-loading', this.hideProgressBar)
                 this.webview.src = url
+                this.webview.useragent = this.userAgent
                 div.appendChild(this.webview)
             }
         }
