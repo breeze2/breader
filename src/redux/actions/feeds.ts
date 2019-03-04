@@ -9,6 +9,7 @@ export const FeedsActionTypes = {
     SET_IS_UPDATING_FEEDS: 'SET_IS_UPDATING_FEEDS',
     TIPS_PARSE_INVALID_FEED: 'TIPS_PARSE_INVALID_FEED',
 
+    ASYNC_DELETE_FEEDS: 'ASYNC_DELETE_FEEDS',
     ASYNC_FETCH_FEEDS: 'ASYNC_FETCH_FEEDS',
     ASYNC_PARSE_FEED: 'ASYNC_PARSE_FEED',
     ASYNC_UPDATE_FEEDS: 'ASYNC_UPDATE_FEEDS',
@@ -66,5 +67,12 @@ export const asyncParseFeedAction = (feedUrl: string) => {
     return ({
         payload: { feedUrl },
         type: FeedsActionTypes.ASYNC_PARSE_FEED,
+    })
+}
+
+export const asyncDeleteFeedsAction = (feedIds: number[]) => {
+    return ({
+        payload: { feedIds },
+        type: FeedsActionTypes.ASYNC_DELETE_FEEDS,
     })
 }

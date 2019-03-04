@@ -1,4 +1,4 @@
-import { openExternalUrl } from './electron'
+import { ipcRenderer, openExternalUrl } from './electron'
 
 export function debounce<F extends (...params: any[]) => void>(fn: F, delay: number) {
     let timeoutID: number
@@ -39,6 +39,7 @@ const Utils = {
     debounce,
     throttle,
 
+    ipcRenderer,
     openExternalUrl,
 }
 

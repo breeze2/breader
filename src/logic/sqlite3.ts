@@ -10,7 +10,7 @@ function makeGetArticlesSql (query: any) {
         articles.description, articles.feed_id, articles.guid, articles.id,
         articles.is_starred, articles.is_unread, articles.link, articles.meta, substr(articles.summary, 0, 30) as summary,
         articles.time, articles.title, articles.updated_at, feeds.title as feed_title
-        from articles join feeds on articles.feed_id = feeds.id `
+        from articles join feeds on articles.feed_id = feeds.id and feeds.deleted_at is null  `
     if (query.feed_id) {
         list.push('articles.feed_id = $feed_id')
     }
@@ -66,7 +66,40 @@ function makeInsertArticlesParams(articles: InterfaceArticle[], feedId: number) 
     return params
 }
 
+function makeDeleteFeedsSql(length: number) {
+    const last = length - 1
+    let sql = `update feeds set deleted_at = $deleted_at where `
+    for (let i = 0; i < last; i++) {
+        sql += ` feeds.id = $feed_id${i} or `
+    }
+    sql += ` feeds.id = $feed_id${last};`
+    return sql
+}
+
+function makeDeleteFeedsParams(feedIds: number[], deletedAt: number) {
+    const params: any = {}
+    feedIds.forEach((fid, i) => {
+        params[`$feed_id${i}`] = fid
+    })
+    params.$deleted_at = deletedAt
+    return params
+}
+
 const DB = {
+    deleteFeeds(feedIds: number[]) {
+        const time = ~~(Date.now() / 1000)
+        const sql = makeDeleteFeedsSql(feedIds.length)
+        const params = makeDeleteFeedsParams(feedIds, time)
+        return new Promise((resolve, reject) => {
+            db.run(sql, params, function (this: void, err: any) {
+                if (err) {
+                    return reject(err)
+                } else {
+                    return resolve((this as any).changes)
+                }
+            })
+        })
+    },
     getAllFeeds() {
         const sql = 'select * from feeds where deleted_at is null order by created_at asc'
         return new Promise((resolve, reject) => {

@@ -63,7 +63,7 @@ class AppMenu extends Component<InterfaceAppMenuProps & InjectedIntlProps> {
     }
     public handleUpdateFeedsClick = () => {
         if (this.props.isUpdatingFeeds || this.props.feedsUpdatedAt > Date.now() - 3 * 60 * 60 * 1000) {
-            return Message.success(this.props.intl.formatMessage({ id: 'feedIsUpdated' }))
+            return Message.success(this.props.intl.formatMessage({ id: 'feedsAreUpdated' }))
         } else {
             return this.props.asyncUpdateFeeds()
         }
@@ -95,7 +95,7 @@ class AppMenu extends Component<InterfaceAppMenuProps & InjectedIntlProps> {
             Message.info(this.props.intl.formatMessage({ id: 'unfoundFeed' }))
         }
         if (this.props.feedsChanges !== props.feedsChanges && props.feedsChanges > -1) {
-            Message.success(this.props.intl.formatMessage({ id: 'feedIsUpdated' }))
+            Message.success(this.props.intl.formatMessage({ id: 'feedsAreUpdated' }))
         }
     }
     public render () {

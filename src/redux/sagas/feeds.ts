@@ -34,6 +34,23 @@ export function* parseFeedSaga(action: InterfaceAction) {
     }
 }
 
+export function* deleteFeedsSaga(action: InterfaceAction) {
+    console.log(action.payload.feedIds)
+    try {
+        if (action.payload.feedIds.length > 0) {
+            console.log(action.payload.feedIds)
+            const changes = yield call(Logic.deleteFeeds, action.payload.feedIds)
+            console.log(changes)
+            if (changes) {
+                yield put({ type: FeedsActionTypes.ASYNC_FETCH_FEEDS, payload: null })
+                yield put({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null })
+            }
+        }
+    } catch (e) {
+        console.error(e)
+    }
+}
+
 export function* updateFeedsSaga(action: InterfaceAction) {
     try {
         yield put({type: FeedsActionTypes.SET_IS_UPDATING_FEEDS, payload: { isUpdating: true}})
@@ -72,4 +89,8 @@ export function* watchFetchFeeds() {
 
 export function* watchUpdateFeeds() {
     yield takeEvery(FeedsActionTypes.ASYNC_UPDATE_FEEDS, updateFeedsSaga)
+}
+
+export function* watchDeleteFeeds() {
+    yield takeEvery(FeedsActionTypes.ASYNC_DELETE_FEEDS, deleteFeedsSaga)
 }

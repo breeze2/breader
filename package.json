@@ -33,7 +33,6 @@
     "sqlite3": "^4.0.6",
     "typescript": "3.3.3"
   },
-  "homepage": "./",
   "main": "public/electron.js",
   "scripts": {
     "postinstall": "yarn electron-rebuild -f -w sqlite3",
@@ -80,6 +79,17 @@
     "mac": {
       "category": "news",
       "icon": "build/icon.png"
+    },
+    "win": {
+      "icon": "build/icon.png",
+      "target": "nins"
+    },
+    "nsis": {
+      "allowToChangeInstallationDirectory": true,
+      "oneClick": false,
+      "menuCategory": true,
+      "createDesktopShortcut": true,
+      "allowElevation": false
     },
     "files": [
       "build/**/*"

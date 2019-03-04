@@ -28,10 +28,23 @@ const Logic = {
             }
             // const faviconUrl = feed.favicon || FeedParser.makeFaviconUrl(feed.link)
             // Logic.saveFeedFavicon(feedId as number, faviconUrl)
-            DB.saveArticles(articles, feedId, lastDateTime)
+            if (articles.length > 0) {
+                DB.saveArticles(articles, feedId, lastDateTime)
+            }
 
             feed.id = feedId
             return feed
+        } catch (err) {
+            console.error(err)
+        }
+    },
+    deleteFeeds: async (feedIds: number[]) => {
+        if (feedIds.length === 0) {
+            return 0
+        }
+        try {
+            const changes = await DB.deleteFeeds(feedIds)
+            return changes
         } catch (err) {
             console.error(err)
         }
