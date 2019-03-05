@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <title>Breader</title>
@@ -54,6 +53,7 @@ html, body, .land-page {
     font-family: 'Roboto', sans-serif; color: #fff;
     height: 100%; padding: 0; margin: 0;
     background-color: rgba(244, 244, 240, 0.8);
+    overflow-x: hidden;
 }
 .land-page {
     background-image: url('./pinwheel.jpg'); background-size: cover;
@@ -74,7 +74,7 @@ html, body, .land-page {
 }
 .land-footer {
     height: 56px; line-height: 56px; font-size: 14px; text-align: center;
-    background-color: rgba(244, 244, 240, 0.8);
+    background-color: #f4f4f1;
     border-top: solid 0.5px #dedede;
     color: rgba(0, 0, 0, 0.65)
 }
@@ -99,12 +99,12 @@ html, body, .land-page {
 }
 .download {
     background-color: #f4f4f1; color: rgba(0, 0, 0, 0.65);
-    min-height: 400px; padding-top: 48px;
+    min-height: 400px; padding: 48px 0px 96px 0px;
     display: flex; flex-wrap: wrap; flex-direction: row; justify-content: flex-start; align-items: center;
 }
 .download-left {
-    padding: 32px; font-size: 20px; 
-    order: 1; flex: 0 0 320px;
+    padding: 32px 0px; text-align: center; font-size: 20px; 
+    order: 1; flex: 1 0 320px;
 }
 .download-left img {
     width: 96px;
@@ -112,6 +112,9 @@ html, body, .land-page {
 }
 .logo {
     margin-bottom: 12px;
+}
+.left-center {
+    margin-left: auto; margin-right: auto;
 }
 .download-left p {
     line-height: 26px; font-weight: 300;
@@ -121,7 +124,7 @@ html, body, .land-page {
 }
 .download-right img {
     max-width: 560px;
-    border: solid 1px #dedede; border-radius: 3px;
+    border-top: solid 1px #dedede; border-bottom: solid 1px #dedede; border-radius: 3px;
 }
 button {
     padding: 8px 24px; line-height: 24px; font-size: 20px; font-weight: 300;
@@ -148,14 +151,16 @@ button:hover {
             </div>
             <div class="download">
                 <div class="download-left">
-                    <div class="logo">
-                        <img src="./favicon.ico" alt="Breader">
+                    <div class="left-center">
+                        <div class="logo">
+                            <img src="./favicon.ico" alt="Breader">
+                        </div>
+                        <!-- <p>Download Breader, </p> -->
+                        <p>Enjoy being a reader.</p>
+                        <br />
+                        <button>for Mac x64</button>
+                        <button>for Win x64</button>
                     </div>
-                    <!-- <p>Download Breader, </p> -->
-                    <p>Enjoy being a reader.</p>
-                    <br />
-                    <button>for Mac x64</button>
-                    <button>for Win x64</button>
                 </div>
                 <div class="download-right">
                     <img src="./screenshot.jpg" alt="breader">
