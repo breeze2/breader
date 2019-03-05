@@ -1,7 +1,7 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
-const isDev = require('electron-is-dev') && false
+const isDev = require('electron-is-dev')
 require('./main')
 
 // Keep a global reference of the window object, if you don't, the window will

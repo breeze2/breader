@@ -1,5 +1,5 @@
 import { Layout } from 'antd'
-import { List, Map } from 'immutable'
+// import { List, Map } from 'immutable'
 import React, { Component } from 'react'
 import { Provider as ReduxProvider } from 'react-redux'
 import { applyMiddleware, createStore } from 'redux'
@@ -64,7 +64,7 @@ class App extends Component {
       <ReduxProvider store={store}>
         <IntlProvider locale={this.state.language} messages={messages[this.state.language]}>
           <div className="app">
-            <Layout>
+            <Layout tagName="main">
               <AppSider />
               <AppContent />
               {/* <Layout></Layout> */}

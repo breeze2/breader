@@ -8,7 +8,7 @@ const LayoutContent = Layout.Content
 class AppContent extends Component {
     public render() {
         return (
-            <LayoutContent className="app-content">
+            <LayoutContent tagName="section" className="app-content">
                 <ArticleView />
             </LayoutContent>
         )
