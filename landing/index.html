@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Breader</title>
+    <meta name="keywords" content="rss, feed, atom, reader, breader, Breader, subscriptions, Breeze2">
+    <meta name="description" content="Breader is a simple RSS reader. Put all subscriptions you like in it, Breader gives you a better reading experience.">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!--ie渲染引擎-->
+    <!--忽略电话号码和email识别-->
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <!--当网站添加到主屏幕快速启动方式，将网站添加到主屏幕快速启动方式-->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!--隐藏ios上的浏览器地址栏-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <!-- UC默认竖屏 ，UC强制全屏 -->
+    <meta name="full-screen" content="yes">
+    <meta name="browsermode" content="application">
+    <!-- QQ强制竖屏 QQ强制全屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="x5-page-mode" content="app">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+    <link rel="shortcut icon" href="./favicon.ico">
+    <style>
+html,body,h1,h2,h3,h4,h5,h6,div,dl,dt,dd,ul,ol,li,p,blockquote,pre,hr,figure,table,caption,th,td,form,fieldset,legend,input,button,textarea,menu{margin:0;padding:0;}
+header,footer,section,article,aside,nav,hgroup,address,figure,figcaption,menu,details{display:block;}
+table{border-collapse:collapse;border-spacing:0;}
+caption,th{text-align:left;font-weight:normal;}
+html,body,fieldset,img,iframe,abbr{border:0;}
+i,cite,em,var,address,dfn{font-style:normal;}
+[hidefocus],summary{outline:0;}
+li{list-style:none;}
+h1,h2,h3,h4,h5,h6,small{font-size:100%;}
+sup,sub{font-size:83%;}
+pre,code,kbd,samp{font-family:inherit;}
+q:before,q:after{content:none;}
+textarea{overflow:auto;resize:none;}
+label,summary{cursor:default;}
+a,button{cursor:pointer;}
+h1,h2,h3,h4,h5,h6,em,strong,b{font-weight:bold;}
+del,ins,u,s,a,a:hover{text-decoration:none;}
+body,textarea,input,button,select,keygen,legend{font:12px/1.14 arial,\5b8b\4f53;color:#333;outline:0;}
+body{background:#fff;}
+a,a:hover{color:#1489ed;}
+    </style>
+    <style>
+html, body, .land-page {
+    font-family: 'Roboto', sans-serif; color: #fff;
+    height: 100%; padding: 0; margin: 0;
+    background-color: rgba(244, 244, 240, 0.8);
+}
+.land-page {
+    background-image: url('./pinwheel.jpg'); background-size: cover;
+}
+.land-header {
+    position: fixed; top: 0; left: 0; right: 0; height: 56px;
+    background: rgba(255,255,255,0.7); color: #7e57c2;
+}
+.header-left {
+    margin-left: 16px;
+}
+.header-left img {
+    width: 32px; height: 32px; margin-top: 12px;
+}
+.header-right {
+    float: right; font-size: 18px; line-height: 32px;
+    margin-top: 12px; margin-right: 16px;
+}
+.land-footer {
+    height: 56px; line-height: 56px; font-size: 14px; text-align: center;
+    background-color: rgba(244, 244, 240, 0.8);
+    border-top: solid 0.5px #dedede;
+    color: rgba(0, 0, 0, 0.65)
+}
+.land-content {
+    padding-top: 96px;
+    color: #fff; text-align: center;
+}
+.title {
+    line-height: 56px; font-size: 50px; font-weight: 300;
+}
+.summary {
+    line-height: 32px; font-size: 20px; font-weight: 300;
+    width: 320px; max-width: 80%; margin-left: auto; margin-right: auto;
+    color: rgba(255, 255, 255, .65);
+}
+.feature {
+    margin-top: 34px;
+    width: 984px; max-width: 80%; margin-left: auto; margin-right: auto;
+}
+.feature img {
+    width: 100%;
+}
+.download {
+    background-color: #f4f4f1; color: rgba(0, 0, 0, 0.65);
+    min-height: 400px; padding-top: 48px;
+    display: flex; flex-wrap: wrap; flex-direction: row; justify-content: flex-start; align-items: center;
+}
+.download-left {
+    padding: 32px; font-size: 20px; 
+    order: 1; flex: 0 0 320px;
+}
+.download-left img {
+    width: 96px;
+    transform: rotate(-9deg);
+}
+.logo {
+    margin-bottom: 12px;
+}
+.download-left p {
+    line-height: 26px; font-weight: 300;
+}
+.download-right {
+    order: 2; flex: 1 0 200px;
+}
+.download-right img {
+    max-width: 560px;
+    border: solid 1px #dedede; border-radius: 3px;
+}
+button {
+    padding: 8px 24px; line-height: 24px; font-size: 20px; font-weight: 300;
+    background-color: #1489ed; color: rgba(255, 255, 255, 0.85);
+    border: solid 0.5px #259afe; border-radius: 2px;
+}
+button:hover {
+    background-color: #0378dc;
+}
+    </style>
+</head>
+
+<body>
+    <div class="land-page">
+        <div class="land-header">
+            <span class="header-left"><img src="./favicon.ico" /></span>
+            <span class="header-right"><a href="https://github.com/breeze2/breader">Github</a></span>
+        </div>
+        <div class="land-content">
+            <h1 class="title">Breader</h1>
+            <p class="summary">Breader is a simple RSS reader. Put all subscriptions you like in it, Breader gives you a better reading experience.</p>
+            <div class="feature">
+                <img src="./feature.png" alt="feature">
+            </div>
+            <div class="download">
+                <div class="download-left">
+                    <div class="logo">
+                        <img src="./favicon.ico" alt="Breader">
+                    </div>
+                    <!-- <p>Download Breader, </p> -->
+                    <p>Enjoy being a reader.</p>
+                    <br />
+                    <button>for Mac x64</button>
+                    <button>for Win x64</button>
+                </div>
+                <div class="download-right">
+                    <img src="./screenshot.jpg" alt="breader">
+                </div>
+            </div>
+        </div>
+        <div class="land-footer"><a href="https://github.com/breeze2">YiFeng Lin</a> @ 2019</div>
+    </div>
+</body>
+
+</html>
