@@ -5,14 +5,6 @@
   "private": true,
   "description": "A simple RSS reader.",
   "dependencies": {
-    "antd": "^3.14.1",
-    "immutable": "^4.0.0-rc.12",
-    "react": "^16.8.1",
-    "react-intl": "^2.8.0",
-    "react-redux": "^6.0.0",
-    "redux": "^4.0.1",
-    "redux-saga": "^1.0.2",
-
     "chardet": "^0.7.0",
     "electron-is-dev": "^1.0.1",
     "feedparser": "^2.2.9",
@@ -54,7 +46,15 @@
     "@types/react-redux": "^7.0.1",
     "@types/react-virtualized": "^9.18.12",
     "@types/sqlite3": "^3.1.4",
-    
+
+    "antd": "^3.14.1",
+    "immutable": "^4.0.0-rc.12",
+    "react": "^16.8.1",
+    "react-intl": "^2.8.0",
+    "react-redux": "^6.0.0",
+    "redux": "^4.0.1",
+    "redux-saga": "^1.0.2",
+
     "babel-plugin-import": "^1.11.0",
     "customize-cra": "^0.2.11",
     "react-app-rewired": "^2.1.0",
