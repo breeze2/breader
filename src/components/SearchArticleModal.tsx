@@ -37,7 +37,7 @@ class SearchArticleModal extends Component<InterfaceSearchArticleModalProps & In
         this.searchArticles = Utils.debounce(this._searchArticles, 100)
         this.searchArticles = this.searchArticles.bind(this)
     }
-    public handleSummit = (e: any) => {
+    public handleSubmit = (e: any) => {
         const keywords = this.state.keywords
         const matched = this._searchArticles(keywords.split(' '))
         if (keywords) {
@@ -75,7 +75,7 @@ class SearchArticleModal extends Component<InterfaceSearchArticleModalProps & In
                     placeholder={this.props.intl.formatMessage({ id: 'keywords' })}
                     value={this.state.keywords}
                     onChange={this.handleChange}
-                    onSearch={this.handleSummit} />
+                    onSearch={this.handleSubmit} />
                 <div className="matched-list">
                     {this.state.matchedArticles.map((article: InterfaceArticle) => (
                         <div key={article.id} onClick={() => this.props.onItemChoose(article.index as number)}>

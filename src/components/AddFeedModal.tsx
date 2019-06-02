@@ -25,7 +25,7 @@ class AddFeedModal extends Component<InterfaceAddFeedModalProps & InjectedIntlPr
             feedUrl: '',
         }
     }
-    public handleSummit = (e: any) => {
+    public handleSubmit = (e: any) => {
         const feedUrl = this.state.feedUrl
         const a = window.document.createElement('a')
         a.href = feedUrl
@@ -64,12 +64,12 @@ class AddFeedModal extends Component<InterfaceAddFeedModalProps & InjectedIntlPr
                 width={376}
                 visible={this.props.visible}
                 onCancel={this.props.onCancel}
-                onOk={this.handleSummit}
+                onOk={this.handleSubmit}
             >
                 {/* <FormattedMessage id="feedUrl" >{ (txt) => {
-                    return <Input placeholder={txt as string} value={this.state.feedUrl} onChange={this.handleChange} onPressEnter={this.handleSummit} />
+                    return <Input placeholder={txt as string} value={this.state.feedUrl} onChange={this.handleChange} onPressEnter={this.handleSubmit} />
                 }}</FormattedMessage> */}
-                <Input className="input-feed-url" placeholder={this.props.intl.formatMessage({ id: 'feedUrl'})} value={this.state.feedUrl} onChange={this.handleChange} onPressEnter={this.handleSummit} />
+                <Input className="input-feed-url" placeholder={this.props.intl.formatMessage({ id: 'feedUrl'})} value={this.state.feedUrl} onChange={this.handleChange} onPressEnter={this.handleSubmit} />
             </Modal>
         )
     }
