@@ -64,7 +64,7 @@ class App extends Component {
       <ReduxProvider store={store}>
         <IntlProvider locale={this.state.language} messages={messages[this.state.language]}>
           <div className="app">
-            <Layout tagName="main">
+            <Layout>
               <AppSider />
               <AppContent />
               {/* <Layout></Layout> */}
