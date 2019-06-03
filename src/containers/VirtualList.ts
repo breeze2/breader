@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import VirtualList from '../components/VirtualList'
-import { asyncSelectAndReadArticlesAction } from '../redux/actions'
+import { asyncSelectAndReadArticlesAction, IAction } from '../redux/actions'
 
 const mapStateToProps = (store: any, props: any) => {
     return {
@@ -10,7 +10,7 @@ const mapStateToProps = (store: any, props: any) => {
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<any>, props: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch<IAction>, props: any) => ({
     selectArticle: (id: number, index: number) => dispatch(asyncSelectAndReadArticlesAction(id, index)),
 })
 

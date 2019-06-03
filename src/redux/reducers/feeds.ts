@@ -1,6 +1,6 @@
 import Immutable, { List, Map } from 'immutable'
 import InterfaceFeed from '../../schemas/InterfaceFeed'
-import { FeedsActionTypes, InterfaceAction } from '../actions'
+import { FeedsActionTypes, IAction } from '../actions'
 
 const initialFeedsState = Immutable.fromJS({
     changes: -1,
@@ -13,7 +13,7 @@ const initialFeedsState = Immutable.fromJS({
 
 Object.defineProperty(window, 'Immutable', { value: Immutable})
 
-const feeds = (state = initialFeedsState, action: InterfaceAction) => {
+const feeds = (state = initialFeedsState, action: IAction) => {
     switch (action.type) {
         case FeedsActionTypes.SET_FEEDS_UPDATED_AT:
             return state.set('updatedAt', action.payload.updatedAt)

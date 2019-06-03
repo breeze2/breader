@@ -1,10 +1,10 @@
 import { all, call, put, select, takeEvery, takeLatest } from 'redux-saga/effects'
 import Logic from '../../logic'
 import InterfaceFeed from '../../schemas/InterfaceFeed'
-import { ArticlesActionTypes, FeedsActionTypes, InterfaceAction } from '../actions'
+import { ArticlesActionTypes, FeedsActionTypes, IAction } from '../actions'
 import { getFeeds, getMenu } from './selectors'
 
-export function* fetchFeedsSaga(action: InterfaceAction) {
+export function* fetchFeedsSaga(action: IAction) {
     try {
         const feeds = yield call(Logic.getAllFeeds)
         yield put({ type: FeedsActionTypes.SET_FEEDS, payload: { feeds } })
@@ -13,7 +13,7 @@ export function* fetchFeedsSaga(action: InterfaceAction) {
     }
 }
 
-export function* parseFeedSaga(action: InterfaceAction) {
+export function* parseFeedSaga(action: IAction) {
     try {
         const feed = yield call(Logic.createFeed, action.payload.feedUrl)
         if (feed) {
@@ -34,7 +34,7 @@ export function* parseFeedSaga(action: InterfaceAction) {
     }
 }
 
-export function* deleteFeedsSaga(action: InterfaceAction) {
+export function* deleteFeedsSaga(action: IAction) {
     try {
         if (action.payload.feedIds.length > 0) {
             const changes = yield call(Logic.deleteFeeds, action.payload.feedIds)
@@ -48,7 +48,7 @@ export function* deleteFeedsSaga(action: InterfaceAction) {
     }
 }
 
-export function* updateFeedsSaga(action: InterfaceAction) {
+export function* updateFeedsSaga(action: IAction) {
     try {
         yield put({type: FeedsActionTypes.SET_IS_UPDATING_FEEDS, payload: { isUpdating: true}})
         const feedsStore = yield select(getFeeds)

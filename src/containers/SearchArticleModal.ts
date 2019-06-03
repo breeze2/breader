@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import SearchArticleModal from '../components/SearchArticleModal'
-import { asyncFilterArticlesAction, asyncSetAllArticlesReadAction } from '../redux/actions'
+import { asyncFilterArticlesAction, asyncSetAllArticlesReadAction, IAction } from '../redux/actions'
 
 const mapStateToProps = (store: any, props: any) => {
     return {
@@ -9,7 +9,7 @@ const mapStateToProps = (store: any, props: any) => {
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<any>, props: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch<IAction>, props: any) => ({
 })
 
 export default connect(

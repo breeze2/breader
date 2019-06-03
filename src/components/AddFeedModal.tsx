@@ -4,21 +4,21 @@ import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'reac
 
 import '../styles/AddFeedModal.less'
 
-interface InterfaceAddFeedModalProps {
+interface IAddFeedModalProps {
     visible: boolean
     onOk: (e: any) => any
     onCancel: (e: any) => any
 }
 
-interface InterfaceAddFeedModalState {
+interface IAddFeedModalState {
     readonly feedUrl: string
 }
 
-class AddFeedModal extends Component<InterfaceAddFeedModalProps & InjectedIntlProps, {}> {
+class AddFeedModal extends Component<IAddFeedModalProps & InjectedIntlProps, {}> {
     public static propTypes: React.ValidationMap<any> = {
         intl: intlShape.isRequired,
     }
-    public state: InterfaceAddFeedModalState
+    public state: IAddFeedModalState
     public constructor(props: any) {
         super(props)
         this.state = {

@@ -9,24 +9,30 @@ const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 const Confirm = Modal.confirm
 
-interface InterfaceListProps {
+export interface IAppListReduxData {
     allArticlesReadAt: number
     articlesFilter: string
     selectedMenuKey: string
+}
+
+export interface IAppListReduxFunc {
     asyncFilterArticles: (filter: string) => any
     asyncSetAllArticlesRead: () => any
 }
 
-interface InterfaceListState {
+interface IAppListProps extends IAppListReduxData, IAppListReduxFunc {
+}
+
+interface IAppListState {
     isSearchArticleModalVisible: boolean
     chooseItemIndex: number
 }
 
-class AppList extends Component<InterfaceListProps & InjectedIntlProps> {
+class AppList extends Component<IAppListProps & InjectedIntlProps> {
     public static propTypes: React.ValidationMap<any> = {
         intl: intlShape.isRequired,
     }
-    public state: InterfaceListState
+    public state: IAppListState
     public constructor(props: any) {
         super(props)
         this.state = {

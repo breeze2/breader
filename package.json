@@ -71,7 +71,6 @@
     "electron-rebuild": "^1.8.4",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
-    "redux-devtools-extension": "^2.13.8",
     "tslint": "^5.12.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-eslint-rules": "^5.4.0",

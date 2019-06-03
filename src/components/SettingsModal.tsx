@@ -90,7 +90,7 @@ class SettingsModal extends Component<InterfaceSettingsModalProps & InjectedIntl
                             split
                             size="small"
                             itemLayout="horizontal"
-                            dataSource={this.props.feeds}
+                            dataSource={this.props.feeds.toArray()}
                             renderItem={(feed: InterfaceFeed) => {
                                 if (feed.id && this.state.needDeleted[feed.id]) {
                                     return <div />

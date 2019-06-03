@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import ListItem from '../components/ListItem'
+import { IAction } from '../redux/actions'
 
 const mapStateToProps = (store: any, props: any) => {
     return {
@@ -8,7 +9,7 @@ const mapStateToProps = (store: any, props: any) => {
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<any>, props: any) => ({})
+const mapDispatchToProps = (dispatch: Dispatch<IAction>, props: any) => ({})
 
 export default connect(
     mapStateToProps,

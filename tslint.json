@@ -36,6 +36,7 @@
         "no-duplicate-variable": true,
         "no-eval": true,
         "no-internal-module": true,
+        "no-implicit-dependencies": false,
         "no-multi-spaces": true,
         "no-namespace": true,
         "no-reference": true,

@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import AppMenu from '../components/AppMenu'
 import { asyncFetchArticlesAction, asyncFetchFeedsAction, asyncParseFeedAction, asyncSelectMenuKeyAction,
-    asyncUpdateFeedsAction, setFeedFaviconAction, setOnlineStatusAction } from '../redux/actions'
+    asyncUpdateFeedsAction, IAction, setFeedFaviconAction, setOnlineStatusAction } from '../redux/actions'
 
 const mapStateToProps = (store: any, props: any) => {
     return {
@@ -17,7 +17,7 @@ const mapStateToProps = (store: any, props: any) => {
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<any>, props: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch<IAction>, props: any) => ({
     asyncFetchArticles: () => dispatch(asyncFetchArticlesAction()),
     asyncFetchFeeds: () => dispatch(asyncFetchFeedsAction()),
     asyncParseFeed: (feedUrl: string) => dispatch(asyncParseFeedAction(feedUrl)),
