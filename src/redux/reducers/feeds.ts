@@ -2,14 +2,23 @@ import Immutable, { List, Map } from 'immutable'
 import InterfaceFeed from '../../schemas/InterfaceFeed'
 import { FeedsActionTypes, IAction } from '../actions'
 
-const initialFeedsState = Immutable.fromJS({
+export interface IFeedsState {
+    changes: number
+    favicons: Immutable.Map<string, string>
+    invalidCount: number
+    isUpdating: boolean
+    list: Immutable.List<InterfaceFeed>
+    updatedAt: number
+}
+
+const initialFeedsState = Immutable.Record<IFeedsState>({
     changes: -1,
-    favicons: {},
+    favicons: Immutable.Map<string>({}),
     invalidCount: 0,
     isUpdating: false,
-    list: [],
+    list: Immutable.List<InterfaceFeed>([]),
     updatedAt: 0,
-})
+})()
 
 Object.defineProperty(window, 'Immutable', { value: Immutable})
 

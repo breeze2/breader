@@ -2,14 +2,23 @@ import Immutable, { List } from 'immutable'
 import InterfaceArticle from '../../schemas/InterfaceArticle'
 import { ArticlesActionTypes, IAction } from '../actions'
 
-const initialArticlesState = Immutable.fromJS({
+export interface IArticlesState {
+    allReadAt: number
+    filter: string
+    list: Immutable.List<InterfaceArticle>
+    selectedContent: string,
+    selectedId: number,
+    selectedIndex: number,
+}
+
+const initialArticlesState = Immutable.Record<IArticlesState>({
     allReadAt: 0,
     filter: 'ALL',
-    list: [],
+    list: Immutable.List<InterfaceArticle>([]),
     selectedContent: '',
     selectedId: 0,
     selectedIndex: -1,
-})
+})()
 
 let lastDateStr = ''
 const articles = (state = initialArticlesState, action: IAction) => {

@@ -3,11 +3,18 @@ import { IAction, MenuActionTypes } from '../actions'
 
 const MenuKeyDefault = 'ALL_ITEMS'
 const languageDefault = localStorage.getItem('LANGUAGE') || navigator.language
-const initialMenuState = Immutable.fromJS({
+
+export interface IMenuState {
+    language: string
+    onlineStatus: boolean
+    selectedKey: string
+}
+
+const initialMenuState = Immutable.Record<IMenuState>({
     language: languageDefault,
     onlineStatus: true,
     selectedKey: MenuKeyDefault,
-})
+})()
 
 const menuKey = (state = initialMenuState, action: IAction) => {
     switch (action.type) {
