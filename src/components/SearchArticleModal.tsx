@@ -10,23 +10,32 @@ import '../styles/SearchArticleModal.less'
 
 const Search = Input.Search
 
-interface InterfaceSearchArticleModalProps {
-    articles: List<InterfaceArticle>
+export interface ISearchArticleModalOwnProps {
     visible: boolean
     onCancel: (e: any) => any
     onItemChoose: (index: number) => any
 }
 
-interface InterfaceSearchArticleModalState {
+export interface ISearchArticleModalReduxDispatch {
+}
+
+export interface ISearchArticleModalReduxState {
+    articles: List<InterfaceArticle>
+}
+
+interface ISearchArticleModalProps extends ISearchArticleModalOwnProps, ISearchArticleModalReduxDispatch, ISearchArticleModalReduxState {
+}
+
+interface ISearchArticleModalState {
     readonly keywords: string
     readonly matchedArticles: List<InterfaceArticle>
 }
 
-class SearchArticleModal extends Component<InterfaceSearchArticleModalProps & InjectedIntlProps, {}> {
+class SearchArticleModal extends Component<ISearchArticleModalProps & InjectedIntlProps, {}> {
     public static propTypes: React.ValidationMap<any> = {
         intl: intlShape.isRequired,
     }
-    public state: InterfaceSearchArticleModalState
+    public state: ISearchArticleModalState
     public searchArticles: (keywords: string[]) => any
     public constructor(props: any) {
         super(props)

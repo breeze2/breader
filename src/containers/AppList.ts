@@ -10,7 +10,7 @@ const mapStateToProps: MapStateToProps<IAppListReduxState, IAppListOwnProps, ISt
     selectedMenuKey: state.menu.selectedKey,
 })
 
-const mapDispatchToProps: MapDispatchToProps<IAppListReduxDispatch, IAppListOwnProps> = (dispatch: Dispatch<IAction>): IAppListReduxDispatch => ({
+const mapDispatchToProps: MapDispatchToProps<IAppListReduxDispatch, IAppListOwnProps> = (dispatch: Dispatch<IAction>) => ({
     asyncFilterArticles: (filter: string) => dispatch(asyncFilterArticlesAction(filter)),
     asyncSetAllArticlesRead: () => dispatch(asyncSetAllArticlesReadAction()),
 })

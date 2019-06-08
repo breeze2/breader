@@ -7,25 +7,34 @@ import InterfaceArticle from '../schemas/InterfaceArticle'
 import '../styles/VirtualList.less'
 import Utils from '../utils'
 
-interface InterfaceVirtualListProps {
-    articleId: number
-    articles: List<InterfaceArticle>
-    selectArticle: (id: number, index: number) => any
+export interface IVirtualListOwnProps {
     scrollToIndex?: number
 }
 
-interface InterfaceVirtualListState {
+export interface IVirtualListReduxDispatch {
+    selectArticle: (id: number, index: number) => any
+}
+
+export interface IVirtualListReduxState {
+    articleId: number
+    articles: List<InterfaceArticle>
+}
+
+interface IVirtualListProps extends IVirtualListOwnProps, IVirtualListReduxDispatch, IVirtualListReduxState {
+}
+
+interface IVirtualListState {
     renderStartDate: string
     isAffixVisible: boolean
     readItems: any
 }
 
-class VirtualList extends PureComponent<InterfaceVirtualListProps> {
+class VirtualList extends PureComponent<IVirtualListProps> {
     public vlist: RefObject<VList>
-    public state: InterfaceVirtualListState
+    public state: IVirtualListState
     public cellCache: CellMeasurerCache
     public updateRenderStartDate: (...params: any[]) => void
-    public constructor(props: InterfaceVirtualListProps) {
+    public constructor(props: IVirtualListProps) {
         super(props)
         this.vlist = React.createRef()
         this.cellCache = new CellMeasurerCache ({
@@ -41,7 +50,7 @@ class VirtualList extends PureComponent<InterfaceVirtualListProps> {
 
         Object.defineProperty(window, 'updateRenderStartDate', {value: this.updateRenderStartDate})
     }
-    public componentWillReceiveProps(props: InterfaceVirtualListProps) {
+    public componentWillReceiveProps(props: IVirtualListProps) {
         if (props.articles !== this.props.articles) {
             this.cellCache = new CellMeasurerCache({
                 defaultHeight: 80,

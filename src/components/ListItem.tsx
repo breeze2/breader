@@ -3,10 +3,6 @@ import Immutable from 'immutable'
 import React, { Component, PureComponent } from 'react'
 import '../styles/ListItem.less'
 
-export interface IListItemReduxState {
-    feedFavicons: Immutable.Map<string, string>
-}
-
 export interface IListItemOwnProps {
     author?: string
     className?: string
@@ -22,7 +18,14 @@ export interface IListItemOwnProps {
     summary: string
 }
 
-export interface IListItemProps extends IListItemOwnProps, IListItemReduxState {
+export interface IListItemReduxDispatch {
+}
+
+export interface IListItemReduxState {
+    feedFavicons: Immutable.Map<string, string>
+}
+
+export interface IListItemProps extends IListItemOwnProps, IListItemReduxDispatch, IListItemReduxState {
 }
 
 interface IListItemState {

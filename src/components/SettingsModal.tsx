@@ -1,30 +1,39 @@
 import { Avatar, Button, Input, List as AntdList, message as Message, Modal, Select } from 'antd'
-import { List, Map } from 'immutable'
+import Immutable from 'immutable'
 import React, { Component } from 'react'
 import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'react-intl'
 import InterfaceFeed from '../schemas/InterfaceFeed'
 
 import '../styles/SettingsModal.less'
 
-interface InterfaceSettingsModalProps {
-    feeds: List<InterfaceFeed>
-    language: string,
+export interface ISettingsModalOwnProps {
     visible: boolean
     onClose: (e: any) => any
     onLanguageChange: (language: string) => any
+}
+
+export interface ISettingsModalReduxDispatch {
     setLanguage: (language: string) => any
     asyncDeleteFeeds: (feedIds: number[]) => any
 }
 
-interface InterfaceSettingsModalState {
+export interface ISettingsModalReduxState {
+    feeds: Immutable.List<InterfaceFeed>
+    language: string,
+}
+
+interface ISettingsModalProps extends ISettingsModalOwnProps, ISettingsModalReduxDispatch, ISettingsModalReduxState {
+}
+
+interface ISettingsModalState {
     needDeleted: any,
 }
 
-class SettingsModal extends Component<InterfaceSettingsModalProps & InjectedIntlProps, {}> {
+class SettingsModal extends Component<ISettingsModalProps & InjectedIntlProps, {}> {
     public static propTypes: React.ValidationMap<any> = {
         intl: intlShape.isRequired,
     }
-    public state: InterfaceSettingsModalState
+    public state: ISettingsModalState
     public constructor(props: any) {
         super(props)
         this.state = {
