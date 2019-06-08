@@ -1,17 +1,11 @@
-import { connect } from 'react-redux'
-import { Dispatch } from 'redux'
-import ListItem from '../components/ListItem'
-import { IAction } from '../redux/actions'
+import { connect, MapStateToProps } from 'react-redux'
+import ListItem, { IListItemOwnProps, IListItemReduxState } from '../components/ListItem'
+import { IState } from '../redux/reducers'
 
-const mapStateToProps = (store: any, props: any) => {
-    return {
-        feedFavicons: store.feeds.get('favicons'),
-    }
-}
-
-const mapDispatchToProps = (dispatch: Dispatch<IAction>, props: any) => ({})
+const mapStateToProps: MapStateToProps<IListItemReduxState, IListItemOwnProps, IState> = (store: IState) => ({
+    feedFavicons: store.feeds.get('favicons'),
+})
 
 export default connect(
     mapStateToProps,
-    mapDispatchToProps,
 )(ListItem)

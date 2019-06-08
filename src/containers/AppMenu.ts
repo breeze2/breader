@@ -1,23 +1,22 @@
-import { connect } from 'react-redux'
+import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux'
 import { Dispatch } from 'redux'
-import AppMenu from '../components/AppMenu'
+import AppMenu, { IAppMenuOwnProps, IAppMenuReduxDispatch, IAppMenuReduxState } from '../components/AppMenu'
 import { asyncFetchArticlesAction, asyncFetchFeedsAction, asyncParseFeedAction, asyncSelectMenuKeyAction,
     asyncUpdateFeedsAction, IAction, setFeedFaviconAction, setOnlineStatusAction } from '../redux/actions'
+import { IState } from '../redux/reducers'
 
-const mapStateToProps = (store: any, props: any) => {
-    return {
-        feedFavicons: store.feeds.get('favicons'),
-        feeds: store.feeds.get('list'),
-        feedsChanges: store.feeds.get('changes'),
-        feedsUpdatedAt: store.feeds.get('updatedAt'),
-        invalidFeedsCount: store.feeds.get('invalidCount'),
-        isUpdatingFeeds: store.feeds.get('isUpdating'),
-        onlineStatus: store.menu.get('onlineStatus'),
-        selectedMenuKey: store.menu.get('selectedKey'),
-    }
-}
+const mapStateToProps: MapStateToProps<IAppMenuReduxState, IAppMenuOwnProps, IState> = (state) => ({
+    feedFavicons: state.feeds.favicons,
+    feeds: state.feeds.list,
+    feedsChanges: state.feeds.changes,
+    feedsUpdatedAt: state.feeds.updatedAt,
+    invalidFeedsCount: state.feeds.invalidCount,
+    isUpdatingFeeds: state.feeds.isUpdating,
+    onlineStatus: state.menu.onlineStatus,
+    selectedMenuKey: state.menu.selectedKey,
+})
 
-const mapDispatchToProps = (dispatch: Dispatch<IAction>, props: any) => ({
+const mapDispatchToProps: MapDispatchToProps<IAppMenuReduxDispatch, IAppMenuOwnProps> = (dispatch: Dispatch<IAction>) => ({
     asyncFetchArticles: () => dispatch(asyncFetchArticlesAction()),
     asyncFetchFeeds: () => dispatch(asyncFetchFeedsAction()),
     asyncParseFeed: (feedUrl: string) => dispatch(asyncParseFeedAction(feedUrl)),

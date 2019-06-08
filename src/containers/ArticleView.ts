@@ -1,18 +1,17 @@
-import { connect } from 'react-redux'
+import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux'
 import { Dispatch } from 'redux'
-import ArticleView from '../components/ArticleView'
+import ArticleView, { IArticleViewOwnProps, IArticleViewReduxDispatch, IArticleViewReduxState } from '../components/ArticleView'
 import { asyncStarArticleAction, IAction } from '../redux/actions'
+import { IState } from '../redux/reducers'
 
-const mapStateToProps = (store: any, props: any) => {
-    return {
-        articleContent: store.articles.get('selectedContent'),
-        articleId: store.articles.get('selectedId'),
-        articleIndex: store.articles.get('selectedIndex'),
-        articles: store.articles.get('list'),
-    }
-}
+const mapStateToProps: MapStateToProps<IArticleViewReduxState, IArticleViewOwnProps, IState> = (state: IState) => ({
+    articleContent: state.articles.selectedContent,
+    articleId: state.articles.selectedId,
+    articleIndex: state.articles.selectedIndex,
+    articles: state.articles.list,
+})
 
-const mapDispatchToProps = (dispatch: Dispatch<IAction>, props: any) => ({
+const mapDispatchToProps: MapDispatchToProps<IArticleViewReduxDispatch, IArticleViewOwnProps> = (dispatch: Dispatch<IAction>) => ({
     asyncStarArticle: (articleId: number, isStarred: boolean) => dispatch(asyncStarArticleAction(articleId, isStarred)),
 })
 

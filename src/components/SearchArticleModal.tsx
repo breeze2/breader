@@ -87,7 +87,6 @@ class SearchArticleModal extends Component<InterfaceSearchArticleModalProps & In
                                 feedId={article.feed_id}
                                 title={article.title}
                                 summary={article.summary}
-                                locale={{ emptyText: 'hhhhh' }}
                                 className='item-is-unread'
                             />
                         </div>

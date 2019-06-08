@@ -1,5 +1,5 @@
 import { Avatar, Icon, Menu, message as Message } from 'antd'
-import { Map } from 'immutable'
+import Immutable from 'immutable'
 import React, { Component } from 'react'
 import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'react-intl'
 import defaultFavicon from '../images/rss.png'
@@ -9,15 +9,11 @@ import AddFeedModal from './AddFeedModal'
 
 const MenuItem = Menu.Item
 const SubMenu = Menu.SubMenu
-interface InterfaceAppMenuProps {
-    feedFavicons: Map<string, string>
-    feeds: InterfaceFeed[]
-    feedsChanges: number
-    feedsUpdatedAt: number
-    invalidFeedsCount: number
-    isUpdatingFeeds: boolean
-    selectedMenuKey: string
-    onlineStatus: boolean
+
+export interface IAppMenuOwnProps {
+}
+
+export interface IAppMenuReduxDispatch {
     setFeedFavicon: (id: number, favicon: string) => any
     setOnlineStatus: () => any
     asyncFetchArticles: () => any
@@ -26,15 +22,30 @@ interface InterfaceAppMenuProps {
     asyncSelectMenuKey: (e: any) => any
     asyncUpdateFeeds: () => any
 }
-interface InterfaceAppMenuState {
+
+export interface IAppMenuReduxState {
+    feedFavicons: Immutable.Map<string, string>
+    feeds: Immutable.List<InterfaceFeed>
+    feedsChanges: number
+    feedsUpdatedAt: number
+    invalidFeedsCount: number
+    isUpdatingFeeds: boolean
+    selectedMenuKey: string
+    onlineStatus: boolean
+}
+
+interface IAppMenuProps extends IAppMenuOwnProps, IAppMenuReduxDispatch, IAppMenuReduxState {
+}
+
+interface IAppMenuState {
     isAddFeedModalVisible: boolean
 }
 
-class AppMenu extends Component<InterfaceAppMenuProps & InjectedIntlProps> {
+class AppMenu extends Component<IAppMenuProps & InjectedIntlProps> {
     public static propTypes: React.ValidationMap<any> = {
         intl: intlShape.isRequired,
     }
-    public state: InterfaceAppMenuState
+    public state: IAppMenuState
     public constructor (props: any) {
         super(props)
         this.state = {

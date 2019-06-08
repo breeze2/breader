@@ -1,13 +1,13 @@
 import { Avatar } from 'antd'
-import { Map } from 'immutable'
+import Immutable from 'immutable'
 import React, { Component, PureComponent } from 'react'
 import '../styles/ListItem.less'
 
-interface InterfaceListItemState {
-    guid: string
+export interface IListItemReduxState {
+    feedFavicons: Immutable.Map<string, string>
 }
-export interface InterfaceListItemProps {
-    feedFavicons: Map<string, string>
+
+export interface IListItemOwnProps {
     author?: string
     className?: string
     favicon?: string
@@ -22,8 +22,15 @@ export interface InterfaceListItemProps {
     summary: string
 }
 
-class ListItem<T extends InterfaceListItemProps> extends PureComponent<T> {
-    public state: InterfaceListItemState
+export interface IListItemProps extends IListItemOwnProps, IListItemReduxState {
+}
+
+interface IListItemState {
+    guid: string
+}
+
+class ListItem<T extends IListItemProps> extends PureComponent<T> {
+    public state: IListItemState
     public constructor(props: T) {
         super(props)
         this.state = {

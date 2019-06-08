@@ -1,20 +1,29 @@
 import { Empty, Icon } from 'antd'
-import { List, Map } from 'immutable'
+import Immutable from 'immutable'
 import React, { Component, PureComponent } from 'react'
 import greyLogo from '../images/grey-logo.png'
 import InterfaceArticle from '../schemas/InterfaceArticle'
 import '../styles/ArticleView.less'
 import WebviewDrawer from './WebviewDrawer'
 
-interface InterfaceArticleViewProps {
+export interface IArticleViewOwnProps {
+}
+
+export interface IArticleViewReduxState {
     articleContent: string
     articleIndex: number
     articleId: number
-    articles: List<InterfaceArticle>
+    articles: Immutable.List<InterfaceArticle>
+}
+
+export interface IArticleViewReduxDispatch {
     asyncStarArticle: (articleId: number, isStarred: boolean) => any
 }
 
-interface InterfaceArticleViewState {
+interface IArticleViewProps extends IArticleViewOwnProps, IArticleViewReduxDispatch, IArticleViewReduxState {
+}
+
+interface IArticleViewState {
     hoverLink: string
     isWebviewDrawerVisible: boolean
     webviewDrawerSrc: string,
@@ -22,8 +31,8 @@ interface InterfaceArticleViewState {
     article?: InterfaceArticle,
 }
 
-class ArticleView extends PureComponent<InterfaceArticleViewProps> {
-    public state: InterfaceArticleViewState
+class ArticleView extends PureComponent<IArticleViewProps> {
+    public state: IArticleViewState
     private _articleContentIsAppended: boolean
     private _articleContentElement: HTMLDivElement
     private _articleContentLinks: string[]
