@@ -3,7 +3,7 @@ import { List, Map } from 'immutable'
 import React, { Component } from 'react'
 import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'react-intl'
 import ListItem from '../containers/ListItem'
-import InterfaceArticle from '../schemas/InterfaceArticle'
+import IArticle from '../schemas/IArticle'
 import Utils from '../utils'
 
 import '../styles/SearchArticleModal.less'
@@ -20,7 +20,7 @@ export interface ISearchArticleModalReduxDispatch {
 }
 
 export interface ISearchArticleModalReduxState {
-    articles: List<InterfaceArticle>
+    articles: List<IArticle>
 }
 
 interface ISearchArticleModalProps extends ISearchArticleModalOwnProps, ISearchArticleModalReduxDispatch, ISearchArticleModalReduxState {
@@ -28,7 +28,7 @@ interface ISearchArticleModalProps extends ISearchArticleModalOwnProps, ISearchA
 
 interface ISearchArticleModalState {
     readonly keywords: string
-    readonly matchedArticles: List<InterfaceArticle>
+    readonly matchedArticles: List<IArticle>
 }
 
 class SearchArticleModal extends Component<ISearchArticleModalProps & InjectedIntlProps, {}> {
@@ -41,7 +41,7 @@ class SearchArticleModal extends Component<ISearchArticleModalProps & InjectedIn
         super(props)
         this.state = {
             keywords: '',
-            matchedArticles: List<InterfaceArticle>([]),
+            matchedArticles: List<IArticle>([]),
         }
         this.searchArticles = Utils.debounce(this._searchArticles, 100)
         this.searchArticles = this.searchArticles.bind(this)
@@ -86,7 +86,7 @@ class SearchArticleModal extends Component<ISearchArticleModalProps & InjectedIn
                     onChange={this.handleChange}
                     onSearch={this.handleSubmit} />
                 <div className="matched-list">
-                    {this.state.matchedArticles.map((article: InterfaceArticle) => (
+                    {this.state.matchedArticles.map((article: IArticle) => (
                         <div key={article.id} onClick={() => this.props.onItemChoose(article.index as number)}>
                             <ListItem author={article.author}
                                 guid={article.guid}
@@ -107,9 +107,9 @@ class SearchArticleModal extends Component<ISearchArticleModalProps & InjectedIn
     private _searchArticles(keys: string[]) {
         const len = keys.length
         if (len < 1) {
-            return List<InterfaceArticle>([])
+            return List<IArticle>([])
         }
-        const matched = this.props.articles.filter((article: InterfaceArticle, index: number) => {
+        const matched = this.props.articles.filter((article: IArticle, index: number) => {
             const str = article.title + article.author + article.summary
             let i = 0
             for (; i < len; i++) {

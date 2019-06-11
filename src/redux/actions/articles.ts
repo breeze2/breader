@@ -1,4 +1,4 @@
-import InterfaceArticle from '../../schemas/InterfaceArticle'
+import IArticle from '../../schemas/IArticle'
 
 export const ArticlesActionTypes = {
     SET_ALL_ARTICLES_READ_AT: 'SET_ALL_ARTICLES_READ_AT',
@@ -34,7 +34,7 @@ export const setSelectedArticleContentAction = (articleContent: string) => ({
     type: ArticlesActionTypes.SET_SELECTED_ARTICLE_CONTENT,
 })
 
-export const setArticlesAction = (articles: InterfaceArticle[]) => ({
+export const setArticlesAction = (articles: IArticle[]) => ({
     payload: { articles },
     type: ArticlesActionTypes.SET_ARTICLES,
 })

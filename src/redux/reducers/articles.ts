@@ -1,11 +1,11 @@
 import Immutable, { List } from 'immutable'
-import InterfaceArticle from '../../schemas/InterfaceArticle'
+import IArticle from '../../schemas/IArticle'
 import { ArticlesActionTypes, IAction } from '../actions'
 
 export interface IArticlesState {
     allReadAt: number
     filter: string
-    list: Immutable.List<InterfaceArticle>
+    list: Immutable.List<IArticle>
     selectedContent: string,
     selectedId: number,
     selectedIndex: number,
@@ -14,7 +14,7 @@ export interface IArticlesState {
 const initialArticlesState = Immutable.Record<IArticlesState>({
     allReadAt: 0,
     filter: 'ALL',
-    list: Immutable.List<InterfaceArticle>([]),
+    list: Immutable.List<IArticle>([]),
     selectedContent: '',
     selectedId: 0,
     selectedIndex: -1,
@@ -33,13 +33,13 @@ const articles = (state = initialArticlesState, action: IAction) => {
             return state.set('selectedContent', action.payload.articleContent)
         case ArticlesActionTypes.SET_ARTICLES:
             lastDateStr = ''
-            action.payload.articles.forEach((article: InterfaceArticle) => {
+            action.payload.articles.forEach((article: IArticle) => {
                 if (lastDateStr !== article.date) {
                     lastDateStr = article.date
                     article.is_dayfirst = true
                 }
             })
-            return state.set('list', List<InterfaceArticle>(action.payload.articles))
+            return state.set('list', List<IArticle>(action.payload.articles))
                 .set('selectedId', 0)
                 .set('selectedIndex', -1)
                 .set('selectedContent', '')
