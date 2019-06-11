@@ -1,5 +1,5 @@
 import IArticle from '../schemas/IArticle'
-import InterfaceFeed from '../schemas/InterfaceFeed'
+import IFeed from '../schemas/IFeed'
 const Sqlite3 = (window as any).require('sqlite3').verbose()
 const SQLITE_DB_PATH = (window as any).SQLITE_DB_PATH
 const db = new Sqlite3.Database(SQLITE_DB_PATH)
@@ -211,7 +211,7 @@ const DB = {
             })
         })
     },
-    createFeed(feed: InterfaceFeed) {
+    createFeed(feed: IFeed) {
         const time = ~~(Date.now() / 1000)
         const sql = `insert into feeds(title, link, url, date_time, etag, favicon, created_at) values
                     ($title, $link, $url, $date_time, $etag, $favicon, $created_at)`
@@ -251,7 +251,7 @@ const DB = {
             })
         })
     },
-    updateFeed(feedId: number, feed: InterfaceFeed) {
+    updateFeed(feedId: number, feed: IFeed) {
         const time = ~~(Date.now() / 1000)
         const sql = `update feeds set title = $title, date_time = $date_time, etag = $etag, updated_at = $updated_at, deleted_at = $deleted_at where id = $feed_id`
         const params = {

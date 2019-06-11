@@ -1,6 +1,6 @@
 import { all, call, put, select, takeEvery, takeLatest } from 'redux-saga/effects'
 import Logic from '../../logic'
-import InterfaceFeed from '../../schemas/InterfaceFeed'
+import IFeed from '../../schemas/IFeed'
 import { ArticlesActionTypes, FeedsActionTypes, IAction } from '../actions'
 import { getFeeds, getMenu } from './selectors'
 
