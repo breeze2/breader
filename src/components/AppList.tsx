@@ -9,18 +9,21 @@ const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 const Confirm = Modal.confirm
 
-export interface IAppListReduxData {
+export interface IAppListOwnProps {
+}
+
+export interface IAppListReduxState {
     allArticlesReadAt: number
     articlesFilter: string
     selectedMenuKey: string
 }
 
-export interface IAppListReduxFunc {
+export interface IAppListReduxDispatch {
     asyncFilterArticles: (filter: string) => any
     asyncSetAllArticlesRead: () => any
 }
 
-interface IAppListProps extends IAppListReduxData, IAppListReduxFunc {
+interface IAppListProps extends IAppListOwnProps, IAppListReduxState, IAppListReduxDispatch {
 }
 
 interface IAppListState {

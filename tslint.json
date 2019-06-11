@@ -34,6 +34,7 @@
         "no-construct": true,
         "no-debugger": true,
         "no-duplicate-variable": true,
+        "no-empty-interface": false,
         "no-eval": true,
         "no-internal-module": true,
         "no-implicit-dependencies": false,

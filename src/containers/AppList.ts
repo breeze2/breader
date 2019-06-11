@@ -1,15 +1,16 @@
-import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux'
+import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux'
 import { Dispatch } from 'redux'
-import AppList, { IAppListReduxData, IAppListReduxFunc } from '../components/AppList'
+import AppList, { IAppListOwnProps, IAppListReduxDispatch, IAppListReduxState } from '../components/AppList'
 import { asyncFilterArticlesAction, asyncSetAllArticlesReadAction, IAction } from '../redux/actions'
+import { IState } from '../redux/reducers'
 
-const mapStateToProps: MapStateToProps<IAppListReduxData, any, any> = (store: any, props: any) => ({
-    allArticlesReadAt: store.articles.get('allReadAt'),
-    articlesFilter: store.articles.get('filter'),
-    selectedMenuKey: store.menu.get('selectedKey'),
+const mapStateToProps: MapStateToProps<IAppListReduxState, IAppListOwnProps, IState> = (state: IState) => ({
+    allArticlesReadAt: state.articles.get('allReadAt'),
+    articlesFilter: state.articles.get('filter'),
+    selectedMenuKey: state.menu.selectedKey,
 })
 
-const mapDispatchToProps: MapDispatchToPropsFunction<IAppListReduxFunc, any> = (dispatch: Dispatch<IAction>, props: any): IAppListReduxFunc => ({
+const mapDispatchToProps: MapDispatchToProps<IAppListReduxDispatch, IAppListOwnProps> = (dispatch: Dispatch<IAction>) => ({
     asyncFilterArticles: (filter: string) => dispatch(asyncFilterArticlesAction(filter)),
     asyncSetAllArticlesRead: () => dispatch(asyncSetAllArticlesReadAction()),
 })
