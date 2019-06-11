@@ -1,14 +1,8 @@
 import { Layout } from 'antd'
-// import { List, Map } from 'immutable'
 import React, { Component } from 'react'
 import { Provider as ReduxProvider } from 'react-redux'
-import { applyMiddleware, createStore } from 'redux'
-import createSagaMiddleware from 'redux-saga'
 
 import SettingsModal from './containers/SettingsModal'
-
-import RootReducer from './redux/reducers'
-import RootSaga from './redux/sagas'
 
 import AppContent from './layouts/AppContent'
 import AppSider from './layouts/AppSider'
@@ -16,22 +10,15 @@ import { IntlProvider, messages } from './locales'
 import './styles/App.less'
 import Utils from './utils';
 
-const sagaMiddleware = createSagaMiddleware()
-// const store = createStore(RootReducer, applyMiddleware(sagaMiddleware))
+import store from './redux';
 
-const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || (window as any).compose
-const store = composeEnhancers ? createStore(RootReducer, composeEnhancers(applyMiddleware(sagaMiddleware))) :
-  createStore(RootReducer, applyMiddleware(sagaMiddleware))
-
-sagaMiddleware.run(RootSaga)
-
-interface InterfaceAppState {
+interface IAppState {
   isSettingsModalVisible: boolean
   language: string
 }
 
 class App extends Component {
-  public state: InterfaceAppState
+  public state: IAppState
   public constructor(props: any) {
     super(props)
     this.state = {
@@ -69,7 +56,7 @@ class App extends Component {
               {/* <Layout></Layout> */}
               <SettingsModal visible={this.state.isSettingsModalVisible}
                 onLanguageChange={this.handleLanguageChange}
-              onClose={this.handleSettingsModalClose} />
+                onClose={this.handleSettingsModalClose} />
             </Layout>
           </div>
         </IntlProvider>
