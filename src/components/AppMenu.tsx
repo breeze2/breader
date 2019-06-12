@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import React, { Component } from 'react'
 import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'react-intl'
 import defaultFavicon from '../images/rss.png'
-import InterfaceFeed from '../schemas/InterfaceFeed'
+import IFeed from '../schemas/IFeed'
 import '../styles/AppMenu.less'
 import AddFeedModal from './AddFeedModal'
 
@@ -25,7 +25,7 @@ export interface IAppMenuReduxDispatch {
 
 export interface IAppMenuReduxState {
     feedFavicons: Immutable.Map<string, string>
-    feeds: Immutable.List<InterfaceFeed>
+    feeds: Immutable.List<IFeed>
     feedsChanges: number
     feedsUpdatedAt: number
     invalidFeedsCount: number

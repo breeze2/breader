@@ -2,7 +2,7 @@ import { Avatar, Button, Input, List as AntdList, message as Message, Modal, Sel
 import Immutable from 'immutable'
 import React, { Component } from 'react'
 import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'react-intl'
-import InterfaceFeed from '../schemas/InterfaceFeed'
+import IFeed from '../schemas/IFeed'
 
 import '../styles/SettingsModal.less'
 
@@ -18,7 +18,7 @@ export interface ISettingsModalReduxDispatch {
 }
 
 export interface ISettingsModalReduxState {
-    feeds: Immutable.List<InterfaceFeed>
+    feeds: Immutable.List<IFeed>
     language: string,
 }
 
@@ -100,7 +100,7 @@ class SettingsModal extends Component<ISettingsModalProps & InjectedIntlProps, {
                             size="small"
                             itemLayout="horizontal"
                             dataSource={this.props.feeds.toArray()}
-                            renderItem={(feed: InterfaceFeed) => {
+                            renderItem={(feed: IFeed) => {
                                 if (feed.id && this.state.needDeleted[feed.id]) {
                                     return <div />
                                 }

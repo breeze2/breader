@@ -6,7 +6,7 @@ const iconv = (window as any).require('iconv-lite')
 const chardet = (window as any).require('chardet')
 const { Transform } = (window as any).require('stream')
 const Buffer = (window as any).Buffer
-import InterfaceFeed from '../schemas/InterfaceFeed'
+import IFeed from '../schemas/IFeed'
 
 class IconvTransform extends Transform {
     private temp: string = ''
@@ -113,7 +113,7 @@ const FeedParser = {
                     const cv = new IconvTransform()
                     const fp = new BaseFeedParser()
                     const articles: any[] = []
-                    let feed: InterfaceFeed
+                    let feed: IFeed
                     res.pipe(cv)
                     res.pipe(fp)
                     fp.on('meta', (meta: any) => {

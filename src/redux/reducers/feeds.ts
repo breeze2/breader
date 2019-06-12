@@ -1,5 +1,5 @@
 import Immutable, { List, Map } from 'immutable'
-import InterfaceFeed from '../../schemas/InterfaceFeed'
+import IFeed from '../../schemas/IFeed'
 import { FeedsActionTypes, IAction } from '../actions'
 
 export interface IFeedsState {
@@ -7,7 +7,7 @@ export interface IFeedsState {
     favicons: Immutable.Map<string, string>
     invalidCount: number
     isUpdating: boolean
-    list: Immutable.List<InterfaceFeed>
+    list: Immutable.List<IFeed>
     updatedAt: number
 }
 
@@ -16,7 +16,7 @@ const initialFeedsState = Immutable.Record<IFeedsState>({
     favicons: Immutable.Map<string>({}),
     invalidCount: 0,
     isUpdating: false,
-    list: Immutable.List<InterfaceFeed>([]),
+    list: Immutable.List<IFeed>([]),
     updatedAt: 0,
 })()
 
@@ -45,19 +45,19 @@ const feeds = (state = initialFeedsState, action: IAction) => {
             const newFeed = action.payload.feed
             return state.update('favicons', (favicons: Map<string, string>) => {
                 return favicons.set(newFeed.id + '', newFeed.favicon)
-            }).update('list', (list: List<InterfaceFeed>) => {
+            }).update('list', (list: List<IFeed>) => {
                 return list.push(newFeed)
             })
         case FeedsActionTypes.SET_FEEDS:
             const newFavicons: any = {}
             const newFeeds = action.payload.feeds
-            newFeeds.forEach((feed: InterfaceFeed) => {
+            newFeeds.forEach((feed: IFeed) => {
                 if (feed.id && feed.favicon) {
                     newFavicons[feed.id] = feed.favicon
                 }
             })
             return state.set('favicons', Map<string, string>(newFavicons))
-                .set('list', List<InterfaceFeed>(newFeeds))
+                .set('list', List<IFeed>(newFeeds))
         default:
             return state
     }
