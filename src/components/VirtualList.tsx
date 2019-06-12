@@ -3,7 +3,7 @@ import { List, Map } from 'immutable'
 import React, { Component, PureComponent, RefObject } from 'react'
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List as VList, WindowScroller } from 'react-virtualized'
 import ListItem from '../containers/ListItem'
-import InterfaceArticle from '../schemas/InterfaceArticle'
+import IArticle from '../schemas/IArticle'
 import '../styles/VirtualList.less'
 import Utils from '../utils'
 
@@ -17,7 +17,7 @@ export interface IVirtualListReduxDispatch {
 
 export interface IVirtualListReduxState {
     articleId: number
-    articles: List<InterfaceArticle>
+    articles: List<IArticle>
 }
 
 interface IVirtualListProps extends IVirtualListOwnProps, IVirtualListReduxDispatch, IVirtualListReduxState {
@@ -150,7 +150,7 @@ class VirtualList extends PureComponent<IVirtualListProps> {
         const parent = info.parent
         const key = info.key
         const style = info.style
-        const article = (this.props.articles.get(index) as InterfaceArticle)
+        const article = (this.props.articles.get(index) as IArticle)
         return (
             <CellMeasurer key={key} cache={this.cellCache} parent={parent} columnIndex={0} rowIndex={index} >
                 <div style={style}

@@ -2,7 +2,7 @@ import { Empty, Icon } from 'antd'
 import Immutable from 'immutable'
 import React, { Component, PureComponent } from 'react'
 import greyLogo from '../images/grey-logo.png'
-import InterfaceArticle from '../schemas/InterfaceArticle'
+import IArticle from '../schemas/IArticle'
 import '../styles/ArticleView.less'
 import WebviewDrawer from './WebviewDrawer'
 
@@ -13,7 +13,7 @@ export interface IArticleViewReduxState {
     articleContent: string
     articleIndex: number
     articleId: number
-    articles: Immutable.List<InterfaceArticle>
+    articles: Immutable.List<IArticle>
 }
 
 export interface IArticleViewReduxDispatch {
@@ -28,7 +28,7 @@ interface IArticleViewState {
     isWebviewDrawerVisible: boolean
     webviewDrawerSrc: string,
     isStarredsMap: any,
-    article?: InterfaceArticle,
+    article?: IArticle,
 }
 
 class ArticleView extends PureComponent<IArticleViewProps> {

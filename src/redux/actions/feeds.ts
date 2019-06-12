@@ -1,4 +1,4 @@
-import InterfaceFeed from '../../schemas/InterfaceFeed'
+import IFeed from '../../schemas/IFeed'
 
 export const FeedsActionTypes = {
     ADD_FEED: 'ADD_FEED',
@@ -15,7 +15,7 @@ export const FeedsActionTypes = {
     ASYNC_UPDATE_FEEDS: 'ASYNC_UPDATE_FEEDS',
 }
 
-export const addFeedAction = (feed: InterfaceFeed) => ({
+export const addFeedAction = (feed: IFeed) => ({
     payload: { feed },
     type: FeedsActionTypes.ADD_FEED,
 })
@@ -30,7 +30,7 @@ export const setFeedsUpdatedAtAction = (updatedAt: number) => ({
     type: FeedsActionTypes.SET_FEEDS_UPDATED_AT,
 })
 
-export const setFeedsAction = (feeds: InterfaceFeed[]) => ({
+export const setFeedsAction = (feeds: IFeed[]) => ({
     payload: { feeds },
     type: FeedsActionTypes.SET_FEEDS,
 })

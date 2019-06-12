@@ -1,4 +1,4 @@
-import InterfaceFeed from '../schemas/InterfaceFeed'
+import IFeed from '../schemas/IFeed'
 import FeedParser from './feedparser'
 import DB from './sqlite3'
 
@@ -106,7 +106,7 @@ const Logic = {
             console.error(err)
         }
     },
-    updateFeedArticles: async (feed: InterfaceFeed) => {
+    updateFeedArticles: async (feed: IFeed) => {
         try {
             const feedNarticles: any = await FeedParser.parseFeed(feed.url, feed.etag || '')
             if (!feedNarticles) {

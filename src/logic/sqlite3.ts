@@ -1,5 +1,5 @@
-import InterfaceArticle from '../schemas/InterfaceArticle'
-import InterfaceFeed from '../schemas/InterfaceFeed'
+import IArticle from '../schemas/IArticle'
+import IFeed from '../schemas/IFeed'
 const Sqlite3 = (window as any).require('sqlite3').verbose()
 const SQLITE_DB_PATH = (window as any).SQLITE_DB_PATH
 const db = new Sqlite3.Database(SQLITE_DB_PATH)
@@ -48,7 +48,7 @@ function makeInsertArticlesSql (length: number) {
     return sql
 }
 
-function makeInsertArticlesParams(articles: InterfaceArticle[], feedId: number) {
+function makeInsertArticlesParams(articles: IArticle[], feedId: number) {
     const params: any = {}
     articles.forEach((a, i) => {
         params[`$guid${i}`] = a.guid
@@ -211,7 +211,7 @@ const DB = {
             })
         })
     },
-    createFeed(feed: InterfaceFeed) {
+    createFeed(feed: IFeed) {
         const time = ~~(Date.now() / 1000)
         const sql = `insert into feeds(title, link, url, date_time, etag, favicon, created_at) values
                     ($title, $link, $url, $date_time, $etag, $favicon, $created_at)`
@@ -251,7 +251,7 @@ const DB = {
             })
         })
     },
-    updateFeed(feedId: number, feed: InterfaceFeed) {
+    updateFeed(feedId: number, feed: IFeed) {
         const time = ~~(Date.now() / 1000)
         const sql = `update feeds set title = $title, date_time = $date_time, etag = $etag, updated_at = $updated_at, deleted_at = $deleted_at where id = $feed_id`
         const params = {
@@ -272,7 +272,7 @@ const DB = {
             })
         })
     },
-    createArticles(articles: InterfaceArticle[], feedId: number) {
+    createArticles(articles: IArticle[], feedId: number) {
         const time = ~~(Date.now() / 1000)
         const leng = articles.length
         const sql = makeInsertArticlesSql(leng)
@@ -290,7 +290,7 @@ const DB = {
             })
         })
     },
-    updateArticle(article: InterfaceArticle) {
+    updateArticle(article: IArticle) {
         const sql = `update articles set author = $author, title = $title, date = $date, time = $time,
                 description = $description, summary = $summary, link = $link,
                 created_at = $created_at, updated_at = $updated_at
@@ -316,8 +316,8 @@ const DB = {
             })
         })
     },
-    saveArticles(articles: InterfaceArticle[], feedId: number, time: number) {
-        const needCreated: InterfaceArticle[] = []
+    saveArticles(articles: IArticle[], feedId: number, time: number) {
+        const needCreated: IArticle[] = []
         articles.forEach((a) => {
             if (a.created_at && a.created_at > time) {
                 needCreated.push(a)

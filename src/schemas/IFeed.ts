@@ -1,4 +1,4 @@
-export default interface InterfaceFeed {
+export default interface IFeed {
     id?: number
     title?: string
     link: string

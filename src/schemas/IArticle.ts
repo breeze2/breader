@@ -1,4 +1,4 @@
-export default interface InterfaceArtilce {
+export default interface IArtilce {
     author: string
     // categories?: string[]
     // comments?: string
