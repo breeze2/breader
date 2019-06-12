@@ -19,8 +19,9 @@ install:
   - npm i yarn -g
   - yarn install
 script:
-  - yarn electron-dist
+  - if [ "$TRAVIS_BRANCH" = "master" ] || [[ "$TRAVIS_BRANCH" =~ ^release ]]; then yarn electron-dist; fi
 
 branches:
-  only:
+    - develop
     - master
+    - release/*
