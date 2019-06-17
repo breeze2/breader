@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import React, { Component } from 'react'
 import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'react-intl'
 import defaultFavicon from '../images/rss.png'
-import IFeed from '../schemas/IFeed'
+import { IFeed } from '../schemas'
 import '../styles/AppMenu.less'
 import AddFeedModal from './AddFeedModal'
 

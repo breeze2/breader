@@ -1,4 +1,4 @@
-import IFeed from '../../schemas/IFeed'
+import { IFeed } from '../../schemas'
 
 export const FeedsActionTypes = {
     ADD_FEED: 'ADD_FEED',

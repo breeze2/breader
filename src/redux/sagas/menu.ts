@@ -1,7 +1,8 @@
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
-import { ArticlesActionTypes, IAction, MenuActionTypes } from '../actions'
+import { IReduxAction } from '../../schemas'
+import { ArticlesActionTypes, MenuActionTypes } from '../actions'
 
-export function* selectMenuKeySaga(action: IAction) {
+export function* selectMenuKeySaga(action: IReduxAction) {
     try {
         yield put({ type: MenuActionTypes.SET_SELECTED_MENU_KEY, payload: action.payload })
         yield put({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null })

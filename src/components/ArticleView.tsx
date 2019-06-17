@@ -2,7 +2,7 @@ import { Empty, Icon } from 'antd'
 import Immutable from 'immutable'
 import React, { Component, PureComponent } from 'react'
 import greyLogo from '../images/grey-logo.png'
-import IArticle from '../schemas/IArticle'
+import { IArticle } from '../schemas'
 import '../styles/ArticleView.less'
 import WebviewDrawer from './WebviewDrawer'
 

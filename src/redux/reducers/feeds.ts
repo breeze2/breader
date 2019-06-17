@@ -1,6 +1,6 @@
 import Immutable, { List, Map } from 'immutable'
-import IFeed from '../../schemas/IFeed'
-import { FeedsActionTypes, IAction } from '../actions'
+import { IFeed, IReduxAction } from '../../schemas'
+import { FeedsActionTypes } from '../actions'
 
 export interface IFeedsState {
     changes: number
@@ -22,7 +22,7 @@ const initialFeedsState = Immutable.Record<IFeedsState>({
 
 Object.defineProperty(window, 'Immutable', { value: Immutable})
 
-const feeds = (state = initialFeedsState, action: IAction) => {
+const feeds = (state = initialFeedsState, action: IReduxAction) => {
     switch (action.type) {
         case FeedsActionTypes.SET_FEEDS_UPDATED_AT:
             return state.set('updatedAt', action.payload.updatedAt)

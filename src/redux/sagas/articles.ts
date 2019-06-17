@@ -1,9 +1,10 @@
 import { all, call, put, select, takeEvery, takeLatest } from 'redux-saga/effects'
 import Logic from '../../logic'
-import { ArticlesActionTypes, IAction } from '../actions'
+import { IReduxAction } from '../../schemas'
+import { ArticlesActionTypes } from '../actions'
 import { getArticles, getMenu } from './selectors'
 
-export function* fetchArticlesSaga(action: IAction) {
+export function* fetchArticlesSaga(action: IReduxAction) {
     try {
         const menu = yield select(getMenu)
         const menuKey = menu.get('selectedKey')
@@ -37,7 +38,7 @@ export function* fetchArticlesSaga(action: IAction) {
     }
 }
 
-function* getArticleContentSaga(action: IAction) {
+function* getArticleContentSaga(action: IReduxAction) {
     try {
         const articleContent = yield call(Logic.getArticleContent, action.payload.articleId)
         yield put({ type: ArticlesActionTypes.SET_SELECTED_ARTICLE_CONTENT, payload: { articleContent } })
@@ -46,7 +47,7 @@ function* getArticleContentSaga(action: IAction) {
     }
 }
 
-export function* selectAndReadArticlesSaga(action: IAction) {
+export function* selectAndReadArticlesSaga(action: IReduxAction) {
     try {
         yield all([
             put({type: ArticlesActionTypes.SET_SELECTED_ARTICLE, payload: action.payload}),
@@ -58,7 +59,7 @@ export function* selectAndReadArticlesSaga(action: IAction) {
     }
 }
 
-export function* starArticleSaga(action: IAction) {
+export function* starArticleSaga(action: IReduxAction) {
     try {
         yield call(Logic.setArticleIsStarred, action.payload.articleId, action.payload.isStarred)
     } catch (e) {
@@ -66,7 +67,7 @@ export function* starArticleSaga(action: IAction) {
     }
 }
 
-export function* setAllArticlesReadSaga (action: IAction) {
+export function* setAllArticlesReadSaga (action: IReduxAction) {
     try {
         const changes = yield call(Logic.setAllAriclesIsRead)
         if (changes) {
@@ -78,7 +79,7 @@ export function* setAllArticlesReadSaga (action: IAction) {
     }
 }
 
-export function* filterArticlesSaga(action: IAction) {
+export function* filterArticlesSaga(action: IReduxAction) {
     try {
         yield put({ type: ArticlesActionTypes.SET_ARTICLES_FILTER, payload: action.payload })
         yield put({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null })

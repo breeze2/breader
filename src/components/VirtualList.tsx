@@ -3,7 +3,7 @@ import { List, Map } from 'immutable'
 import React, { Component, PureComponent, RefObject } from 'react'
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List as VList, WindowScroller } from 'react-virtualized'
 import ListItem from '../containers/ListItem'
-import IArticle from '../schemas/IArticle'
+import { IArticle } from '../schemas'
 import '../styles/VirtualList.less'
 import Utils from '../utils'
 

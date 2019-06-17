@@ -6,7 +6,7 @@ const iconv = (window as any).require('iconv-lite')
 const chardet = (window as any).require('chardet')
 const { Transform } = (window as any).require('stream')
 const Buffer = (window as any).Buffer
-import IFeed from '../schemas/IFeed'
+import { IFeed } from '../schemas'
 
 class IconvTransform extends Transform {
     private temp: string = ''

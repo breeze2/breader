@@ -1,4 +1,4 @@
-import IArticle from '../../schemas/IArticle'
+import { IArticle } from '../../schemas'
 
 export const ArticlesActionTypes = {
     SET_ALL_ARTICLES_READ_AT: 'SET_ALL_ARTICLES_READ_AT',
