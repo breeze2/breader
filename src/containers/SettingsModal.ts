@@ -1,7 +1,7 @@
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux'
 import { Dispatch } from 'redux'
 import SettingsModal, { ISettingsModalOwnProps, ISettingsModalReduxDispatch, ISettingsModalReduxState } from '../components/SettingsModal'
-import { asyncDeleteFeedsAction, setLanguageAction } from '../redux/actions'
+import { asyncActionDispatcher, asyncDeleteFeedsAction, setLanguageAction } from '../redux/actions'
 import { IReduxAction, IReduxState } from '../schemas'
 
 const mapStateToProps: MapStateToProps<ISettingsModalReduxState, ISettingsModalOwnProps, IReduxState> = (state: IReduxState) => ({
@@ -10,7 +10,7 @@ const mapStateToProps: MapStateToProps<ISettingsModalReduxState, ISettingsModalO
 })
 
 const mapDispatchToProps: MapDispatchToProps<ISettingsModalReduxDispatch, ISettingsModalOwnProps> = (dispatch: Dispatch<IReduxAction>) => ({
-    asyncDeleteFeeds: (feedIds: number[]) => dispatch(asyncDeleteFeedsAction(feedIds)),
+    asyncDeleteFeeds: (feedIds: number[]) => asyncActionDispatcher(dispatch, asyncDeleteFeedsAction(feedIds)),
     setLanguage: (language: string) => dispatch(setLanguageAction(language)),
 })
 

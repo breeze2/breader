@@ -19,8 +19,8 @@ export interface IAppListReduxState {
 }
 
 export interface IAppListReduxDispatch {
-    asyncFilterArticles: (filter: string) => any
-    asyncSetAllArticlesRead: () => any
+    asyncFilterArticles: (filter: string) => Promise<undefined>
+    asyncSetAllArticlesRead: () => Promise<undefined>
 }
 
 interface IAppListProps extends IAppListOwnProps, IAppListReduxState, IAppListReduxDispatch {

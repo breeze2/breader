@@ -1,7 +1,7 @@
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux'
 import { Dispatch } from 'redux'
 import ArticleView, { IArticleViewOwnProps, IArticleViewReduxDispatch, IArticleViewReduxState } from '../components/ArticleView'
-import { asyncStarArticleAction } from '../redux/actions'
+import { asyncActionDispatcher, asyncStarArticleAction } from '../redux/actions'
 import { IReduxAction, IReduxState } from '../schemas'
 
 const mapStateToProps: MapStateToProps<IArticleViewReduxState, IArticleViewOwnProps, IReduxState> = (state: IReduxState) => ({
@@ -12,7 +12,7 @@ const mapStateToProps: MapStateToProps<IArticleViewReduxState, IArticleViewOwnPr
 })
 
 const mapDispatchToProps: MapDispatchToProps<IArticleViewReduxDispatch, IArticleViewOwnProps> = (dispatch: Dispatch<IReduxAction>) => ({
-    asyncStarArticle: (articleId: number, isStarred: boolean) => dispatch(asyncStarArticleAction(articleId, isStarred)),
+    asyncStarArticle: (articleId: number, isStarred: boolean) => asyncActionDispatcher(dispatch, asyncStarArticleAction(articleId, isStarred)),
 })
 
 export default connect(

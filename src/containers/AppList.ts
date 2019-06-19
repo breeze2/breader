@@ -1,7 +1,7 @@
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux'
 import { Dispatch } from 'redux'
 import AppList, { IAppListOwnProps, IAppListReduxDispatch, IAppListReduxState } from '../components/AppList'
-import { asyncFilterArticlesAction, asyncSetAllArticlesReadAction } from '../redux/actions'
+import { asyncActionDispatcher, asyncFilterArticlesAction, asyncSetAllArticlesReadAction } from '../redux/actions'
 import { IReduxAction, IReduxState } from '../schemas'
 
 const mapStateToProps: MapStateToProps<IAppListReduxState, IAppListOwnProps, IReduxState> = (state: IReduxState) => ({
@@ -11,8 +11,8 @@ const mapStateToProps: MapStateToProps<IAppListReduxState, IAppListOwnProps, IRe
 })
 
 const mapDispatchToProps: MapDispatchToProps<IAppListReduxDispatch, IAppListOwnProps> = (dispatch: Dispatch<IReduxAction>) => ({
-    asyncFilterArticles: (filter: string) => dispatch(asyncFilterArticlesAction(filter)),
-    asyncSetAllArticlesRead: () => dispatch(asyncSetAllArticlesReadAction()),
+    asyncFilterArticles: (filter: string) => asyncActionDispatcher(dispatch, asyncFilterArticlesAction(filter)),
+    asyncSetAllArticlesRead: () => asyncActionDispatcher(dispatch, asyncSetAllArticlesReadAction()),
 })
 
 export default connect(

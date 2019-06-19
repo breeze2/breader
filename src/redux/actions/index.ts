@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux'
 import { IReduxAction, IReduxAsyncAction } from '../../schemas'
 
-export function asyncActionDispatcher<Type = {}>(dispatch: Dispatch<any>, action: IReduxAction) {
+export function asyncActionDispatcher<Type = {}>(dispatch: Dispatch<IReduxAction>, action: IReduxAction) {
     return new Promise<Type>((resolve, reject) => {
         const asyncAction: IReduxAsyncAction = {
             ...action,

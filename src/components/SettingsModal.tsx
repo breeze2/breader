@@ -14,7 +14,7 @@ export interface ISettingsModalOwnProps {
 
 export interface ISettingsModalReduxDispatch {
     setLanguage: (language: string) => any
-    asyncDeleteFeeds: (feedIds: number[]) => any
+    asyncDeleteFeeds: (feedIds: number[]) => Promise<undefined>
 }
 
 export interface ISettingsModalReduxState {

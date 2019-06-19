@@ -1,4 +1,5 @@
 import { Avatar, Icon, Menu, message as Message } from 'antd'
+import { SelectParam } from 'antd/lib/menu'
 import Immutable from 'immutable'
 import React, { Component } from 'react'
 import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'react-intl'
@@ -16,11 +17,11 @@ export interface IAppMenuOwnProps {
 export interface IAppMenuReduxDispatch {
     setFeedFavicon: (id: number, favicon: string) => any
     setOnlineStatus: () => any
-    asyncFetchArticles: () => any
-    asyncFetchFeeds: () => any
-    asyncParseFeed: (feedUrl: string) => any
-    asyncSelectMenuKey: (e: any) => any
-    asyncUpdateFeeds: () => any
+    asyncFetchArticles: () => Promise<undefined>
+    asyncFetchFeeds: () => Promise<undefined>
+    asyncParseFeed: (feedUrl: string) => Promise<undefined>
+    asyncSelectMenuKey: (key: string) => Promise<undefined>
+    asyncUpdateFeeds: () => Promise<undefined>
 }
 
 export interface IAppMenuReduxState {
@@ -79,8 +80,8 @@ class AppMenu extends Component<IAppMenuProps & InjectedIntlProps> {
             return this.props.asyncUpdateFeeds()
         }
     }
-    public handleSelect = (e: any) => {
-        this.props.asyncSelectMenuKey(e.key)
+    public handleSelect = (param: SelectParam) => {
+        this.props.asyncSelectMenuKey(param.key)
     }
     public setFeedFaviconDefault = (id: number | undefined) => {
         if (id) {
