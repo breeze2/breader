@@ -2,6 +2,7 @@ import { all, call, put, select, takeEvery, takeLatest } from 'redux-saga/effect
 import Logic from '../../logic'
 import { IReduxAction } from '../../schemas'
 import { ArticlesActionTypes } from '../actions'
+import { makeSagaWorkersDispatcher } from './helpers'
 import { getArticles, getMenu } from './selectors'
 
 export function* fetchArticlesSaga(action: IReduxAction) {
@@ -87,6 +88,14 @@ export function* filterArticlesSaga(action: IReduxAction) {
         console.error(e)
     }
 }
+
+const dispatcher = makeSagaWorkersDispatcher({
+    [ArticlesActionTypes.ASYNC_FETCH_ARTICLES]: fetchArticlesSaga,
+    [ArticlesActionTypes.ASYNC_SELECT_AND_READ_ARTICLE]: selectAndReadArticlesSaga,
+    [ArticlesActionTypes.ASYNC_FILTER_ARTICLES]: filterArticlesSaga,
+    [ArticlesActionTypes.ASYNC_STAR_ARTICLE]: starArticleSaga,
+    [ArticlesActionTypes.ASYNC_SET_ALL_ARTICLES_READ]: setAllArticlesReadSaga,
+})
 
 export function* watchFetchArticles() {
     yield takeLatest(ArticlesActionTypes.ASYNC_FETCH_ARTICLES, fetchArticlesSaga)

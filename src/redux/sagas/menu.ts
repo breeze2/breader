@@ -1,6 +1,7 @@
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
 import { IReduxAction } from '../../schemas'
 import { ArticlesActionTypes, MenuActionTypes } from '../actions'
+import { makeSagaWorkersDispatcher } from './helpers'
 
 export function* selectMenuKeySaga(action: IReduxAction) {
     try {
@@ -11,6 +12,10 @@ export function* selectMenuKeySaga(action: IReduxAction) {
     }
 }
 
+const dispatcher = makeSagaWorkersDispatcher({
+    [MenuActionTypes.ASYNC_SELECT_MENU_KEY]: selectMenuKeySaga,
+})
+
 export function* watchSelectMenuKey() {
-    yield takeLatest(MenuActionTypes.ASYNC_SELECT_MENU_KEY, selectMenuKeySaga)
+    yield takeLatest(MenuActionTypes.ASYNC_SELECT_MENU_KEY, dispatcher)
 }
