@@ -1,5 +1,4 @@
-import IArticle from '../schemas/IArticle'
-import IFeed from '../schemas/IFeed'
+import { IArticle, IFeed } from '../schemas'
 const Sqlite3 = (window as any).require('sqlite3').verbose()
 const SQLITE_DB_PATH = (window as any).SQLITE_DB_PATH
 const db = new Sqlite3.Database(SQLITE_DB_PATH)

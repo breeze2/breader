@@ -1,4 +1,4 @@
-import IFeed from '../schemas/IFeed'
+import { IFeed } from '../schemas'
 import FeedParser from './feedparser'
 import DB from './sqlite3'
 

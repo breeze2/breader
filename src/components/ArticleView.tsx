@@ -2,7 +2,7 @@ import { Empty, Icon } from 'antd'
 import Immutable from 'immutable'
 import React, { Component, PureComponent } from 'react'
 import greyLogo from '../images/grey-logo.png'
-import IArticle from '../schemas/IArticle'
+import { IArticle } from '../schemas'
 import '../styles/ArticleView.less'
 import WebviewDrawer from './WebviewDrawer'
 
@@ -17,7 +17,7 @@ export interface IArticleViewReduxState {
 }
 
 export interface IArticleViewReduxDispatch {
-    asyncStarArticle: (articleId: number, isStarred: boolean) => any
+    asyncStarArticle: (articleId: number, isStarred: boolean) => Promise<undefined>
 }
 
 interface IArticleViewProps extends IArticleViewOwnProps, IArticleViewReduxDispatch, IArticleViewReduxState {

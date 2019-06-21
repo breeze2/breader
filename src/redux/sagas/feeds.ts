@@ -1,10 +1,11 @@
 import { all, call, put, select, takeEvery, takeLatest } from 'redux-saga/effects'
 import Logic from '../../logic'
-import IFeed from '../../schemas/IFeed'
-import { ArticlesActionTypes, FeedsActionTypes, IAction } from '../actions'
+import { IReduxAction } from '../../schemas'
+import { ArticlesActionTypes, FeedsActionTypes } from '../actions'
+import { makeSagaWorkersDispatcher } from './helpers'
 import { getFeeds, getMenu } from './selectors'
 
-export function* fetchFeedsSaga(action: IAction) {
+export function* fetchFeedsSaga(action: IReduxAction) {
     try {
         const feeds = yield call(Logic.getAllFeeds)
         yield put({ type: FeedsActionTypes.SET_FEEDS, payload: { feeds } })
@@ -13,7 +14,7 @@ export function* fetchFeedsSaga(action: IAction) {
     }
 }
 
-export function* parseFeedSaga(action: IAction) {
+export function* parseFeedSaga(action: IReduxAction) {
     try {
         const feed = yield call(Logic.createFeed, action.payload.feedUrl)
         if (feed) {
@@ -34,7 +35,7 @@ export function* parseFeedSaga(action: IAction) {
     }
 }
 
-export function* deleteFeedsSaga(action: IAction) {
+export function* deleteFeedsSaga(action: IReduxAction) {
     try {
         if (action.payload.feedIds.length > 0) {
             const changes = yield call(Logic.deleteFeeds, action.payload.feedIds)
@@ -48,7 +49,7 @@ export function* deleteFeedsSaga(action: IAction) {
     }
 }
 
-export function* updateFeedsSaga(action: IAction) {
+export function* updateFeedsSaga(action: IReduxAction) {
     try {
         yield put({type: FeedsActionTypes.SET_IS_UPDATING_FEEDS, payload: { isUpdating: true}})
         const feedsStore = yield select(getFeeds)
@@ -76,18 +77,25 @@ export function* updateFeedsSaga(action: IAction) {
     }
 }
 
+const dispatcher = makeSagaWorkersDispatcher({
+    [FeedsActionTypes.ASYNC_PARSE_FEED]: parseFeedSaga,
+    [FeedsActionTypes.ASYNC_FETCH_FEEDS]: fetchFeedsSaga,
+    [FeedsActionTypes.ASYNC_UPDATE_FEEDS]: updateFeedsSaga,
+    [FeedsActionTypes.ASYNC_DELETE_FEEDS]: deleteFeedsSaga,
+})
+
 export function* watchParseFeed() {
-    yield takeEvery(FeedsActionTypes.ASYNC_PARSE_FEED, parseFeedSaga)
+    yield takeEvery(FeedsActionTypes.ASYNC_PARSE_FEED, dispatcher)
 }
 
 export function* watchFetchFeeds() {
-    yield takeEvery(FeedsActionTypes.ASYNC_FETCH_FEEDS, fetchFeedsSaga)
+    yield takeEvery(FeedsActionTypes.ASYNC_FETCH_FEEDS, dispatcher)
 }
 
 export function* watchUpdateFeeds() {
-    yield takeEvery(FeedsActionTypes.ASYNC_UPDATE_FEEDS, updateFeedsSaga)
+    yield takeEvery(FeedsActionTypes.ASYNC_UPDATE_FEEDS, dispatcher)
 }
 
 export function* watchDeleteFeeds() {
-    yield takeEvery(FeedsActionTypes.ASYNC_DELETE_FEEDS, deleteFeedsSaga)
+    yield takeEvery(FeedsActionTypes.ASYNC_DELETE_FEEDS, dispatcher)
 }

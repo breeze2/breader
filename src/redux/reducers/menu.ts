@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
-import { IAction, MenuActionTypes } from '../actions'
+import { IReduxAction } from '../../schemas'
+import { MenuActionTypes } from '../actions'
 
 const MenuKeyDefault = 'ALL_ITEMS'
 const languageDefault = localStorage.getItem('LANGUAGE') || navigator.language
@@ -16,7 +17,7 @@ const initialMenuState = Immutable.Record<IMenuState>({
     selectedKey: MenuKeyDefault,
 })()
 
-const menuKey = (state = initialMenuState, action: IAction) => {
+const menuKey = (state = initialMenuState, action: IReduxAction) => {
     switch (action.type) {
         case MenuActionTypes.SET_LANGUAGE:
             localStorage.setItem('LANGUAGE', action.payload.language)

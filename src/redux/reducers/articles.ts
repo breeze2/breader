@@ -1,6 +1,6 @@
 import Immutable, { List } from 'immutable'
-import IArticle from '../../schemas/IArticle'
-import { ArticlesActionTypes, IAction } from '../actions'
+import { IArticle, IReduxAction } from '../../schemas'
+import { ArticlesActionTypes } from '../actions'
 
 export interface IArticlesState {
     allReadAt: number
@@ -21,7 +21,7 @@ const initialArticlesState = Immutable.Record<IArticlesState>({
 })()
 
 let lastDateStr = ''
-const articles = (state = initialArticlesState, action: IAction) => {
+const articles = (state = initialArticlesState, action: IReduxAction) => {
     switch (action.type) {
         case ArticlesActionTypes.SET_ALL_ARTICLES_READ_AT:
             return state.set('allReadAt', action.payload.allReadAt)

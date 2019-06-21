@@ -3,7 +3,7 @@ import { List, Map } from 'immutable'
 import React, { Component } from 'react'
 import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'react-intl'
 import ListItem from '../containers/ListItem'
-import IArticle from '../schemas/IArticle'
+import { IArticle } from '../schemas'
 import Utils from '../utils'
 
 import '../styles/SearchArticleModal.less'

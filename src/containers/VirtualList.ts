@@ -1,15 +1,15 @@
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux'
 import { Dispatch } from 'redux'
 import VirtualList, { IVirtualListOwnProps, IVirtualListReduxDispatch, IVirtualListReduxState } from '../components/VirtualList'
-import { asyncSelectAndReadArticlesAction, IAction } from '../redux/actions'
-import { IState } from '../redux/reducers'
+import { asyncSelectAndReadArticlesAction } from '../redux/actions'
+import { IReduxAction, IReduxState } from '../schemas'
 
-const mapStateToProps: MapStateToProps<IVirtualListReduxState, IVirtualListOwnProps, IState> = (state: any) => ({
+const mapStateToProps: MapStateToProps<IVirtualListReduxState, IVirtualListOwnProps, IReduxState> = (state: IReduxState) => ({
     articleId: state.articles.selectedId,
     articles: state.articles.list,
 })
 
-const mapDispatchToProps: MapDispatchToProps<IVirtualListReduxDispatch, IVirtualListOwnProps> = (dispatch: Dispatch<IAction>) => ({
+const mapDispatchToProps: MapDispatchToProps<IVirtualListReduxDispatch, IVirtualListOwnProps> = (dispatch: Dispatch<IReduxAction>) => ({
     selectArticle: (id: number, index: number) => dispatch(asyncSelectAndReadArticlesAction(id, index)),
 })
 

@@ -2,7 +2,7 @@ import { Avatar, Button, Input, List as AntdList, message as Message, Modal, Sel
 import Immutable from 'immutable'
 import React, { Component } from 'react'
 import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'react-intl'
-import IFeed from '../schemas/IFeed'
+import { IFeed } from '../schemas'
 
 import '../styles/SettingsModal.less'
 
@@ -14,7 +14,7 @@ export interface ISettingsModalOwnProps {
 
 export interface ISettingsModalReduxDispatch {
     setLanguage: (language: string) => any
-    asyncDeleteFeeds: (feedIds: number[]) => any
+    asyncDeleteFeeds: (feedIds: number[]) => Promise<undefined>
 }
 
 export interface ISettingsModalReduxState {

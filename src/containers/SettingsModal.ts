@@ -1,16 +1,16 @@
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux'
 import { Dispatch } from 'redux'
 import SettingsModal, { ISettingsModalOwnProps, ISettingsModalReduxDispatch, ISettingsModalReduxState } from '../components/SettingsModal'
-import { asyncDeleteFeedsAction, IAction, setLanguageAction } from '../redux/actions'
-import { IState } from '../redux/reducers'
+import { asyncActionDispatcher, asyncDeleteFeedsAction, setLanguageAction } from '../redux/actions'
+import { IReduxAction, IReduxState } from '../schemas'
 
-const mapStateToProps: MapStateToProps<ISettingsModalReduxState, ISettingsModalOwnProps, IState> = (state: IState) => ({
+const mapStateToProps: MapStateToProps<ISettingsModalReduxState, ISettingsModalOwnProps, IReduxState> = (state: IReduxState) => ({
     feeds: state.feeds.list,
     language: state.menu.language,
 })
 
-const mapDispatchToProps: MapDispatchToProps<ISettingsModalReduxDispatch, ISettingsModalOwnProps> = (dispatch: Dispatch<IAction>) => ({
-    asyncDeleteFeeds: (feedIds: number[]) => dispatch(asyncDeleteFeedsAction(feedIds)),
+const mapDispatchToProps: MapDispatchToProps<ISettingsModalReduxDispatch, ISettingsModalOwnProps> = (dispatch: Dispatch<IReduxAction>) => ({
+    asyncDeleteFeeds: (feedIds: number[]) => asyncActionDispatcher(dispatch, asyncDeleteFeedsAction(feedIds)),
     setLanguage: (language: string) => dispatch(setLanguageAction(language)),
 })
 
