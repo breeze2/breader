@@ -1,31 +1,35 @@
-const BaseFeedParser = (window as any).require('feedparser')
-const http = (window as any).require('http')
-const https = (window as any).require('https')
-const url = (window as any).require('url')
-const iconv = (window as any).require('iconv-lite')
-const chardet = (window as any).require('chardet')
-const { Transform } = (window as any).require('stream')
-const Buffer = (window as any).Buffer
-import { IFeed } from '../schemas'
+import chardet from 'chardet'
+import BaseFeedParser from 'feedparser'
+import http from 'http'
+import https from 'https'
+import iconv from 'iconv-lite'
+import { Transform, TransformCallback } from 'stream'
+import url from 'url'
+import { IFeed, IArticle } from '../schemas'
 
 class IconvTransform extends Transform {
     private temp: string = ''
-    private _transform(chunk: any, encoding: string, callback: ((err: any) => any)) {
+    public _transform(chunk: any, encoding: string, callback: TransformCallback) {
         this.temp += chunk
         // TODO temp is too big
-        callback(null)
+        callback()
     }
-    private _flush(callback: ((err: any) => any)) {
+    public _flush(callback: TransformCallback) {
         const buffer = Buffer.from(this.temp)
         const charset = chardet.detect(buffer)
-        const output = iconv.decode(buffer, charset)
+        let output = buffer.toString()
+        if (charset) {
+            output = (typeof charset === 'string') ?
+                iconv.decode(buffer, charset as string) :
+                iconv.decode(buffer, (charset as chardet.Confidence[])[0].name)
+        }
         this.push(output)
-        callback(null)
+        callback()
     }
 }
 
-function xmlHttpRequest(feedUrl: string, options: any) {
-    return new Promise((resolve, reject) => {
+function xmlHttpRequest(feedUrl: string, options: http.RequestOptions) {
+    return new Promise<http.IncomingMessage>((resolve, reject) => {
         const u = url.parse(feedUrl)
         if (!u) {
             return reject(new Error('WRONG URL'))
@@ -35,7 +39,7 @@ function xmlHttpRequest(feedUrl: string, options: any) {
         headers['user-agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36'
         headers.host = u.host
         headers.origin = headers.referer = u.protocol + '//' + u.host + '/'
-        const o = {
+        const o: http.RequestOptions = {
             headers,
             host: u.host,
             hostname: u.hostname,
@@ -45,7 +49,7 @@ function xmlHttpRequest(feedUrl: string, options: any) {
             protocol: u.protocol,
             timeout: 10000,
         }
-        client.get(o, (res: any) => {
+        client.get(o, (res: http.IncomingMessage) => {
             return resolve(res)
         }).on('error', (err: any) => {
             return reject(err)
@@ -85,8 +89,8 @@ const FeedParser = {
         }
     },
     fetchFavicon (favicon: string) {
-        return new Promise((resolve, reject) => {
-            xmlHttpRequest(favicon, {}).then((res: any) => {
+        return new Promise<string>((resolve, reject) => {
+            xmlHttpRequest(favicon, {}).then((res: http.IncomingMessage) => {
                 if (res.statusCode === 200) {
                     let base64data = ''
                     res.on('data', (chunk: Buffer) => {
@@ -99,6 +103,8 @@ const FeedParser = {
                             return resolve(base64data)
                         }
                     })
+                } else {
+                    return resolve('')
                 }
             })
         })
@@ -108,11 +114,11 @@ const FeedParser = {
             xmlHttpRequest(feedUrl, { headers: {
                 'accept': 'text/html,application/xhtml+xml',
                 'if-none-match': etag,
-            } }).then((res: any) => {
+            } }).then((res: http.IncomingMessage) => {
                 if (res.statusCode === 200) {
                     const cv = new IconvTransform()
-                    const fp = new BaseFeedParser()
-                    const articles: any[] = []
+                    const fp = new BaseFeedParser({})
+                    const articles: IArticle[] = []
                     let feed: IFeed
                     res.pipe(cv)
                     res.pipe(fp)
@@ -140,6 +146,10 @@ const FeedParser = {
                         // TODO
                         return reject(err)
                     })
+                } else if (res.statusCode === 304) {
+                    resolve()
+                } else {
+                    reject(new Error('FETCH ERROR'))
                 }
             })
         })

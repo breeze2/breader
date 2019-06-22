@@ -1,9 +1,4 @@
-interface InterfaceElectron {
-    remote: any
-    ipcRenderer: any
-    shell: any
-}
-const electron: InterfaceElectron = (window as any).require('electron')
+import electron from 'electron'
 export const remote = electron.remote
 export const ipcRenderer = electron.ipcRenderer
 export const shell = electron.shell
