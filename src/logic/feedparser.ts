@@ -1,24 +1,28 @@
-const BaseFeedParser = (window as any).require('feedparser')
-const http = (window as any).require('http')
-const https = (window as any).require('https')
-const url = (window as any).require('url')
-const iconv = (window as any).require('iconv-lite')
-const chardet = (window as any).require('chardet')
-const { Transform } = (window as any).require('stream')
-const Buffer = (window as any).Buffer
+import chardet from 'chardet'
+import BaseFeedParser from 'feedparser'
+import http from 'http'
+import https from 'https'
+import iconv from 'iconv-lite'
+import { Transform } from 'stream'
+import url from 'url'
 import { IFeed } from '../schemas'
 
 class IconvTransform extends Transform {
     private temp: string = ''
-    private _transform(chunk: any, encoding: string, callback: ((err: any) => any)) {
+    public _transform(chunk: any, encoding: string, callback: ((err: any) => any)) {
         this.temp += chunk
         // TODO temp is too big
         callback(null)
     }
-    private _flush(callback: ((err: any) => any)) {
+    public _flush(callback: ((err: any) => any)) {
         const buffer = Buffer.from(this.temp)
         const charset = chardet.detect(buffer)
-        const output = iconv.decode(buffer, charset)
+        let output = buffer.toString()
+        if (charset) {
+            output = (typeof charset === 'string') ?
+                iconv.decode(buffer, charset as string) :
+                iconv.decode(buffer, (charset as chardet.Confidence[])[0].name)
+        }
         this.push(output)
         callback(null)
     }
@@ -35,7 +39,7 @@ function xmlHttpRequest(feedUrl: string, options: any) {
         headers['user-agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36'
         headers.host = u.host
         headers.origin = headers.referer = u.protocol + '//' + u.host + '/'
-        const o = {
+        const o: http.RequestOptions = {
             headers,
             host: u.host,
             hostname: u.hostname,
@@ -111,7 +115,7 @@ const FeedParser = {
             } }).then((res: any) => {
                 if (res.statusCode === 200) {
                     const cv = new IconvTransform()
-                    const fp = new BaseFeedParser()
+                    const fp = new BaseFeedParser({})
                     const articles: any[] = []
                     let feed: IFeed
                     res.pipe(cv)

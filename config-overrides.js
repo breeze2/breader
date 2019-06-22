@@ -1,5 +1,21 @@
 const { override, fixBabelImports, addLessLoader } = require('customize-cra');
 
+const addWebpackExternalsPlugin = config => {
+    const external = function (context, request, callback) {
+        if (/^(iconv-lite|feedparser)$/.test(request)) {
+            return callback(null, 'commonjs ' + request);
+        }
+        callback();
+    };
+    config.externals = external;
+    return config;
+}
+
+const addWebpackTargetPlugin = config => {
+    config.target = 'electron-renderer';
+    return config;
+}
+
 module.exports = override (
     fixBabelImports('import', {
         libraryName: 'antd',
@@ -23,5 +39,7 @@ module.exports = override (
             '@border-color-base': '#d9d9d9',                     // 边框色
             '@box-shadow-base': '0 2px 8px rgba(0, 0, 0, .15)',  // 浮层阴影
         }
-    })
+    }),
+    addWebpackExternalsPlugin,
+    addWebpackTargetPlugin
 );
