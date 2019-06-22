@@ -3,18 +3,18 @@ import BaseFeedParser from 'feedparser'
 import http from 'http'
 import https from 'https'
 import iconv from 'iconv-lite'
-import { Transform } from 'stream'
+import { Transform, TransformCallback } from 'stream'
 import url from 'url'
-import { IFeed } from '../schemas'
+import { IFeed, IArticle } from '../schemas'
 
 class IconvTransform extends Transform {
     private temp: string = ''
-    public _transform(chunk: any, encoding: string, callback: ((err: any) => any)) {
+    public _transform(chunk: any, encoding: string, callback: TransformCallback) {
         this.temp += chunk
         // TODO temp is too big
-        callback(null)
+        callback()
     }
-    public _flush(callback: ((err: any) => any)) {
+    public _flush(callback: TransformCallback) {
         const buffer = Buffer.from(this.temp)
         const charset = chardet.detect(buffer)
         let output = buffer.toString()
@@ -24,12 +24,12 @@ class IconvTransform extends Transform {
                 iconv.decode(buffer, (charset as chardet.Confidence[])[0].name)
         }
         this.push(output)
-        callback(null)
+        callback()
     }
 }
 
-function xmlHttpRequest(feedUrl: string, options: any) {
-    return new Promise((resolve, reject) => {
+function xmlHttpRequest(feedUrl: string, options: http.RequestOptions) {
+    return new Promise<http.IncomingMessage>((resolve, reject) => {
         const u = url.parse(feedUrl)
         if (!u) {
             return reject(new Error('WRONG URL'))
@@ -49,7 +49,7 @@ function xmlHttpRequest(feedUrl: string, options: any) {
             protocol: u.protocol,
             timeout: 10000,
         }
-        client.get(o, (res: any) => {
+        client.get(o, (res: http.IncomingMessage) => {
             return resolve(res)
         }).on('error', (err: any) => {
             return reject(err)
@@ -89,8 +89,8 @@ const FeedParser = {
         }
     },
     fetchFavicon (favicon: string) {
-        return new Promise((resolve, reject) => {
-            xmlHttpRequest(favicon, {}).then((res: any) => {
+        return new Promise<string>((resolve, reject) => {
+            xmlHttpRequest(favicon, {}).then((res: http.IncomingMessage) => {
                 if (res.statusCode === 200) {
                     let base64data = ''
                     res.on('data', (chunk: Buffer) => {
@@ -103,6 +103,8 @@ const FeedParser = {
                             return resolve(base64data)
                         }
                     })
+                } else {
+                    return resolve('')
                 }
             })
         })
@@ -112,11 +114,11 @@ const FeedParser = {
             xmlHttpRequest(feedUrl, { headers: {
                 'accept': 'text/html,application/xhtml+xml',
                 'if-none-match': etag,
-            } }).then((res: any) => {
+            } }).then((res: http.IncomingMessage) => {
                 if (res.statusCode === 200) {
                     const cv = new IconvTransform()
                     const fp = new BaseFeedParser({})
-                    const articles: any[] = []
+                    const articles: IArticle[] = []
                     let feed: IFeed
                     res.pipe(cv)
                     res.pipe(fp)
@@ -144,6 +146,10 @@ const FeedParser = {
                         // TODO
                         return reject(err)
                     })
+                } else if (res.statusCode === 304) {
+                    resolve()
+                } else {
+                    reject(new Error('FETCH ERROR'))
                 }
             })
         })

@@ -1,3 +1,4 @@
+import { IArticle } from './IArticle'
 export interface IFeed {
     id?: number
     title?: string
@@ -10,4 +11,5 @@ export interface IFeed {
     favicon?: string
     summary?: string
     deleted_at?: number
+    articles?: IArticle[]
 }
