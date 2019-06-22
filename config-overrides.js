@@ -7,12 +7,21 @@ const addWebpackExternalsPlugin = config => {
         }
         callback();
     };
-    config.externals = external;
+    if (config.externals) {
+        if (Array.isArray(config.externals)) {
+            config.externals.push(external);
+        } else {
+            config.externals = [config.externals, external];
+        }
+    } else {
+        config.externals = [external];
+    }
     return config;
 }
 
 const addWebpackTargetPlugin = config => {
     config.target = 'electron-renderer';
+    console.log(config);
     return config;
 }
 
@@ -40,6 +49,6 @@ module.exports = override (
             '@box-shadow-base': '0 2px 8px rgba(0, 0, 0, .15)',  // 浮层阴影
         }
     }),
-    addWebpackExternalsPlugin,
+    addWebpackExternalsPlugin, 
     addWebpackTargetPlugin
 );
