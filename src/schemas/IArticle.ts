@@ -1,27 +1,22 @@
 export interface IArticle {
+    _id: string
+    _rev: string
     author: string
-    // categories?: string[]
-    // comments?: string
-    created_at?: number
-    date: string
-    feed_id?: number
-    time: string
-    description?: string
-    feed_title?: string
-    // enclosures?: InterfaceFeedEnclosure[]
-    guid: string
-    // image?: InterfaceFeedImage
-    id?: number
+    categories: string[]
+    comments: string
+    createTime: number
+    deleteTime: number
+    description: string
+    enclosures: string[]
+    feedId: string
+    image: string
     index?: number
-    is_starred?: number
-    is_unread?: number
-    is_dayfirst?: boolean
+    isDayFirst?: boolean
+    isUnread?: boolean
     link: string
-    // origlink?: string
-    // permalink?: string
-    // pubdate: string
-    // source?: InterfaceFeedSource
+    originLink: string
+    publishTime: number
     summary: string
+    time: number
     title: string
-    updated_at?: number
-};
+}

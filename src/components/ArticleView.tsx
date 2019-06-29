@@ -12,12 +12,12 @@ export interface IArticleViewOwnProps {
 export interface IArticleViewReduxState {
     articleContent: string
     articleIndex: number
-    articleId: number
+    articleId: string
     articles: Immutable.List<IArticle>
 }
 
 export interface IArticleViewReduxDispatch {
-    asyncStarArticle: (articleId: number, isStarred: boolean) => Promise<undefined>
+    asyncStarArticle: (articleId: string, isStarred: boolean) => Promise<undefined>
 }
 
 interface IArticleViewProps extends IArticleViewOwnProps, IArticleViewReduxDispatch, IArticleViewReduxState {
@@ -144,14 +144,14 @@ class ArticleView extends PureComponent<IArticleViewProps> {
             viewContent = (
                 <div className="view-content" onMouseLeave={this.handleMouseLeave} onClick={this.handleContentClick}>
                     <div className="article-info" onMouseOver={() => this.handleMouseOverInfo(article.link)}>
-                        <div className="article-date"><p>{article.date}</p></div>
+                        <div className="article-date"><p>{article.time}</p></div>
                         <div className="article-title"><h1>{article.title}</h1></div>
-                        <div className="article-author"><p>{article.author} @ {article.feed_title}</p></div>
+                        <div className="article-author"><p>{article.author} @ {article.feedId}</p></div>
                     </div>
                     <div className="article-content" onMouseOver={this.handleMouseOverContent}>{' '}</div>
                 </div>
             )
-            if (this.state.isStarredsMap[(article.id as number)]) {
+            if (this.state.isStarredsMap[(article._id as string)]) {
                 starIcon = (<Icon type="star" theme="filled"
                     onClick={this.handleStarIconClick} />)
             } else {

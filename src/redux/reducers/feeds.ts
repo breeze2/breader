@@ -52,8 +52,8 @@ const feeds = (state = initialFeedsState, action: IReduxAction) => {
             const newFavicons: any = {}
             const newFeeds = action.payload.feeds
             newFeeds.forEach((feed: IFeed) => {
-                if (feed.id && feed.favicon) {
-                    newFavicons[feed.id] = feed.favicon
+                if (feed._id && feed.favicon) {
+                    newFavicons[feed._id] = feed.favicon
                 }
             })
             return state.set('favicons', Map<string, string>(newFavicons))

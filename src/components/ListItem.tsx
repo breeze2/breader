@@ -11,9 +11,9 @@ export interface IListItemOwnProps {
     style?: any
     guid: string
     feedTitle?: string
-    feedId?: number
-    time: string
-    inid?: number
+    feedId?: string
+    time: number
+    inid?: string
     title: string
     summary: string
 }
@@ -61,7 +61,7 @@ class ListItem<T extends IListItemProps> extends PureComponent<T> {
                 <div className="item-main">
                     <div className="item-header">
                         <div className="item-header-left">{feedTitle}</div>
-                        <div className="item-header-right">{time ? time.substring(0, 5) : ''}</div>
+                        <div className="item-header-right">{time}</div>
                     </div>
                     <div className="item-content">{this.props.title}</div>
                     <div className="item-footer">{this.props.summary}</div>

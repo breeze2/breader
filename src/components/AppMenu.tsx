@@ -15,7 +15,7 @@ export interface IAppMenuOwnProps {
 }
 
 export interface IAppMenuReduxDispatch {
-    setFeedFavicon: (id: number, favicon: string) => any
+    setFeedFavicon: (id: string, favicon: string) => any
     setOnlineStatus: () => any
     asyncFetchArticles: () => Promise<undefined>
     asyncFetchFeeds: () => Promise<undefined>
@@ -83,7 +83,7 @@ class AppMenu extends Component<IAppMenuProps & InjectedIntlProps> {
     public handleSelect = (param: SelectParam) => {
         this.props.asyncSelectMenuKey(param.key)
     }
-    public setFeedFaviconDefault = (id: number | undefined) => {
+    public setFeedFaviconDefault = (id: string | undefined) => {
         if (id) {
             this.props.setFeedFavicon(id, defaultFavicon)
         }
@@ -138,9 +138,9 @@ class AppMenu extends Component<IAppMenuProps & InjectedIntlProps> {
                         </MenuItem>
                         <SubMenu key="subscriptions" className="feed-list" title={<span><Icon type="folder" /><FormattedMessage id="menuSubscriptions" /></span>}>
                             {this.props.feeds.map(feed => {
-                                const favicon = this.props.feedFavicons.get(feed.id + '') || ''
-                                return (<MenuItem key={feed.id}>
-                                    <Avatar shape="square" size={22} src={favicon} onError={() => this.setFeedFaviconDefault(feed.id)}/>
+                                const favicon = this.props.feedFavicons.get(feed._id + '') || ''
+                                return (<MenuItem key={feed._id}>
+                                    <Avatar shape="square" size={22} src={favicon} onError={() => this.setFeedFaviconDefault(feed._id)}/>
                                     <span className="feed-title" title={feed.title}>{feed.title}</span>
                                 </MenuItem>)
                             })}

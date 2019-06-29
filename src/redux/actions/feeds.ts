@@ -35,7 +35,7 @@ export const setFeedsAction = (feeds: IFeed[]): IReduxAction => ({
     type: FeedsActionTypes.SET_FEEDS,
 })
 
-export const setFeedFaviconAction = (feedId: number, favicon: string): IReduxAction => ({
+export const setFeedFaviconAction = (feedId: string, favicon: string): IReduxAction => ({
     payload: { feedId, favicon },
     type: FeedsActionTypes.SET_FEED_FAVICON,
 })

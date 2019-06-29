@@ -39,6 +39,10 @@ let template = [
             click: () => {
                 shell.openExternal('https://github.com/breeze2/breader')
             }
+        }, {
+            label: 'Toggle Developer Tools',
+            accelerator: 'CmdOrCtrl+Alt+I',
+            role: 'toggledevtools'
         }]
     }
 ]

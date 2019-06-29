@@ -12,7 +12,7 @@ const mapStateToProps: MapStateToProps<IArticleViewReduxState, IArticleViewOwnPr
 })
 
 const mapDispatchToProps: MapDispatchToProps<IArticleViewReduxDispatch, IArticleViewOwnProps> = (dispatch: Dispatch<IReduxAction>) => ({
-    asyncStarArticle: (articleId: number, isStarred: boolean) => asyncActionDispatcher(dispatch, asyncStarArticleAction(articleId, isStarred)),
+    asyncStarArticle: (articleId: string, isStarred: boolean) => asyncActionDispatcher(dispatch, asyncStarArticleAction(articleId, isStarred)),
 })
 
 export default connect(
