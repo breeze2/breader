@@ -40,7 +40,7 @@ export default class ArticleModel extends BaseModel<IArticle> {
         const len = articles.length
         let tasks: Array<Promise<PouchDB.Core.Response>> = []
         for (let i = 0; i < len; i++) {
-            tasks.push(this.insertArticle(articles[i]))
+            tasks.push(this.insertArticle(articles[i], feedId))
             if (tasks.length === num) {
                 await Promise.all(tasks)
                 tasks = []
@@ -52,11 +52,11 @@ export default class ArticleModel extends BaseModel<IArticle> {
         }
     }
     public async insertArticle(article: IArticle, feedId?: string) {
+        article.feedId = feedId || article.feedId
         try {
             const oldArticle = await this.get(article._id)
             article._id = oldArticle._id
             article._rev = oldArticle._rev
-            article.feedId = feedId || article.feedId
             return this.put(article)
         } catch (error) {
             return this.post(article)
@@ -64,7 +64,7 @@ export default class ArticleModel extends BaseModel<IArticle> {
     }
     public async getAllArticles() {
         const articles = await this.find({
-            fields: ['_id', '_rev', 'author', 'feedId', 'summary', 'tiem', 'title'],
+            fields: ['_id', '_rev', 'author', 'feedId', 'summary', 'time', 'title'],
             selector: {},
             sort: ['createTime'],
         }, ['createTime'])

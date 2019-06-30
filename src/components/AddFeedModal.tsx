@@ -25,7 +25,7 @@ class AddFeedModal extends Component<IAddFeedModalProps & InjectedIntlProps, {}>
             feedUrl: '',
         }
     }
-    public handleSubmit = (e: any) => {
+    public handleSubmit = () => {
         const feedUrl = this.state.feedUrl
         const a = window.document.createElement('a')
         a.href = feedUrl
@@ -37,12 +37,12 @@ class AddFeedModal extends Component<IAddFeedModalProps & InjectedIntlProps, {}>
             Message.warning(this.props.intl.formatMessage({ id: 'invalidFeedUrl'}))
         }
     }
-    public handleChange = (e: any) => {
+    public handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({
             feedUrl: e.target.value,
         })
     }
-    public componentWillReceiveProps () {
+    public afterClose = () => {
         this.setState({
             feedUrl: '',
         })
@@ -65,6 +65,7 @@ class AddFeedModal extends Component<IAddFeedModalProps & InjectedIntlProps, {}>
                 visible={this.props.visible}
                 onCancel={this.props.onCancel}
                 onOk={this.handleSubmit}
+                afterClose={this.afterClose}
             >
                 {/* <FormattedMessage id="feedUrl" >{ (txt) => {
                     return <Input placeholder={txt as string} value={this.state.feedUrl} onChange={this.handleChange} onPressEnter={this.handleSubmit} />

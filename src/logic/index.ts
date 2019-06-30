@@ -1,4 +1,5 @@
 import { IFeed } from '../schemas'
+import { LogicErrorTypes } from './error'
 import { parseFeed } from './feedparser'
 import { articleDB, feedDB } from './pouchdb'
 
@@ -7,11 +8,11 @@ const Logic = {
         try {
             const isExists = await feedDB.isFeedExists(feedUrl)
             if (isExists && !isExists.deleteTime) {
-                return 'EXISTS'
+                return LogicErrorTypes.PouchDB.EXISTS
             }
             const feed = await parseFeed(feedUrl, '')
             if (!feed) {
-                return 'NOT FOUND'
+                return LogicErrorTypes.FeedParser.NOT_FOUND
             }
             const articles = feed.articles
             const response = await feedDB.insertFeed(feed)
@@ -25,7 +26,7 @@ const Logic = {
             return feed
         } catch (err) {
             console.error(err)
-            return 'ERROR'
+            return LogicErrorTypes.UNKNOWN
         }
     },
     deleteFeeds: async (feedIds: string[]) => {

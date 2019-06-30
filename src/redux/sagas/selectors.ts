@@ -1,3 +1,4 @@
-export const getMenu = (state: any) => state.menu
-export const getFeeds = (state: any) => state.feeds
-export const getArticles = (state: any) => state.articles
+import { IReduxState } from '../../schemas'
+export const getMenu = (state: IReduxState) => state.menu
+export const getFeeds = (state: IReduxState) => state.feeds
+export const getArticles = (state: IReduxState) => state.articles

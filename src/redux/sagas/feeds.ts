@@ -1,38 +1,41 @@
+import Immutable from 'immutable'
 import { all, call, put, select, takeEvery, takeLatest } from 'redux-saga/effects'
 import Logic from '../../logic'
-import { IReduxAction } from '../../schemas'
+import { LogicErrorTypes } from '../../logic/error'
+import { IFeed, IReduxAction } from '../../schemas'
 import { ArticlesActionTypes, FeedsActionTypes } from '../actions'
+import { IMenuState } from '../reducers/menu'
 import { makeSagaWorkersDispatcher } from './helpers'
 import { getFeeds, getMenu } from './selectors'
 
 export function* fetchFeedsSaga(action: IReduxAction) {
-    try {
-        const feeds = yield call(Logic.getAllFeeds)
-        yield put({ type: FeedsActionTypes.SET_FEEDS, payload: { feeds } })
-    } catch (e) {
-        console.error(e)
-    }
+    const feeds = yield call(Logic.getAllFeeds)
+    yield put({ type: FeedsActionTypes.SET_FEEDS, payload: { feeds } })
 }
 
 export function* parseFeedSaga(action: IReduxAction) {
-    try {
-        const feed = yield call(Logic.createFeed, action.payload.feedUrl)
-        if (feed) {
-            if (feed === 'EXISTS') {
-                return
-            }
-            yield put({ type: FeedsActionTypes.ADD_FEED, payload: { feed } })
-            const menuStore = yield select(getMenu)
-            const menuKey = menuStore.get('selectedKey')
-            if (menuKey === 'ALL_ITEMS' || menuKey === 'UNREAD_ITEMS') {
-                yield put({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null})
-            }
-        } else {
-            yield put({ type: FeedsActionTypes.TIPS_PARSE_INVALID_FEED, payload: null })
+    yield put<IReduxAction>({ type: FeedsActionTypes.SET_IS_CREATING_FEED, payload: { isCreating: true } })
+    const feed: IFeed | string = yield call(Logic.createFeed, action.payload.feedUrl)
+    yield put<IReduxAction>({ type: FeedsActionTypes.SET_IS_CREATING_FEED, payload: { isCreating: false } })
+    if (typeof feed === 'string') {
+        switch (feed) {
+            case LogicErrorTypes.PouchDB.EXISTS:
+                break
+            case LogicErrorTypes.FeedParser.NOT_FOUND:
+                break
+            default:
+                yield put({ type: FeedsActionTypes.TIPS_PARSE_INVALID_FEED, payload: null })
+                break
         }
-    } catch (e) {
-        console.error(e)
+        return null
     }
+    yield put<IReduxAction>({ type: FeedsActionTypes.ADD_FEED, payload: { feed } })
+    const menuState: Immutable.Record<IMenuState> = yield select(getMenu)
+    const menuKey = menuState.get('selectedKey')
+    if (menuKey === 'ALL_ITEMS' || menuKey === 'UNREAD_ITEMS') {
+        yield put({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null })
+    }
+    return feed
 }
 
 export function* deleteFeedsSaga(action: IReduxAction) {

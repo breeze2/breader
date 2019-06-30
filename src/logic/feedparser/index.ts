@@ -3,7 +3,7 @@ import http from 'http'
 import https from 'https'
 import url from 'url'
 import { IArticle, IFeed } from '../../schemas'
-import LogicErrorTypes from '../LogicErrorTypes'
+import { LogicErrorTypes } from '../error'
 import { articleDB, feedDB } from '../pouchdb'
 import IconvTransform from './IconvTransform'
 

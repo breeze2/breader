@@ -11,6 +11,7 @@ const mapStateToProps: MapStateToProps<IAppMenuReduxState, IAppMenuOwnProps, IRe
     feedsChanges: state.feeds.changes,
     feedsUpdatedAt: state.feeds.updatedAt,
     invalidFeedsCount: state.feeds.invalidCount,
+    isCreatingFeed: state.feeds.isCreating,
     isUpdatingFeeds: state.feeds.isUpdating,
     onlineStatus: state.menu.onlineStatus,
     selectedMenuKey: state.menu.selectedKey,

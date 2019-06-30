@@ -90,9 +90,7 @@ class SearchArticleModal extends Component<ISearchArticleModalProps & InjectedIn
                         <div key={article._id} onClick={() => this.props.onItemChoose(article.index as number)}>
                             <ListItem author={article.author}
                                 guid={article._id}
-                                feedTitle={article.feedId}
-                                time={0}
-                                inid={article._id}
+                                time={article.time}
                                 feedId={article.feedId}
                                 title={article.title}
                                 summary={article.summary}

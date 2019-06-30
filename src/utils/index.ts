@@ -35,8 +35,12 @@ export function throttle<F extends (...params: any[]) => void>(fn: F, delay: num
     return wrapper
 }
 
-export function timeToString(time: number) {
-    return new Date(time).toString().substring(4, 21);
+export function timeToDateString(time: number) {
+    return new Date(time).toString().substring(4, 15);
+}
+
+export function timeToTimeString(time: number) {
+    return new Date(time).toString().substring(16, 21);
 }
 
 const Utils = {
@@ -45,7 +49,8 @@ const Utils = {
 
     ipcRenderer,
     openExternalUrl,
-    timeToString,
+    timeToDateString,
+    timeToTimeString,
 }
 
 export default Utils

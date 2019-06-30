@@ -7,7 +7,9 @@ export interface IFeedsState {
     favicons: Immutable.Map<string, string>
     invalidCount: number
     isUpdating: boolean
+    isCreating: boolean
     list: Immutable.List<IFeed>
+    titles: Immutable.Map<string, string>
     updatedAt: number
 }
 
@@ -15,8 +17,10 @@ const initialFeedsState = Immutable.Record<IFeedsState>({
     changes: -1,
     favicons: Immutable.Map<string>({}),
     invalidCount: 0,
+    isCreating: false,
     isUpdating: false,
     list: Immutable.List<IFeed>([]),
+    titles: Immutable.Map<string>({}),
     updatedAt: 0,
 })()
 
@@ -32,6 +36,8 @@ const feeds = (state = initialFeedsState, action: IReduxAction) => {
 
         case FeedsActionTypes.SET_IS_UPDATING_FEEDS:
             return state.set('isUpdating', action.payload.isUpdating)
+        case FeedsActionTypes.SET_IS_CREATING_FEED:
+            return state.set('isUpdating', action.payload.isCreating)
 
         case FeedsActionTypes.TIPS_PARSE_INVALID_FEED:
             return state.set('invalidCount', state.get('invalidCount') + 1)
@@ -42,21 +48,27 @@ const feeds = (state = initialFeedsState, action: IReduxAction) => {
             })
 
         case FeedsActionTypes.ADD_FEED:
-            const newFeed = action.payload.feed
+            const newFeed: IFeed = action.payload.feed
             return state.update('favicons', (favicons: Map<string, string>) => {
-                return favicons.set(newFeed.id + '', newFeed.favicon)
+                return favicons.set(newFeed._id + '', newFeed.favicon)
+            }).update('titles', (titles: Map<string, string>) => {
+                return titles.set(newFeed._id + '', newFeed.title)
             }).update('list', (list: List<IFeed>) => {
                 return list.push(newFeed)
             })
+
         case FeedsActionTypes.SET_FEEDS:
             const newFavicons: any = {}
+            const newTtitles: any = {}
             const newFeeds = action.payload.feeds
             newFeeds.forEach((feed: IFeed) => {
-                if (feed._id && feed.favicon) {
+                if (feed._id) {
                     newFavicons[feed._id] = feed.favicon
+                    newTtitles[feed._id] = feed.title
                 }
             })
             return state.set('favicons', Map<string, string>(newFavicons))
+                .set('titles', Map<string, string>(newTtitles))
                 .set('list', List<IFeed>(newFeeds))
         default:
             return state

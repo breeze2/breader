@@ -29,8 +29,8 @@ export function makeSagaWorkersDispatcher(workersMap: { [key: string]: (action: 
             if ('reject' in action && 'resolve' in action) {
                 yield handlePromiseWrapper(worker, action as IReduxAsyncAction)
             } else {
-                // yield nerverThrowWrapper(action, worker)
-                yield noWrapper(worker, action)
+                yield nerverThrowWrapper(worker, action)
+                // yield noWrapper(worker, action)
             }
         }
     }

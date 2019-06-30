@@ -132,7 +132,7 @@ class VirtualList extends PureComponent<IVirtualListProps> {
             const startIndex = (vlist.Grid as any)._renderedRowStartIndex
             const startArticle = this.props.articles.get(startIndex)
             if (startArticle) {
-                const dateTime = Utils.timeToString(startArticle.time)
+                const dateTime = Utils.timeToDateString(startArticle.time)
                 if (dateTime !== this.state.renderStartDate) {
                     this.setState({
                         renderStartDate: dateTime,
@@ -159,12 +159,10 @@ class VirtualList extends PureComponent<IVirtualListProps> {
                 <div style={style}
                     data-id={article._id} data-index={index}
                     className={index === 0 ? 'vlist-item first-list-item' : 'vlist-item'}>
-                    {article.isDayFirst && <div className="date-divid">{article.time}</div>}
+                    {article.isDayFirst && <div className="date-divid">{Utils.timeToDateString(article.time)}</div>}
                     <ListItem author={article.author}
                         guid={article._id}
-                        feedTitle={article.feedId}
                         time={article.time}
-                        inid={article._id}
                         feedId={article.feedId}
                         title={article.title}
                         summary={article.summary}

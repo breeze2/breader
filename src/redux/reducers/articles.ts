@@ -1,4 +1,4 @@
-import Immutable, { List } from 'immutable'
+import Immutable from 'immutable'
 import { IArticle, IReduxAction } from '../../schemas'
 import Utils from '../../utils';
 import { ArticlesActionTypes } from '../actions'
@@ -35,13 +35,13 @@ const articles = (state = initialArticlesState, action: IReduxAction) => {
         case ArticlesActionTypes.SET_ARTICLES:
             lastDateTime = ''
             action.payload.articles.forEach((article: IArticle) => {
-                const dateTime = Utils.timeToString(article.time)
+                const dateTime = Utils.timeToDateString(article.time)
                 if (lastDateTime !== dateTime) {
                     lastDateTime = dateTime
                     article.isDayFirst = true
                 }
             })
-            return state.set('list', List<IArticle>(action.payload.articles))
+            return state.set('list', Immutable.List<IArticle>(action.payload.articles))
                 .set('selectedId', '')
                 .set('selectedIndex', -1)
                 .set('selectedContent', '')
