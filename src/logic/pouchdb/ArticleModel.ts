@@ -59,24 +59,20 @@ export default class ArticleModel extends BaseModel<IArticle> {
         return changes
     }
     public readArticle = async (id: string) => {
-        try {
-            const article = await this.get(id)
-            if (article.isUnread) {
-                article.isUnread = false
-                return this.put(article)
-            }
-            return null
-        } catch (error) {
-            return null
+        const article = await this.get(id)
+        if (article.isUnread !== false) {
+            article.isUnread = false
+            return this.put(article)
         }
+        return null
     }
-    public async getAllArticles() {
-        const articles = await this.find({
-            fields: ['_id', '_rev', 'author', 'feedId', 'isUnread', 'link', 'summary', 'time', 'title'],
-            selector: {},
-            sort: ['createTime'],
-        }, ['createTime'])
-        return articles.docs
+    public starArticle = async (id: string, isStarred: boolean = true) => {
+        const article = await this.get(id)
+        if (article.isStarred !== isStarred) {
+            article.isStarred = isStarred
+            return this.put(article)
+        }
+        return null
     }
     public async queryArticles(selector: PouchDB.Find.Selector = {}, limit: number = 9999, skip: number = 0) {
         if (!selector.time) {
