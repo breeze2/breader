@@ -9,30 +9,30 @@ export function* fetchArticlesSaga(action: IReduxAction) {
     try {
         const menu = yield select(getMenu)
         const menuKey = menu.get('selectedKey')
-        const query: any = {}
+        const selector: PouchDB.Find.Selector = {}
         switch (menuKey) {
             case 'ALL_ITEMS':
                 break
             case 'STARRED_ITEMS':
-                query.is_starred = 1
+                selector.isStarred = { $eq: true }
                 break
             case 'UNREAD_ITEMS':
-                query.is_unread = 1
+                selector.isUnread = { $eq: true }
                 break
             default:
-                query.feed_id = parseInt(menuKey, 10)
+                selector.feedId = { $eq: menuKey }
                 break
         }
-        if (query.feed_id) {
+        if (selector.feedId) {
             const articlesStore = yield select(getArticles)
             const filter = articlesStore.get('filter')
             if (filter === 'STARRED') {
-                query.is_starred = 1
+                selector.isStarred = { $eq: true }
             } else if (filter === 'UNREAD') {
-                query.is_unread = 1
+                selector.isUnread = { $eq: true }
             }
         }
-        const articles = yield call(Logic.getArticles, query)
+        const articles = yield call(Logic.getArticles, selector)
         yield put({ type: ArticlesActionTypes.SET_ARTICLES, payload: { articles: articles || [] } })
     } catch (e) {
         console.error(e)
@@ -70,7 +70,8 @@ export function* starArticleSaga(action: IReduxAction) {
 
 export function* setAllArticlesReadSaga (action: IReduxAction) {
     try {
-        const changes = yield call(Logic.setAllAriclesIsRead)
+        const articleIds: string[] = action.payload.articleIds
+        const changes = yield call(Logic.setAriclesIsRead, articleIds)
         if (changes) {
             yield put({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null })
         }

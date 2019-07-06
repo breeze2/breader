@@ -12,7 +12,8 @@ export interface IArticle {
     image: string
     index?: number
     isDayFirst?: boolean
-    isUnread?: boolean
+    isStarred: boolean
+    isUnread: boolean
     link: string
     originLink: string
     publishTime: number

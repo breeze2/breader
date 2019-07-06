@@ -5,14 +5,15 @@ import { asyncActionDispatcher, asyncFilterArticlesAction, asyncSetAllArticlesRe
 import { IReduxAction, IReduxState } from '../schemas'
 
 const mapStateToProps: MapStateToProps<IAppListReduxState, IAppListOwnProps, IReduxState> = (state: IReduxState) => ({
-    allArticlesReadAt: state.articles.get('allReadAt'),
-    articlesFilter: state.articles.get('filter'),
+    allArticlesReadAt: state.articles.allReadAt,
+    articles: state.articles.list,
+    articlesFilter: state.articles.filter,
     selectedMenuKey: state.menu.selectedKey,
 })
 
 const mapDispatchToProps: MapDispatchToProps<IAppListReduxDispatch, IAppListOwnProps> = (dispatch: Dispatch<IReduxAction>) => ({
     asyncFilterArticles: (filter: string) => asyncActionDispatcher(dispatch, asyncFilterArticlesAction(filter)),
-    asyncSetAllArticlesRead: () => asyncActionDispatcher(dispatch, asyncSetAllArticlesReadAction()),
+    asyncSetAllArticlesRead: (ids: string[]) => asyncActionDispatcher(dispatch, asyncSetAllArticlesReadAction(ids)),
 })
 
 export default connect(

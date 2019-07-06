@@ -59,7 +59,7 @@ export const asyncStarArticleAction = (articleId: string, isStarred: boolean): I
     type: ArticlesActionTypes.ASYNC_STAR_ARTICLE,
 })
 
-export const asyncSetAllArticlesReadAction = (): IReduxAction => ({
-    payload: null,
+export const asyncSetAllArticlesReadAction = (articleIds: string[]): IReduxAction => ({
+    payload: { articleIds },
     type: ArticlesActionTypes.ASYNC_SET_ALL_ARTICLES_READ,
 })

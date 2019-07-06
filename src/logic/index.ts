@@ -3,6 +3,7 @@ import { LogicErrorTypes } from './error'
 import { parseFeed } from './feedparser'
 import { articleDB, feedDB } from './pouchdb'
 
+(window as any).articleDB = articleDB
 const Logic = {
     createFeed: async (feedUrl: string) => {
         try {
@@ -20,7 +21,8 @@ const Logic = {
                 feed._id = response.id
                 feed._rev = response.rev
                 if (articles) {
-                    await articleDB.batchInsertArticles(articles, feed._id)
+                    articles.forEach(article => (article.feedId = feed._id))
+                    await articleDB.batchInsertArticles(articles)
                 }
             }
             return feed
@@ -45,17 +47,29 @@ const Logic = {
         const articleContent = await articleDB.getArticleContent(articleId)
         return articleContent
     },
-    getArticles: async (query: any, offset: number = 0, limit: number = 9999) => {
+    getArticles: async (selector: PouchDB.Find.Selector = {}, limit: number = 9999, skip: number = 0) => {
         try {
-            const articles = await articleDB.getAllArticles()
+            const articles = await articleDB.queryArticles(selector, limit, skip)
             return articles
         } catch (err) {
             console.error(err)
         }
     },
-    setAllAriclesIsRead: async () => {
+    setAriclesIsRead: async (articleIds: string[]) => {
+        try {
+            const changes = await articleDB.batchReadArticles(articleIds);
+            return changes
+        } catch (err) {
+            console.error(err)
+            return 0
+        }
     },
-    setArticleIsRead: async (articleId: number) => {
+    setArticleIsRead: async (articleId: string) => {
+        try {
+            await articleDB.readArticle(articleId)
+        } catch (err) {
+            console.error(err)
+        }
     },
     setArticleIsStarred: async (articleId: number, isStarred: boolean) => {
     },
@@ -71,7 +85,8 @@ const Logic = {
             feed._id = response.id
             feed._rev = response.rev
             if (articles) {
-                await articleDB.batchInsertArticles(articles, feed._id)
+                articles.forEach(article => (article.feedId = feed._id))
+                await articleDB.batchInsertArticles(articles)
             }
         }
         return 1

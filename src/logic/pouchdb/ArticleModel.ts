@@ -1,5 +1,6 @@
 import FeedParser from 'feedparser'
 import { IArticle } from '../../schemas/'
+import Utils from '../../utils'
 import BaseModel from './BaseModel'
 
 export default class ArticleModel extends BaseModel<IArticle> {
@@ -9,7 +10,7 @@ export default class ArticleModel extends BaseModel<IArticle> {
                 fields: ['feedId'], name: 'feedId',
             }},
             {index: {
-                fields: ['createTime'], name: 'createTime',
+                fields: ['time'], name: 'time',
             }},
         ])
     }
@@ -26,6 +27,8 @@ export default class ArticleModel extends BaseModel<IArticle> {
             enclosures: item.enclosures,
             feedId,
             image: item.image.url,
+            isStarred: false,
+            isUnread: true,
             link: item.link,
             originLink: item.origlink,
             publishTime: item.pubdate ? item.pubdate.getTime() : Date.now(),
@@ -35,49 +38,64 @@ export default class ArticleModel extends BaseModel<IArticle> {
         }
         return article
     }
-    public async batchInsertArticles(articles: IArticle[], feedId?: string) {
-        const num = 6
-        const len = articles.length
-        let tasks: Array<Promise<PouchDB.Core.Response>> = []
-        for (let i = 0; i < len; i++) {
-            tasks.push(this.insertArticle(articles[i], feedId))
-            if (tasks.length === num) {
-                await Promise.all(tasks)
-                tasks = []
-            }
-        }
-        if (tasks.length) {
-            await Promise.all(tasks)
-            tasks = []
-        }
+    public async batchInsertArticles(articles: IArticle[]) {
+        await Utils.batchOperate(this.insertArticle, articles)
     }
-    public async insertArticle(article: IArticle, feedId?: string) {
+    public insertArticle = async (article: IArticle, feedId?: string) => {
         article.feedId = feedId || article.feedId
         try {
             const oldArticle = await this.get(article._id)
             article._id = oldArticle._id
             article._rev = oldArticle._rev
+            article.isStarred = oldArticle.isStarred
+            article.isUnread = oldArticle.isUnread
             return this.put(article)
         } catch (error) {
             return this.post(article)
         }
     }
+    public async batchReadArticles(ids: string[]) {
+        const changes = await Utils.batchOperate(this.readArticle, ids)
+        return changes
+    }
+    public readArticle = async (id: string) => {
+        try {
+            const article = await this.get(id)
+            if (article.isUnread) {
+                article.isUnread = false
+                return this.put(article)
+            }
+            return null
+        } catch (error) {
+            return null
+        }
+    }
     public async getAllArticles() {
         const articles = await this.find({
-            fields: ['_id', '_rev', 'author', 'feedId', 'summary', 'time', 'title'],
+            fields: ['_id', '_rev', 'author', 'feedId', 'isUnread', 'link', 'summary', 'time', 'title'],
             selector: {},
             sort: ['createTime'],
         }, ['createTime'])
         return articles.docs
     }
+    public async queryArticles(selector: PouchDB.Find.Selector = {}, limit: number = 9999, skip: number = 0) {
+        if (!selector.time) {
+            selector.time = { $exists: true }
+        }
+        const articles = await this.find({
+            fields: ['_id', '_rev', 'author', 'feedId', 'isUnread', 'link', 'summary', 'time', 'title'],
+            limit,
+            selector,
+            skip,
+            sort: [{ time: 'desc'}],
+        }, ['time', 'feedId'])
+        return articles.docs
+    }
 
     public async getArticleContent(id: string) {
-        const article = await this.find({
-            fields: ['content'],
-            selector: {_id: {$eq: id}},
-        }, [])
-        if (article.docs[0]) {
-            return article.docs[0].description
+        const article = await this.get(id)
+        if (article) {
+            return article.description
         }
         return ''
     }

@@ -9,6 +9,7 @@ const mapStateToProps: MapStateToProps<IArticleViewReduxState, IArticleViewOwnPr
     articleId: state.articles.selectedId,
     articleIndex: state.articles.selectedIndex,
     articles: state.articles.list,
+    feedTitles: state.feeds.titles,
 })
 
 const mapDispatchToProps: MapDispatchToProps<IArticleViewReduxDispatch, IArticleViewOwnProps> = (dispatch: Dispatch<IReduxAction>) => ({
