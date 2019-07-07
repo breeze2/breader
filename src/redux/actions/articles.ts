@@ -24,7 +24,7 @@ export const setArticlesFilterAction = (filter: string): IReduxAction => ({
     type: ArticlesActionTypes.SET_ARTICLES_FILTER,
 })
 
-export const setSelectedArticleAction = (articleId: number, articleIndex: number): IReduxAction => ({
+export const setSelectedArticleAction = (articleId: string, articleIndex: number): IReduxAction => ({
     payload: { articleId, articleIndex },
     type: ArticlesActionTypes.SET_SELECTED_ARTICLE,
 })
@@ -49,17 +49,17 @@ export const asyncFilterArticlesAction = (filter: string): IReduxAction => ({
     type: ArticlesActionTypes.ASYNC_FILTER_ARTICLES,
 })
 
-export const asyncSelectAndReadArticlesAction = (articleId: number, articleIndex: number): IReduxAction => ({
+export const asyncSelectAndReadArticlesAction = (articleId: string, articleIndex: number): IReduxAction => ({
     payload: { articleId, articleIndex },
     type: ArticlesActionTypes.ASYNC_SELECT_AND_READ_ARTICLE,
 })
 
-export const asyncStarArticleAction = (articleId: number, isStarred: boolean): IReduxAction => ({
+export const asyncStarArticleAction = (articleId: string, isStarred: boolean): IReduxAction => ({
     payload: { articleId, isStarred },
     type: ArticlesActionTypes.ASYNC_STAR_ARTICLE,
 })
 
-export const asyncSetAllArticlesReadAction = (): IReduxAction => ({
-    payload: null,
+export const asyncSetAllArticlesReadAction = (articleIds: string[]): IReduxAction => ({
+    payload: { articleIds },
     type: ArticlesActionTypes.ASYNC_SET_ALL_ARTICLES_READ,
 })

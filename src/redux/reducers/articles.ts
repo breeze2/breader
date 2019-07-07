@@ -1,5 +1,6 @@
-import Immutable, { List } from 'immutable'
+import Immutable from 'immutable'
 import { IArticle, IReduxAction } from '../../schemas'
+import Utils from '../../utils';
 import { ArticlesActionTypes } from '../actions'
 
 export interface IArticlesState {
@@ -7,7 +8,7 @@ export interface IArticlesState {
     filter: string
     list: Immutable.List<IArticle>
     selectedContent: string,
-    selectedId: number,
+    selectedId: string,
     selectedIndex: number,
 }
 
@@ -16,11 +17,11 @@ const initialArticlesState = Immutable.Record<IArticlesState>({
     filter: 'ALL',
     list: Immutable.List<IArticle>([]),
     selectedContent: '',
-    selectedId: 0,
+    selectedId: '',
     selectedIndex: -1,
 })()
 
-let lastDateStr = ''
+let lastDateTime = ''
 const articles = (state = initialArticlesState, action: IReduxAction) => {
     switch (action.type) {
         case ArticlesActionTypes.SET_ALL_ARTICLES_READ_AT:
@@ -32,15 +33,16 @@ const articles = (state = initialArticlesState, action: IReduxAction) => {
         case ArticlesActionTypes.SET_SELECTED_ARTICLE_CONTENT:
             return state.set('selectedContent', action.payload.articleContent)
         case ArticlesActionTypes.SET_ARTICLES:
-            lastDateStr = ''
+            lastDateTime = ''
             action.payload.articles.forEach((article: IArticle) => {
-                if (lastDateStr !== article.date) {
-                    lastDateStr = article.date
-                    article.is_dayfirst = true
+                const dateTime = Utils.timeToDateString(article.time)
+                if (lastDateTime !== dateTime) {
+                    lastDateTime = dateTime
+                    article.isDayFirst = true
                 }
             })
-            return state.set('list', List<IArticle>(action.payload.articles))
-                .set('selectedId', 0)
+            return state.set('list', Immutable.List<IArticle>(action.payload.articles))
+                .set('selectedId', '')
                 .set('selectedIndex', -1)
                 .set('selectedContent', '')
         default:

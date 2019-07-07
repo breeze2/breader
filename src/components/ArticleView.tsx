@@ -3,8 +3,10 @@ import Immutable from 'immutable'
 import React, { Component, PureComponent } from 'react'
 import greyLogo from '../images/grey-logo.png'
 import { IArticle } from '../schemas'
-import '../styles/ArticleView.less'
+import Utils from '../utils'
 import WebviewDrawer from './WebviewDrawer'
+
+import '../styles/ArticleView.less'
 
 export interface IArticleViewOwnProps {
 }
@@ -12,12 +14,13 @@ export interface IArticleViewOwnProps {
 export interface IArticleViewReduxState {
     articleContent: string
     articleIndex: number
-    articleId: number
+    articleId: string
     articles: Immutable.List<IArticle>
+    feedTitles: Immutable.Map<string, string>
 }
 
 export interface IArticleViewReduxDispatch {
-    asyncStarArticle: (articleId: number, isStarred: boolean) => Promise<undefined>
+    asyncStarArticle: (articleId: string, isStarred: boolean) => Promise<undefined>
 }
 
 interface IArticleViewProps extends IArticleViewOwnProps, IArticleViewReduxDispatch, IArticleViewReduxState {
@@ -141,17 +144,18 @@ class ArticleView extends PureComponent<IArticleViewProps> {
 
         if (this.state.article) {
             const article = this.state.article
+            const feedTitles = this.props.feedTitles
             viewContent = (
                 <div className="view-content" onMouseLeave={this.handleMouseLeave} onClick={this.handleContentClick}>
                     <div className="article-info" onMouseOver={() => this.handleMouseOverInfo(article.link)}>
-                        <div className="article-date"><p>{article.date}</p></div>
+                        <div className="article-date"><p>{Utils.timeToDateTimeString(article.time)}</p></div>
                         <div className="article-title"><h1>{article.title}</h1></div>
-                        <div className="article-author"><p>{article.author} @ {article.feed_title}</p></div>
+                        <div className="article-author"><p>{article.author} @ {feedTitles.get(article.feedId)}</p></div>
                     </div>
                     <div className="article-content" onMouseOver={this.handleMouseOverContent}>{' '}</div>
                 </div>
             )
-            if (this.state.isStarredsMap[(article.id as number)]) {
+            if (this.state.isStarredsMap[(article._id as string)]) {
                 starIcon = (<Icon type="star" theme="filled"
                     onClick={this.handleStarIconClick} />)
             } else {

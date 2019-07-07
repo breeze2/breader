@@ -11,6 +11,7 @@ const mapStateToProps: MapStateToProps<IAppMenuReduxState, IAppMenuOwnProps, IRe
     feedsChanges: state.feeds.changes,
     feedsUpdatedAt: state.feeds.updatedAt,
     invalidFeedsCount: state.feeds.invalidCount,
+    isCreatingFeed: state.feeds.isCreating,
     isUpdatingFeeds: state.feeds.isUpdating,
     onlineStatus: state.menu.onlineStatus,
     selectedMenuKey: state.menu.selectedKey,
@@ -22,7 +23,7 @@ const mapDispatchToProps: MapDispatchToProps<IAppMenuReduxDispatch, IAppMenuOwnP
     asyncParseFeed: (feedUrl: string) => asyncActionDispatcher(dispatch, asyncParseFeedAction(feedUrl)),
     asyncSelectMenuKey: (key: string) => asyncActionDispatcher(dispatch, asyncSelectMenuKeyAction(key)),
     asyncUpdateFeeds: () => asyncActionDispatcher(dispatch, asyncUpdateFeedsAction()),
-    setFeedFavicon: (id: number, favicon: string) => dispatch(setFeedFaviconAction(id, favicon)),
+    setFeedFavicon: (id: string, favicon: string) => dispatch(setFeedFaviconAction(id, favicon)),
     setOnlineStatus: () => dispatch(setOnlineStatusAction()),
 })
 

@@ -22,7 +22,7 @@ export interface ISettingsModalReduxState {
     language: string,
 }
 
-interface ISettingsModalProps extends ISettingsModalOwnProps, ISettingsModalReduxDispatch, ISettingsModalReduxState {
+export interface ISettingsModalProps extends ISettingsModalOwnProps, ISettingsModalReduxDispatch, ISettingsModalReduxState {
 }
 
 interface ISettingsModalState {
@@ -56,7 +56,7 @@ class SettingsModal extends Component<ISettingsModalProps & InjectedIntlProps, {
         }
         this.props.onClose(e)
     }
-    public handleDeleteClick = (feedId: number) => {
+    public handleDeleteClick = (feedId: string) => {
         const needDeleted = this.state.needDeleted
         needDeleted[feedId] = true
         this.setState({
@@ -101,13 +101,13 @@ class SettingsModal extends Component<ISettingsModalProps & InjectedIntlProps, {
                             itemLayout="horizontal"
                             dataSource={this.props.feeds.toArray()}
                             renderItem={(feed: IFeed) => {
-                                if (feed.id && this.state.needDeleted[feed.id]) {
+                                if (feed._id && this.state.needDeleted[feed._id]) {
                                     return <div />
                                 }
                                 return (<AntdList.Item className="settings-feed-item"
-                                    key={feed.id}
+                                    key={feed._id}
                                     actions={[
-                                        (<Button size="small" type="danger" onClick={() => this.handleDeleteClick(feed.id as number)}
+                                        (<Button size="small" type="danger" onClick={() => this.handleDeleteClick(feed._id)}
                                         ><FormattedMessage id="delete" /></Button>),
                                     ]}
                                 >

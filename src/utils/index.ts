@@ -35,12 +35,49 @@ export function throttle<F extends (...params: any[]) => void>(fn: F, delay: num
     return wrapper
 }
 
+export async function batchOperate<A, T>(action: ((args: A) => Promise<T>), argsList: A[]) {
+    const num = 6
+    const len = argsList.length
+    let tasks: Array<Promise<T>> = []
+    let changes = 0
+    for (let i = 0; i < len; i++) {
+        tasks.push(action(argsList[i]))
+        if (tasks.length === num) {
+            const list = await Promise.all(tasks)
+            list.forEach(el => (changes += el ? 1 : 0))
+            tasks = []
+        }
+    }
+    if (tasks.length) {
+        const list = await Promise.all(tasks)
+        list.forEach(el => (changes += el ? 1 : 0))
+        tasks = []
+    }
+    return changes
+}
+
+export function timeToDateString(time: number) {
+    return new Date(time).toString().substring(4, 15);
+}
+
+export function timeToTimeString(time: number) {
+    return new Date(time).toString().substring(16, 21);
+}
+
+export function timeToDateTimeString(time: number) {
+    return new Date(time).toString().substring(0, 21);
+}
+
 const Utils = {
     debounce,
     throttle,
 
+    batchOperate,
     ipcRenderer,
     openExternalUrl,
+    timeToDateString,
+    timeToDateTimeString,
+    timeToTimeString,
 }
 
 export default Utils

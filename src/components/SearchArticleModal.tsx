@@ -87,13 +87,11 @@ class SearchArticleModal extends Component<ISearchArticleModalProps & InjectedIn
                     onSearch={this.handleSubmit} />
                 <div className="matched-list">
                     {this.state.matchedArticles.map((article: IArticle) => (
-                        <div key={article.id} onClick={() => this.props.onItemChoose(article.index as number)}>
+                        <div key={article._id} onClick={() => this.props.onItemChoose(article.index as number)}>
                             <ListItem author={article.author}
-                                guid={article.guid}
-                                feedTitle={article.feed_title}
-                                time={''}
-                                inid={article.id}
-                                feedId={article.feed_id}
+                                guid={article._id}
+                                time={article.time}
+                                feedId={article.feedId}
                                 title={article.title}
                                 summary={article.summary}
                                 className='item-is-unread'

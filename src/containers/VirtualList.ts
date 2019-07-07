@@ -10,7 +10,7 @@ const mapStateToProps: MapStateToProps<IVirtualListReduxState, IVirtualListOwnPr
 })
 
 const mapDispatchToProps: MapDispatchToProps<IVirtualListReduxDispatch, IVirtualListOwnProps> = (dispatch: Dispatch<IReduxAction>) => ({
-    selectArticle: (id: number, index: number) => dispatch(asyncSelectAndReadArticlesAction(id, index)),
+    selectArticle: (id: string, index: number) => dispatch(asyncSelectAndReadArticlesAction(id, index)),
 })
 
 export default connect(

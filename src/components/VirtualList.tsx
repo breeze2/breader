@@ -12,11 +12,11 @@ export interface IVirtualListOwnProps {
 }
 
 export interface IVirtualListReduxDispatch {
-    selectArticle: (id: number, index: number) => any
+    selectArticle: (id: string, index: number) => any
 }
 
 export interface IVirtualListReduxState {
-    articleId: number
+    articleId: string
     articles: List<IArticle>
 }
 
@@ -85,7 +85,7 @@ class VirtualList extends PureComponent<IVirtualListProps> {
         const target = e.target
         const $listItem = target.closest('.vlist-item')
         if ($listItem && $listItem.dataset) {
-            this.props.selectArticle(parseInt($listItem.dataset.id, 10), parseInt($listItem.dataset.index, 10))
+            this.props.selectArticle($listItem.dataset.id, parseInt($listItem.dataset.index, 10))
             readItems[$listItem.dataset.id] = 1
             this.setState({
                 readItems: { ...readItems },
@@ -131,10 +131,13 @@ class VirtualList extends PureComponent<IVirtualListProps> {
         if (vlist && vlist.Grid) {
             const startIndex = (vlist.Grid as any)._renderedRowStartIndex
             const startArticle = this.props.articles.get(startIndex)
-            if (startArticle && (startArticle.date !== this.state.renderStartDate)) {
-                this.setState({
-                    renderStartDate: startArticle.date,
-                })
+            if (startArticle) {
+                const dateTime = Utils.timeToDateString(startArticle.time)
+                if (dateTime !== this.state.renderStartDate) {
+                    this.setState({
+                        renderStartDate: dateTime,
+                    })
+                }
             }
         }
     }
@@ -154,18 +157,16 @@ class VirtualList extends PureComponent<IVirtualListProps> {
         return (
             <CellMeasurer key={key} cache={this.cellCache} parent={parent} columnIndex={0} rowIndex={index} >
                 <div style={style}
-                    data-id={article.id} data-index={index}
+                    data-id={article._id} data-index={index}
                     className={index === 0 ? 'vlist-item first-list-item' : 'vlist-item'}>
-                    {article.is_dayfirst && <div className="date-divid">{article.date}</div>}
+                    {article.isDayFirst && <div className="date-divid">{Utils.timeToDateString(article.time)}</div>}
                     <ListItem author={article.author}
-                        guid={article.guid}
-                        feedTitle={article.feed_title}
+                        guid={article._id}
                         time={article.time}
-                        inid={article.id}
-                        feedId={article.feed_id}
+                        feedId={article.feedId}
                         title={article.title}
                         summary={article.summary}
-                        className={(article.is_unread && !this.state.readItems[(article.id as number)] ? 'item-is-unread' : '') + (article.id === this.props.articleId ? ' item-is-selected' : '')}
+                        className={(article.isUnread && !this.state.readItems[(article._id)] ? 'item-is-unread' : '') + (article._id === this.props.articleId ? ' item-is-selected' : '')}
                     />
                 </div>
             </CellMeasurer>

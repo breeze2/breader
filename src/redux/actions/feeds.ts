@@ -6,6 +6,7 @@ export const FeedsActionTypes = {
     SET_FEEDS_CHANGES: 'SET_FEEDS_CHANGES',
     SET_FEEDS_UPDATED_AT: 'SET_FEEDS_UPDATED_AT',
     SET_FEED_FAVICON: 'SET_FEED_FAVICON',
+    SET_IS_CREATING_FEED: 'SET_IS_CREATING_FEED',
     SET_IS_UPDATING_FEEDS: 'SET_IS_UPDATING_FEEDS',
     TIPS_PARSE_INVALID_FEED: 'TIPS_PARSE_INVALID_FEED',
 
@@ -35,7 +36,7 @@ export const setFeedsAction = (feeds: IFeed[]): IReduxAction => ({
     type: FeedsActionTypes.SET_FEEDS,
 })
 
-export const setFeedFaviconAction = (feedId: number, favicon: string): IReduxAction => ({
+export const setFeedFaviconAction = (feedId: string, favicon: string): IReduxAction => ({
     payload: { feedId, favicon },
     type: FeedsActionTypes.SET_FEED_FAVICON,
 })
@@ -43,6 +44,11 @@ export const setFeedFaviconAction = (feedId: number, favicon: string): IReduxAct
 export const setIsUpdatingFeedsAction = (isUpdating: boolean): IReduxAction => ({
     payload: { isUpdating },
     type: FeedsActionTypes.SET_IS_UPDATING_FEEDS,
+})
+
+export const setIsCreatingFeedAction = (isCreating: boolean): IReduxAction => ({
+    payload: { isCreating },
+    type: FeedsActionTypes.SET_IS_CREATING_FEED,
 })
 
 export const tipsParseInvalidFeedAction = (): IReduxAction => ({

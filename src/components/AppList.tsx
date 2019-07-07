@@ -1,8 +1,10 @@
 import { Icon, message as Message, Modal, Radio } from 'antd'
+import Immutable from 'immutable'
 import React, { Component } from 'react'
 import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'react-intl'
 import SearchArticleModal from '../containers/SearchArticleModal'
 import VirtualList from '../containers/VirtualList'
+import { IArticle } from '../schemas'
 import '../styles/AppList.less'
 
 const RadioButton = Radio.Button
@@ -16,11 +18,12 @@ export interface IAppListReduxState {
     allArticlesReadAt: number
     articlesFilter: string
     selectedMenuKey: string
+    articles: Immutable.List<IArticle>
 }
 
 export interface IAppListReduxDispatch {
     asyncFilterArticles: (filter: string) => Promise<undefined>
-    asyncSetAllArticlesRead: () => Promise<undefined>
+    asyncSetAllArticlesRead: (ids: string[]) => Promise<undefined>
 }
 
 interface IAppListProps extends IAppListOwnProps, IAppListReduxState, IAppListReduxDispatch {
@@ -60,7 +63,8 @@ class AppList extends Component<IAppListProps & InjectedIntlProps> {
     public handleCheckClick = (e: any) => {
         Confirm({
             onOk: () => {
-                this.props.asyncSetAllArticlesRead()
+                const ids = this.props.articles.map(article => article._id).toArray()
+                this.props.asyncSetAllArticlesRead(ids)
             },
             title: (this.props.intl.formatMessage({ id: 'doYouWantSetAllArticlesBeRead' })),
         })

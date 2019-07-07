@@ -15,7 +15,7 @@ export interface IAppMenuOwnProps {
 }
 
 export interface IAppMenuReduxDispatch {
-    setFeedFavicon: (id: number, favicon: string) => any
+    setFeedFavicon: (id: string, favicon: string) => any
     setOnlineStatus: () => any
     asyncFetchArticles: () => Promise<undefined>
     asyncFetchFeeds: () => Promise<undefined>
@@ -30,6 +30,7 @@ export interface IAppMenuReduxState {
     feedsChanges: number
     feedsUpdatedAt: number
     invalidFeedsCount: number
+    isCreatingFeed: boolean
     isUpdatingFeeds: boolean
     selectedMenuKey: string
     onlineStatus: boolean
@@ -83,7 +84,7 @@ class AppMenu extends Component<IAppMenuProps & InjectedIntlProps> {
     public handleSelect = (param: SelectParam) => {
         this.props.asyncSelectMenuKey(param.key)
     }
-    public setFeedFaviconDefault = (id: number | undefined) => {
+    public setFeedFaviconDefault = (id: string | undefined) => {
         if (id) {
             this.props.setFeedFavicon(id, defaultFavicon)
         }
@@ -111,6 +112,7 @@ class AppMenu extends Component<IAppMenuProps & InjectedIntlProps> {
         }
     }
     public render () {
+        const { feeds, feedFavicons, isCreatingFeed, isUpdatingFeeds, onlineStatus, selectedMenuKey } = this.props
         return (
             <div className="app-menu">
                 <div className="menu-content">
@@ -119,7 +121,7 @@ class AppMenu extends Component<IAppMenuProps & InjectedIntlProps> {
                         <p className="date-text">{new Date().toDateString()}</p>
                     </div>
                     <Menu
-                        defaultSelectedKeys={[this.props.selectedMenuKey]}
+                        defaultSelectedKeys={[selectedMenuKey]}
                         defaultOpenKeys={['subscriptions']}
                         mode="inline"
                         onSelect={this.handleSelect}
@@ -137,10 +139,10 @@ class AppMenu extends Component<IAppMenuProps & InjectedIntlProps> {
                             <FormattedMessage id="menuUnread" />
                         </MenuItem>
                         <SubMenu key="subscriptions" className="feed-list" title={<span><Icon type="folder" /><FormattedMessage id="menuSubscriptions" /></span>}>
-                            {this.props.feeds.map(feed => {
-                                const favicon = this.props.feedFavicons.get(feed.id + '') || ''
-                                return (<MenuItem key={feed.id}>
-                                    <Avatar shape="square" size={22} src={favicon} onError={() => this.setFeedFaviconDefault(feed.id)}/>
+                            {feeds.map(feed => {
+                                const favicon = feedFavicons.get(feed._id + '') || ''
+                                return (<MenuItem key={feed._id}>
+                                    <Avatar shape="square" size={22} src={favicon} onError={() => this.setFeedFaviconDefault(feed._id)}/>
                                     <span className="feed-title" title={feed.title}>{feed.title}</span>
                                 </MenuItem>)
                             })}
@@ -149,11 +151,11 @@ class AppMenu extends Component<IAppMenuProps & InjectedIntlProps> {
                 </div>
                 <div className="menu-footer">
                     <div className="menu-footer-left">
-                        {this.props.onlineStatus && <Icon type={this.props.isUpdatingFeeds ? 'loading' : 'sync'} className="sync-rss" onClick={this.handleUpdateFeedsClick}/>}
+                        {onlineStatus && <Icon type={isUpdatingFeeds || isCreatingFeed ? 'loading' : 'sync'} className="sync-rss" onClick={this.handleUpdateFeedsClick}/>}
                     </div>
-                    {!this.props.onlineStatus && <span><Icon type="warning" theme="twoTone" twoToneColor="#faad14" /> OFFLINE</span>}
+                    {!onlineStatus && <span><Icon type="warning" theme="twoTone" twoToneColor="#faad14" /> OFFLINE</span>}
                     <div className="menu-footer-right">
-                        {this.props.onlineStatus && <Icon type="plus" className="add-rss" onClick={this.handleAddFeedClick} />}
+                        {onlineStatus && <Icon type="plus" className="add-rss" onClick={this.handleAddFeedClick} />}
                     </div>
                     <AddFeedModal visible={this.state.isAddFeedModalVisible} onOk={this.handleAddFeedModalOk} onCancel={this.handleAddFeedModalCancel} />
                 </div>
