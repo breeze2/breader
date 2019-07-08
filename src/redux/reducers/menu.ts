@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 import { IReduxAction } from '../../schemas'
 import {
     ISetLanguagePayload,
-    ISetSelectedMenuKeyPayload,
+    ISetMenuKeyPayload,
     MenuActionTypes,
 } from '../actions'
 
@@ -21,23 +21,27 @@ const initialMenuState = Immutable.Record<IMenuState>({
     selectedKey: MenuKeyDefault,
 })()
 
-const menuKey = (state = initialMenuState, action: IReduxAction) => {
+const menu = (state = initialMenuState, action: IReduxAction) => {
+    const payload = action.payload;
     switch (action.type) {
-        case MenuActionTypes.SET_LANGUAGE:
-            const language = (action as IReduxAction<ISetLanguagePayload>).payload.language
-            localStorage.setItem('LANGUAGE', language)
-            return state.set('language', language)
-
-        case MenuActionTypes.UPDATE_ONLINE_STATUS:
-            return state.set('onlineStatus', navigator.onLine)
-
-        case MenuActionTypes.SET_SELECTED_MENU_KEY:
-            const key = (action as IReduxAction<ISetSelectedMenuKeyPayload>).payload.key
-            return state.set('selectedKey', key)
-
-        default:
-            return state
+        case MenuActionTypes.SET_LANGUAGE: return handleSetLanguage(state, payload)
+        case MenuActionTypes.SET_MENU_KEY: return handleSetMenuKey(state, payload)
+        case MenuActionTypes.UPDATE_ONLINE_STATUS: return handleUpdateOnlineStatus(state)
+        default: return state
     }
 }
 
-export default menuKey
+function handleSetLanguage(state: Immutable.Record<IMenuState> & Readonly<IMenuState>, payload: ISetLanguagePayload) {
+    localStorage.setItem('LANGUAGE', payload.language)
+    return state.set('language', payload.language)
+}
+
+function handleUpdateOnlineStatus(state: Immutable.Record<IMenuState> & Readonly<IMenuState>) {
+    return state.set('onlineStatus', navigator.onLine)
+}
+
+function handleSetMenuKey(state: Immutable.Record<IMenuState> & Readonly<IMenuState>, payload: ISetMenuKeyPayload) {
+    return state.set('selectedKey', payload.key)
+}
+
+export default menu
