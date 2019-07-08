@@ -11,21 +11,21 @@ const Logic = {
             if (isExists && !isExists.deleteTime) {
                 return LogicErrorTypes.PouchDB.EXISTS
             }
-            const feed = await parseFeed(feedUrl, '')
-            if (!feed) {
+            const newFeed = await parseFeed(feedUrl, '')
+            if (!newFeed) {
                 return LogicErrorTypes.FeedParser.NOT_FOUND
             }
-            const articles = feed.articles
-            const response = await feedDB.insertFeed(feed)
+            const response = await feedDB.insertFeed(newFeed)
             if (response && response.ok) {
-                feed._id = response.id
-                feed._rev = response.rev
+                newFeed._id = response.id
+                newFeed._rev = response.rev
+                const articles = newFeed.articles
                 if (articles) {
-                    articles.forEach(article => (article.feedId = feed._id))
+                    articles.forEach(article => (article.feedId = newFeed._id))
                     await articleDB.batchInsertArticles(articles)
                 }
             }
-            return feed
+            return newFeed
         } catch (err) {
             console.error(err)
             return LogicErrorTypes.UNKNOWN
@@ -81,14 +81,14 @@ const Logic = {
     updateFeedArticles: async (feed: IFeed) => {
         const newFeed = await parseFeed(feed.url, feed.etag || '')
         if (!newFeed) {
-            return
+            return 0
         }
         newFeed.createTime = feed.createTime
-        const articles = feed.articles
         const response = await feedDB.insertFeed(newFeed)
         if (response && response.ok) {
-            feed._id = response.id
-            feed._rev = response.rev
+            newFeed._id = response.id
+            newFeed._rev = response.rev
+            const articles = newFeed.articles
             if (articles) {
                 articles.forEach(article => (article.feedId = feed._id))
                 await articleDB.batchInsertArticles(articles)

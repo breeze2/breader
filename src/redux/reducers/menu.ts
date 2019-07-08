@@ -28,7 +28,7 @@ const menuKey = (state = initialMenuState, action: IReduxAction) => {
             localStorage.setItem('LANGUAGE', language)
             return state.set('language', language)
 
-        case MenuActionTypes.SET_ONLINE_STATUS:
+        case MenuActionTypes.UPDATE_ONLINE_STATUS:
             return state.set('onlineStatus', navigator.onLine)
 
         case MenuActionTypes.SET_SELECTED_MENU_KEY:

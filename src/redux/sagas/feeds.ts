@@ -4,6 +4,7 @@ import Logic from '../../logic'
 import { LogicErrorTypes } from '../../logic/error'
 import { IFeed, IReduxAction } from '../../schemas'
 import { ArticlesActionTypes, FeedsActionTypes } from '../actions'
+import { IFeedsState } from '../reducers/feeds'
 import { IMenuState } from '../reducers/menu'
 import { makeSagaWorkersDispatcher } from './helpers'
 import { getFeeds, getMenu } from './selectors'
@@ -55,8 +56,8 @@ export function* deleteFeedsSaga(action: IReduxAction) {
 export function* updateFeedsSaga(action: IReduxAction) {
     try {
         yield put({type: FeedsActionTypes.SET_IS_UPDATING_FEEDS, payload: { isUpdating: true}})
-        const feedsStore = yield select(getFeeds)
-        const list = feedsStore.get('list').toArray()
+        const feedsState: Immutable.Record<IFeedsState> = yield select(getFeeds)
+        const list = feedsState.get('list').toArray()
         let changes = 0
         for (const feed of list) {
             try {

@@ -2,8 +2,8 @@ import { IReduxAction } from '../../schemas'
 
 export const MenuActionTypes = {
     SET_LANGUAGE: 'SET_LANGUAGE',
-    SET_ONLINE_STATUS: 'SET_ONLINE_STATUS',
     SET_SELECTED_MENU_KEY: 'SET_SELECTED_MENU_KEY',
+    UPDATE_ONLINE_STATUS: 'UPDATE_ONLINE_STATUS',
 
     ASYNC_SELECT_MENU_KEY: 'ASYNC_SELECT_MENU_KEY',
 }
@@ -14,9 +14,9 @@ export const setLanguageAction = (language: string): IReduxAction<ISetLanguagePa
     type: MenuActionTypes.SET_LANGUAGE,
 })
 
-export const setOnlineStatusAction = (): IReduxAction<null> => ({
+export const updateOnlineStatusAction = (): IReduxAction<null> => ({
     payload: null,
-    type: MenuActionTypes.SET_ONLINE_STATUS,
+    type: MenuActionTypes.UPDATE_ONLINE_STATUS,
 })
 
 export interface ISetSelectedMenuKeyPayload { key: string }

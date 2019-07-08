@@ -16,7 +16,7 @@ export interface IAppMenuOwnProps {
 
 export interface IAppMenuReduxDispatch {
     setFeedFavicon: (id: string, favicon: string) => any
-    setOnlineStatus: () => any
+    updateOnlineStatus: () => any
     asyncFetchArticles: () => Promise<undefined>
     asyncFetchFeeds: () => Promise<undefined>
     asyncParseFeed: (feedUrl: string) => Promise<undefined>
@@ -91,7 +91,7 @@ class AppMenu extends Component<IAppMenuProps & InjectedIntlProps> {
         return true
     }
     public handleOnlineStatus = () => {
-        this.props.setOnlineStatus()
+        this.props.updateOnlineStatus()
     }
     public componentWillMount() {
         this.props.asyncFetchFeeds()
