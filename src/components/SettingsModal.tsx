@@ -14,7 +14,7 @@ export interface ISettingsModalOwnProps {
 
 export interface ISettingsModalReduxDispatch {
     setLanguage: (language: string) => any
-    asyncDeleteFeeds: (feedIds: number[]) => Promise<undefined>
+    asyncDeleteFeeds: (feedIds: string[]) => Promise<undefined>
 }
 
 export interface ISettingsModalReduxState {
@@ -26,7 +26,7 @@ export interface ISettingsModalProps extends ISettingsModalOwnProps, ISettingsMo
 }
 
 interface ISettingsModalState {
-    needDeleted: any,
+    needDeleted: { [id: string]: boolean },
 }
 
 class SettingsModal extends Component<ISettingsModalProps & InjectedIntlProps, {}> {
@@ -34,7 +34,7 @@ class SettingsModal extends Component<ISettingsModalProps & InjectedIntlProps, {
         intl: intlShape.isRequired,
     }
     public state: ISettingsModalState
-    public constructor(props: any) {
+    public constructor(props: ISettingsModalProps & InjectedIntlProps) {
         super(props)
         this.state = {
             needDeleted: {},
@@ -45,10 +45,10 @@ class SettingsModal extends Component<ISettingsModalProps & InjectedIntlProps, {
     }
     public handleOk = (e: any) => {
         const needDeleted = this.state.needDeleted
-        const ids: number[] = []
+        const ids: string[] = []
         for (const id in needDeleted) {
             if (needDeleted[id]) {
-                ids.push(parseInt(id, 10))
+                ids.push(id)
             }
         }
         if (ids.length) {

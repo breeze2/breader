@@ -14,52 +14,61 @@ export const ArticlesActionTypes = {
     ASYNC_STAR_ARTICLE: 'ASYNC_STAR_ARTICLE',
 }
 
-export const setAllArticlesReadAtAction = (allReadAt: number): IReduxAction => ({
+export interface ISetAllArticlesReadAtPayload { allReadAt: number }
+export const setAllArticlesReadAtAction = (allReadAt: number): IReduxAction<ISetAllArticlesReadAtPayload> => ({
     payload: { allReadAt },
     type: ArticlesActionTypes.SET_ALL_ARTICLES_READ_AT,
 })
 
-export const setArticlesFilterAction = (filter: string): IReduxAction => ({
+export interface ISetArticlesFilterPayload { filter: string }
+export const setArticlesFilterAction = (filter: string): IReduxAction<ISetArticlesFilterPayload> => ({
     payload: { filter },
     type: ArticlesActionTypes.SET_ARTICLES_FILTER,
 })
 
-export const setSelectedArticleAction = (articleId: string, articleIndex: number): IReduxAction => ({
+export interface ISetSelectedArticlePayload { articleId: string, articleIndex: number }
+export const setSelectedArticleAction = (articleId: string, articleIndex: number): IReduxAction<ISetSelectedArticlePayload> => ({
     payload: { articleId, articleIndex },
     type: ArticlesActionTypes.SET_SELECTED_ARTICLE,
 })
 
-export const setSelectedArticleContentAction = (articleContent: string): IReduxAction => ({
+export interface ISetSelectedArticleContentPayload { articleContent: string }
+export const setSelectedArticleContentAction = (articleContent: string): IReduxAction<ISetSelectedArticleContentPayload> => ({
     payload: { articleContent },
     type: ArticlesActionTypes.SET_SELECTED_ARTICLE_CONTENT,
 })
 
-export const setArticlesAction = (articles: IArticle[]): IReduxAction => ({
+export interface ISetArticlesPayload { articles: IArticle[]}
+export const setArticlesAction = (articles: IArticle[]): IReduxAction<ISetArticlesPayload> => ({
     payload: { articles },
     type: ArticlesActionTypes.SET_ARTICLES,
 })
 
-export const asyncFetchArticlesAction = (): IReduxAction => ({
+export const asyncFetchArticlesAction = (): IReduxAction<null> => ({
     payload: null,
     type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES,
 })
 
-export const asyncFilterArticlesAction = (filter: string): IReduxAction => ({
+export interface IAsyncFilterArticlesPayload { filter: string }
+export const asyncFilterArticlesAction = (filter: string): IReduxAction<IAsyncFilterArticlesPayload> => ({
     payload: { filter },
     type: ArticlesActionTypes.ASYNC_FILTER_ARTICLES,
 })
 
-export const asyncSelectAndReadArticlesAction = (articleId: string, articleIndex: number): IReduxAction => ({
+export interface IAsyncSelectAndReadArticlesPayload { articleId: string, articleIndex: number }
+export const asyncSelectAndReadArticlesAction = (articleId: string, articleIndex: number): IReduxAction<IAsyncSelectAndReadArticlesPayload> => ({
     payload: { articleId, articleIndex },
     type: ArticlesActionTypes.ASYNC_SELECT_AND_READ_ARTICLE,
 })
 
-export const asyncStarArticleAction = (articleId: string, isStarred: boolean): IReduxAction => ({
+export interface IAsyncStarArticlePayload { articleId: string, isStarred: boolean }
+export const asyncStarArticleAction = (articleId: string, isStarred: boolean): IReduxAction<IAsyncStarArticlePayload> => ({
     payload: { articleId, isStarred },
     type: ArticlesActionTypes.ASYNC_STAR_ARTICLE,
 })
 
-export const asyncSetAllArticlesReadAction = (articleIds: string[]): IReduxAction => ({
+export interface IAsyncSetAllArticlesReadPayload { articleIds: string[] }
+export const asyncSetAllArticlesReadAction = (articleIds: string[]): IReduxAction<IAsyncSetAllArticlesReadPayload> => ({
     payload: { articleIds },
     type: ArticlesActionTypes.ASYNC_SET_ALL_ARTICLES_READ,
 })

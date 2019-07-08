@@ -10,7 +10,7 @@ const mapStateToProps: MapStateToProps<ISettingsModalReduxState, ISettingsModalO
 })
 
 const mapDispatchToProps: MapDispatchToProps<ISettingsModalReduxDispatch, ISettingsModalOwnProps> = (dispatch: Dispatch<IReduxAction>) => ({
-    asyncDeleteFeeds: (feedIds: number[]) => asyncActionDispatcher(dispatch, asyncDeleteFeedsAction(feedIds)),
+    asyncDeleteFeeds: (feedIds: string[]) => asyncActionDispatcher(dispatch, asyncDeleteFeedsAction(feedIds)),
     setLanguage: (language: string) => dispatch(setLanguageAction(language)),
 })
 
