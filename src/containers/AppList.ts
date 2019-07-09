@@ -5,7 +5,6 @@ import { asyncActionDispatcher, asyncFilterArticlesAction, asyncSetAllArticlesRe
 import { IReduxAction, IReduxState } from '../schemas'
 
 const mapStateToProps: MapStateToProps<IAppListReduxState, IAppListOwnProps, IReduxState> = (state: IReduxState) => ({
-    allArticlesReadAt: state.articles.allReadAt,
     articles: state.articles.list,
     articlesFilter: state.articles.filter,
     selectedMenuKey: state.menu.selectedKey,

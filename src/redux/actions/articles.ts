@@ -1,11 +1,9 @@
 import { IArticle, IReduxAction } from '../../schemas'
 
 export const ArticlesActionTypes = {
-    SET_ALL_ARTICLES_READ_AT: 'SET_ALL_ARTICLES_READ_AT',
     SET_ARTICLES: 'SET_ARTICLES',
     SET_ARTICLES_FILTER: 'SET_ARTICLES_FILTER',
-    SET_SELECTED_ARTICLE: 'SET_SELECTED_ARTICLE',
-    SET_SELECTED_ARTICLE_CONTENT: 'SET_SELECTED_ARTICLE_CONTENT',
+    SET_CURRENT_ARTICLE: 'SET_CURRENT_ARTICLE',
 
     ASYNC_FETCH_ARTICLES: 'ASYNC_FETCH_ARTICLES',
     ASYNC_FILTER_ARTICLES: 'ASYNC_FILTER_ARTICLES',
@@ -14,28 +12,16 @@ export const ArticlesActionTypes = {
     ASYNC_STAR_ARTICLE: 'ASYNC_STAR_ARTICLE',
 }
 
-export interface ISetAllArticlesReadAtPayload { allReadAt: number }
-export const setAllArticlesReadAtAction = (allReadAt: number): IReduxAction<ISetAllArticlesReadAtPayload> => ({
-    payload: { allReadAt },
-    type: ArticlesActionTypes.SET_ALL_ARTICLES_READ_AT,
+export interface ISetCurrentArticlePayload { article: IArticle | null }
+export const setCurrentArticleAction = (article: IArticle | null): IReduxAction<ISetCurrentArticlePayload> => ({
+    payload: { article },
+    type: ArticlesActionTypes.SET_CURRENT_ARTICLE,
 })
 
 export interface ISetArticlesFilterPayload { filter: string }
 export const setArticlesFilterAction = (filter: string): IReduxAction<ISetArticlesFilterPayload> => ({
     payload: { filter },
     type: ArticlesActionTypes.SET_ARTICLES_FILTER,
-})
-
-export interface ISetSelectedArticlePayload { articleId: string, articleIndex: number }
-export const setSelectedArticleAction = (articleId: string, articleIndex: number): IReduxAction<ISetSelectedArticlePayload> => ({
-    payload: { articleId, articleIndex },
-    type: ArticlesActionTypes.SET_SELECTED_ARTICLE,
-})
-
-export interface ISetSelectedArticleContentPayload { articleContent: string }
-export const setSelectedArticleContentAction = (articleContent: string): IReduxAction<ISetSelectedArticleContentPayload> => ({
-    payload: { articleContent },
-    type: ArticlesActionTypes.SET_SELECTED_ARTICLE_CONTENT,
 })
 
 export interface ISetArticlesPayload { articles: IArticle[]}
@@ -55,8 +41,8 @@ export const asyncFilterArticlesAction = (filter: string): IReduxAction<IAsyncFi
     type: ArticlesActionTypes.ASYNC_FILTER_ARTICLES,
 })
 
-export interface IAsyncSelectAndReadArticlesPayload { articleId: string, articleIndex: number }
-export const asyncSelectAndReadArticlesAction = (articleId: string, articleIndex: number): IReduxAction<IAsyncSelectAndReadArticlesPayload> => ({
+export interface IAsyncSelectAndReadArticlePayload { articleId: string, articleIndex: number }
+export const asyncSelectAndReadArticleAction = (articleId: string, articleIndex: number): IReduxAction<IAsyncSelectAndReadArticlePayload> => ({
     payload: { articleId, articleIndex },
     type: ArticlesActionTypes.ASYNC_SELECT_AND_READ_ARTICLE,
 })

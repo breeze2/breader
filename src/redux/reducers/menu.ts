@@ -15,6 +15,8 @@ export interface IMenuState {
     selectedKey: string
 }
 
+export type IIMenuState = Immutable.Record<IMenuState> & Readonly<IMenuState>
+
 const initialMenuState = Immutable.Record<IMenuState>({
     language: languageDefault,
     onlineStatus: true,
@@ -31,16 +33,16 @@ const menu = (state = initialMenuState, action: IReduxAction) => {
     }
 }
 
-function handleSetLanguage(state: Immutable.Record<IMenuState> & Readonly<IMenuState>, payload: ISetLanguagePayload) {
+function handleSetLanguage(state: IIMenuState, payload: ISetLanguagePayload) {
     localStorage.setItem('LANGUAGE', payload.language)
     return state.set('language', payload.language)
 }
 
-function handleUpdateOnlineStatus(state: Immutable.Record<IMenuState> & Readonly<IMenuState>) {
+function handleUpdateOnlineStatus(state: IIMenuState) {
     return state.set('onlineStatus', navigator.onLine)
 }
 
-function handleSetMenuKey(state: Immutable.Record<IMenuState> & Readonly<IMenuState>, payload: ISetMenuKeyPayload) {
+function handleSetMenuKey(state: IIMenuState, payload: ISetMenuKeyPayload) {
     return state.set('selectedKey', payload.key)
 }
 

@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import React, { Component } from 'react'
 import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'react-intl'
 import defaultFavicon from '../images/rss.png'
-import { IFeed } from '../schemas'
+import { IArticle, IFeed } from '../schemas'
 import '../styles/AppMenu.less'
 import AddFeedModal from './AddFeedModal'
 
@@ -17,10 +17,10 @@ export interface IAppMenuOwnProps {
 export interface IAppMenuReduxDispatch {
     setFeedFavicon: (id: string, favicon: string) => any
     updateOnlineStatus: () => any
-    asyncFetchArticles: () => Promise<undefined>
+    asyncFetchArticles: () => Promise<IArticle[]>
     asyncFetchFeeds: () => Promise<undefined>
     asyncParseFeed: (feedUrl: string) => Promise<undefined>
-    asyncSelectMenuKey: (key: string) => Promise<undefined>
+    asyncSelectMenuKey: (key: string) => Promise<void>
     asyncUpdateFeeds: () => Promise<undefined>
 }
 

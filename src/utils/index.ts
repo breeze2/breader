@@ -35,10 +35,10 @@ export function throttle<F extends (...params: any[]) => void>(fn: F, delay: num
     return wrapper
 }
 
-export async function batchOperate<A, T>(action: ((args: A) => Promise<T>), argsList: A[]) {
+export async function batchOperate<A>(action: ((args: A) => Promise<boolean>), argsList: A[]) {
     const num = 6
     const len = argsList.length
-    let tasks: Array<Promise<T>> = []
+    let tasks: Array<Promise<boolean>> = []
     let changes = 0
     for (let i = 0; i < len; i++) {
         tasks.push(action(argsList[i]))

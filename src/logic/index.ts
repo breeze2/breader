@@ -43,6 +43,15 @@ const Logic = {
         const feeds = await feedDB.getAllFeeds()
         return feeds
     },
+    getArticle: async (articleId: string) => {
+        try {
+            const article = await articleDB.get(articleId)
+            return article
+        } catch (err) {
+            console.error(err)
+            return null
+        }
+    },
     getArticleContent: async (articleId: string) => {
         const articleContent = await articleDB.getArticleContent(articleId)
         return articleContent

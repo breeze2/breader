@@ -39,10 +39,13 @@ export default class ArticleModel extends BaseModel<IArticle> {
         return article
     }
     public async batchInsertArticles(articles: IArticle[]) {
-        await Utils.batchOperate(this.insertArticle, articles)
+        await Utils.batchOperate(this.singleInsertArticle, articles)
     }
-    public insertArticle = async (article: IArticle, feedId?: string) => {
-        article.feedId = feedId || article.feedId
+    public singleInsertArticle = async (article: IArticle) => {
+        await this.insertArticle(article)
+        return true
+    }
+    public insertArticle = async (article: IArticle) => {
         try {
             const oldArticle = await this.get(article._id)
             article._id = oldArticle._id
@@ -55,8 +58,16 @@ export default class ArticleModel extends BaseModel<IArticle> {
         }
     }
     public async batchReadArticles(ids: string[]) {
-        const changes = await Utils.batchOperate(this.readArticle, ids)
+        const changes = await Utils.batchOperate(this.singleReadArticle, ids)
         return changes
+    }
+    public singleReadArticle = async (id: string) => {
+        try {
+            const result = await this.readArticle(id)
+            return result ? true : false
+        } catch {
+            return false
+        }
     }
     public readArticle = async (id: string) => {
         const article = await this.get(id)
@@ -64,7 +75,6 @@ export default class ArticleModel extends BaseModel<IArticle> {
             article.isUnread = false
             return this.put(article)
         }
-        return null
     }
     public starArticle = async (id: string, isStarred: boolean = true) => {
         const article = await this.get(id)

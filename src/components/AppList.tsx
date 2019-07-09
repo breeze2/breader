@@ -15,15 +15,14 @@ export interface IAppListOwnProps {
 }
 
 export interface IAppListReduxState {
-    allArticlesReadAt: number
     articlesFilter: string
     selectedMenuKey: string
     articles: Immutable.List<IArticle>
 }
 
 export interface IAppListReduxDispatch {
-    asyncFilterArticles: (filter: string) => Promise<undefined>
-    asyncSetAllArticlesRead: (ids: string[]) => Promise<undefined>
+    asyncFilterArticles: (filter: string) => Promise<void>
+    asyncSetAllArticlesRead: (ids: string[]) => Promise<number>
 }
 
 interface IAppListProps extends IAppListOwnProps, IAppListReduxState, IAppListReduxDispatch {
@@ -63,7 +62,8 @@ class AppList extends Component<IAppListProps & InjectedIntlProps> {
     public handleCheckClick = (e: any) => {
         Confirm({
             onOk: () => {
-                const ids = this.props.articles.map(article => article._id).toArray()
+                const ids = this.props.articles.filter(article => article.isUnread)
+                .map(article => article._id).toArray()
                 this.props.asyncSetAllArticlesRead(ids)
             },
             title: (this.props.intl.formatMessage({ id: 'doYouWantSetAllArticlesBeRead' })),
@@ -79,11 +79,7 @@ class AppList extends Component<IAppListProps & InjectedIntlProps> {
             })
         }
     }
-    public componentWillReceiveProps(props: any) {
-        if (props.allArticlesReadAt > 0 && props.allArticlesReadAt > this.props.allArticlesReadAt) {
-            Message.success(this.props.intl.formatMessage({ id: 'allArticlesAreReadNow' }))
-        }
-    }
+
     public render() {
         return (
             <div className="app-list">

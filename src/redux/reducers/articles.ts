@@ -1,53 +1,63 @@
 import Immutable from 'immutable'
 import { IArticle, IReduxAction } from '../../schemas'
 import Utils from '../../utils';
-import { ArticlesActionTypes } from '../actions'
+import {
+    ArticlesActionTypes,
+    ISetArticlesFilterPayload,
+    ISetArticlesPayload,
+    ISetCurrentArticlePayload,
+} from '../actions'
 
 export interface IArticlesState {
-    allReadAt: number
+    current: IArticle | null
     filter: string
     list: Immutable.List<IArticle>
-    selectedContent: string,
-    selectedId: string,
-    selectedIndex: number,
 }
 
+export type IIArticlesState = Immutable.Record<IArticlesState> & Readonly<IArticlesState>
+
 const initialArticlesState = Immutable.Record<IArticlesState>({
-    allReadAt: 0,
+    current: null,
     filter: 'ALL',
     list: Immutable.List<IArticle>([]),
-    selectedContent: '',
-    selectedId: '',
-    selectedIndex: -1,
 })()
 
-let lastDateTime = ''
 const articles = (state = initialArticlesState, action: IReduxAction) => {
+    const payload = action.payload;
     switch (action.type) {
-        case ArticlesActionTypes.SET_ALL_ARTICLES_READ_AT:
-            return state.set('allReadAt', action.payload.allReadAt)
-        case ArticlesActionTypes.SET_SELECTED_ARTICLE:
-            return state.set('selectedId', action.payload.articleId).set('selectedIndex', action.payload.articleIndex)
+        case ArticlesActionTypes.SET_CURRENT_ARTICLE:
+            return handleSetCurrentArticle(state, payload)
         case ArticlesActionTypes.SET_ARTICLES_FILTER:
-            return state.set('filter', action.payload.filter)
-        case ArticlesActionTypes.SET_SELECTED_ARTICLE_CONTENT:
-            return state.set('selectedContent', action.payload.articleContent)
+            return handleSetArticlesFilter(state, payload)
+
         case ArticlesActionTypes.SET_ARTICLES:
-            lastDateTime = ''
-            action.payload.articles.forEach((article: IArticle) => {
-                const dateTime = Utils.timeToDateString(article.time)
-                if (lastDateTime !== dateTime) {
-                    lastDateTime = dateTime
-                    article.isDayFirst = true
-                }
-            })
-            return state.set('list', Immutable.List<IArticle>(action.payload.articles))
-                .set('selectedId', '')
-                .set('selectedIndex', -1)
-                .set('selectedContent', '')
+            return handleSetArticles(state, payload)
+
         default:
             return state
     }
+}
+
+function handleSetArticles(state: IIArticlesState, payload: ISetArticlesPayload) {
+    let lastDateTime = ''
+    payload.articles.forEach((article: IArticle) => {
+        const dateTime = Utils.timeToDateString(article.time)
+        if (lastDateTime !== dateTime) {
+            lastDateTime = dateTime
+            article.isDayFirst = true
+        }
+    })
+    return state.set('list', Immutable.List<IArticle>(payload.articles))
+        .set('current', null)
+
+}
+
+function handleSetCurrentArticle(state: IIArticlesState, payload: ISetCurrentArticlePayload) {
+    return state.set('current', payload.article)
+}
+
+function handleSetArticlesFilter(state: IIArticlesState, payload: ISetArticlesFilterPayload) {
+    return state.set('filter', payload.filter)
 }
 
 export default articles

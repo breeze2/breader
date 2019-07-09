@@ -12,15 +12,13 @@ export interface IArticleViewOwnProps {
 }
 
 export interface IArticleViewReduxState {
-    articleContent: string
-    articleIndex: number
-    articleId: string
+    currentArticle: IArticle | null
     articles: Immutable.List<IArticle>
     feedTitles: Immutable.Map<string, string>
 }
 
 export interface IArticleViewReduxDispatch {
-    asyncStarArticle: (articleId: string, isStarred: boolean) => Promise<undefined>
+    asyncStarArticle: (articleId: string, isStarred: boolean) => Promise<void>
 }
 
 interface IArticleViewProps extends IArticleViewOwnProps, IArticleViewReduxDispatch, IArticleViewReduxState {
@@ -30,8 +28,7 @@ interface IArticleViewState {
     hoverLink: string
     isWebviewDrawerVisible: boolean
     webviewDrawerSrc: string,
-    isStarredsMap: any,
-    article?: IArticle,
+    isStarredsMap: {[_id: string]: boolean},
 }
 
 class ArticleView extends PureComponent<IArticleViewProps> {
@@ -39,7 +36,7 @@ class ArticleView extends PureComponent<IArticleViewProps> {
     private _articleContentIsAppended: boolean
     private _articleContentElement: HTMLDivElement
     private _articleContentLinks: string[]
-    public constructor(props: any) {
+    public constructor(props: IArticleViewProps) {
         super(props)
         this.state = {
             hoverLink: '',
@@ -51,28 +48,17 @@ class ArticleView extends PureComponent<IArticleViewProps> {
         this._articleContentElement = document.createElement('div')
         this._articleContentLinks = []
     }
-    public componentWillReceiveProps(props: any) {
-        if (props.articleContent !== this.props.articleContent) {
-            this._parseArticleContent(props.articleContent)
-        }
-        if (props.articleIndex === -1) {
-            return this.setState({
-                article: undefined,
-            })
-        }
-        const article = props.articles.get(props.articleIndex)
-        // TODO
-        if (article) {
-            const map = this.state.isStarredsMap
-            map[article.id] = article.is_starred === 1 ? true : false
-            this.setState({
-                article,
-                isStarredsMap: {...map},
-            })
-        } else {
-            this.setState({
-                article,
-            })
+    public componentWillReceiveProps(props: IArticleViewProps) {
+        const currentArticle = props.currentArticle
+        const isStarredsMap = this.state.isStarredsMap
+        if (currentArticle && currentArticle !== this.props.currentArticle) {
+            this._parseArticleContent(currentArticle.description)
+            if (isStarredsMap[currentArticle._id] === undefined) {
+                isStarredsMap[currentArticle._id] = currentArticle.isStarred
+                this.setState({
+                    isStarredsMap: {...isStarredsMap},
+                })
+            }
         }
     }
     public componentDidUpdate() {
@@ -93,20 +79,15 @@ class ArticleView extends PureComponent<IArticleViewProps> {
         }
     }
     public handleStarIconClick = () => {
-        if (this.state.isStarredsMap[this.props.articleId]) {
-            const map = this.state.isStarredsMap
-            map[this.props.articleId] = false
+        const currentArticle = this.props.currentArticle
+        const isStarredsMap = this.state.isStarredsMap
+        if (currentArticle) {
+            const articleId = currentArticle._id
+            isStarredsMap[articleId] = !isStarredsMap[articleId]
             this.setState({
-                isStarredsMap: {...map},
+                isStarredsMap: { ...isStarredsMap },
             })
-            this.props.asyncStarArticle(this.props.articleId, false)
-        } else {
-            const map = this.state.isStarredsMap
-            map[this.props.articleId] = true
-            this.setState({
-                isStarredsMap: { ...map },
-            })
-            this.props.asyncStarArticle(this.props.articleId, true)
+            this.props.asyncStarArticle(articleId, isStarredsMap[articleId])
         }
     }
     public handleContentClick = (e: any) => {
@@ -142,8 +123,8 @@ class ArticleView extends PureComponent<IArticleViewProps> {
         let viewContent: any
         let starIcon: any
 
-        if (this.state.article) {
-            const article = this.state.article
+        if (this.props.currentArticle) {
+            const article = this.props.currentArticle
             const feedTitles = this.props.feedTitles
             viewContent = (
                 <div className="view-content" onMouseLeave={this.handleMouseLeave} onClick={this.handleContentClick}>

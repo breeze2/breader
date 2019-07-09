@@ -1,10 +1,13 @@
 import Immutable from 'immutable'
-import { IArticlesState } from '../redux/reducers/articles'
+import { IIArticlesState } from '../redux/reducers/articles'
 import { IFeedsState } from '../redux/reducers/feeds'
-import { IMenuState } from '../redux/reducers/menu'
+import { IIMenuState } from '../redux/reducers/menu'
+
+export type IIArticlesState = IIArticlesState
+export type IIMenuState = IIMenuState
 
 export interface IReduxState {
-    articles: Immutable.Record<IArticlesState> & Readonly<IArticlesState>
+    articles: IIArticlesState
     feeds: Immutable.Record<IFeedsState> & Readonly<IFeedsState>
-    menu: Immutable.Record<IMenuState> & Readonly<IMenuState>
+    menu: IIMenuState
 }

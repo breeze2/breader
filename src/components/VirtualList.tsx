@@ -12,11 +12,11 @@ export interface IVirtualListOwnProps {
 }
 
 export interface IVirtualListReduxDispatch {
-    selectArticle: (id: string, index: number) => any
+    selectArticle: (id: string, index: number) => Promise<IArticle | null>
 }
 
 export interface IVirtualListReduxState {
-    articleId: string
+    currentArticle: IArticle | null
     articles: List<IArticle>
 }
 
@@ -48,7 +48,7 @@ class VirtualList extends PureComponent<IVirtualListProps> {
         }
         this.updateRenderStartDate = Utils.throttle(this._updateRenderStartDate, 100)
 
-        Object.defineProperty(window, 'updateRenderStartDate', {value: this.updateRenderStartDate})
+        // Object.defineProperty(window, 'updateRenderStartDate', {value: this.updateRenderStartDate})
     }
     public componentWillReceiveProps(props: IVirtualListProps) {
         if (props.articles !== this.props.articles) {
@@ -154,6 +154,8 @@ class VirtualList extends PureComponent<IVirtualListProps> {
         const key = info.key
         const style = info.style
         const article = (this.props.articles.get(index) as IArticle)
+        const currentArticle = this.props.currentArticle
+        const isCurrent = currentArticle && article._id === currentArticle._id
         return (
             <CellMeasurer key={key} cache={this.cellCache} parent={parent} columnIndex={0} rowIndex={index} >
                 <div style={style}
@@ -166,7 +168,7 @@ class VirtualList extends PureComponent<IVirtualListProps> {
                         feedId={article.feedId}
                         title={article.title}
                         summary={article.summary}
-                        className={(article.isUnread && !this.state.readItems[(article._id)] ? 'item-is-unread' : '') + (article._id === this.props.articleId ? ' item-is-selected' : '')}
+                        className={(article.isUnread && !this.state.readItems[(article._id)] ? 'item-is-unread' : '') + (isCurrent ? ' item-is-selected' : '')}
                     />
                 </div>
             </CellMeasurer>
