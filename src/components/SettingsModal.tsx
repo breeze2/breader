@@ -1,7 +1,7 @@
-import { Avatar, Button, Input, List as AntdList, message as Message, Modal, Select } from 'antd'
+import { Avatar, Button, List as AntdList, Modal, Select } from 'antd'
 import Immutable from 'immutable'
 import React, { Component } from 'react'
-import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'react-intl'
+import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl'
 import { IFeed } from '../schemas'
 
 import '../styles/SettingsModal.less'
@@ -14,7 +14,7 @@ export interface ISettingsModalOwnProps {
 
 export interface ISettingsModalReduxDispatch {
     setLanguage: (language: string) => any
-    asyncDeleteFeeds: (feedIds: string[]) => Promise<undefined>
+    asyncDeleteFeeds: (feedIds: string[]) => Promise<number>
 }
 
 export interface ISettingsModalReduxState {
@@ -30,9 +30,6 @@ interface ISettingsModalState {
 }
 
 class SettingsModal extends Component<ISettingsModalProps & InjectedIntlProps, {}> {
-    public static propTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    }
     public state: ISettingsModalState
     public constructor(props: ISettingsModalProps & InjectedIntlProps) {
         super(props)

@@ -1,7 +1,7 @@
-import { Input, List as AntdList, message as Message, Modal } from 'antd'
-import { List, Map } from 'immutable'
+import { Input, Modal } from 'antd'
+import Immutable from 'immutable'
 import React, { Component } from 'react'
-import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'react-intl'
+import { InjectedIntlProps, injectIntl } from 'react-intl'
 import ListItem from '../containers/ListItem'
 import { IArticle } from '../schemas'
 import Utils from '../utils'
@@ -20,7 +20,7 @@ export interface ISearchArticleModalReduxDispatch {
 }
 
 export interface ISearchArticleModalReduxState {
-    articles: List<IArticle>
+    articles: Immutable.List<IArticle>
 }
 
 interface ISearchArticleModalProps extends ISearchArticleModalOwnProps, ISearchArticleModalReduxDispatch, ISearchArticleModalReduxState {
@@ -28,20 +28,17 @@ interface ISearchArticleModalProps extends ISearchArticleModalOwnProps, ISearchA
 
 interface ISearchArticleModalState {
     readonly keywords: string
-    readonly matchedArticles: List<IArticle>
+    readonly matchedArticles: Immutable.List<IArticle>
 }
 
-class SearchArticleModal extends Component<ISearchArticleModalProps & InjectedIntlProps, {}> {
-    public static propTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    }
+class SearchArticleModal extends Component<ISearchArticleModalProps & InjectedIntlProps> {
     public state: ISearchArticleModalState
     public searchArticles: (keywords: string[]) => any
-    public constructor(props: any) {
+    public constructor(props: ISearchArticleModalProps & InjectedIntlProps) {
         super(props)
         this.state = {
             keywords: '',
-            matchedArticles: List<IArticle>([]),
+            matchedArticles: Immutable.List<IArticle>([]),
         }
         this.searchArticles = Utils.debounce(this._searchArticles, 100)
         this.searchArticles = this.searchArticles.bind(this)
@@ -105,7 +102,7 @@ class SearchArticleModal extends Component<ISearchArticleModalProps & InjectedIn
     private _searchArticles(keys: string[]) {
         const len = keys.length
         if (len < 1) {
-            return List<IArticle>([])
+            return Immutable.List<IArticle>([])
         }
         const matched = this.props.articles.filter((article: IArticle, index: number) => {
             const str = article.title + article.author + article.summary

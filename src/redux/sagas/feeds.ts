@@ -1,84 +1,64 @@
 import Immutable from 'immutable'
 import { all, call, put, select, takeEvery, takeLatest } from 'redux-saga/effects'
 import Logic from '../../logic'
-import { LogicErrorTypes } from '../../logic/error'
-import { IFeed, IReduxAction } from '../../schemas'
-import { ArticlesActionTypes, FeedsActionTypes } from '../actions'
-import { IFeedsState } from '../reducers/feeds'
-import { IMenuState } from '../reducers/menu'
+import { IFeed, IIFeedsState, IIMenuState, IReduxAction } from '../../schemas'
+import {
+    ArticlesActionTypes,
+    FeedsActionTypes,
+    IAddFeedPayload,
+    IAsyncDeleteFeedsPayload,
+    IAsyncParseFeedPayload,
+} from '../actions'
 import { makeSagaWorkersDispatcher } from './helpers'
 import { getFeeds, getMenu } from './selectors'
 
-export function* fetchFeedsSaga(action: IReduxAction) {
+export function* fetchFeedsSaga(action: IReduxAction<null>) {
     const feeds = yield call(Logic.getAllFeeds)
     yield put({ type: FeedsActionTypes.SET_FEEDS, payload: { feeds } })
+    return feeds
 }
 
-export function* parseFeedSaga(action: IReduxAction) {
-    yield put<IReduxAction>({ type: FeedsActionTypes.SET_IS_CREATING_FEED, payload: { isCreating: true } })
-    const feed: IFeed | string = yield call(Logic.createFeed, action.payload.feedUrl)
-    yield put<IReduxAction>({ type: FeedsActionTypes.SET_IS_CREATING_FEED, payload: { isCreating: false } })
-    if (typeof feed === 'string') {
-        switch (feed) {
-            case LogicErrorTypes.PouchDB.EXISTS:
-                break
-            case LogicErrorTypes.FeedParser.NOT_FOUND:
-                break
-            default:
-                yield put({ type: FeedsActionTypes.TIPS_PARSE_INVALID_FEED, payload: null })
-                break
+export function* parseFeedSaga(action: IReduxAction<IAsyncParseFeedPayload>) {
+    const feed: IFeed | null = yield call(Logic.createFeed, action.payload.feedUrl)
+    if (feed) {
+        yield put<IReduxAction<IAddFeedPayload>>({ type: FeedsActionTypes.ADD_FEED, payload: { feed } })
+        const menuState: IIMenuState = yield select(getMenu)
+        const menuKey = menuState.selectedKey
+        if (menuKey === 'ALL_ITEMS' || menuKey === 'UNREAD_ITEMS') {
+            yield put({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null })
         }
-        return null
-    }
-    yield put<IReduxAction>({ type: FeedsActionTypes.ADD_FEED, payload: { feed } })
-    const menuState: Immutable.Record<IMenuState> = yield select(getMenu)
-    const menuKey = menuState.get('selectedKey')
-    if (menuKey === 'ALL_ITEMS' || menuKey === 'UNREAD_ITEMS') {
-        yield put({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null })
     }
     return feed
 }
 
-export function* deleteFeedsSaga(action: IReduxAction) {
-    try {
-        if (action.payload.feedIds.length > 0) {
-            const changes = yield call(Logic.deleteFeeds, action.payload.feedIds)
-            if (changes) {
-                yield put({ type: FeedsActionTypes.ASYNC_FETCH_FEEDS, payload: null })
-                yield put({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null })
-            }
+export function* deleteFeedsSaga(action: IReduxAction<IAsyncDeleteFeedsPayload>) {
+    if (action.payload.feedIds.length > 0) {
+        const changes: number = yield call(Logic.deleteFeeds, action.payload.feedIds)
+        if (changes) {
+            yield put<IReduxAction<null>>({ type: FeedsActionTypes.ASYNC_FETCH_FEEDS, payload: null })
+            yield put<IReduxAction<null>>({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null })
+            return changes
         }
-    } catch (e) {
-        console.error(e)
     }
+    return 0
 }
 
-export function* updateFeedsSaga(action: IReduxAction) {
-    try {
-        yield put({type: FeedsActionTypes.SET_IS_UPDATING_FEEDS, payload: { isUpdating: true}})
-        const feedsState: Immutable.Record<IFeedsState> = yield select(getFeeds)
-        const list = feedsState.get('list').toArray()
-        let changes = 0
-        for (const feed of list) {
-            try {
-                changes += yield call(Logic.updateFeedArticles, feed)
-            } catch (err) {
-                console.error(err)
-            }
+export function* updateFeedsSaga(action: IReduxAction<null>) {
+    const feedsState: IIFeedsState = yield select(getFeeds)
+    const list: IFeed[] = feedsState.list.toArray()
+    let changes = 0
+    for (const feed of list) {
+        try {
+            changes += yield call(Logic.updateFeedArticles, feed)
+        } catch (err) {
+            console.error(err)
         }
-        yield all([
-            put({ type: FeedsActionTypes.ASYNC_FETCH_FEEDS, payload: null}),
-            put({ type: FeedsActionTypes.SET_FEEDS_CHANGES, payload: { changes } }),
-            put({ type: FeedsActionTypes.SET_FEEDS_UPDATED_AT, payload: { updatedAt: Date.now() }}),
-        ])
-        if (changes > 0) {
-            yield put({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null })
-        }
-    } catch (e) {
-        console.error(e)
-    } finally {
-        yield put({ type: FeedsActionTypes.SET_IS_UPDATING_FEEDS, payload: { isUpdating: false } })
     }
+    yield put<IReduxAction<null>>({ type: FeedsActionTypes.ASYNC_FETCH_FEEDS, payload: null })
+    if (changes > 0) {
+        yield put({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null })
+    }
+    return changes
 }
 
 const dispatcher = makeSagaWorkersDispatcher({

@@ -7,7 +7,7 @@ import { IReduxAction, IReduxState } from '../schemas'
 const mapStateToProps: MapStateToProps<IArticleViewReduxState, IArticleViewOwnProps, IReduxState> = (state: IReduxState) => ({
     articles: state.articles.list,
     currentArticle: state.articles.current,
-    feedTitles: state.feeds.titles,
+    feedsMap: state.feeds.map,
 })
 
 const mapDispatchToProps: MapDispatchToProps<IArticleViewReduxDispatch, IArticleViewOwnProps> = (dispatch: Dispatch<IReduxAction>) => ({

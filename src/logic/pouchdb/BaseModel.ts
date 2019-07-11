@@ -47,22 +47,4 @@ export default class BaseModel<Type> {
         const result = this._db.find(options)
         return result
     }
-    // public async findOne(query: PouchDB.Find.Selector, sorts: Array<(string | { [propName: string]: "asc" | "desc" })> | undefined, indexNames: string[]) {
-    //     const result = await this.find({
-    //         limit: 1,
-    //         selector: query,
-    //         sort: sorts,
-    //     }, indexNames)
-    //     if (result.docs.length) {
-    //         return result.docs[0] as Type
-    //     }
-    //     return null
-    // }
-    // public async findAll(query: PouchDB.Find.Selector, sorts: Array<(string | { [propName: string]: "asc" | "desc" })> | undefined, indexName: string[]) {
-    //     const result = await this.find({
-    //         selector: query,
-    //         sort: sorts,
-    //     }, indexName)
-    //     return result.docs as Type[]
-    // }
 }

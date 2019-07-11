@@ -1,8 +1,9 @@
 import { Empty, Icon } from 'antd'
 import Immutable from 'immutable'
 import React, { Component, PureComponent } from 'react'
+import { InjectedIntlProps, injectIntl } from 'react-intl'
 import greyLogo from '../images/grey-logo.png'
-import { IArticle } from '../schemas'
+import { IArticle, IFeed } from '../schemas'
 import Utils from '../utils'
 import WebviewDrawer from './WebviewDrawer'
 
@@ -14,7 +15,7 @@ export interface IArticleViewOwnProps {
 export interface IArticleViewReduxState {
     currentArticle: IArticle | null
     articles: Immutable.List<IArticle>
-    feedTitles: Immutable.Map<string, string>
+    feedsMap: Immutable.Map<string, IFeed>
 }
 
 export interface IArticleViewReduxDispatch {
@@ -31,12 +32,12 @@ interface IArticleViewState {
     isStarredsMap: {[_id: string]: boolean},
 }
 
-class ArticleView extends PureComponent<IArticleViewProps> {
+class ArticleView extends PureComponent<IArticleViewProps & InjectedIntlProps> {
     public state: IArticleViewState
     private _articleContentIsAppended: boolean
     private _articleContentElement: HTMLDivElement
     private _articleContentLinks: string[]
-    public constructor(props: IArticleViewProps) {
+    public constructor(props: IArticleViewProps & InjectedIntlProps) {
         super(props)
         this.state = {
             hoverLink: '',
@@ -125,13 +126,17 @@ class ArticleView extends PureComponent<IArticleViewProps> {
 
         if (this.props.currentArticle) {
             const article = this.props.currentArticle
-            const feedTitles = this.props.feedTitles
+            const feedsMap = this.props.feedsMap
+            const intl = this.props.intl
+            const feed = feedsMap.get(article.feedId)
             viewContent = (
                 <div className="view-content" onMouseLeave={this.handleMouseLeave} onClick={this.handleContentClick}>
                     <div className="article-info" onMouseOver={() => this.handleMouseOverInfo(article.link)}>
                         <div className="article-date"><p>{Utils.timeToDateTimeString(article.time)}</p></div>
                         <div className="article-title"><h1>{article.title}</h1></div>
-                        <div className="article-author"><p>{article.author} @ {feedTitles.get(article.feedId)}</p></div>
+                        <div className="article-author">
+                            <p>{article.author} @ {feed ? feed.title : intl.formatMessage({id: 'unknown'})}</p>
+                        </div>
                     </div>
                     <div className="article-content" onMouseOver={this.handleMouseOverContent}>{' '}</div>
                 </div>
@@ -191,4 +196,4 @@ class ArticleView extends PureComponent<IArticleViewProps> {
     }
 }
 
-export default ArticleView
+export default injectIntl(ArticleView)

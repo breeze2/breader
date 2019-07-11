@@ -1,8 +1,8 @@
 const enUS = {
     addFeed: 'Add Feed',
-    allArticlesAreReadNow: 'All articles are read now .',
+    allArticlesAreReadNow: 'All articles are read now.',
     delete: 'Delete',
-    doYouWantSetAllArticlesBeRead: 'Do you want set all articles be read ?',
+    doYouWantSetAllArticlesBeRead: 'Do you want set all articles be read?',
     feedUrl: 'Feed Url',
     feeds: 'Feeds',
     feedsAreUpdated: 'Feeds are Updated',
@@ -15,7 +15,9 @@ const enUS = {
     menuUnread: 'Unread',
     noMatched: 'No matched',
     settings: 'Settings',
+    somethingWrong: 'Something Wrong!',
     title: 'Breader',
     unfoundFeed: 'Unfound Feed',
+    unknown: 'Unknown',
 }
 export default enUS

@@ -1,7 +1,7 @@
-import { Icon, message as Message, Modal, Radio } from 'antd'
+import { Icon, Modal, Radio } from 'antd'
 import Immutable from 'immutable'
 import React, { Component } from 'react'
-import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'react-intl'
+import { InjectedIntlProps, injectIntl } from 'react-intl'
 import SearchArticleModal from '../containers/SearchArticleModal'
 import VirtualList from '../containers/VirtualList'
 import { IArticle } from '../schemas'
@@ -34,11 +34,8 @@ interface IAppListState {
 }
 
 class AppList extends Component<IAppListProps & InjectedIntlProps> {
-    public static propTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    }
     public state: IAppListState
-    public constructor(props: any) {
+    public constructor(props: IAppListProps & InjectedIntlProps) {
         super(props)
         this.state = {
             chooseItemIndex: -1,

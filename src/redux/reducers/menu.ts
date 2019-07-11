@@ -23,7 +23,7 @@ const initialMenuState = Immutable.Record<IMenuState>({
     selectedKey: MenuKeyDefault,
 })()
 
-const menu = (state = initialMenuState, action: IReduxAction) => {
+const menuReducer = (state = initialMenuState, action: IReduxAction) => {
     const payload = action.payload;
     switch (action.type) {
         case MenuActionTypes.SET_LANGUAGE: return handleSetLanguage(state, payload)
@@ -46,4 +46,4 @@ function handleSetMenuKey(state: IIMenuState, payload: ISetMenuKeyPayload) {
     return state.set('selectedKey', payload.key)
 }
 
-export default menu
+export default menuReducer

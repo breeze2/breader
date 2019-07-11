@@ -1,6 +1,9 @@
 import { Avatar } from 'antd'
 import Immutable from 'immutable'
 import React, { Component, PureComponent } from 'react'
+import { InjectedIntlProps, injectIntl } from 'react-intl'
+import defaultFavicon from '../images/rss.png'
+import { IFeed } from '../schemas';
 import '../styles/ListItem.less'
 import Utils from '../utils';
 
@@ -20,8 +23,7 @@ export interface IListItemReduxDispatch {
 }
 
 export interface IListItemReduxState {
-    feedFavicons: Immutable.Map<string, string>
-    feedTitles: Immutable.Map<string, string>
+    feedsMap: Immutable.Map<string, IFeed>
 }
 
 export interface IListItemProps extends IListItemOwnProps, IListItemReduxDispatch, IListItemReduxState {
@@ -31,22 +33,23 @@ interface IListItemState {
     guid: string
 }
 
-class ListItem<T extends IListItemProps> extends PureComponent<T> {
+class ListItem<T extends IListItemProps> extends PureComponent<T & InjectedIntlProps> {
     public state: IListItemState
-    public constructor(props: T) {
+    public constructor(props: T & InjectedIntlProps) {
         super(props)
         this.state = {
             guid: this.props.guid,
         }
     }
-    public componentWillReceiveProps(props: any) {
+    public componentWillReceiveProps(props: T & InjectedIntlProps) {
         // console.log(props)
     }
     public render () {
-        const { className, feedId, feedFavicons, feedTitles, summary, time, title } = this.props
+        const { className, feedId, feedsMap, intl, summary, time, title } = this.props
         const dateTime = Utils.timeToTimeString(time)
-        const feedTitle = feedTitles.get(feedId) || ''
-        const favicon = feedFavicons.get(feedId) || ''
+        const feed = feedsMap.get(feedId)
+        const feedTitle = feed ? feed.title : intl.formatMessage({id: 'unknown'})
+        const favicon = feed ? feed.favicon : defaultFavicon
         return (
             <div className={'list-item ' + className}>
                 <div className="item-sider">
@@ -67,4 +70,4 @@ class ListItem<T extends IListItemProps> extends PureComponent<T> {
     };
 }
 
-export default ListItem
+export default injectIntl(ListItem)

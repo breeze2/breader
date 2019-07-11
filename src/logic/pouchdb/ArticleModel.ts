@@ -42,8 +42,12 @@ export default class ArticleModel extends BaseModel<IArticle> {
         await Utils.batchOperate(this.singleInsertArticle, articles)
     }
     public singleInsertArticle = async (article: IArticle) => {
-        await this.insertArticle(article)
-        return true
+        try {
+            const result = await this.insertArticle(article)
+            return result ? true : false
+        } catch {
+            return false
+        }
     }
     public insertArticle = async (article: IArticle) => {
         try {

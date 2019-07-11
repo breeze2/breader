@@ -22,7 +22,7 @@ const initialArticlesState = Immutable.Record<IArticlesState>({
     list: Immutable.List<IArticle>([]),
 })()
 
-const articles = (state = initialArticlesState, action: IReduxAction) => {
+const articlesReducer = (state = initialArticlesState, action: IReduxAction) => {
     const payload = action.payload;
     switch (action.type) {
         case ArticlesActionTypes.SET_CURRENT_ARTICLE:
@@ -60,4 +60,4 @@ function handleSetArticlesFilter(state: IIArticlesState, payload: ISetArticlesFi
     return state.set('filter', payload.filter)
 }
 
-export default articles
+export default articlesReducer

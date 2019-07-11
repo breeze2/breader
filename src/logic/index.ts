@@ -1,35 +1,31 @@
 import { IFeed } from '../schemas'
-import { LogicErrorTypes } from './error'
+import LogicError from './error'
 import { parseFeed } from './feedparser'
 import { articleDB, feedDB } from './pouchdb'
 
 (window as any).articleDB = articleDB
 const Logic = {
     createFeed: async (feedUrl: string) => {
-        try {
-            const isExists = await feedDB.isFeedExists(feedUrl)
-            if (isExists && !isExists.deleteTime) {
-                return LogicErrorTypes.PouchDB.EXISTS
-            }
-            const newFeed = await parseFeed(feedUrl, '')
-            if (!newFeed) {
-                return LogicErrorTypes.FeedParser.NOT_FOUND
-            }
-            const response = await feedDB.insertFeed(newFeed)
-            if (response && response.ok) {
-                newFeed._id = response.id
-                newFeed._rev = response.rev
-                const articles = newFeed.articles
-                if (articles) {
-                    articles.forEach(article => (article.feedId = newFeed._id))
-                    await articleDB.batchInsertArticles(articles)
-                }
-            }
-            return newFeed
-        } catch (err) {
-            console.error(err)
-            return LogicErrorTypes.UNKNOWN
+        const isExists = await feedDB.isFeedExists(feedUrl)
+        if (isExists && !isExists.deleteTime) {
+            // throw new LogicError(LogicError.types.POUCHDB_EXISTS)
+            return null
         }
+        const newFeed = await parseFeed(feedUrl, '')
+        if (!newFeed) {
+            throw new LogicError(LogicError.types.FEEDPARSER_NOT_FOUND)
+        }
+        const response = await feedDB.insertFeed(newFeed)
+        if (response && response.ok) {
+            newFeed._id = response.id
+            newFeed._rev = response.rev
+            const articles = newFeed.articles
+            if (articles) {
+                articles.forEach(article => (article.feedId = newFeed._id))
+                await articleDB.batchInsertArticles(articles)
+            }
+        }
+        return newFeed
     },
     deleteFeeds: async (feedIds: string[]) => {
         let changes = 0
@@ -44,48 +40,26 @@ const Logic = {
         return feeds
     },
     getArticle: async (articleId: string) => {
-        try {
-            const article = await articleDB.get(articleId)
-            return article
-        } catch (err) {
-            console.error(err)
-            return null
-        }
+        const article = await articleDB.get(articleId)
+        return article
     },
     getArticleContent: async (articleId: string) => {
         const articleContent = await articleDB.getArticleContent(articleId)
         return articleContent
     },
     getArticles: async (selector: PouchDB.Find.Selector = {}, limit: number = 9999, skip: number = 0) => {
-        try {
-            const articles = await articleDB.queryArticles(selector, limit, skip)
-            return articles
-        } catch (err) {
-            console.error(err)
-        }
+        const articles = await articleDB.queryArticles(selector, limit, skip)
+        return articles
     },
     setAriclesIsRead: async (articleIds: string[]) => {
-        try {
-            const changes = await articleDB.batchReadArticles(articleIds);
-            return changes
-        } catch (err) {
-            console.error(err)
-            return 0
-        }
+        const changes = await articleDB.batchReadArticles(articleIds);
+        return changes
     },
     setArticleIsRead: async (articleId: string) => {
-        try {
-            await articleDB.readArticle(articleId)
-        } catch (err) {
-            console.error(err)
-        }
+        await articleDB.readArticle(articleId)
     },
     setArticleIsStarred: async (articleId: string, isStarred: boolean) => {
-        try {
-            await articleDB.starArticle(articleId, isStarred)
-        } catch (err) {
-            console.error(err)
-        }
+        await articleDB.starArticle(articleId, isStarred)
     },
     updateFeedArticles: async (feed: IFeed) => {
         const newFeed = await parseFeed(feed.url, feed.etag || '')

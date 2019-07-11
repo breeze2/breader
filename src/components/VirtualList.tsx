@@ -1,5 +1,5 @@
 import { Affix, Empty } from 'antd'
-import { List, Map } from 'immutable'
+import Immutable from 'immutable'
 import React, { Component, PureComponent, RefObject } from 'react'
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List as VList, WindowScroller } from 'react-virtualized'
 import ListItem from '../containers/ListItem'
@@ -17,7 +17,7 @@ export interface IVirtualListReduxDispatch {
 
 export interface IVirtualListReduxState {
     currentArticle: IArticle | null
-    articles: List<IArticle>
+    articles: Immutable.List<IArticle>
 }
 
 interface IVirtualListProps extends IVirtualListOwnProps, IVirtualListReduxDispatch, IVirtualListReduxState {
