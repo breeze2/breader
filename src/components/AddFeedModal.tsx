@@ -14,8 +14,7 @@ interface IAddFeedModalState {
     readonly feedUrl: string
 }
 
-class AddFeedModal extends Component<IAddFeedModalProps & InjectedIntlProps> {
-    public state: IAddFeedModalState
+class AddFeedModal extends Component<IAddFeedModalProps & InjectedIntlProps, IAddFeedModalState> {
     public constructor(props: IAddFeedModalProps & InjectedIntlProps) {
         super(props)
         this.state = {

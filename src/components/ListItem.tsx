@@ -29,17 +29,9 @@ export interface IListItemReduxState {
 export interface IListItemProps extends IListItemOwnProps, IListItemReduxDispatch, IListItemReduxState {
 }
 
-interface IListItemState {
-    guid: string
-}
-
 class ListItem<T extends IListItemProps> extends PureComponent<T & InjectedIntlProps> {
-    public state: IListItemState
     public constructor(props: T & InjectedIntlProps) {
         super(props)
-        this.state = {
-            guid: this.props.guid,
-        }
     }
     public componentWillReceiveProps(props: T & InjectedIntlProps) {
         // console.log(props)

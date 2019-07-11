@@ -29,8 +29,7 @@ interface ISettingsModalState {
     needDeleted: { [id: string]: boolean },
 }
 
-class SettingsModal extends Component<ISettingsModalProps & InjectedIntlProps, {}> {
-    public state: ISettingsModalState
+class SettingsModal extends Component<ISettingsModalProps & InjectedIntlProps, ISettingsModalState> {
     public constructor(props: ISettingsModalProps & InjectedIntlProps) {
         super(props)
         this.state = {

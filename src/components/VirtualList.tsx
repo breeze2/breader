@@ -29,9 +29,8 @@ interface IVirtualListState {
     readItems: any
 }
 
-class VirtualList extends PureComponent<IVirtualListProps> {
+class VirtualList extends PureComponent<IVirtualListProps, IVirtualListState> {
     public vlist: RefObject<VList>
-    public state: IVirtualListState
     public cellCache: CellMeasurerCache
     public updateRenderStartDate: (...params: any[]) => void
     public constructor(props: IVirtualListProps) {

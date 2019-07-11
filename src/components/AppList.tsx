@@ -33,8 +33,7 @@ interface IAppListState {
     chooseItemIndex: number
 }
 
-class AppList extends Component<IAppListProps & InjectedIntlProps> {
-    public state: IAppListState
+class AppList extends Component<IAppListProps & InjectedIntlProps, IAppListState> {
     public constructor(props: IAppListProps & InjectedIntlProps) {
         super(props)
         this.state = {

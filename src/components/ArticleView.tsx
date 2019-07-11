@@ -32,8 +32,7 @@ interface IArticleViewState {
     isStarredsMap: {[_id: string]: boolean},
 }
 
-class ArticleView extends PureComponent<IArticleViewProps & InjectedIntlProps> {
-    public state: IArticleViewState
+class ArticleView extends PureComponent<IArticleViewProps & InjectedIntlProps, IArticleViewState> {
     private _articleContentIsAppended: boolean
     private _articleContentElement: HTMLDivElement
     private _articleContentLinks: string[]

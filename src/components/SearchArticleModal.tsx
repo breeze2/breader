@@ -31,8 +31,7 @@ interface ISearchArticleModalState {
     readonly matchedArticles: Immutable.List<IArticle>
 }
 
-class SearchArticleModal extends Component<ISearchArticleModalProps & InjectedIntlProps> {
-    public state: ISearchArticleModalState
+class SearchArticleModal extends Component<ISearchArticleModalProps & InjectedIntlProps, ISearchArticleModalState> {
     public searchArticles: (keywords: string[]) => any
     public constructor(props: ISearchArticleModalProps & InjectedIntlProps) {
         super(props)
