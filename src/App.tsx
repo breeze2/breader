@@ -1,4 +1,5 @@
 import { Layout } from 'antd'
+import { ipcRenderer } from 'electron'
 import React, { Component } from 'react'
 import { Provider as ReduxProvider } from 'react-redux'
 
@@ -27,7 +28,7 @@ class App extends Component {
     }
   }
   public componentWillMount() {
-    Utils.ipcRenderer.on('PREFERENCES_MODAL', (event: any, args: any) => {
+    ipcRenderer.on('PREFERENCES_MODAL', (event: any, args: any) => {
       if (args === 'OPEN') {
         this.setState({
           isSettingsModalVisible: true,

@@ -1,4 +1,5 @@
 import { Drawer, Icon, Progress } from 'antd'
+import { shell } from 'electron'
 import React, { Component, createRef, RefObject } from 'react'
 import Utils from '../utils'
 import ProgressBar from './ProgressBar'
@@ -30,7 +31,7 @@ class WebviewDrawer extends Component<IWebviewDrawerProps, IWebviewDrawerState> 
     }
     public handleCompassClick = () => {
         if (this.props.src) {
-            Utils.openExternalUrl(this.props.src)
+            shell.openExternal(this.props.src)
         }
     }
     public handleDrawerClose = (e: any) => {
