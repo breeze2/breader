@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { IArticle, IReduxAction } from '../../schemas'
+import { IArticle, IArticlesState, IIArticlesState, IReduxAction, } from '../../schemas'
 import Utils from '../../utils';
 import {
     ArticlesActionTypes,
@@ -7,14 +7,6 @@ import {
     ISetArticlesPayload,
     ISetCurrentArticlePayload,
 } from '../actions'
-
-export interface IArticlesState {
-    current: IArticle | null
-    filter: string
-    list: Immutable.List<IArticle>
-}
-
-export type IIArticlesState = Immutable.Record<IArticlesState> & Readonly<IArticlesState>
 
 const initialArticlesState = Immutable.Record<IArticlesState>({
     current: null,

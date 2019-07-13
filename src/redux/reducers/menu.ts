@@ -1,18 +1,10 @@
 import Immutable from 'immutable'
-import { IReduxAction, MenuKeyEnum } from '../../schemas'
+import { IIMenuState, IMenuState, IReduxAction, MenuKeyEnum } from '../../schemas'
 import {
     ISetLanguagePayload,
     ISetMenuKeyPayload,
     MenuActionTypes,
 } from '../actions'
-
-export interface IMenuState {
-    language: string
-    onlineStatus: boolean
-    selectedKey: string
-}
-
-export type IIMenuState = Immutable.Record<IMenuState> & Readonly<IMenuState>
 
 const LANGUAGE = 'LANGUAGE'
 const MenuKeyDefault = MenuKeyEnum.ALL_ITEMS

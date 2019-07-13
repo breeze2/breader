@@ -1,20 +1,11 @@
 import Immutable from 'immutable'
-import { IFeed, IReduxAction } from '../../schemas'
+import { IFeed, IFeedsState, IIFeedsState, IReduxAction } from '../../schemas'
 import {
     FeedsActionTypes,
     IAddFeedPayload,
     ISetFeedFaviconPayload,
     ISetFeedsPayload,
 } from '../actions'
-
-export interface IFeedsState {
-    isUpdating: boolean
-    isCreating: boolean
-    list: Immutable.List<IFeed>
-    map: Immutable.Map<string, IFeed>
-}
-
-export type IIFeedsState = Immutable.Record<IFeedsState> & Readonly<IFeedsState>
 
 const initialFeedsState = Immutable.Record<IFeedsState>({
     isCreating: false,
