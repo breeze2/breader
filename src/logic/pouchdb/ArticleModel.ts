@@ -32,34 +32,25 @@ export default class ArticleModel extends BaseModel<IArticle> {
             link: item.link,
             originLink: item.origlink,
             publishTime: item.pubdate ? item.pubdate.getTime() : Date.now(),
-            summary: item.summary,
+            summary: item.summary.substr(0, 96),
             time: item.date ? item.date.getTime() : Date.now(),
             title: item.title,
         }
         return article
     }
     public async batchInsertArticles(articles: IArticle[]) {
-        await Utils.batchOperate(this.singleInsertArticle, articles)
-    }
-    public singleInsertArticle = async (article: IArticle) => {
-        try {
-            const result = await this.insertArticle(article)
-            return result ? true : false
-        } catch {
-            return false
-        }
-    }
-    public insertArticle = async (article: IArticle) => {
-        try {
-            const oldArticle = await this.get(article._id)
-            article._id = oldArticle._id
-            article._rev = oldArticle._rev
-            article.isStarred = oldArticle.isStarred
-            article.isUnread = oldArticle.isUnread
-            return this.put(article)
-        } catch (error) {
-            return this.post(article)
-        }
+        const keys = articles.map(article => article._id)
+        const { rows } = await this.all({keys})
+        let changes = 0
+        rows.forEach((row, i) => {
+            if (!('error' in row)) {
+                articles[i]._rev = row.value.rev
+            } else {
+                changes ++
+            }
+        })
+        const response = await this.batchPost(articles)
+        return changes
     }
     public async batchReadArticles(ids: string[]) {
         const changes = await Utils.batchOperate(this.singleReadArticle, ids)
@@ -68,7 +59,7 @@ export default class ArticleModel extends BaseModel<IArticle> {
     public singleReadArticle = async (id: string) => {
         try {
             const result = await this.readArticle(id)
-            return result ? true : false
+            return result && result.ok ? true : false
         } catch {
             return false
         }
@@ -92,14 +83,14 @@ export default class ArticleModel extends BaseModel<IArticle> {
         if (!selector.time) {
             selector.time = { $exists: true }
         }
-        const articles = await this.find({
+        const result = await this.find({
             fields: ['_id', '_rev', 'author', 'feedId', 'isUnread', 'link', 'summary', 'time', 'title'],
             limit,
             selector,
             skip,
             sort: [{ time: 'desc'}],
-        }, ['time', 'feedId'])
-        return articles.docs
+        })
+        return result.docs
     }
 
     public async getArticleContent(id: string) {

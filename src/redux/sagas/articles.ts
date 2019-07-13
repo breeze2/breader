@@ -1,6 +1,6 @@
 import { all, call, put, race, select, takeEvery, takeLatest } from 'redux-saga/effects'
 import Logic from '../../logic'
-import { IArticle, IIMenuState, IReduxAction } from '../../schemas'
+import { IArticle, IIFeedsState, IIMenuState, IReduxAction, MenuKeyEnum } from '../../schemas'
 import {
     ArticlesActionTypes,
     IAsyncFilterArticlesPayload,
@@ -11,19 +11,21 @@ import {
     ISetCurrentArticlePayload,
 } from '../actions'
 import { makeSagaWorkersDispatcher } from './helpers'
-import { getArticles, getMenu } from './selectors'
+import { getArticles, getFeeds, getMenu } from './selectors'
 
 export function* fetchArticlesSaga(action: IReduxAction<null>) {
-    const menu: IIMenuState = yield select(getMenu)
-    const menuKey = menu.selectedKey
-    const selector: PouchDB.Find.Selector = {}
+    const menuState: IIMenuState = yield select(getMenu)
+    const menuKey = menuState.selectedKey
+    const feedsState: IIFeedsState = yield select(getFeeds)
+    const feedIds = feedsState.list.map(feed => feed._id).toArray()
+    const selector: PouchDB.Find.Selector = { feedId: { $in: feedIds } }
     switch (menuKey) {
-        case 'ALL_ITEMS':
+        case MenuKeyEnum.ALL_ITEMS:
             break
-        case 'STARRED_ITEMS':
+        case MenuKeyEnum.STARRED_ITEMS:
             selector.isStarred = { $eq: true }
             break
-        case 'UNREAD_ITEMS':
+        case MenuKeyEnum.UNREAD_ITEMS:
             selector.isUnread = { $eq: true }
             break
         default:

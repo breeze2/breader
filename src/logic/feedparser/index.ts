@@ -2,7 +2,7 @@ import FeedParser from 'feedparser'
 import http from 'http'
 import https from 'https'
 import url from 'url'
-import { IArticle, IFeed } from '../../schemas'
+import { IArticle, IFeed, LogicErrorEnum } from '../../schemas'
 import LogicError from '../error'
 import { articleDB, feedDB } from '../pouchdb'
 import IconvTransform from './IconvTransform'
@@ -11,7 +11,7 @@ function feedXmlRequest(feedUrl: string, options: http.RequestOptions) {
     return new Promise<http.IncomingMessage>((resolve, reject) => {
         const u = url.parse(feedUrl)
         if (!u) {
-            return reject(new LogicError(LogicError.types.FEEDPARSER_WRONG_URL))
+            return reject(new LogicError(LogicErrorEnum.FEEDPARSER_WRONG_URL))
         }
         const client = u.protocol === 'http:' ? http : https
         const headers = options.headers ? options.headers : {}
@@ -88,7 +88,7 @@ export function parseFeed(feedUrl: string, etag: string) {
             } else if (res.statusCode === 304) {
                 resolve(null)
             } else {
-                reject(new LogicError(LogicError.types.FEEDPARSER_FETCH_ERROR))
+                reject(new LogicError(LogicErrorEnum.FEEDPARSER_FETCH_ERROR))
             }
         })
     })

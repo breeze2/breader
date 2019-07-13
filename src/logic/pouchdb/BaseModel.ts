@@ -5,14 +5,12 @@ PouchDB.plugin(PouchDBFind)
 
 export default class BaseModel<Type> {
     private _db: PouchDB.Database<Type>
-    private _createIndexResponseMap: {[indexName: string]: Promise<PouchDB.Find.CreateIndexResponse<Type>>}
+    private _createIndexResponseList: Array<Promise<PouchDB.Find.CreateIndexResponse<Type>>>
     public constructor(name: string, createIndexOptionsList: PouchDB.Find.CreateIndexOptions[]) {
         this._db = new PouchDB<Type>(name, { adapter: 'idb' })
-        this._createIndexResponseMap = {}
+        this._createIndexResponseList = []
         createIndexOptionsList.forEach(options => {
-            const indexName = options.index.name ? options.index.name : options.index.fields.toString()
-            options.index.name = indexName
-            this._createIndexResponseMap[indexName] = this.createIndex(options)
+            this._createIndexResponseList.push(this.createIndex(options))
         })
     }
     public get(id: string) {
@@ -30,20 +28,17 @@ export default class BaseModel<Type> {
     public batchGet(options: PouchDB.Core.BulkGetOptions) {
         return this._db.bulkGet(options);
     }
+    public all(options?: PouchDB.Core.AllDocsWithKeyOptions | PouchDB.Core.AllDocsOptions | PouchDB.Core.AllDocsWithKeysOptions | PouchDB.Core.AllDocsWithinRangeOptions) {
+        return this._db.allDocs(options)
+    }
     public createIndex(options: PouchDB.Find.CreateIndexOptions) {
         return this._db.createIndex(options)
     }
-    public async beforeFind(options: PouchDB.Find.FindRequest<Type>, indexNames: string[]) {
-        const responses: Array<Promise<PouchDB.Find.CreateIndexResponse<Type>>> = []
-        indexNames.forEach(indexName => {
-            if (this._createIndexResponseMap[indexName]) {
-                responses.push(this._createIndexResponseMap[indexName])
-            }
-        })
-        return Promise.all(responses)
+    public async beforeFind(options: PouchDB.Find.FindRequest<Type>) {
+        return Promise.all(this._createIndexResponseList)
     }
-    public async find(options: PouchDB.Find.FindRequest<Type>, indexNames: string[]) {
-        await this.beforeFind(options, indexNames)
+    public async find(options: PouchDB.Find.FindRequest<Type>) {
+        await this.beforeFind(options)
         const result = this._db.find(options)
         return result
     }

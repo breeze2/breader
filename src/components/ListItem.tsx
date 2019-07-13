@@ -33,9 +33,6 @@ class ListItem<T extends IListItemProps> extends PureComponent<T & InjectedIntlP
     public constructor(props: T & InjectedIntlProps) {
         super(props)
     }
-    public componentWillReceiveProps(props: T & InjectedIntlProps) {
-        // console.log(props)
-    }
     public render () {
         const { className, feedId, feedsMap, intl, summary, time, title } = this.props
         const dateTime = Utils.timeToTimeString(time)

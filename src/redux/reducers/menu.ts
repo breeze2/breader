@@ -1,13 +1,10 @@
 import Immutable from 'immutable'
-import { IReduxAction } from '../../schemas'
+import { IReduxAction, MenuKeyEnum } from '../../schemas'
 import {
     ISetLanguagePayload,
     ISetMenuKeyPayload,
     MenuActionTypes,
 } from '../actions'
-
-const MenuKeyDefault = 'ALL_ITEMS'
-const languageDefault = localStorage.getItem('LANGUAGE') || navigator.language
 
 export interface IMenuState {
     language: string
@@ -16,6 +13,10 @@ export interface IMenuState {
 }
 
 export type IIMenuState = Immutable.Record<IMenuState> & Readonly<IMenuState>
+
+const LANGUAGE = 'LANGUAGE'
+const MenuKeyDefault = MenuKeyEnum.ALL_ITEMS
+const languageDefault = localStorage.getItem(LANGUAGE) || navigator.language
 
 const initialMenuState = Immutable.Record<IMenuState>({
     language: languageDefault,
@@ -34,7 +35,7 @@ const menuReducer = (state = initialMenuState, action: IReduxAction) => {
 }
 
 function handleSetLanguage(state: IIMenuState, payload: ISetLanguagePayload) {
-    localStorage.setItem('LANGUAGE', payload.language)
+    localStorage.setItem(LANGUAGE, payload.language)
     return state.set('language', payload.language)
 }
 

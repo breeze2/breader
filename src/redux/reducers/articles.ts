@@ -48,7 +48,7 @@ function handleSetArticles(state: IIArticlesState, payload: ISetArticlesPayload)
         }
     })
     return state.set('list', Immutable.List<IArticle>(payload.articles))
-        .set('current', null)
+        // .set('current', null)
 
 }
 

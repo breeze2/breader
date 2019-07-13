@@ -100,8 +100,9 @@ class AppMenu extends Component<IAppMenuProps & InjectedIntlProps, IAppMenuState
         this.props.updateOnlineStatus()
     }
     public componentWillMount() {
-        this.props.asyncFetchFeeds()
-        this.props.asyncFetchArticles()
+        this.props.asyncFetchFeeds().then(() => {
+            this.props.asyncFetchArticles()
+        })
         window.addEventListener('online', this.handleOnlineStatus)
         window.addEventListener('offline', this.handleOnlineStatus)
     }

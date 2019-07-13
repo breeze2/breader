@@ -73,12 +73,6 @@ class VirtualList extends PureComponent<IVirtualListProps, IVirtualListState> {
             }
         }
     }
-    // public componentWillUpdate() {
-    //     console.log(arguments, 11)
-    // }
-    // public componentDidCatch () {
-    //     console.log(arguments, 33)
-    // }
     public handleVirtualListClick = (e: any) => {
         const readItems = this.state.readItems
         const target = e.target
