@@ -11,6 +11,7 @@ import {
     setArticlesAction,
     setArticlesFilterAction,
     setCurrentArticleAction,
+    setIsUpdatingCurrentArticleAction,
 } from '../actions'
 import { makeSagaWorkersDispatcher } from './helpers'
 import { getArticles, getFeeds, getMenu } from './selectors'
@@ -55,11 +56,13 @@ export function* filterArticlesSaga(action: IReduxAction<IAsyncFilterArticlesPay
 }
 
 export function* selectAndReadArticleSaga(action: IReduxAction<IAsyncSelectAndReadArticlePayload>) {
+    yield put(setIsUpdatingCurrentArticleAction(true))
     const article: IArticle | null = yield call(Logic.getArticle, action.payload.articleId)
     if (article) {
         article.index = action.payload.articleIndex
         yield call(Logic.setArticleIsRead, article._id)
     }
+    yield put(setIsUpdatingCurrentArticleAction(false))
     yield put(setCurrentArticleAction(article))
     return article
 }

@@ -6,6 +6,19 @@
     padding: 42px 0 42px 0;
     height: 100%;
 
+    .article-view-skeleton.ant-skeleton-active .ant-skeleton-content .ant-skeleton-paragraph > li {
+        background: linear-gradient(90deg, #dedede 25%, #e6e6e6 37%, #dedede 63%);
+        background-size: 400% 100%;
+        animation: ant-skeleton-loading 1.4s ease infinite;
+    }
+    .article-view-skeleton {
+        padding: 16px;
+        margin-top: 32px;
+        max-width: 420px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
     .view-header {
         .wrapper-header;
         .anticon {

@@ -5,6 +5,8 @@ export const ArticlesActionTypes = {
     SET_ARTICLES: 'SET_ARTICLES',
     SET_ARTICLES_FILTER: 'SET_ARTICLES_FILTER',
     SET_CURRENT_ARTICLE: 'SET_CURRENT_ARTICLE',
+    SET_IS_FETCHING: 'SET_IS_FETCHING',
+    SET_IS_UPDATING_CURRENT: 'SET_IS_UPDATING_CURRENT',
 
     ASYNC_FETCH_ARTICLES: 'ASYNC_FETCH_ARTICLES',
     ASYNC_FILTER_ARTICLES: 'ASYNC_FILTER_ARTICLES',
@@ -24,6 +26,14 @@ export const setArticlesFilterAction = (filter: string) =>
 export interface ISetArticlesPayload { articles: IArticle[]}
 export const setArticlesAction = (articles: IArticle[]) =>
     actionCreator<ISetArticlesPayload>(ArticlesActionTypes.SET_ARTICLES)({ articles })
+
+export interface ISetIsFetchingArticlePayload { isFetching: boolean }
+export const setIsFetchingArticleAction = (isFetching: boolean) =>
+    actionCreator<ISetIsFetchingArticlePayload>(ArticlesActionTypes.SET_IS_UPDATING_CURRENT)({ isFetching })
+
+export interface ISetIsUpdatingCurrentArticlePayload { isUpdatingCurrent: boolean }
+export const setIsUpdatingCurrentArticleAction = (isUpdatingCurrent: boolean) =>
+    actionCreator<ISetIsUpdatingCurrentArticlePayload>(ArticlesActionTypes.SET_IS_UPDATING_CURRENT)({ isUpdatingCurrent })
 
 export const asyncFetchArticlesAction = () =>
     actionCreator<void>(ArticlesActionTypes.ASYNC_FETCH_ARTICLES)()

@@ -8,6 +8,7 @@ const mapStateToProps: MapStateToProps<IArticleViewReduxState, IArticleViewOwnPr
     articles: state.articles.list,
     currentArticle: state.articles.current,
     feedsMap: state.feeds.map,
+    isUpdatingCurrentArticle: state.articles.isUpdatingCurrent,
 })
 
 const mapDispatchToProps: MapDispatchToProps<IArticleViewReduxDispatch, IArticleViewOwnProps> = (dispatch: Dispatch<IReduxAction>) => ({

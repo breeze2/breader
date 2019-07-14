@@ -1,4 +1,4 @@
-import { Empty, Icon } from 'antd'
+import { Empty, Icon, Skeleton } from 'antd'
 import Immutable from 'immutable'
 import React, { Component, PureComponent } from 'react'
 import { InjectedIntlProps, injectIntl } from 'react-intl'
@@ -16,6 +16,7 @@ export interface IArticleViewReduxState {
     currentArticle: IArticle | null
     articles: Immutable.List<IArticle>
     feedsMap: Immutable.Map<string, IFeed>
+    isUpdatingCurrentArticle: boolean
 }
 
 export interface IArticleViewReduxDispatch {
@@ -120,27 +121,25 @@ class ArticleView extends PureComponent<IArticleViewProps & InjectedIntlProps, I
         }
     }
     public render() {
-        let viewContent: any
-        let starIcon: any
+        let viewContent: JSX.Element
+        let starIcon: JSX.Element | null
 
         if (this.props.currentArticle) {
-            const article = this.props.currentArticle
-            const feedsMap = this.props.feedsMap
-            const intl = this.props.intl
-            const feed = feedsMap.get(article.feedId)
+            const { currentArticle, feedsMap, intl} = this.props
+            const feed = feedsMap.get(currentArticle.feedId)
             viewContent = (
                 <div className="view-content" onMouseLeave={this.handleMouseLeave} onClick={this.handleContentClick}>
-                    <div className="article-info" onMouseOver={() => this.handleMouseOverInfo(article.link)}>
-                        <div className="article-date"><p>{Utils.timeToDateTimeString(article.time)}</p></div>
-                        <div className="article-title"><h1>{article.title}</h1></div>
+                    <div className="article-info" onMouseOver={() => this.handleMouseOverInfo(currentArticle.link)}>
+                        <div className="article-date"><p>{Utils.timeToDateTimeString(currentArticle.time)}</p></div>
+                        <div className="article-title"><h1>{currentArticle.title}</h1></div>
                         <div className="article-author">
-                            <p>{article.author} @ {feed ? feed.title : intl.formatMessage({id: 'unknown'})}</p>
+                            <p>{currentArticle.author} @ {feed ? feed.title : intl.formatMessage({id: 'unknown'})}</p>
                         </div>
                     </div>
                     <div className="article-content" onMouseOver={this.handleMouseOverContent}>{' '}</div>
                 </div>
             )
-            if (this.state.isStarredsMap[(article._id as string)]) {
+            if (this.state.isStarredsMap[(currentArticle._id as string)]) {
                 starIcon = (<Icon type="star" theme="filled"
                     onClick={this.handleStarIconClick} />)
             } else {
@@ -159,14 +158,18 @@ class ArticleView extends PureComponent<IArticleViewProps & InjectedIntlProps, I
         }
         return (
             <div className="article-view" >
+            <Skeleton className="article-view-skeleton" loading={this.props.isUpdatingCurrentArticle} title={false} active
+                paragraph={{ rows: 10, width: ['100%', '70%', '80%', '100%', '100%', '100%', '100%', '100%', '100%', '60%'] }}
+            >
                 <div className="view-header">
                     <div className="view-header-right">
                         {starIcon}
                     </div>
                 </div>
-                {viewContent}
+                    {viewContent}
                 <div className="view-footer"><p>{this.state.hoverLink ? 'Open ' + this.state.hoverLink : ''}</p></div>
                 <WebviewDrawer width={'calc(100vw - 490px)'} onClose={this.handelWebviewClose} visible={this.state.isWebviewDrawerVisible} src={this.state.webviewDrawerSrc} />
+            </Skeleton>
             </div>
         )
     }

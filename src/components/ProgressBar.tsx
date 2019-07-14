@@ -48,7 +48,7 @@ class ProgressBar extends PureComponent<IProgressBarProps, IProgressBarState> {
             status='active'
             showInfo={false}
             strokeColor={{
-                '0%': '#91a4ad',
+                '0%': '#c8af8d',
                 '100%': '#ffa81e',
             }}
             percent={this.state.progress}
