@@ -15,7 +15,7 @@ export default class FeedModel extends BaseModel<IFeed> {
     }
     public makeFeedBaseOnMate(meta: FeedParser.Meta, etag: string = '', articles: IArticle[] = []) {
         const feed: IFeed = {
-            _id: '',
+            _id: meta.xmlurl,
             _rev: '',
             articles,
             author: meta.author,
@@ -36,13 +36,12 @@ export default class FeedModel extends BaseModel<IFeed> {
         return feed
     }
     public async isFeedExists(url: string) {
-        const response = await this.find({
-            selector: { url },
-        }, ['url'])
-        if (response.docs[0]) {
-            return response.docs[0]
+        try {
+            const feed = await this.get(url)
+            return feed
+        } catch (error) {
+            return false
         }
-        return false
     }
     public async insertFeed (feed: IFeed) {
         const oldFeed = await this.isFeedExists(feed.url)
@@ -63,9 +62,12 @@ export default class FeedModel extends BaseModel<IFeed> {
     }
     public async getAllFeeds() {
         const feeds = await this.find({
-            selector: {},
+            selector: {
+                createTime: {$exists: true},
+                deleteTime: {$eq: 0},
+            },
             sort: ['createTime'],
-        }, ['createTime'])
+        })
         return feeds.docs
     }
 }

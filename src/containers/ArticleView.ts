@@ -5,11 +5,9 @@ import { asyncActionDispatcher, asyncStarArticleAction } from '../redux/actions'
 import { IReduxAction, IReduxState } from '../schemas'
 
 const mapStateToProps: MapStateToProps<IArticleViewReduxState, IArticleViewOwnProps, IReduxState> = (state: IReduxState) => ({
-    articleContent: state.articles.selectedContent,
-    articleId: state.articles.selectedId,
-    articleIndex: state.articles.selectedIndex,
     articles: state.articles.list,
-    feedTitles: state.feeds.titles,
+    currentArticle: state.articles.current,
+    feedsMap: state.feeds.map,
 })
 
 const mapDispatchToProps: MapDispatchToProps<IArticleViewReduxDispatch, IArticleViewOwnProps> = (dispatch: Dispatch<IReduxAction>) => ({

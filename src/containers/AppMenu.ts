@@ -1,16 +1,23 @@
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux'
 import { Dispatch } from 'redux'
 import AppMenu, { IAppMenuOwnProps, IAppMenuReduxDispatch, IAppMenuReduxState } from '../components/AppMenu'
-import { asyncActionDispatcher, asyncFetchArticlesAction, asyncFetchFeedsAction, asyncParseFeedAction, asyncSelectMenuKeyAction,
-    asyncUpdateFeedsAction, setFeedFaviconAction, setOnlineStatusAction } from '../redux/actions'
+import {
+    asyncActionDispatcher,
+    asyncFetchArticlesAction,
+    asyncFetchFeedsAction,
+    asyncParseFeedAction,
+    asyncSelectMenuKeyAction,
+    asyncUpdateFeedsAction,
+    setFeedFaviconAction,
+    setIsCreatingFeedAction,
+    setIsUpdatingFeedsAction,
+    updateOnlineStatusAction,
+} from '../redux/actions'
 import { IReduxAction, IReduxState } from '../schemas'
 
 const mapStateToProps: MapStateToProps<IAppMenuReduxState, IAppMenuOwnProps, IReduxState> = (state) => ({
-    feedFavicons: state.feeds.favicons,
     feeds: state.feeds.list,
-    feedsChanges: state.feeds.changes,
-    feedsUpdatedAt: state.feeds.updatedAt,
-    invalidFeedsCount: state.feeds.invalidCount,
+    feedsMap: state.feeds.map,
     isCreatingFeed: state.feeds.isCreating,
     isUpdatingFeeds: state.feeds.isUpdating,
     onlineStatus: state.menu.onlineStatus,
@@ -24,7 +31,9 @@ const mapDispatchToProps: MapDispatchToProps<IAppMenuReduxDispatch, IAppMenuOwnP
     asyncSelectMenuKey: (key: string) => asyncActionDispatcher(dispatch, asyncSelectMenuKeyAction(key)),
     asyncUpdateFeeds: () => asyncActionDispatcher(dispatch, asyncUpdateFeedsAction()),
     setFeedFavicon: (id: string, favicon: string) => dispatch(setFeedFaviconAction(id, favicon)),
-    setOnlineStatus: () => dispatch(setOnlineStatusAction()),
+    setIsCreatingFeed: (isCreating: boolean) => dispatch(setIsCreatingFeedAction(isCreating)),
+    setIsUpdatingFeeds: (isUpdating: boolean) => dispatch(setIsUpdatingFeedsAction(isUpdating)),
+    updateOnlineStatus: () => dispatch(updateOnlineStatusAction()),
 })
 
 export default connect(

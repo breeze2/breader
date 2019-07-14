@@ -1,4 +1,4 @@
-export interface IReduxAction {
-    payload: any,
+export interface IReduxAction<P = any> {
+    payload: P,
     type: string,
 }

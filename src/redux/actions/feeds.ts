@@ -1,14 +1,12 @@
-import { IFeed, IReduxAction } from '../../schemas'
+import { IFeed } from '../../schemas'
+import { actionCreator } from './helpers'
 
 export const FeedsActionTypes = {
     ADD_FEED: 'ADD_FEED',
     SET_FEEDS: 'SET_FEEDS',
-    SET_FEEDS_CHANGES: 'SET_FEEDS_CHANGES',
-    SET_FEEDS_UPDATED_AT: 'SET_FEEDS_UPDATED_AT',
     SET_FEED_FAVICON: 'SET_FEED_FAVICON',
     SET_IS_CREATING_FEED: 'SET_IS_CREATING_FEED',
     SET_IS_UPDATING_FEEDS: 'SET_IS_UPDATING_FEEDS',
-    TIPS_PARSE_INVALID_FEED: 'TIPS_PARSE_INVALID_FEED',
 
     ASYNC_DELETE_FEEDS: 'ASYNC_DELETE_FEEDS',
     ASYNC_FETCH_FEEDS: 'ASYNC_FETCH_FEEDS',
@@ -16,62 +14,36 @@ export const FeedsActionTypes = {
     ASYNC_UPDATE_FEEDS: 'ASYNC_UPDATE_FEEDS',
 }
 
-export const addFeedAction = (feed: IFeed): IReduxAction => ({
-    payload: { feed },
-    type: FeedsActionTypes.ADD_FEED,
-})
+export interface IAddFeedPayload { feed: IFeed }
+export const addFeedAction = (feed: IFeed) =>
+    actionCreator<IAddFeedPayload>(FeedsActionTypes.ADD_FEED)({ feed })
 
-export const setFeedsChangesAction = (changes: number): IReduxAction => ({
-    payload: { changes },
-    type: FeedsActionTypes.SET_FEEDS_CHANGES,
-})
+export interface ISetFeedsPayload { feeds: IFeed[] }
+export const setFeedsAction = (feeds: IFeed[]) =>
+    actionCreator<ISetFeedsPayload>(FeedsActionTypes.SET_FEEDS)({ feeds })
 
-export const setFeedsUpdatedAtAction = (updatedAt: number): IReduxAction => ({
-    payload: { updatedAt },
-    type: FeedsActionTypes.SET_FEEDS_UPDATED_AT,
-})
+export interface ISetFeedFaviconPayload { feedId: string, favicon: string }
+export const setFeedFaviconAction = (feedId: string, favicon: string) =>
+    actionCreator<ISetFeedFaviconPayload>(FeedsActionTypes.SET_FEED_FAVICON)({ feedId, favicon })
 
-export const setFeedsAction = (feeds: IFeed[]): IReduxAction => ({
-    payload: { feeds },
-    type: FeedsActionTypes.SET_FEEDS,
-})
+export interface ISetIsUpdatingFeedsPayload { isUpdating: boolean }
+export const setIsUpdatingFeedsAction = (isUpdating: boolean) =>
+    actionCreator<ISetIsUpdatingFeedsPayload>(FeedsActionTypes.SET_IS_UPDATING_FEEDS)({ isUpdating })
 
-export const setFeedFaviconAction = (feedId: string, favicon: string): IReduxAction => ({
-    payload: { feedId, favicon },
-    type: FeedsActionTypes.SET_FEED_FAVICON,
-})
+export interface ISetIsCreatingFeedPayload { isCreating: boolean }
+export const setIsCreatingFeedAction = (isCreating: boolean) =>
+    actionCreator<ISetIsCreatingFeedPayload>(FeedsActionTypes.SET_IS_CREATING_FEED)({ isCreating })
 
-export const setIsUpdatingFeedsAction = (isUpdating: boolean): IReduxAction => ({
-    payload: { isUpdating },
-    type: FeedsActionTypes.SET_IS_UPDATING_FEEDS,
-})
+export const asyncFetchFeedsAction = () =>
+    actionCreator<void>(FeedsActionTypes.ASYNC_FETCH_FEEDS)()
 
-export const setIsCreatingFeedAction = (isCreating: boolean): IReduxAction => ({
-    payload: { isCreating },
-    type: FeedsActionTypes.SET_IS_CREATING_FEED,
-})
+export const asyncUpdateFeedsAction = () =>
+    actionCreator<void>(FeedsActionTypes.ASYNC_UPDATE_FEEDS)()
 
-export const tipsParseInvalidFeedAction = (): IReduxAction => ({
-    payload: null,
-    type: FeedsActionTypes.TIPS_PARSE_INVALID_FEED,
-})
+export interface IAsyncParseFeedPayload { feedUrl: string }
+export const asyncParseFeedAction = (feedUrl: string) =>
+    actionCreator<IAsyncParseFeedPayload>(FeedsActionTypes.ASYNC_PARSE_FEED)({ feedUrl })
 
-export const asyncFetchFeedsAction = (): IReduxAction => ({
-    payload: null,
-    type: FeedsActionTypes.ASYNC_FETCH_FEEDS,
-})
-
-export const asyncUpdateFeedsAction = (): IReduxAction => ({
-    payload: null,
-    type: FeedsActionTypes.ASYNC_UPDATE_FEEDS,
-})
-
-export const asyncParseFeedAction = (feedUrl: string): IReduxAction => ({
-    payload: { feedUrl },
-    type: FeedsActionTypes.ASYNC_PARSE_FEED,
-})
-
-export const asyncDeleteFeedsAction = (feedIds: number[]): IReduxAction => ({
-    payload: { feedIds },
-    type: FeedsActionTypes.ASYNC_DELETE_FEEDS,
-})
+export interface IAsyncDeleteFeedsPayload { feedIds: string[] }
+export const asyncDeleteFeedsAction = (feedIds: string[]) =>
+    actionCreator<IAsyncDeleteFeedsPayload>(FeedsActionTypes.ASYNC_DELETE_FEEDS)({ feedIds })

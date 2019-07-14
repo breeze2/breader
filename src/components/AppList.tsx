@@ -1,10 +1,10 @@
-import { Icon, message as Message, Modal, Radio } from 'antd'
+import { Icon, Modal, Radio } from 'antd'
 import Immutable from 'immutable'
 import React, { Component } from 'react'
-import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'react-intl'
+import { InjectedIntlProps, injectIntl } from 'react-intl'
 import SearchArticleModal from '../containers/SearchArticleModal'
 import VirtualList from '../containers/VirtualList'
-import { IArticle } from '../schemas'
+import { IArticle, MenuKeyEnum } from '../schemas'
 import '../styles/AppList.less'
 
 const RadioButton = Radio.Button
@@ -15,15 +15,14 @@ export interface IAppListOwnProps {
 }
 
 export interface IAppListReduxState {
-    allArticlesReadAt: number
     articlesFilter: string
     selectedMenuKey: string
     articles: Immutable.List<IArticle>
 }
 
 export interface IAppListReduxDispatch {
-    asyncFilterArticles: (filter: string) => Promise<undefined>
-    asyncSetAllArticlesRead: (ids: string[]) => Promise<undefined>
+    asyncFilterArticles: (filter: string) => Promise<void>
+    asyncSetAllArticlesRead: (ids: string[]) => Promise<number>
 }
 
 interface IAppListProps extends IAppListOwnProps, IAppListReduxState, IAppListReduxDispatch {
@@ -34,12 +33,8 @@ interface IAppListState {
     chooseItemIndex: number
 }
 
-class AppList extends Component<IAppListProps & InjectedIntlProps> {
-    public static propTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    }
-    public state: IAppListState
-    public constructor(props: any) {
+class AppList extends Component<IAppListProps & InjectedIntlProps, IAppListState> {
+    public constructor(props: IAppListProps & InjectedIntlProps) {
         super(props)
         this.state = {
             chooseItemIndex: -1,
@@ -63,7 +58,8 @@ class AppList extends Component<IAppListProps & InjectedIntlProps> {
     public handleCheckClick = (e: any) => {
         Confirm({
             onOk: () => {
-                const ids = this.props.articles.map(article => article._id).toArray()
+                const ids = this.props.articles.filter(article => article.isUnread)
+                .map(article => article._id).toArray()
                 this.props.asyncSetAllArticlesRead(ids)
             },
             title: (this.props.intl.formatMessage({ id: 'doYouWantSetAllArticlesBeRead' })),
@@ -79,27 +75,19 @@ class AppList extends Component<IAppListProps & InjectedIntlProps> {
             })
         }
     }
-    public componentWillReceiveProps(props: any) {
-        if (props.allArticlesReadAt > 0 && props.allArticlesReadAt > this.props.allArticlesReadAt) {
-            Message.success(this.props.intl.formatMessage({ id: 'allArticlesAreReadNow' }))
-        }
-    }
+
     public render() {
         return (
             <div className="app-list">
                 <div className="list-header">
-                    {
-                        this.props.selectedMenuKey !== 'ALL_ITEMS' &&
-                        this.props.selectedMenuKey !== 'STARRED_ITEMS' &&
-                        this.props.selectedMenuKey !== 'UNREAD_ITEMS' &&
-                        <div className="list-header-right">
-                            <RadioGroup defaultValue={this.props.articlesFilter} size="small" onChange={this.handleRadioChange}>
-                                <RadioButton value="STARRED"><Icon type="star" theme="filled" /></RadioButton>
-                                <RadioButton value="UNREAD"><Icon type="file-text" theme="filled" /></RadioButton>
-                                <RadioButton value="ALL"><Icon type="profile" theme="filled" /></RadioButton>
-                            </RadioGroup>
-                        </div>
-                    }
+                    {!(this.props.selectedMenuKey in MenuKeyEnum) &&
+                    <div className="list-header-right">
+                        <RadioGroup defaultValue={this.props.articlesFilter} size="small" onChange={this.handleRadioChange}>
+                            <RadioButton value="STARRED"><Icon type="star" theme="filled" /></RadioButton>
+                            <RadioButton value="UNREAD"><Icon type="file-text" theme="filled" /></RadioButton>
+                            <RadioButton value="ALL"><Icon type="profile" theme="filled" /></RadioButton>
+                        </RadioGroup>
+                    </div>}
                 </div>
                 <div className="list-content">
                     <VirtualList scrollToIndex={this.state.chooseItemIndex} />

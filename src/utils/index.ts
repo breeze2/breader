@@ -1,5 +1,3 @@
-import { ipcRenderer, openExternalUrl } from './electron'
-
 export function debounce<F extends (...params: any[]) => void>(fn: F, delay: number) {
     let timeoutID: number
     const wrapper = function (this: any, ...args: any[]) {
@@ -35,10 +33,10 @@ export function throttle<F extends (...params: any[]) => void>(fn: F, delay: num
     return wrapper
 }
 
-export async function batchOperate<A, T>(action: ((args: A) => Promise<T>), argsList: A[]) {
+export async function batchOperate<A>(action: ((args: A) => Promise<boolean>), argsList: A[]) {
     const num = 6
     const len = argsList.length
-    let tasks: Array<Promise<T>> = []
+    let tasks: Array<Promise<boolean>> = []
     let changes = 0
     for (let i = 0; i < len; i++) {
         tasks.push(action(argsList[i]))
@@ -57,11 +55,11 @@ export async function batchOperate<A, T>(action: ((args: A) => Promise<T>), args
 }
 
 export function timeToDateString(time: number) {
-    return new Date(time).toString().substring(4, 15);
+    return new Date(time).toDateString();
 }
 
 export function timeToTimeString(time: number) {
-    return new Date(time).toString().substring(16, 21);
+    return new Date(time).toTimeString().substring(0, 5);
 }
 
 export function timeToDateTimeString(time: number) {
@@ -73,8 +71,6 @@ const Utils = {
     throttle,
 
     batchOperate,
-    ipcRenderer,
-    openExternalUrl,
     timeToDateString,
     timeToDateTimeString,
     timeToTimeString,

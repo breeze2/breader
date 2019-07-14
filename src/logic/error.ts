@@ -1,32 +1,17 @@
-interface InterfaceLogicErrorMessage {
-    code: number
-    value: string
+import { LogicErrorEnum } from '../schemas'
+
+const LogicErrorMessages = {
+    [LogicErrorEnum.FEEDPARSER_FETCH_ERROR]: 'Feedparser fetch error.',
+    [LogicErrorEnum.FEEDPARSER_NOT_FOUND]: 'Feedparser feed not error.',
+    [LogicErrorEnum.FEEDPARSER_WRONG_URL]: 'Feedparser wrong url.',
+    [LogicErrorEnum.POUCHDB_EXISTS]: 'PouchDB doc exists.',
+    [LogicErrorEnum.UNKNOWN]: 'Unknown error.',
 }
 
-const LogicErrorMessages: { [key: string]: InterfaceLogicErrorMessage } = {
-    DB_: { code: 2000, value: 'DB Error.' },
-    FEED_PARSER_: { code: 3000, value: 'FeedParser Error.' },
-}
-
-class LogicError extends Error {
-    public code: number
-    public constructor(message: InterfaceLogicErrorMessage) {
-        super(message.value)
-        this.code = message.code
+export default class LogicError extends Error {
+    public type: string
+    public constructor(type: LogicErrorEnum) {
+        super(LogicErrorMessages[type])
+        this.type = type
     }
 }
-
-const LogicErrorTypes = {
-    FeedParser: {
-        FETCH_ERROR: 'FEEDPARSER_FETCH_ERROR',
-        NOT_FOUND: 'FEEDPARSER_NOT_FOUND',
-        WRONG_URL: 'FEEDPARSER_WRONG_URL',
-    },
-    PouchDB: {
-        EXISTS: 'POUCHDB_EXISTS',
-    },
-    UNKNOWN: 'UNKNOWN',
-}
-
-export default LogicError
-export { LogicErrorTypes, LogicErrorMessages }

@@ -1,5 +1,5 @@
 import { Affix, Empty } from 'antd'
-import { List, Map } from 'immutable'
+import Immutable from 'immutable'
 import React, { Component, PureComponent, RefObject } from 'react'
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List as VList, WindowScroller } from 'react-virtualized'
 import ListItem from '../containers/ListItem'
@@ -12,12 +12,12 @@ export interface IVirtualListOwnProps {
 }
 
 export interface IVirtualListReduxDispatch {
-    selectArticle: (id: string, index: number) => any
+    selectArticle: (id: string, index: number) => Promise<IArticle | null>
 }
 
 export interface IVirtualListReduxState {
-    articleId: string
-    articles: List<IArticle>
+    currentArticle: IArticle | null
+    articles: Immutable.List<IArticle>
 }
 
 interface IVirtualListProps extends IVirtualListOwnProps, IVirtualListReduxDispatch, IVirtualListReduxState {
@@ -29,9 +29,8 @@ interface IVirtualListState {
     readItems: any
 }
 
-class VirtualList extends PureComponent<IVirtualListProps> {
+class VirtualList extends PureComponent<IVirtualListProps, IVirtualListState> {
     public vlist: RefObject<VList>
-    public state: IVirtualListState
     public cellCache: CellMeasurerCache
     public updateRenderStartDate: (...params: any[]) => void
     public constructor(props: IVirtualListProps) {
@@ -48,7 +47,7 @@ class VirtualList extends PureComponent<IVirtualListProps> {
         }
         this.updateRenderStartDate = Utils.throttle(this._updateRenderStartDate, 100)
 
-        Object.defineProperty(window, 'updateRenderStartDate', {value: this.updateRenderStartDate})
+        // Object.defineProperty(window, 'updateRenderStartDate', {value: this.updateRenderStartDate})
     }
     public componentWillReceiveProps(props: IVirtualListProps) {
         if (props.articles !== this.props.articles) {
@@ -74,12 +73,6 @@ class VirtualList extends PureComponent<IVirtualListProps> {
             }
         }
     }
-    // public componentWillUpdate() {
-    //     console.log(arguments, 11)
-    // }
-    // public componentDidCatch () {
-    //     console.log(arguments, 33)
-    // }
     public handleVirtualListClick = (e: any) => {
         const readItems = this.state.readItems
         const target = e.target
@@ -154,6 +147,8 @@ class VirtualList extends PureComponent<IVirtualListProps> {
         const key = info.key
         const style = info.style
         const article = (this.props.articles.get(index) as IArticle)
+        const currentArticle = this.props.currentArticle
+        const isCurrent = currentArticle && article._id === currentArticle._id
         return (
             <CellMeasurer key={key} cache={this.cellCache} parent={parent} columnIndex={0} rowIndex={index} >
                 <div style={style}
@@ -166,7 +161,7 @@ class VirtualList extends PureComponent<IVirtualListProps> {
                         feedId={article.feedId}
                         title={article.title}
                         summary={article.summary}
-                        className={(article.isUnread && !this.state.readItems[(article._id)] ? 'item-is-unread' : '') + (article._id === this.props.articleId ? ' item-is-selected' : '')}
+                        className={(article.isUnread && !this.state.readItems[(article._id)] ? 'item-is-unread' : '') + (isCurrent ? ' item-is-selected' : '')}
                     />
                 </div>
             </CellMeasurer>
