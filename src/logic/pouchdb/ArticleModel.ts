@@ -49,7 +49,7 @@ export default class ArticleModel extends BaseModel<IArticle> {
                 changes ++
             }
         })
-        const response = await this.batchPost(articles)
+        await this.batchPost(articles)
         return changes
     }
     public async batchReadArticles(ids: string[]) {

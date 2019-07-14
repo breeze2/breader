@@ -105,7 +105,7 @@ class SettingsModal extends Component<ISettingsModalProps & InjectedIntlProps, I
                                 ><FormattedMessage id="delete" /></Button>),
                             ]}
                             >
-                                <p className="feed-item-content"><Avatar shape="square" size={16} src={feed.favicon} /> {feed.title}</p>
+                                <p title={feed.url} className="feed-item-content"><Avatar shape="square" size={16} src={feed.favicon} /> {feed.title}</p>
                             </AntdList.Item>
                         )}
                         />

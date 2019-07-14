@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import { InjectedIntlProps, injectIntl } from 'react-intl'
 import SearchArticleModal from '../containers/SearchArticleModal'
 import VirtualList from '../containers/VirtualList'
-import { IArticle } from '../schemas'
+import { IArticle, MenuKeyEnum } from '../schemas'
 import '../styles/AppList.less'
 
 const RadioButton = Radio.Button
@@ -80,18 +80,14 @@ class AppList extends Component<IAppListProps & InjectedIntlProps, IAppListState
         return (
             <div className="app-list">
                 <div className="list-header">
-                    {
-                        this.props.selectedMenuKey !== 'ALL_ITEMS' &&
-                        this.props.selectedMenuKey !== 'STARRED_ITEMS' &&
-                        this.props.selectedMenuKey !== 'UNREAD_ITEMS' &&
-                        <div className="list-header-right">
-                            <RadioGroup defaultValue={this.props.articlesFilter} size="small" onChange={this.handleRadioChange}>
-                                <RadioButton value="STARRED"><Icon type="star" theme="filled" /></RadioButton>
-                                <RadioButton value="UNREAD"><Icon type="file-text" theme="filled" /></RadioButton>
-                                <RadioButton value="ALL"><Icon type="profile" theme="filled" /></RadioButton>
-                            </RadioGroup>
-                        </div>
-                    }
+                    {!(this.props.selectedMenuKey in MenuKeyEnum) &&
+                    <div className="list-header-right">
+                        <RadioGroup defaultValue={this.props.articlesFilter} size="small" onChange={this.handleRadioChange}>
+                            <RadioButton value="STARRED"><Icon type="star" theme="filled" /></RadioButton>
+                            <RadioButton value="UNREAD"><Icon type="file-text" theme="filled" /></RadioButton>
+                            <RadioButton value="ALL"><Icon type="profile" theme="filled" /></RadioButton>
+                        </RadioGroup>
+                    </div>}
                 </div>
                 <div className="list-content">
                     <VirtualList scrollToIndex={this.state.chooseItemIndex} />

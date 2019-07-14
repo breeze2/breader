@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import React, { Component } from 'react'
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl'
 import defaultFavicon from '../images/rss.png'
-import { IArticle, IFeed } from '../schemas'
+import { IArticle, IFeed, MenuKeyEnum } from '../schemas'
 import AddFeedModal from './AddFeedModal'
 
 import '../styles/AppMenu.less'
@@ -126,15 +126,15 @@ class AppMenu extends Component<IAppMenuProps & InjectedIntlProps, IAppMenuState
                         mode="inline"
                         onSelect={this.handleSelect}
                     >
-                        <MenuItem key="ALL_ITEMS">
+                        <MenuItem key={MenuKeyEnum.ALL_ITEMS}>
                             <Icon type="profile" />
                             <FormattedMessage id="menuAllItems" />
                         </MenuItem>
-                        <MenuItem key="STARRED_ITEMS">
+                        <MenuItem key={MenuKeyEnum.STARRED_ITEMS}>
                             <Icon type="star" />
                             <FormattedMessage id="menuStarred" />
                         </MenuItem>
-                        <MenuItem key="UNREAD_ITEMS">
+                        <MenuItem key={MenuKeyEnum.UNREAD_ITEMS}>
                             <Icon type="file-text" />
                             <FormattedMessage id="menuUnread" />
                         </MenuItem>
