@@ -1,14 +1,16 @@
-import { all, call, put, race, select, takeEvery, takeLatest } from 'redux-saga/effects'
+import { call, put, select, takeEvery, takeLatest } from 'redux-saga/effects'
 import Logic from '../../logic'
 import { IArticle, IIFeedsState, IIMenuState, IReduxAction, MenuKeyEnum } from '../../schemas'
 import {
     ArticlesActionTypes,
+    asyncFetchArticlesAction,
     IAsyncFilterArticlesPayload,
     IAsyncSelectAndReadArticlePayload,
     IAsyncSetAllArticlesReadPayload,
     IAsyncStarArticlePayload,
-    ISetArticlesFilterPayload,
-    ISetCurrentArticlePayload,
+    setArticlesAction,
+    setArticlesFilterAction,
+    setCurrentArticleAction,
 } from '../actions'
 import { makeSagaWorkersDispatcher } from './helpers'
 import { getArticles, getFeeds, getMenu } from './selectors'
@@ -42,26 +44,23 @@ export function* fetchArticlesSaga(action: IReduxAction<null>) {
         }
     }
     const articles: IArticle[] = yield call(Logic.getArticles, selector)
-    yield put({ type: ArticlesActionTypes.SET_ARTICLES, payload: { articles: articles || [] } })
+    yield put(setArticlesAction(articles || []))
     return articles
 }
 
 export function* filterArticlesSaga(action: IReduxAction<IAsyncFilterArticlesPayload>) {
-    yield put<IReduxAction<ISetArticlesFilterPayload>>({ type: ArticlesActionTypes.SET_ARTICLES_FILTER, payload: action.payload })
-    yield put<IReduxAction<null>>({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null })
+    const payload = action.payload
+    yield put(setArticlesFilterAction(payload.filter))
+    yield put(asyncFetchArticlesAction())
 }
 
 export function* selectAndReadArticleSaga(action: IReduxAction<IAsyncSelectAndReadArticlePayload>) {
     const article: IArticle | null = yield call(Logic.getArticle, action.payload.articleId)
     if (article) {
         article.index = action.payload.articleIndex
-        yield race([
-            call(Logic.setArticleIsRead, article._id),
-            put<IReduxAction<ISetCurrentArticlePayload>>({ type: ArticlesActionTypes.SET_CURRENT_ARTICLE, payload: { article } }),
-        ])
-    } else {
-        yield put<IReduxAction<ISetCurrentArticlePayload>>({ type: ArticlesActionTypes.SET_CURRENT_ARTICLE, payload: { article } })
+        yield call(Logic.setArticleIsRead, article._id)
     }
+    yield put(setCurrentArticleAction(article))
     return article
 }
 
@@ -73,7 +72,7 @@ export function* setAllArticlesReadSaga(action: IReduxAction<IAsyncSetAllArticle
     const articleIds: string[] = action.payload.articleIds
     const changes = yield call(Logic.setAriclesIsRead, articleIds)
     if (changes) {
-        yield put({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null })
+        yield put(asyncFetchArticlesAction())
     }
     return changes
 }

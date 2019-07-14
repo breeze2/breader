@@ -16,7 +16,7 @@ export const updateOnlineStatusAction = () =>
     actionCreator<void>(MenuActionTypes.UPDATE_ONLINE_STATUS)()
 
 export interface ISetMenuKeyPayload { key: string }
-export const selectMenuKeyAction = (key: string) =>
+export const setMenuKeyAction = (key: string) =>
     actionCreator<ISetMenuKeyPayload>(MenuActionTypes.SET_MENU_KEY)({ key })
 
 export interface IAsyncSelectMenuKeyPayload { key: string }

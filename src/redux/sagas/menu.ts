@@ -1,16 +1,18 @@
 import { put, race, takeLatest } from 'redux-saga/effects'
 import { IReduxAction } from '../../schemas'
 import {
-    ArticlesActionTypes,
+    asyncFetchArticlesAction,
     IAsyncSelectMenuKeyPayload,
     MenuActionTypes,
+    setMenuKeyAction,
 } from '../actions'
 import { makeSagaWorkersDispatcher } from './helpers'
 
 export function* selectMenuKeySaga(action: IReduxAction<IAsyncSelectMenuKeyPayload>) {
+    const payload = action.payload
     yield race([
-        put({ type: MenuActionTypes.SET_MENU_KEY, payload: action.payload }),
-        put({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null }),
+        put(setMenuKeyAction(payload.key)),
+        put(asyncFetchArticlesAction()),
     ])
 }
 

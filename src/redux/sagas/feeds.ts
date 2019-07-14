@@ -1,28 +1,34 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects'
 import Logic from '../../logic'
-import { IFeed, IIFeedsState, IIMenuState, IReduxAction, MenuKeyEnum } from '../../schemas'
+import { IFeed, IIArticlesState, IIFeedsState, IIMenuState, IReduxAction, MenuKeyEnum } from '../../schemas'
 import {
-    ArticlesActionTypes,
+    addFeedAction,
+    asyncFetchArticlesAction,
+    asyncFetchFeedsAction,
+    asyncSelectMenuKeyAction,
     FeedsActionTypes,
-    IAddFeedPayload,
     IAsyncDeleteFeedsPayload,
     IAsyncParseFeedPayload,
-    IAsyncSelectMenuKeyPayload,
-    ISetFeedsPayload,
-    MenuActionTypes,
+    setCurrentArticleAction,
+    setFeedsAction,
 } from '../actions'
 import { makeSagaWorkersDispatcher } from './helpers'
-import { getFeeds, getMenu } from './selectors'
+import { getArticles, getFeeds, getMenu } from './selectors'
 
 export function* fetchFeedsSaga(action: IReduxAction<null>) {
     const feeds: IFeed[] = yield call(Logic.getAllFeeds)
-    yield put<IReduxAction<ISetFeedsPayload>>({ type: FeedsActionTypes.SET_FEEDS, payload: { feeds } })
+    yield put(setFeedsAction(feeds))
     const menuState: IIMenuState = yield select(getMenu)
     const menuKey = menuState.selectedKey
+    const articlesState: IIArticlesState = yield select(getArticles)
+    const currentArticle = articlesState.current
     if (menuKey in MenuKeyEnum) {
-        yield put<IReduxAction<null>>({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null })
+        yield put(asyncFetchArticlesAction())
     } else if (!feeds.some(feed => feed._id === menuKey)) {
-        yield put<IReduxAction<IAsyncSelectMenuKeyPayload>>({type: MenuActionTypes.ASYNC_SELECT_MENU_KEY, payload: { key: MenuKeyEnum.ALL_ITEMS}})
+        yield put(asyncSelectMenuKeyAction(MenuKeyEnum.ALL_ITEMS))
+    }
+    if (currentArticle && !feeds.some(feed => feed._id === currentArticle.feedId)) {
+        yield put(setCurrentArticleAction(null))
     }
     return feeds
 }
@@ -30,11 +36,11 @@ export function* fetchFeedsSaga(action: IReduxAction<null>) {
 export function* parseFeedSaga(action: IReduxAction<IAsyncParseFeedPayload>) {
     const feed: IFeed | null = yield call(Logic.createFeed, action.payload.feedUrl)
     if (feed) {
-        yield put<IReduxAction<IAddFeedPayload>>({ type: FeedsActionTypes.ADD_FEED, payload: { feed } })
+        yield put(addFeedAction(feed))
         const menuState: IIMenuState = yield select(getMenu)
         const menuKey = menuState.selectedKey
         if (menuKey === MenuKeyEnum.ALL_ITEMS || menuKey === MenuKeyEnum.UNREAD_ITEMS) {
-            yield put({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null })
+            yield put(asyncFetchArticlesAction())
         }
     }
     return feed
@@ -45,7 +51,7 @@ export function* deleteFeedsSaga(action: IReduxAction<IAsyncDeleteFeedsPayload>)
         const feedIds = action.payload.feedIds
         const changes: number = yield call(Logic.deleteFeeds, feedIds)
         if (changes) {
-            yield put<IReduxAction<null>>({ type: FeedsActionTypes.ASYNC_FETCH_FEEDS, payload: null })
+            yield put(asyncFetchFeedsAction())
             return changes
         }
     }
@@ -63,9 +69,9 @@ export function* updateFeedsSaga(action: IReduxAction<null>) {
             console.error(err)
         }
     }
-    yield put<IReduxAction<null>>({ type: FeedsActionTypes.ASYNC_FETCH_FEEDS, payload: null })
     if (changes > 0) {
-        yield put({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null })
+        yield put(asyncFetchFeedsAction())
+        yield put(asyncFetchArticlesAction())
     }
     return changes
 }
