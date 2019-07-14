@@ -1,4 +1,4 @@
-import { IReduxAction } from '../../schemas'
+import { actionCreator } from './helpers'
 
 export const MenuActionTypes = {
     SET_LANGUAGE: 'SET_LANGUAGE',
@@ -9,24 +9,16 @@ export const MenuActionTypes = {
 }
 
 export interface ISetLanguagePayload { language: string }
-export const setLanguageAction = (language: string): IReduxAction<ISetLanguagePayload> => ({
-    payload: { language },
-    type: MenuActionTypes.SET_LANGUAGE,
-})
+export const setLanguageAction = (language: string) =>
+    actionCreator<ISetLanguagePayload>(MenuActionTypes.SET_LANGUAGE)({ language })
 
-export const updateOnlineStatusAction = (): IReduxAction<null> => ({
-    payload: null,
-    type: MenuActionTypes.UPDATE_ONLINE_STATUS,
-})
+export const updateOnlineStatusAction = () =>
+    actionCreator<void>(MenuActionTypes.UPDATE_ONLINE_STATUS)()
 
 export interface ISetMenuKeyPayload { key: string }
-export const selectMenuKeyAction = (key: string): IReduxAction<ISetMenuKeyPayload> => ({
-    payload: { key },
-    type: MenuActionTypes.SET_MENU_KEY,
-})
+export const selectMenuKeyAction = (key: string) =>
+    actionCreator<ISetMenuKeyPayload>(MenuActionTypes.SET_MENU_KEY)({ key })
 
 export interface IAsyncSelectMenuKeyPayload { key: string }
-export const asyncSelectMenuKeyAction = (key: string): IReduxAction<IAsyncSelectMenuKeyPayload> => ({
-    payload: { key },
-    type: MenuActionTypes.ASYNC_SELECT_MENU_KEY,
-})
+export const asyncSelectMenuKeyAction = (key: string) =>
+    actionCreator<IAsyncSelectMenuKeyPayload>(MenuActionTypes.ASYNC_SELECT_MENU_KEY)({ key })
