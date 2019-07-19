@@ -11,12 +11,14 @@ import {
     setArticlesAction,
     setArticlesFilterAction,
     setCurrentArticleAction,
+    setIsFetchingArticlesAction,
     setIsUpdatingCurrentArticleAction,
 } from '../actions'
 import { makeSagaWorkersDispatcher } from './helpers'
 import { getArticles, getFeeds, getMenu } from './selectors'
 
 export function* fetchArticlesSaga(action: IReduxAction<null>) {
+    yield put(setIsFetchingArticlesAction(true))
     const menuState: IIMenuState = yield select(getMenu)
     const menuKey = menuState.selectedKey
     const feedsState: IIFeedsState = yield select(getFeeds)
@@ -45,6 +47,7 @@ export function* fetchArticlesSaga(action: IReduxAction<null>) {
         }
     }
     const articles: IArticle[] = yield call(Logic.getArticles, selector)
+    yield put(setIsFetchingArticlesAction(false))
     yield put(setArticlesAction(articles || []))
     return articles
 }

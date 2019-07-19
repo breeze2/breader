@@ -7,6 +7,7 @@ import { IReduxAction, IReduxState } from '../schemas'
 const mapStateToProps: MapStateToProps<IAppListReduxState, IAppListOwnProps, IReduxState> = (state: IReduxState) => ({
     articles: state.articles.list,
     articlesFilter: state.articles.filter,
+    isFetchingArticles: state.articles.isFetching,
     selectedMenuKey: state.menu.selectedKey,
 })
 

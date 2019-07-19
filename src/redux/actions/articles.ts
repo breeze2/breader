@@ -27,9 +27,9 @@ export interface ISetArticlesPayload { articles: IArticle[]}
 export const setArticlesAction = (articles: IArticle[]) =>
     actionCreator<ISetArticlesPayload>(ArticlesActionTypes.SET_ARTICLES)({ articles })
 
-export interface ISetIsFetchingArticlePayload { isFetching: boolean }
-export const setIsFetchingArticleAction = (isFetching: boolean) =>
-    actionCreator<ISetIsFetchingArticlePayload>(ArticlesActionTypes.SET_IS_UPDATING_CURRENT)({ isFetching })
+export interface ISetIsFetchingArticlesPayload { isFetching: boolean }
+export const setIsFetchingArticlesAction = (isFetching: boolean) =>
+    actionCreator<ISetIsFetchingArticlesPayload>(ArticlesActionTypes.SET_IS_FETCHING)({ isFetching })
 
 export interface ISetIsUpdatingCurrentArticlePayload { isUpdatingCurrent: boolean }
 export const setIsUpdatingCurrentArticleAction = (isUpdatingCurrent: boolean) =>

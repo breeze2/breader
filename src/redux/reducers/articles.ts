@@ -6,7 +6,7 @@ import {
     ISetArticlesFilterPayload,
     ISetArticlesPayload,
     ISetCurrentArticlePayload,
-    ISetIsFetchingArticlePayload,
+    ISetIsFetchingArticlesPayload,
     ISetIsUpdatingCurrentArticlePayload,
 } from '../actions'
 
@@ -59,7 +59,7 @@ function handleSetArticlesFilter(state: IIArticlesState, payload: ISetArticlesFi
     return state.set('filter', payload.filter)
 }
 
-function handleSetIsFetchingArticle(state: IIArticlesState, payload: ISetIsFetchingArticlePayload) {
+function handleSetIsFetchingArticle(state: IIArticlesState, payload: ISetIsFetchingArticlesPayload) {
     return state.set('isFetching', payload.isFetching)
 }
 
