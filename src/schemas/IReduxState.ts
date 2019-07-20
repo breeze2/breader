@@ -5,6 +5,8 @@ import { IFeed } from './IFeed'
 export interface IArticlesState {
     current: IArticle | null
     filter: string
+    isFetching: boolean
+    isUpdatingCurrent: boolean
     list: Immutable.List<IArticle>
 }
 

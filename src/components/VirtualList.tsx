@@ -26,7 +26,7 @@ interface IVirtualListProps extends IVirtualListOwnProps, IVirtualListReduxDispa
 interface IVirtualListState {
     renderStartDate: string
     isAffixVisible: boolean
-    readItems: any
+    readItems: {[_id: string]: boolean}
 }
 
 class VirtualList extends PureComponent<IVirtualListProps, IVirtualListState> {
@@ -36,7 +36,7 @@ class VirtualList extends PureComponent<IVirtualListProps, IVirtualListState> {
     public constructor(props: IVirtualListProps) {
         super(props)
         this.vlist = React.createRef()
-        this.cellCache = new CellMeasurerCache ({
+        this.cellCache = new CellMeasurerCache({
             defaultHeight: 80,
             fixedWidth: true,
         })
@@ -45,7 +45,10 @@ class VirtualList extends PureComponent<IVirtualListProps, IVirtualListState> {
             readItems: {},
             renderStartDate: '',
         }
-        this.updateRenderStartDate = Utils.throttle(this._updateRenderStartDate, 100)
+        this.updateRenderStartDate = Utils.throttle(
+            this._updateRenderStartDate,
+            100
+        )
 
         // Object.defineProperty(window, 'updateRenderStartDate', {value: this.updateRenderStartDate})
     }
@@ -56,8 +59,12 @@ class VirtualList extends PureComponent<IVirtualListProps, IVirtualListState> {
                 fixedWidth: true,
             })
         }
-        if (props.scrollToIndex !== undefined && props.scrollToIndex !== undefined &&
-            props.scrollToIndex > -1 && this.props.scrollToIndex !== props.scrollToIndex) {
+        if (
+            props.scrollToIndex !== undefined &&
+            props.scrollToIndex !== undefined &&
+            props.scrollToIndex > -1 &&
+            this.props.scrollToIndex !== props.scrollToIndex
+        ) {
             const vlist = this.vlist.current
             const index = props.scrollToIndex
             if (vlist) {
@@ -65,7 +72,10 @@ class VirtualList extends PureComponent<IVirtualListProps, IVirtualListState> {
                 setTimeout(() => {
                     const items = document.querySelectorAll('.vlist-item')
                     items.forEach((item: any) => {
-                        if (item.dataset.index === index || item.dataset.index === index + '') {
+                        if (
+                            item.dataset.index === index ||
+                            item.dataset.index === index + ''
+                        ) {
                             item.click()
                         }
                     })
@@ -73,25 +83,39 @@ class VirtualList extends PureComponent<IVirtualListProps, IVirtualListState> {
             }
         }
     }
-    public handleVirtualListClick = (e: any) => {
+    public handleVirtualListClick = (e: React.MouseEvent<HTMLDivElement>) => {
         const readItems = this.state.readItems
         const target = e.target
-        const $listItem = target.closest('.vlist-item')
-        if ($listItem && $listItem.dataset) {
-            this.props.selectArticle($listItem.dataset.id, parseInt($listItem.dataset.index, 10))
-            readItems[$listItem.dataset.id] = 1
-            this.setState({
-                readItems: { ...readItems },
-            })
+        const $listItem = (target as HTMLDivElement).closest('.vlist-item')
+        if ($listItem) {
+            const {
+                id,
+                index,
+            } = ($listItem as HTMLDivElement).dataset
+            const article = this.props.currentArticle
+            if (article && article._id === id) {
+                // do nothing
+            } else if (id && index) {
+                this.props.selectArticle(id, parseInt(index, 10))
+                readItems[id] = true
+                this.setState({
+                    readItems: { ...readItems },
+                })
+            }
         }
     }
     public render() {
         return (
             <div className="virtual-list" onClick={this.handleVirtualListClick}>
-                {this.state.isAffixVisible && <div className="list-affix" >{this.state.renderStartDate}</div>}
+                {this.state.isAffixVisible && (
+                    <div className="list-affix">
+                        {this.state.renderStartDate}
+                    </div>
+                )}
                 <AutoSizer>
                     {({ width, height }) => (
-                        <VList ref={this.vlist}
+                        <VList
+                            ref={this.vlist}
                             width={width}
                             height={height}
                             deferredMeasurementCache={this.cellCache}
@@ -106,7 +130,7 @@ class VirtualList extends PureComponent<IVirtualListProps, IVirtualListState> {
             </div>
         )
     }
-    private _onScroll (info: any) {
+    private _onScroll(info: any) {
         if (info.scrollTop > 3 && this.state.isAffixVisible === false) {
             this.setState({
                 isAffixVisible: true,
@@ -134,7 +158,7 @@ class VirtualList extends PureComponent<IVirtualListProps, IVirtualListState> {
             }
         }
     }
-    private _noRowsRenderer () {
+    private _noRowsRenderer() {
         return (
             <div style={{ marginTop: '30px' }}>
                 <Empty />
@@ -146,22 +170,43 @@ class VirtualList extends PureComponent<IVirtualListProps, IVirtualListState> {
         const parent = info.parent
         const key = info.key
         const style = info.style
-        const article = (this.props.articles.get(index) as IArticle)
+        const article = this.props.articles.get(index) as IArticle
         const currentArticle = this.props.currentArticle
         const isCurrent = currentArticle && article._id === currentArticle._id
         return (
-            <CellMeasurer key={key} cache={this.cellCache} parent={parent} columnIndex={0} rowIndex={index} >
-                <div style={style}
-                    data-id={article._id} data-index={index}
-                    className={index === 0 ? 'vlist-item first-list-item' : 'vlist-item'}>
-                    {article.isDayFirst && <div className="date-divid">{Utils.timeToDateString(article.time)}</div>}
-                    <ListItem author={article.author}
+            <CellMeasurer
+                key={key}
+                cache={this.cellCache}
+                parent={parent}
+                columnIndex={0}
+                rowIndex={index}>
+                <div
+                    style={style}
+                    data-id={article._id}
+                    data-index={index}
+                    className={
+                        index === 0
+                            ? 'vlist-item first-list-item'
+                            : 'vlist-item'
+                    }>
+                    {article.isDayFirst && (
+                        <div className="date-divid">
+                            {Utils.timeToDateString(article.time)}
+                        </div>
+                    )}
+                    <ListItem
+                        author={article.author}
                         guid={article._id}
                         time={article.time}
                         feedId={article.feedId}
                         title={article.title}
                         summary={article.summary}
-                        className={(article.isUnread && !this.state.readItems[(article._id)] ? 'item-is-unread' : '') + (isCurrent ? ' item-is-selected' : '')}
+                        className={
+                            (article.isUnread &&
+                            !this.state.readItems[article._id]
+                                ? 'item-is-unread'
+                                : '') + (isCurrent ? ' item-is-selected' : '')
+                        }
                     />
                 </div>
             </CellMeasurer>

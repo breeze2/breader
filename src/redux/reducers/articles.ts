@@ -6,11 +6,15 @@ import {
     ISetArticlesFilterPayload,
     ISetArticlesPayload,
     ISetCurrentArticlePayload,
+    ISetIsFetchingArticlesPayload,
+    ISetIsUpdatingCurrentArticlePayload,
 } from '../actions'
 
 const initialArticlesState = Immutable.Record<IArticlesState>({
     current: null,
     filter: 'ALL',
+    isFetching: false,
+    isUpdatingCurrent: false,
     list: Immutable.List<IArticle>([]),
 })()
 
@@ -21,7 +25,10 @@ const articlesReducer = (state = initialArticlesState, action: IReduxAction) => 
             return handleSetCurrentArticle(state, payload)
         case ArticlesActionTypes.SET_ARTICLES_FILTER:
             return handleSetArticlesFilter(state, payload)
-
+        case ArticlesActionTypes.SET_IS_FETCHING:
+            return handleSetIsFetchingArticle(state, payload)
+        case ArticlesActionTypes.SET_IS_UPDATING_CURRENT:
+            return handleSetIsUpdatingCurrentArticle(state, payload)
         case ArticlesActionTypes.SET_ARTICLES:
             return handleSetArticles(state, payload)
 
@@ -50,6 +57,14 @@ function handleSetCurrentArticle(state: IIArticlesState, payload: ISetCurrentArt
 
 function handleSetArticlesFilter(state: IIArticlesState, payload: ISetArticlesFilterPayload) {
     return state.set('filter', payload.filter)
+}
+
+function handleSetIsFetchingArticle(state: IIArticlesState, payload: ISetIsFetchingArticlesPayload) {
+    return state.set('isFetching', payload.isFetching)
+}
+
+function handleSetIsUpdatingCurrentArticle(state: IIArticlesState, payload: ISetIsUpdatingCurrentArticlePayload) {
+    return state.set('isUpdatingCurrent', payload.isUpdatingCurrent)
 }
 
 export default articlesReducer
