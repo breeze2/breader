@@ -65,7 +65,8 @@
             {
                 "singleline": "never",
                 "multiline": "always",
-                "esSpecCompliant": true
+                "esSpecCompliant": true,
+                "functions": "never"
             }
         ],
         "triple-equals": [

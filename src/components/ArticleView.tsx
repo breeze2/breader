@@ -1,9 +1,10 @@
-import { Empty, Icon, Skeleton } from 'antd'
+import { Empty, Icon } from 'antd'
 import Immutable from 'immutable'
-import React, { Component, PureComponent } from 'react'
+import React, { PureComponent } from 'react'
 import { InjectedIntlProps, injectIntl } from 'react-intl'
 import greyLogo from '../images/grey-logo.png'
 import { IArticle, IFeed } from '../schemas'
+import ArticleViewSkeleton from '../skeletons/ArticleViewSkeleton'
 import Utils from '../utils'
 import WebviewDrawer from './WebviewDrawer'
 
@@ -67,7 +68,9 @@ class ArticleView extends PureComponent<IArticleViewProps & InjectedIntlProps, I
             return
         }
         this._articleContentIsAppended = true
-        const div = document.querySelector('.article-content')
+        const div = document.querySelector(
+            '.article-view>.view-content .article-content',
+        )
         if (div && this._articleContentElement) {
             while (div.firstChild) {
                 div.removeChild(div.firstChild);
@@ -157,19 +160,31 @@ class ArticleView extends PureComponent<IArticleViewProps & InjectedIntlProps, I
             starIcon = null
         }
         return (
-            <div className="article-view" >
-            <Skeleton className="article-view-skeleton" loading={this.props.isUpdatingCurrentArticle} title={false} active
-                paragraph={{ rows: 10, width: ['100%', '70%', '80%', '100%', '100%', '100%', '100%', '100%', '100%', '60%'] }}
-            >
+            <div className="article-view">
                 <div className="view-header">
-                    <div className="view-header-right">
-                        {starIcon}
-                    </div>
+                    <div className="view-header-right">{starIcon}</div>
                 </div>
-                    {viewContent}
-                <div className="view-footer"><p>{this.state.hoverLink ? 'Open ' + this.state.hoverLink : ''}</p></div>
-                <WebviewDrawer width={'calc(100vw - 490px)'} onClose={this.handelWebviewClose} visible={this.state.isWebviewDrawerVisible} src={this.state.webviewDrawerSrc} />
-            </Skeleton>
+                {viewContent}
+                <div className="view-footer">
+                    <p>
+                        {this.state.hoverLink
+                            ? 'Open ' + this.state.hoverLink
+                            : ''}
+                    </p>
+                </div>
+                <WebviewDrawer
+                    width={'calc(100vw - 490px)'}
+                    onClose={this.handelWebviewClose}
+                    visible={this.state.isWebviewDrawerVisible}
+                    src={this.state.webviewDrawerSrc}
+                />
+                <ArticleViewSkeleton
+                    style={{
+                        display: this.props.isUpdatingCurrentArticle
+                            ? 'block'
+                            : 'none',
+                    }}
+                />
             </div>
         )
     }

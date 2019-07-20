@@ -6,8 +6,21 @@
     bottom: 42px;
     left: 0;
     right: 0;
-    background-color: @beige-background-color;  
-    overflow: scroll;
+    background-color: @beige-background-color;
+    overflow: hidden;
+}
+
+.article-view-skeleton {
+    position: absolute;
+    top: 42px;
+    bottom: 42px;
+    left: 0;
+    right: 0;
+    background-color: @grey-background-color;
+    overflow: hidden;
+    .view-content {
+        overflow: hidden;
+    }
 }
 
 .skeleton-active {

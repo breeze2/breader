@@ -3,19 +3,21 @@ import AvatarSkeleton from './AvatarSkeleton'
 import SpanSkeleton from './SpanSkeleton'
 import TextSkeleton from './TextSkeleton'
 
-import "../styles/ListItem.less";
+import '../styles/ListItem.less'
 
 interface IArticleItemSkeletonProps {
     key: string | number
 }
 
-export default class ArticleItemSkeleton extends PureComponent<IArticleItemSkeletonProps> {
+export default class ArticleItemSkeleton extends PureComponent<
+    IArticleItemSkeletonProps
+> {
     public constructor(props: IArticleItemSkeletonProps) {
-        super(props);
+        super(props)
     }
     public render() {
         return (
-            <div className={"list-item"}>
+            <div className={'list-item'}>
                 <div className="item-sider">
                     <AvatarSkeleton />
                 </div>
@@ -33,10 +35,10 @@ export default class ArticleItemSkeleton extends PureComponent<IArticleItemSkele
                         <TextSkeleton width={'67%'} />
                     </div>
                     <div className="item-footer">
-                        <SpanSkeleton width={"100%"} />
+                        <SpanSkeleton width={'100%'} />
                     </div>
                 </div>
             </div>
-        );
+        )
     }
 }

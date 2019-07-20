@@ -1,12 +1,14 @@
 import React, { CSSProperties, PureComponent } from 'react'
-import '../styles/Skeleton.less'
+import '../styles/Skeletons.less'
 
 interface IAvatarSkeletonProps {
     className?: string
     style?: CSSProperties
 }
 
-export default class AvatarSkeleton extends PureComponent<IAvatarSkeletonProps> {
+export default class AvatarSkeleton extends PureComponent<
+    IAvatarSkeletonProps
+> {
     public constructor(props: IAvatarSkeletonProps) {
         super(props)
     }

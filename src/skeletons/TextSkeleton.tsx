@@ -1,22 +1,27 @@
-import React, { CSSProperties, PureComponent } from "react";
-import "../styles/Skeleton.less";
+import React, { CSSProperties, PureComponent } from 'react'
+import '../styles/Skeletons.less'
 
 interface ITextSkeletonProps {
     width?: number | string
-    className?: string;
-    style?: CSSProperties;
+    className?: string
+    style?: CSSProperties
 }
 
 export default class TextSkeleton extends PureComponent<ITextSkeletonProps> {
     public constructor(props: ITextSkeletonProps) {
-        super(props);
+        super(props)
     }
     public render() {
-        const { className, style, width } = this.props;
-        const classes = 'text-skeleton skeleton-active ' + (className || '');
-        return <div className={classes} style={{
-            ...style,
-            width,
-        }} />;
+        const { className, style, width } = this.props
+        const classes = 'text-skeleton skeleton-active ' + (className || '')
+        return (
+            <div
+                className={classes}
+                style={{
+                    ...style,
+                    width,
+                }}
+            />
+        )
     }
 }
