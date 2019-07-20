@@ -24,6 +24,15 @@ const addWebpackTargetPlugin = config => {
     return config;
 }
 
+const setPublicPathPlugin = config => {
+    if (config.output) {
+        config.output.publicPath = ''
+    } else {
+        config.output = { publicPath: '' }
+    }
+    return config
+}
+
 module.exports = override (
     fixBabelImports('import', {
         libraryName: 'antd',
@@ -49,5 +58,6 @@ module.exports = override (
         }
     }),
     addWebpackExternalsPlugin, 
-    addWebpackTargetPlugin
+    addWebpackTargetPlugin,
+    setPublicPathPlugin,
 );

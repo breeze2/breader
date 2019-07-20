@@ -10,7 +10,7 @@
     "feedparser": "^2.2.9",
     "iconv-lite": "^0.4.24"
   },
-  "homepage": "./",
+  "homepage": "https://github.com/breeze2/breader",
   "main": "public/electron.js",
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
