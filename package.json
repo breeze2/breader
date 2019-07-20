@@ -11,10 +11,10 @@
     "iconv-lite": "^0.4.24"
   },
   "homepage": "https://github.com/breeze2/breader",
-  "main": "public/electron.js",
+  "main": "public/index.js",
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
-    "preelectron-pack": "yarn build",
+    "preelectron-dev": "yarn tsc-main",
     "preelectron-dist": "yarn build",
     "electron-pack": "electron-builder --dir",
     "electron-dist": "electron-builder",
@@ -22,6 +22,7 @@
     "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron-start": "electron .",
     "electron-rebuild": "electron-rebuild",
+    "tsc-main": "yarn tsc --project ./main",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
