@@ -66,11 +66,16 @@ export function timeToDateTimeString(time: number) {
     return new Date(time).toString().substring(0, 21);
 }
 
+export function sleep(sec: number) {
+    return new Promise(resolve => setTimeout(resolve, sec * 1000))
+}
+
 const Utils = {
     debounce,
     throttle,
 
     batchOperate,
+    sleep,
     timeToDateString,
     timeToDateTimeString,
     timeToTimeString,

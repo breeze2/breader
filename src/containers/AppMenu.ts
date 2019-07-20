@@ -10,6 +10,7 @@ import {
     asyncUpdateFeedsAction,
     setFeedFaviconAction,
     setIsCreatingFeedAction,
+    setIsFetchingArticlesAction,
     setIsUpdatingFeedsAction,
     updateOnlineStatusAction,
 } from '../redux/actions'
@@ -32,6 +33,7 @@ const mapDispatchToProps: MapDispatchToProps<IAppMenuReduxDispatch, IAppMenuOwnP
     asyncUpdateFeeds: () => asyncActionDispatcher(dispatch, asyncUpdateFeedsAction()),
     setFeedFavicon: (id: string, favicon: string) => dispatch(setFeedFaviconAction(id, favicon)),
     setIsCreatingFeed: (isCreating: boolean) => dispatch(setIsCreatingFeedAction(isCreating)),
+    setIsFetchingArticles: (isFetching: boolean) => dispatch(setIsFetchingArticlesAction(isFetching)),
     setIsUpdatingFeeds: (isUpdating: boolean) => dispatch(setIsUpdatingFeedsAction(isUpdating)),
     updateOnlineStatus: () => dispatch(updateOnlineStatusAction()),
 })

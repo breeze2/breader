@@ -18,7 +18,8 @@ export interface IAppMenuOwnProps {
 export interface IAppMenuReduxDispatch {
     setFeedFavicon: (id: string, favicon: string) => any
     setIsCreatingFeed: (isCreating: boolean) => any
-    setIsUpdatingFeeds: (isUpdating: boolean) => any,
+    setIsFetchingArticles: (isFetching: boolean) => any
+    setIsUpdatingFeeds: (isUpdating: boolean) => any
     updateOnlineStatus: () => any
     asyncFetchArticles: () => Promise<IArticle[]>
     asyncFetchFeeds: () => Promise<IFeed[]>
@@ -100,6 +101,7 @@ class AppMenu extends Component<IAppMenuProps & InjectedIntlProps, IAppMenuState
         this.props.updateOnlineStatus()
     }
     public componentWillMount() {
+        this.props.setIsFetchingArticles(true)
         this.props.asyncFetchFeeds().then(() => {
             this.props.asyncFetchArticles()
         })

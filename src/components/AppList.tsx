@@ -5,6 +5,8 @@ import { InjectedIntlProps, injectIntl } from 'react-intl'
 import SearchArticleModal from '../containers/SearchArticleModal'
 import VirtualList from '../containers/VirtualList'
 import { IArticle, MenuKeyEnum } from '../schemas'
+import ArticleListSkeleton from '../skeletons/ArticleListSkeleton'
+
 import '../styles/AppList.less'
 
 const RadioButton = Radio.Button
@@ -15,9 +17,10 @@ export interface IAppListOwnProps {
 }
 
 export interface IAppListReduxState {
-    articlesFilter: string
-    selectedMenuKey: string
     articles: Immutable.List<IArticle>
+    articlesFilter: string
+    isFetchingArticles: boolean
+    selectedMenuKey: string
 }
 
 export interface IAppListReduxDispatch {
@@ -101,6 +104,9 @@ class AppList extends Component<IAppListProps & InjectedIntlProps, IAppListState
                         {/* <Icon type="right" className="show-content" /> */}
                     </div>
                 </div>
+                <ArticleListSkeleton row={8} style={{
+                    display: this.props.isFetchingArticles ? 'block' : 'none',
+                }} />
                 <SearchArticleModal visible={this.state.isSearchArticleModalVisible}
                     onCancel={this.handleSearchCancel}
                     onItemChoose={this.handleSearchItemChoose} />
