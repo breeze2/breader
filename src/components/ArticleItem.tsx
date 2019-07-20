@@ -3,11 +3,11 @@ import Immutable from 'immutable'
 import React, { Component, PureComponent } from 'react'
 import { InjectedIntlProps, injectIntl } from 'react-intl'
 import defaultFavicon from '../images/rss.png'
-import { IFeed } from '../schemas';
-import '../styles/ListItem.less'
-import Utils from '../utils';
+import { IFeed } from '../schemas'
+import '../styles/ArticleItem.less'
+import Utils from '../utils'
 
-export interface IListItemOwnProps {
+export interface IArticleItemOwnProps {
     author?: string
     className?: string
     key?: string | number
@@ -19,17 +19,17 @@ export interface IListItemOwnProps {
     summary: string
 }
 
-export interface IListItemReduxDispatch {
+export interface IArticleItemReduxDispatch {
 }
 
-export interface IListItemReduxState {
+export interface IArticleItemReduxState {
     feedsMap: Immutable.Map<string, IFeed>
 }
 
-export interface IListItemProps extends IListItemOwnProps, IListItemReduxDispatch, IListItemReduxState {
+export interface IArticleItemProps extends IArticleItemOwnProps, IArticleItemReduxDispatch, IArticleItemReduxState {
 }
 
-class ListItem<T extends IListItemProps> extends PureComponent<T & InjectedIntlProps> {
+class ArticleItem<T extends IArticleItemProps> extends PureComponent<T & InjectedIntlProps> {
     public constructor(props: T & InjectedIntlProps) {
         super(props)
     }
@@ -40,7 +40,7 @@ class ListItem<T extends IListItemProps> extends PureComponent<T & InjectedIntlP
         const feedTitle = feed ? feed.title : intl.formatMessage({id: 'unknown'})
         const favicon = feed ? feed.favicon : defaultFavicon
         return (
-            <div className={'list-item ' + className}>
+            <div className={'article-item ' + className}>
                 <div className="item-sider">
                     {favicon ? (<Avatar shape="square" size={22} src={favicon} />) : (
                         <Avatar shape="square" size={22} >{feedTitle ? feedTitle.substring(0, 1) : ''}</Avatar>
@@ -59,4 +59,4 @@ class ListItem<T extends IListItemProps> extends PureComponent<T & InjectedIntlP
     };
 }
 
-export default injectIntl(ListItem)
+export default injectIntl(ArticleItem)

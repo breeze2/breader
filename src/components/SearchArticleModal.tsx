@@ -2,7 +2,7 @@ import { Input, Modal } from 'antd'
 import Immutable from 'immutable'
 import React, { Component } from 'react'
 import { InjectedIntlProps, injectIntl } from 'react-intl'
-import ListItem from '../containers/ListItem'
+import ArticleItem from '../containers/ArticleItem'
 import { IArticle } from '../schemas'
 import Utils from '../utils'
 
@@ -84,7 +84,7 @@ class SearchArticleModal extends Component<ISearchArticleModalProps & InjectedIn
                 <div className="matched-list">
                     {this.state.matchedArticles.map((article: IArticle) => (
                         <div key={article._id} onClick={() => this.props.onItemChoose(article.index as number)}>
-                            <ListItem author={article.author}
+                            <ArticleItem author={article.author}
                                 guid={article._id}
                                 time={article.time}
                                 feedId={article.feedId}
