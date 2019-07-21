@@ -1,7 +1,7 @@
 import { Progress } from 'antd'
 import React, { PureComponent } from 'react'
 
-interface IProgressBarProps {
+export interface IProgressBarProps {
     className?: string
     start?: number
     max: number

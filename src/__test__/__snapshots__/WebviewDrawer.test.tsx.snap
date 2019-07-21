@@ -1,0 +1,291 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WebviewDrawer Testing react tree snapshot testing 1`] = `
+<WebviewDrawer
+  onClose={[MockFunction]}
+  src="https://github.com"
+  visible={true}
+  width={100}
+>
+  <withConfigConsumer(Drawer)
+    className="webview-drawer"
+    closable={false}
+    onClose={[Function]}
+    visible={true}
+    width={100}
+  >
+    <Drawer
+      className="webview-drawer"
+      closable={false}
+      getPrefixCls={[Function]}
+      height={256}
+      level={null}
+      mask={true}
+      maskClosable={true}
+      onClose={[Function]}
+      placement="right"
+      prefixCls="ant-drawer"
+      renderEmpty={[Function]}
+      visible={true}
+      width={100}
+    >
+      <Drawer
+        afterVisibleChange={[Function]}
+        className="webview-drawer"
+        closable={false}
+        duration=".3s"
+        ease="cubic-bezier(0.78, 0.14, 0.15, 0.86)"
+        firstEnter={false}
+        getContainer="body"
+        getPrefixCls={[Function]}
+        handler={false}
+        keyboard={true}
+        level={null}
+        mask={true}
+        maskClosable={true}
+        maskStyle={Object {}}
+        onChange={[Function]}
+        onClose={[Function]}
+        onMaskClick={[Function]}
+        open={true}
+        placement="right"
+        prefixCls="ant-drawer"
+        renderEmpty={[Function]}
+        showMask={true}
+        style={
+          Object {
+            "transform": undefined,
+            "zIndex": undefined,
+          }
+        }
+        visible={true}
+        width={100}
+        wrapperClassName=""
+      >
+        <Portal
+          containerInfo={
+            <div>
+              <div
+                class="ant-drawer ant-drawer-right ant-drawer-open webview-drawer"
+                tabindex="-1"
+              >
+                <div
+                  class="ant-drawer-mask"
+                />
+                <div
+                  class="ant-drawer-content-wrapper"
+                  style="width: 100px;"
+                >
+                  <div
+                    class="ant-drawer-content"
+                  >
+                    <div
+                      class="ant-drawer-wrapper-body"
+                      style="overflow: auto; height: 100%;"
+                    >
+                      <div
+                        class="ant-drawer-body"
+                      >
+                        <div
+                          class="drawer-header"
+                        >
+                          <div
+                            class="drawer-header-left"
+                          >
+                            <i
+                              aria-label="icon: close"
+                              class="anticon anticon-close"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                class=""
+                                data-icon="close"
+                                fill="currentColor"
+                                focusable="false"
+                                height="1em"
+                                viewBox="64 64 896 896"
+                                width="1em"
+                              >
+                                <path
+                                  d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 0 0 203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"
+                                />
+                              </svg>
+                            </i>
+                          </div>
+                          <div
+                            class="drawer-header-right"
+                          >
+                            <i
+                              aria-label="icon: compass"
+                              class="anticon anticon-compass"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                class=""
+                                data-icon="compass"
+                                fill="currentColor"
+                                focusable="false"
+                                height="1em"
+                                viewBox="64 64 896 896"
+                                width="1em"
+                              >
+                                <path
+                                  d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372zm198.4-588.1a32 32 0 0 0-24.5.5L414.9 415 296.4 686c-3.6 8.2-3.6 17.5 0 25.7 3.4 7.8 9.7 13.9 17.7 17 3.8 1.5 7.7 2.2 11.7 2.2 4.4 0 8.7-.9 12.8-2.7l271-118.6 118.5-271a32.06 32.06 0 0 0-17.7-42.7zM576.8 534.4l26.2 26.2-42.4 42.4-26.2-26.2L380 644.4 447.5 490 422 464.4l42.4-42.4 25.5 25.5L644.4 380l-67.6 154.4zM464.4 422L422 464.4l25.5 25.6 86.9 86.8 26.2 26.2 42.4-42.4-26.2-26.2-86.8-86.9z"
+                                />
+                              </svg>
+                            </i>
+                          </div>
+                        </div>
+                        <div
+                          class="drawer-content"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+        >
+          <div
+            className="ant-drawer ant-drawer-right ant-drawer-open webview-drawer"
+            onKeyDown={[Function]}
+            onTransitionEnd={[Function]}
+            style={
+              Object {
+                "transform": undefined,
+                "zIndex": undefined,
+              }
+            }
+            tabIndex={-1}
+          >
+            <div
+              className="ant-drawer-mask"
+              onClick={[Function]}
+              style={Object {}}
+            />
+            <div
+              className="ant-drawer-content-wrapper"
+              style={
+                Object {
+                  "height": undefined,
+                  "msTransform": "",
+                  "transform": "",
+                  "width": "100px",
+                }
+              }
+            >
+              <div
+                className="ant-drawer-content"
+                onTouchMove={[Function]}
+                onTouchStart={[Function]}
+              >
+                <div
+                  className="ant-drawer-wrapper-body"
+                  onTransitionEnd={[Function]}
+                  style={
+                    Object {
+                      "height": "100%",
+                      "overflow": "auto",
+                    }
+                  }
+                >
+                  <div
+                    className="ant-drawer-body"
+                  >
+                    <div
+                      className="drawer-header"
+                    >
+                      <div
+                        className="drawer-header-left"
+                        onClick={[Function]}
+                      >
+                        <Icon
+                          type="close"
+                        >
+                          <LocaleReceiver
+                            componentName="Icon"
+                          >
+                            <i
+                              aria-label="icon: close"
+                              className="anticon anticon-close"
+                            >
+                              <IconReact
+                                className=""
+                                type="close-o"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  className=""
+                                  data-icon="close"
+                                  fill="currentColor"
+                                  focusable="false"
+                                  height="1em"
+                                  key="svg-close"
+                                  viewBox="64 64 896 896"
+                                  width="1em"
+                                >
+                                  <path
+                                    d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 0 0 203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"
+                                    key="svg-close-svg-0"
+                                  />
+                                </svg>
+                              </IconReact>
+                            </i>
+                          </LocaleReceiver>
+                        </Icon>
+                      </div>
+                      <div
+                        className="drawer-header-right"
+                        onClick={[Function]}
+                      >
+                        <Icon
+                          type="compass"
+                        >
+                          <LocaleReceiver
+                            componentName="Icon"
+                          >
+                            <i
+                              aria-label="icon: compass"
+                              className="anticon anticon-compass"
+                            >
+                              <IconReact
+                                className=""
+                                type="compass-o"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  className=""
+                                  data-icon="compass"
+                                  fill="currentColor"
+                                  focusable="false"
+                                  height="1em"
+                                  key="svg-compass"
+                                  viewBox="64 64 896 896"
+                                  width="1em"
+                                >
+                                  <path
+                                    d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372zm198.4-588.1a32 32 0 0 0-24.5.5L414.9 415 296.4 686c-3.6 8.2-3.6 17.5 0 25.7 3.4 7.8 9.7 13.9 17.7 17 3.8 1.5 7.7 2.2 11.7 2.2 4.4 0 8.7-.9 12.8-2.7l271-118.6 118.5-271a32.06 32.06 0 0 0-17.7-42.7zM576.8 534.4l26.2 26.2-42.4 42.4-26.2-26.2L380 644.4 447.5 490 422 464.4l42.4-42.4 25.5 25.5L644.4 380l-67.6 154.4zM464.4 422L422 464.4l25.5 25.6 86.9 86.8 26.2 26.2 42.4-42.4-26.2-26.2-86.8-86.9z"
+                                    key="svg-compass-svg-0"
+                                  />
+                                </svg>
+                              </IconReact>
+                            </i>
+                          </LocaleReceiver>
+                        </Icon>
+                      </div>
+                    </div>
+                    <div
+                      className="drawer-content"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Portal>
+      </Drawer>
+    </Drawer>
+  </withConfigConsumer(Drawer)>
+</WebviewDrawer>
+`;

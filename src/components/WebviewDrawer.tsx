@@ -6,7 +6,7 @@ import ProgressBar from './ProgressBar'
 
 import '../styles/WebviewDrawer.less'
 
-interface IWebviewDrawerProps {
+export interface IWebviewDrawerProps {
     visible: boolean
     src: string
     width: string | number
