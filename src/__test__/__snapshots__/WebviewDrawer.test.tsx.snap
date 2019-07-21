@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`WebviewDrawer Testing react tree snapshot testing 1`] = `
+exports[`WebviewDrawer Testing snapshot testing 1`] = `
 <WebviewDrawer
   onClose={[MockFunction]}
   src="https://github.com"

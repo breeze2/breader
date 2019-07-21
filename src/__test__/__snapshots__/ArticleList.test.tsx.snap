@@ -1,0 +1,1315 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ArticleList Testing snapshot testing 1`] = `
+<Provider
+  store={
+    Object {
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <IntlProvider
+    locale="en-US"
+    messages={
+      Object {
+        "addFeed": "Add Feed",
+        "allArticlesAreReadNow": "All articles are read now.",
+        "delete": "Delete",
+        "doYouWantSetAllArticlesBeRead": "Do you want set all articles be read?",
+        "feedUrl": "Feed Url",
+        "feeds": "Feeds",
+        "feedsAreUpdated": "Feeds are Updated",
+        "invalidFeedUrl": "Invalid Feed Url",
+        "keywords": "Keywords",
+        "languages": "Languages",
+        "menuAllItems": "All Items",
+        "menuStarred": "Starred",
+        "menuSubscriptions": "Subscriptions",
+        "menuUnread": "Unread",
+        "noMatched": "No matched",
+        "settings": "Settings",
+        "somethingWrong": "Something Wrong!",
+        "title": "Breader",
+        "unfoundFeed": "Unfound Feed",
+        "unknown": "Unknown",
+      }
+    }
+  >
+    <Connect(InjectIntl(ArticleList))
+      articles={Immutable.List []}
+      articlesFilter="ALL"
+      asyncFilterArticles={[MockFunction]}
+      asyncSetAllArticlesRead={[MockFunction]}
+      isFetchingArticles={false}
+      selectedMenuKey="ALL_ITEMS"
+    >
+      <InjectIntl(ArticleList)
+        articles={Immutable.List []}
+        articlesFilter="ALL"
+        asyncFilterArticles={[Function]}
+        asyncSetAllArticlesRead={[Function]}
+        isFetchingArticles={false}
+        selectedMenuKey="ALL_ITEMS"
+      >
+        <ArticleList
+          articles={Immutable.List []}
+          articlesFilter="ALL"
+          asyncFilterArticles={[Function]}
+          asyncSetAllArticlesRead={[Function]}
+          intl={
+            Object {
+              "defaultFormats": Object {},
+              "defaultLocale": "en",
+              "formatDate": [Function],
+              "formatHTMLMessage": [Function],
+              "formatMessage": [Function],
+              "formatNumber": [Function],
+              "formatPlural": [Function],
+              "formatRelative": [Function],
+              "formatTime": [Function],
+              "formats": Object {},
+              "formatters": Object {
+                "getDateTimeFormat": [Function],
+                "getMessageFormat": [Function],
+                "getNumberFormat": [Function],
+                "getPluralFormat": [Function],
+                "getRelativeFormat": [Function],
+              },
+              "locale": "en-US",
+              "messages": Object {
+                "addFeed": "Add Feed",
+                "allArticlesAreReadNow": "All articles are read now.",
+                "delete": "Delete",
+                "doYouWantSetAllArticlesBeRead": "Do you want set all articles be read?",
+                "feedUrl": "Feed Url",
+                "feeds": "Feeds",
+                "feedsAreUpdated": "Feeds are Updated",
+                "invalidFeedUrl": "Invalid Feed Url",
+                "keywords": "Keywords",
+                "languages": "Languages",
+                "menuAllItems": "All Items",
+                "menuStarred": "Starred",
+                "menuSubscriptions": "Subscriptions",
+                "menuUnread": "Unread",
+                "noMatched": "No matched",
+                "settings": "Settings",
+                "somethingWrong": "Something Wrong!",
+                "title": "Breader",
+                "unfoundFeed": "Unfound Feed",
+                "unknown": "Unknown",
+              },
+              "now": [Function],
+              "onError": [Function],
+              "textComponent": "span",
+              "timeZone": null,
+            }
+          }
+          isFetchingArticles={false}
+          selectedMenuKey="ALL_ITEMS"
+        >
+          <div
+            className="article-list"
+          >
+            <div
+              className="list-header"
+            />
+            <div
+              className="list-content"
+            >
+              <Connect(ArticleVirtualList)
+                scrollToIndex={-1}
+              >
+                <ArticleVirtualList
+                  articles={Immutable.List []}
+                  currentArticle={null}
+                  scrollToIndex={-1}
+                  selectArticle={[Function]}
+                >
+                  <div
+                    className="article-virtual-list"
+                    onClick={[Function]}
+                  >
+                    <AutoSizer
+                      disableHeight={false}
+                      disableWidth={false}
+                      onResize={[Function]}
+                      style={Object {}}
+                    >
+                      <div
+                        style={
+                          Object {
+                            "height": 0,
+                            "overflow": "visible",
+                            "width": 0,
+                          }
+                        }
+                      >
+                        <List
+                          autoHeight={false}
+                          deferredMeasurementCache={
+                            CellMeasurerCache {
+                              "_cellHeightCache": Object {},
+                              "_cellWidthCache": Object {},
+                              "_columnCount": 0,
+                              "_columnWidthCache": Object {},
+                              "_defaultHeight": 80,
+                              "_defaultWidth": 100,
+                              "_hasFixedHeight": false,
+                              "_hasFixedWidth": true,
+                              "_keyMapper": [Function],
+                              "_minHeight": 0,
+                              "_minWidth": 0,
+                              "_rowCount": 0,
+                              "_rowHeightCache": Object {},
+                              "columnWidth": [Function],
+                              "rowHeight": [Function],
+                            }
+                          }
+                          estimatedRowSize={30}
+                          height={0}
+                          noRowsRenderer={[Function]}
+                          onRowsRendered={[Function]}
+                          onScroll={[Function]}
+                          overscanIndicesGetter={[Function]}
+                          overscanRowCount={10}
+                          rowCount={0}
+                          rowHeight={[Function]}
+                          rowRenderer={[Function]}
+                          scrollToAlignment="auto"
+                          scrollToIndex={-1}
+                          style={Object {}}
+                          width={0}
+                        >
+                          <Grid
+                            aria-label="grid"
+                            aria-readonly={true}
+                            autoContainerWidth={true}
+                            autoHeight={false}
+                            autoWidth={false}
+                            cellRangeRenderer={[Function]}
+                            cellRenderer={[Function]}
+                            className="ReactVirtualized__List"
+                            columnCount={1}
+                            columnWidth={0}
+                            containerRole="rowgroup"
+                            containerStyle={Object {}}
+                            deferredMeasurementCache={
+                              CellMeasurerCache {
+                                "_cellHeightCache": Object {},
+                                "_cellWidthCache": Object {},
+                                "_columnCount": 0,
+                                "_columnWidthCache": Object {},
+                                "_defaultHeight": 80,
+                                "_defaultWidth": 100,
+                                "_hasFixedHeight": false,
+                                "_hasFixedWidth": true,
+                                "_keyMapper": [Function],
+                                "_minHeight": 0,
+                                "_minWidth": 0,
+                                "_rowCount": 0,
+                                "_rowHeightCache": Object {},
+                                "columnWidth": [Function],
+                                "rowHeight": [Function],
+                              }
+                            }
+                            estimatedColumnSize={100}
+                            estimatedRowSize={30}
+                            getScrollbarSize={[Function]}
+                            height={0}
+                            isScrollingOptOut={false}
+                            noContentRenderer={[Function]}
+                            noRowsRenderer={[Function]}
+                            onRowsRendered={[Function]}
+                            onScroll={[Function]}
+                            onScrollbarPresenceChange={[Function]}
+                            onSectionRendered={[Function]}
+                            overscanColumnCount={0}
+                            overscanIndicesGetter={[Function]}
+                            overscanRowCount={10}
+                            role="grid"
+                            rowCount={0}
+                            rowHeight={[Function]}
+                            rowRenderer={[Function]}
+                            scrollToAlignment="auto"
+                            scrollToColumn={-1}
+                            scrollToIndex={-1}
+                            scrollToRow={-1}
+                            scrollingResetTimeInterval={150}
+                            style={Object {}}
+                            tabIndex={0}
+                            width={0}
+                          >
+                            <div
+                              aria-label="grid"
+                              aria-readonly={true}
+                              className="ReactVirtualized__Grid ReactVirtualized__List"
+                              onScroll={[Function]}
+                              role="grid"
+                              style={
+                                Object {
+                                  "WebkitOverflowScrolling": "touch",
+                                  "boxSizing": "border-box",
+                                  "direction": "ltr",
+                                  "height": 0,
+                                  "overflowX": "hidden",
+                                  "overflowY": "hidden",
+                                  "position": "relative",
+                                  "width": 0,
+                                  "willChange": "transform",
+                                }
+                              }
+                              tabIndex={0}
+                            />
+                          </Grid>
+                        </List>
+                      </div>
+                    </AutoSizer>
+                  </div>
+                </ArticleVirtualList>
+              </Connect(ArticleVirtualList)>
+            </div>
+            <div
+              className="list-footer"
+            >
+              <div
+                className="list-footer-left"
+              >
+                <Icon
+                  className="check-all"
+                  onClick={[Function]}
+                  theme="filled"
+                  type="check-circle"
+                >
+                  <LocaleReceiver
+                    componentName="Icon"
+                  >
+                    <i
+                      aria-label="icon: check-circle"
+                      className="anticon anticon-check-circle check-all"
+                      onClick={[Function]}
+                      tabIndex={-1}
+                    >
+                      <IconReact
+                        className=""
+                        type="check-circle-fill"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          className=""
+                          data-icon="check-circle"
+                          fill="currentColor"
+                          focusable="false"
+                          height="1em"
+                          key="svg-check-circle"
+                          viewBox="64 64 896 896"
+                          width="1em"
+                        >
+                          <path
+                            d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm193.5 301.7l-210.6 292a31.8 31.8 0 0 1-51.7 0L318.5 484.9c-3.8-5.3 0-12.7 6.5-12.7h46.9c10.2 0 19.9 4.9 25.9 13.3l71.2 98.8 157.2-218c6-8.3 15.6-13.3 25.9-13.3H699c6.5 0 10.3 7.4 6.5 12.7z"
+                            key="svg-check-circle-svg-0"
+                          />
+                        </svg>
+                      </IconReact>
+                    </i>
+                  </LocaleReceiver>
+                </Icon>
+              </div>
+              <div
+                className="list-footer-right"
+              >
+                <Icon
+                  className="search-item"
+                  onClick={[Function]}
+                  type="search"
+                >
+                  <LocaleReceiver
+                    componentName="Icon"
+                  >
+                    <i
+                      aria-label="icon: search"
+                      className="anticon anticon-search search-item"
+                      onClick={[Function]}
+                      tabIndex={-1}
+                    >
+                      <IconReact
+                        className=""
+                        type="search-o"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          className=""
+                          data-icon="search"
+                          fill="currentColor"
+                          focusable="false"
+                          height="1em"
+                          key="svg-search"
+                          viewBox="64 64 896 896"
+                          width="1em"
+                        >
+                          <path
+                            d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0 0 11.6 0l43.6-43.5a8.2 8.2 0 0 0 0-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"
+                            key="svg-search-svg-0"
+                          />
+                        </svg>
+                      </IconReact>
+                    </i>
+                  </LocaleReceiver>
+                </Icon>
+              </div>
+            </div>
+            <ArticleListSkeleton
+              row={8}
+              style={
+                Object {
+                  "display": "none",
+                }
+              }
+            >
+              <div
+                className="article-list-skeleton "
+                style={
+                  Object {
+                    "display": "none",
+                  }
+                }
+              >
+                <SpanSkeleton
+                  style={
+                    Object {
+                      "marginLeft": 8,
+                    }
+                  }
+                  width={90}
+                >
+                  <span
+                    className="span-skeleton skeleton-active "
+                    style={
+                      Object {
+                        "marginLeft": 8,
+                        "width": 90,
+                      }
+                    }
+                  />
+                </SpanSkeleton>
+                <ArticleItemSkeleton
+                  key="0"
+                >
+                  <div
+                    className="article-item"
+                  >
+                    <div
+                      className="item-sider"
+                    >
+                      <AvatarSkeleton>
+                        <div
+                          className="avatar-skeleton skeleton-active "
+                        />
+                      </AvatarSkeleton>
+                    </div>
+                    <div
+                      className="item-main"
+                    >
+                      <div
+                        className="item-header"
+                      >
+                        <div
+                          className="item-header-left"
+                        >
+                          <SpanSkeleton
+                            width={96}
+                          >
+                            <span
+                              className="span-skeleton skeleton-active "
+                              style={
+                                Object {
+                                  "width": 96,
+                                }
+                              }
+                            />
+                          </SpanSkeleton>
+                        </div>
+                        <div
+                          className="item-header-right"
+                        >
+                          <SpanSkeleton
+                            width={36}
+                          >
+                            <span
+                              className="span-skeleton skeleton-active "
+                              style={
+                                Object {
+                                  "width": 36,
+                                }
+                              }
+                            />
+                          </SpanSkeleton>
+                        </div>
+                      </div>
+                      <div
+                        className="item-content"
+                      >
+                        <TextSkeleton>
+                          <div
+                            className="text-skeleton skeleton-active "
+                            style={
+                              Object {
+                                "width": undefined,
+                              }
+                            }
+                          />
+                        </TextSkeleton>
+                        <TextSkeleton
+                          width="67%"
+                        >
+                          <div
+                            className="text-skeleton skeleton-active "
+                            style={
+                              Object {
+                                "width": "67%",
+                              }
+                            }
+                          />
+                        </TextSkeleton>
+                      </div>
+                      <div
+                        className="item-footer"
+                      >
+                        <SpanSkeleton
+                          width="100%"
+                        >
+                          <span
+                            className="span-skeleton skeleton-active "
+                            style={
+                              Object {
+                                "width": "100%",
+                              }
+                            }
+                          />
+                        </SpanSkeleton>
+                      </div>
+                    </div>
+                  </div>
+                </ArticleItemSkeleton>
+                <ArticleItemSkeleton
+                  key="1"
+                >
+                  <div
+                    className="article-item"
+                  >
+                    <div
+                      className="item-sider"
+                    >
+                      <AvatarSkeleton>
+                        <div
+                          className="avatar-skeleton skeleton-active "
+                        />
+                      </AvatarSkeleton>
+                    </div>
+                    <div
+                      className="item-main"
+                    >
+                      <div
+                        className="item-header"
+                      >
+                        <div
+                          className="item-header-left"
+                        >
+                          <SpanSkeleton
+                            width={96}
+                          >
+                            <span
+                              className="span-skeleton skeleton-active "
+                              style={
+                                Object {
+                                  "width": 96,
+                                }
+                              }
+                            />
+                          </SpanSkeleton>
+                        </div>
+                        <div
+                          className="item-header-right"
+                        >
+                          <SpanSkeleton
+                            width={36}
+                          >
+                            <span
+                              className="span-skeleton skeleton-active "
+                              style={
+                                Object {
+                                  "width": 36,
+                                }
+                              }
+                            />
+                          </SpanSkeleton>
+                        </div>
+                      </div>
+                      <div
+                        className="item-content"
+                      >
+                        <TextSkeleton>
+                          <div
+                            className="text-skeleton skeleton-active "
+                            style={
+                              Object {
+                                "width": undefined,
+                              }
+                            }
+                          />
+                        </TextSkeleton>
+                        <TextSkeleton
+                          width="67%"
+                        >
+                          <div
+                            className="text-skeleton skeleton-active "
+                            style={
+                              Object {
+                                "width": "67%",
+                              }
+                            }
+                          />
+                        </TextSkeleton>
+                      </div>
+                      <div
+                        className="item-footer"
+                      >
+                        <SpanSkeleton
+                          width="100%"
+                        >
+                          <span
+                            className="span-skeleton skeleton-active "
+                            style={
+                              Object {
+                                "width": "100%",
+                              }
+                            }
+                          />
+                        </SpanSkeleton>
+                      </div>
+                    </div>
+                  </div>
+                </ArticleItemSkeleton>
+                <ArticleItemSkeleton
+                  key="2"
+                >
+                  <div
+                    className="article-item"
+                  >
+                    <div
+                      className="item-sider"
+                    >
+                      <AvatarSkeleton>
+                        <div
+                          className="avatar-skeleton skeleton-active "
+                        />
+                      </AvatarSkeleton>
+                    </div>
+                    <div
+                      className="item-main"
+                    >
+                      <div
+                        className="item-header"
+                      >
+                        <div
+                          className="item-header-left"
+                        >
+                          <SpanSkeleton
+                            width={96}
+                          >
+                            <span
+                              className="span-skeleton skeleton-active "
+                              style={
+                                Object {
+                                  "width": 96,
+                                }
+                              }
+                            />
+                          </SpanSkeleton>
+                        </div>
+                        <div
+                          className="item-header-right"
+                        >
+                          <SpanSkeleton
+                            width={36}
+                          >
+                            <span
+                              className="span-skeleton skeleton-active "
+                              style={
+                                Object {
+                                  "width": 36,
+                                }
+                              }
+                            />
+                          </SpanSkeleton>
+                        </div>
+                      </div>
+                      <div
+                        className="item-content"
+                      >
+                        <TextSkeleton>
+                          <div
+                            className="text-skeleton skeleton-active "
+                            style={
+                              Object {
+                                "width": undefined,
+                              }
+                            }
+                          />
+                        </TextSkeleton>
+                        <TextSkeleton
+                          width="67%"
+                        >
+                          <div
+                            className="text-skeleton skeleton-active "
+                            style={
+                              Object {
+                                "width": "67%",
+                              }
+                            }
+                          />
+                        </TextSkeleton>
+                      </div>
+                      <div
+                        className="item-footer"
+                      >
+                        <SpanSkeleton
+                          width="100%"
+                        >
+                          <span
+                            className="span-skeleton skeleton-active "
+                            style={
+                              Object {
+                                "width": "100%",
+                              }
+                            }
+                          />
+                        </SpanSkeleton>
+                      </div>
+                    </div>
+                  </div>
+                </ArticleItemSkeleton>
+                <ArticleItemSkeleton
+                  key="3"
+                >
+                  <div
+                    className="article-item"
+                  >
+                    <div
+                      className="item-sider"
+                    >
+                      <AvatarSkeleton>
+                        <div
+                          className="avatar-skeleton skeleton-active "
+                        />
+                      </AvatarSkeleton>
+                    </div>
+                    <div
+                      className="item-main"
+                    >
+                      <div
+                        className="item-header"
+                      >
+                        <div
+                          className="item-header-left"
+                        >
+                          <SpanSkeleton
+                            width={96}
+                          >
+                            <span
+                              className="span-skeleton skeleton-active "
+                              style={
+                                Object {
+                                  "width": 96,
+                                }
+                              }
+                            />
+                          </SpanSkeleton>
+                        </div>
+                        <div
+                          className="item-header-right"
+                        >
+                          <SpanSkeleton
+                            width={36}
+                          >
+                            <span
+                              className="span-skeleton skeleton-active "
+                              style={
+                                Object {
+                                  "width": 36,
+                                }
+                              }
+                            />
+                          </SpanSkeleton>
+                        </div>
+                      </div>
+                      <div
+                        className="item-content"
+                      >
+                        <TextSkeleton>
+                          <div
+                            className="text-skeleton skeleton-active "
+                            style={
+                              Object {
+                                "width": undefined,
+                              }
+                            }
+                          />
+                        </TextSkeleton>
+                        <TextSkeleton
+                          width="67%"
+                        >
+                          <div
+                            className="text-skeleton skeleton-active "
+                            style={
+                              Object {
+                                "width": "67%",
+                              }
+                            }
+                          />
+                        </TextSkeleton>
+                      </div>
+                      <div
+                        className="item-footer"
+                      >
+                        <SpanSkeleton
+                          width="100%"
+                        >
+                          <span
+                            className="span-skeleton skeleton-active "
+                            style={
+                              Object {
+                                "width": "100%",
+                              }
+                            }
+                          />
+                        </SpanSkeleton>
+                      </div>
+                    </div>
+                  </div>
+                </ArticleItemSkeleton>
+                <ArticleItemSkeleton
+                  key="4"
+                >
+                  <div
+                    className="article-item"
+                  >
+                    <div
+                      className="item-sider"
+                    >
+                      <AvatarSkeleton>
+                        <div
+                          className="avatar-skeleton skeleton-active "
+                        />
+                      </AvatarSkeleton>
+                    </div>
+                    <div
+                      className="item-main"
+                    >
+                      <div
+                        className="item-header"
+                      >
+                        <div
+                          className="item-header-left"
+                        >
+                          <SpanSkeleton
+                            width={96}
+                          >
+                            <span
+                              className="span-skeleton skeleton-active "
+                              style={
+                                Object {
+                                  "width": 96,
+                                }
+                              }
+                            />
+                          </SpanSkeleton>
+                        </div>
+                        <div
+                          className="item-header-right"
+                        >
+                          <SpanSkeleton
+                            width={36}
+                          >
+                            <span
+                              className="span-skeleton skeleton-active "
+                              style={
+                                Object {
+                                  "width": 36,
+                                }
+                              }
+                            />
+                          </SpanSkeleton>
+                        </div>
+                      </div>
+                      <div
+                        className="item-content"
+                      >
+                        <TextSkeleton>
+                          <div
+                            className="text-skeleton skeleton-active "
+                            style={
+                              Object {
+                                "width": undefined,
+                              }
+                            }
+                          />
+                        </TextSkeleton>
+                        <TextSkeleton
+                          width="67%"
+                        >
+                          <div
+                            className="text-skeleton skeleton-active "
+                            style={
+                              Object {
+                                "width": "67%",
+                              }
+                            }
+                          />
+                        </TextSkeleton>
+                      </div>
+                      <div
+                        className="item-footer"
+                      >
+                        <SpanSkeleton
+                          width="100%"
+                        >
+                          <span
+                            className="span-skeleton skeleton-active "
+                            style={
+                              Object {
+                                "width": "100%",
+                              }
+                            }
+                          />
+                        </SpanSkeleton>
+                      </div>
+                    </div>
+                  </div>
+                </ArticleItemSkeleton>
+                <ArticleItemSkeleton
+                  key="5"
+                >
+                  <div
+                    className="article-item"
+                  >
+                    <div
+                      className="item-sider"
+                    >
+                      <AvatarSkeleton>
+                        <div
+                          className="avatar-skeleton skeleton-active "
+                        />
+                      </AvatarSkeleton>
+                    </div>
+                    <div
+                      className="item-main"
+                    >
+                      <div
+                        className="item-header"
+                      >
+                        <div
+                          className="item-header-left"
+                        >
+                          <SpanSkeleton
+                            width={96}
+                          >
+                            <span
+                              className="span-skeleton skeleton-active "
+                              style={
+                                Object {
+                                  "width": 96,
+                                }
+                              }
+                            />
+                          </SpanSkeleton>
+                        </div>
+                        <div
+                          className="item-header-right"
+                        >
+                          <SpanSkeleton
+                            width={36}
+                          >
+                            <span
+                              className="span-skeleton skeleton-active "
+                              style={
+                                Object {
+                                  "width": 36,
+                                }
+                              }
+                            />
+                          </SpanSkeleton>
+                        </div>
+                      </div>
+                      <div
+                        className="item-content"
+                      >
+                        <TextSkeleton>
+                          <div
+                            className="text-skeleton skeleton-active "
+                            style={
+                              Object {
+                                "width": undefined,
+                              }
+                            }
+                          />
+                        </TextSkeleton>
+                        <TextSkeleton
+                          width="67%"
+                        >
+                          <div
+                            className="text-skeleton skeleton-active "
+                            style={
+                              Object {
+                                "width": "67%",
+                              }
+                            }
+                          />
+                        </TextSkeleton>
+                      </div>
+                      <div
+                        className="item-footer"
+                      >
+                        <SpanSkeleton
+                          width="100%"
+                        >
+                          <span
+                            className="span-skeleton skeleton-active "
+                            style={
+                              Object {
+                                "width": "100%",
+                              }
+                            }
+                          />
+                        </SpanSkeleton>
+                      </div>
+                    </div>
+                  </div>
+                </ArticleItemSkeleton>
+                <ArticleItemSkeleton
+                  key="6"
+                >
+                  <div
+                    className="article-item"
+                  >
+                    <div
+                      className="item-sider"
+                    >
+                      <AvatarSkeleton>
+                        <div
+                          className="avatar-skeleton skeleton-active "
+                        />
+                      </AvatarSkeleton>
+                    </div>
+                    <div
+                      className="item-main"
+                    >
+                      <div
+                        className="item-header"
+                      >
+                        <div
+                          className="item-header-left"
+                        >
+                          <SpanSkeleton
+                            width={96}
+                          >
+                            <span
+                              className="span-skeleton skeleton-active "
+                              style={
+                                Object {
+                                  "width": 96,
+                                }
+                              }
+                            />
+                          </SpanSkeleton>
+                        </div>
+                        <div
+                          className="item-header-right"
+                        >
+                          <SpanSkeleton
+                            width={36}
+                          >
+                            <span
+                              className="span-skeleton skeleton-active "
+                              style={
+                                Object {
+                                  "width": 36,
+                                }
+                              }
+                            />
+                          </SpanSkeleton>
+                        </div>
+                      </div>
+                      <div
+                        className="item-content"
+                      >
+                        <TextSkeleton>
+                          <div
+                            className="text-skeleton skeleton-active "
+                            style={
+                              Object {
+                                "width": undefined,
+                              }
+                            }
+                          />
+                        </TextSkeleton>
+                        <TextSkeleton
+                          width="67%"
+                        >
+                          <div
+                            className="text-skeleton skeleton-active "
+                            style={
+                              Object {
+                                "width": "67%",
+                              }
+                            }
+                          />
+                        </TextSkeleton>
+                      </div>
+                      <div
+                        className="item-footer"
+                      >
+                        <SpanSkeleton
+                          width="100%"
+                        >
+                          <span
+                            className="span-skeleton skeleton-active "
+                            style={
+                              Object {
+                                "width": "100%",
+                              }
+                            }
+                          />
+                        </SpanSkeleton>
+                      </div>
+                    </div>
+                  </div>
+                </ArticleItemSkeleton>
+                <ArticleItemSkeleton
+                  key="7"
+                >
+                  <div
+                    className="article-item"
+                  >
+                    <div
+                      className="item-sider"
+                    >
+                      <AvatarSkeleton>
+                        <div
+                          className="avatar-skeleton skeleton-active "
+                        />
+                      </AvatarSkeleton>
+                    </div>
+                    <div
+                      className="item-main"
+                    >
+                      <div
+                        className="item-header"
+                      >
+                        <div
+                          className="item-header-left"
+                        >
+                          <SpanSkeleton
+                            width={96}
+                          >
+                            <span
+                              className="span-skeleton skeleton-active "
+                              style={
+                                Object {
+                                  "width": 96,
+                                }
+                              }
+                            />
+                          </SpanSkeleton>
+                        </div>
+                        <div
+                          className="item-header-right"
+                        >
+                          <SpanSkeleton
+                            width={36}
+                          >
+                            <span
+                              className="span-skeleton skeleton-active "
+                              style={
+                                Object {
+                                  "width": 36,
+                                }
+                              }
+                            />
+                          </SpanSkeleton>
+                        </div>
+                      </div>
+                      <div
+                        className="item-content"
+                      >
+                        <TextSkeleton>
+                          <div
+                            className="text-skeleton skeleton-active "
+                            style={
+                              Object {
+                                "width": undefined,
+                              }
+                            }
+                          />
+                        </TextSkeleton>
+                        <TextSkeleton
+                          width="67%"
+                        >
+                          <div
+                            className="text-skeleton skeleton-active "
+                            style={
+                              Object {
+                                "width": "67%",
+                              }
+                            }
+                          />
+                        </TextSkeleton>
+                      </div>
+                      <div
+                        className="item-footer"
+                      >
+                        <SpanSkeleton
+                          width="100%"
+                        >
+                          <span
+                            className="span-skeleton skeleton-active "
+                            style={
+                              Object {
+                                "width": "100%",
+                              }
+                            }
+                          />
+                        </SpanSkeleton>
+                      </div>
+                    </div>
+                  </div>
+                </ArticleItemSkeleton>
+              </div>
+            </ArticleListSkeleton>
+            <Connect(InjectIntl(SearchArticleModal))
+              onCancel={[Function]}
+              onItemChoose={[Function]}
+              visible={false}
+            >
+              <InjectIntl(SearchArticleModal)
+                articles={Immutable.List []}
+                onCancel={[Function]}
+                onItemChoose={[Function]}
+                visible={false}
+              >
+                <SearchArticleModal
+                  articles={Immutable.List []}
+                  intl={
+                    Object {
+                      "defaultFormats": Object {},
+                      "defaultLocale": "en",
+                      "formatDate": [Function],
+                      "formatHTMLMessage": [Function],
+                      "formatMessage": [Function],
+                      "formatNumber": [Function],
+                      "formatPlural": [Function],
+                      "formatRelative": [Function],
+                      "formatTime": [Function],
+                      "formats": Object {},
+                      "formatters": Object {
+                        "getDateTimeFormat": [Function],
+                        "getMessageFormat": [Function],
+                        "getNumberFormat": [Function],
+                        "getPluralFormat": [Function],
+                        "getRelativeFormat": [Function],
+                      },
+                      "locale": "en-US",
+                      "messages": Object {
+                        "addFeed": "Add Feed",
+                        "allArticlesAreReadNow": "All articles are read now.",
+                        "delete": "Delete",
+                        "doYouWantSetAllArticlesBeRead": "Do you want set all articles be read?",
+                        "feedUrl": "Feed Url",
+                        "feeds": "Feeds",
+                        "feedsAreUpdated": "Feeds are Updated",
+                        "invalidFeedUrl": "Invalid Feed Url",
+                        "keywords": "Keywords",
+                        "languages": "Languages",
+                        "menuAllItems": "All Items",
+                        "menuStarred": "Starred",
+                        "menuSubscriptions": "Subscriptions",
+                        "menuUnread": "Unread",
+                        "noMatched": "No matched",
+                        "settings": "Settings",
+                        "somethingWrong": "Something Wrong!",
+                        "title": "Breader",
+                        "unfoundFeed": "Unfound Feed",
+                        "unknown": "Unknown",
+                      },
+                      "now": [Function],
+                      "onError": [Function],
+                      "textComponent": "span",
+                      "timeZone": null,
+                    }
+                  }
+                  onCancel={[Function]}
+                  onItemChoose={[Function]}
+                  visible={false}
+                >
+                  <Modal
+                    className="search-article-modal"
+                    closable={false}
+                    confirmLoading={false}
+                    footer={null}
+                    maskTransitionName="fade"
+                    okType="primary"
+                    onCancel={[Function]}
+                    style={
+                      Object {
+                        "top": 42,
+                      }
+                    }
+                    transitionName="zoom"
+                    visible={false}
+                    width={376}
+                  >
+                    <DialogWrap
+                      className="search-article-modal"
+                      closable={false}
+                      closeIcon={
+                        <span
+                          className="ant-modal-close-x"
+                        >
+                          <Icon
+                            className="ant-modal-close-icon"
+                            type="close"
+                          />
+                        </span>
+                      }
+                      confirmLoading={false}
+                      footer={null}
+                      forceRender={false}
+                      maskTransitionName="fade"
+                      okType="primary"
+                      onCancel={[Function]}
+                      onClose={[Function]}
+                      prefixCls="ant-modal"
+                      style={
+                        Object {
+                          "top": 42,
+                        }
+                      }
+                      transitionName="zoom"
+                      visible={false}
+                      width={376}
+                      wrapClassName=""
+                    />
+                  </Modal>
+                </SearchArticleModal>
+              </InjectIntl(SearchArticleModal)>
+            </Connect(InjectIntl(SearchArticleModal))>
+          </div>
+        </ArticleList>
+      </InjectIntl(ArticleList)>
+    </Connect(InjectIntl(ArticleList))>
+  </IntlProvider>
+</Provider>
+`;

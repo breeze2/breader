@@ -28,7 +28,7 @@ export interface IArticleListReduxDispatch {
     asyncSetAllArticlesRead: (ids: string[]) => Promise<number>
 }
 
-interface IArticleListProps extends IArticleListOwnProps, IArticleListReduxState, IArticleListReduxDispatch {
+export interface IArticleListProps extends IArticleListOwnProps, IArticleListReduxState, IArticleListReduxDispatch {
 }
 
 interface IArticleListState {
