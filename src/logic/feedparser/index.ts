@@ -15,7 +15,8 @@ function feedXmlRequest(feedUrl: string, options: http.RequestOptions) {
         }
         const client = u.protocol === 'http:' ? http : https
         const headers = options.headers ? options.headers : {}
-        headers['user-agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36'
+        headers['user-agent'] =
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36'
         headers.host = u.host
         headers.origin = headers.referer = u.protocol + '//' + u.host + '/'
         const o: http.RequestOptions = {
@@ -85,10 +86,17 @@ export function parseFeed(feedUrl: string, etag: string) {
                     // TODO
                     return reject(err)
                 })
+            } else if (res.statusCode === 301) {
+                const newUrl = res.headers.location
+                if (newUrl) {
+                    feedDB.updateFeedUrl(feedUrl, newUrl)
+                }
+                return resolve(null)
             } else if (res.statusCode === 304) {
-                resolve(null)
+                return resolve(null)
             } else {
-                reject(new LogicError(LogicErrorEnum.FEEDPARSER_FETCH_ERROR))
+                console.error(res)
+                return reject(new LogicError(LogicErrorEnum.FEEDPARSER_FETCH_ERROR))
             }
         })
     })
