@@ -1,0 +1,8 @@
+bracketSpacing: true
+trailingComma: "es5"
+tabWidth: 4
+tabs: false
+semi: false
+singleQuote: true
+jsxSingleQuote: false
+jsxBracketSameLine: true

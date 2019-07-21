@@ -2,38 +2,38 @@ import { Affix, Empty } from 'antd'
 import Immutable from 'immutable'
 import React, { Component, PureComponent, RefObject } from 'react'
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List as VList, WindowScroller } from 'react-virtualized'
-import ListItem from '../containers/ListItem'
+import ArticleItem from '../containers/ArticleItem'
 import { IArticle } from '../schemas'
-import '../styles/VirtualList.less'
+import '../styles/ArticleVirtualList.less'
 import Utils from '../utils'
 
-export interface IVirtualListOwnProps {
+export interface IArticleVirtualListOwnProps {
     scrollToIndex?: number
 }
 
-export interface IVirtualListReduxDispatch {
+export interface IArticleVirtualListReduxDispatch {
     selectArticle: (id: string, index: number) => Promise<IArticle | null>
 }
 
-export interface IVirtualListReduxState {
+export interface IArticleVirtualListReduxState {
     currentArticle: IArticle | null
     articles: Immutable.List<IArticle>
 }
 
-interface IVirtualListProps extends IVirtualListOwnProps, IVirtualListReduxDispatch, IVirtualListReduxState {
+interface IArticleVirtualListProps extends IArticleVirtualListOwnProps, IArticleVirtualListReduxDispatch, IArticleVirtualListReduxState {
 }
 
-interface IVirtualListState {
+interface IArticleVirtualListState {
     renderStartDate: string
     isAffixVisible: boolean
     readItems: {[_id: string]: boolean}
 }
 
-class VirtualList extends PureComponent<IVirtualListProps, IVirtualListState> {
+class ArticleVirtualList extends PureComponent<IArticleVirtualListProps, IArticleVirtualListState> {
     public vlist: RefObject<VList>
     public cellCache: CellMeasurerCache
     public updateRenderStartDate: (...params: any[]) => void
-    public constructor(props: IVirtualListProps) {
+    public constructor(props: IArticleVirtualListProps) {
         super(props)
         this.vlist = React.createRef()
         this.cellCache = new CellMeasurerCache({
@@ -52,7 +52,7 @@ class VirtualList extends PureComponent<IVirtualListProps, IVirtualListState> {
 
         // Object.defineProperty(window, 'updateRenderStartDate', {value: this.updateRenderStartDate})
     }
-    public componentWillReceiveProps(props: IVirtualListProps) {
+    public componentWillReceiveProps(props: IArticleVirtualListProps) {
         if (props.articles !== this.props.articles) {
             this.cellCache = new CellMeasurerCache({
                 defaultHeight: 80,
@@ -83,15 +83,15 @@ class VirtualList extends PureComponent<IVirtualListProps, IVirtualListState> {
             }
         }
     }
-    public handleVirtualListClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    public handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
         const readItems = this.state.readItems
         const target = e.target
-        const $listItem = (target as HTMLDivElement).closest('.vlist-item')
-        if ($listItem) {
+        const $item = (target as HTMLDivElement).closest('.vlist-item')
+        if ($item) {
             const {
                 id,
                 index,
-            } = ($listItem as HTMLDivElement).dataset
+            } = ($item as HTMLDivElement).dataset
             const article = this.props.currentArticle
             if (article && article._id === id) {
                 // do nothing
@@ -106,7 +106,7 @@ class VirtualList extends PureComponent<IVirtualListProps, IVirtualListState> {
     }
     public render() {
         return (
-            <div className="virtual-list" onClick={this.handleVirtualListClick}>
+            <div className="article-virtual-list" onClick={this.handleClick}>
                 {this.state.isAffixVisible && (
                     <div className="list-affix">
                         {this.state.renderStartDate}
@@ -194,7 +194,7 @@ class VirtualList extends PureComponent<IVirtualListProps, IVirtualListState> {
                             {Utils.timeToDateString(article.time)}
                         </div>
                     )}
-                    <ListItem
+                    <ArticleItem
                         author={article.author}
                         guid={article._id}
                         time={article.time}
@@ -214,4 +214,4 @@ class VirtualList extends PureComponent<IVirtualListProps, IVirtualListState> {
     }
 }
 
-export default VirtualList
+export default ArticleVirtualList

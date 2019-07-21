@@ -35,6 +35,11 @@ export default class FeedModel extends BaseModel<IFeed> {
         }
         return feed
     }
+    public async updateFeedUrl(oldUrl: string, newUrl: string) {
+        const feed = await this.get(oldUrl)
+        feed.url = newUrl
+        return this.put(feed)
+    }
     public async isFeedExists(url: string) {
         try {
             const feed = await this.get(url)

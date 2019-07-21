@@ -2,42 +2,42 @@ import { Icon, Modal, Radio } from 'antd'
 import Immutable from 'immutable'
 import React, { Component } from 'react'
 import { InjectedIntlProps, injectIntl } from 'react-intl'
+import ArticleVirtualList from '../containers/ArticleVirtualList'
 import SearchArticleModal from '../containers/SearchArticleModal'
-import VirtualList from '../containers/VirtualList'
 import { IArticle, MenuKeyEnum } from '../schemas'
 import ArticleListSkeleton from '../skeletons/ArticleListSkeleton'
 
-import '../styles/AppList.less'
+import '../styles/ArticleList.less'
 
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 const Confirm = Modal.confirm
 
-export interface IAppListOwnProps {
+export interface IArticleListOwnProps {
 }
 
-export interface IAppListReduxState {
+export interface IArticleListReduxState {
     articles: Immutable.List<IArticle>
     articlesFilter: string
     isFetchingArticles: boolean
     selectedMenuKey: string
 }
 
-export interface IAppListReduxDispatch {
+export interface IArticleListReduxDispatch {
     asyncFilterArticles: (filter: string) => Promise<void>
     asyncSetAllArticlesRead: (ids: string[]) => Promise<number>
 }
 
-interface IAppListProps extends IAppListOwnProps, IAppListReduxState, IAppListReduxDispatch {
+interface IArticleListProps extends IArticleListOwnProps, IArticleListReduxState, IArticleListReduxDispatch {
 }
 
-interface IAppListState {
+interface IArticleListState {
     isSearchArticleModalVisible: boolean
     chooseItemIndex: number
 }
 
-class AppList extends Component<IAppListProps & InjectedIntlProps, IAppListState> {
-    public constructor(props: IAppListProps & InjectedIntlProps) {
+class ArticleList extends Component<IArticleListProps & InjectedIntlProps, IArticleListState> {
+    public constructor(props: IArticleListProps & InjectedIntlProps) {
         super(props)
         this.state = {
             chooseItemIndex: -1,
@@ -81,7 +81,7 @@ class AppList extends Component<IAppListProps & InjectedIntlProps, IAppListState
 
     public render() {
         return (
-            <div className="app-list">
+            <div className="article-list">
                 <div className="list-header">
                     {!(this.props.selectedMenuKey in MenuKeyEnum) &&
                     <div className="list-header-right">
@@ -93,7 +93,7 @@ class AppList extends Component<IAppListProps & InjectedIntlProps, IAppListState
                     </div>}
                 </div>
                 <div className="list-content">
-                    <VirtualList scrollToIndex={this.state.chooseItemIndex} />
+                    <ArticleVirtualList scrollToIndex={this.state.chooseItemIndex} />
                 </div>
                 <div className="list-footer">
                     <div className="list-footer-left">
@@ -115,4 +115,4 @@ class AppList extends Component<IAppListProps & InjectedIntlProps, IAppListState
     }
 }
 
-export default injectIntl(AppList)
+export default injectIntl(ArticleList)

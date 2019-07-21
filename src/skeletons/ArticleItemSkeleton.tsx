@@ -3,7 +3,7 @@ import AvatarSkeleton from './AvatarSkeleton'
 import SpanSkeleton from './SpanSkeleton'
 import TextSkeleton from './TextSkeleton'
 
-import '../styles/ListItem.less'
+import '../styles/Skeletons.less'
 
 interface IArticleItemSkeletonProps {
     key: string | number
@@ -17,7 +17,7 @@ export default class ArticleItemSkeleton extends PureComponent<
     }
     public render() {
         return (
-            <div className={'list-item'}>
+            <div className="article-item">
                 <div className="item-sider">
                     <AvatarSkeleton />
                 </div>

@@ -73,7 +73,10 @@ class AppMenu extends Component<IAppMenuProps & InjectedIntlProps, IAppMenuState
         }
     }
     public handleUpdateFeedsClick = () => {
-        const { intl, setIsUpdatingFeeds, asyncUpdateFeeds } = this.props
+        const { intl, isUpdatingFeeds, setIsUpdatingFeeds, asyncUpdateFeeds } = this.props
+        if (isUpdatingFeeds) {
+            return
+        }
         setIsUpdatingFeeds(true)
         asyncUpdateFeeds().then(() => {
             setIsUpdatingFeeds(false)
@@ -115,19 +118,21 @@ class AppMenu extends Component<IAppMenuProps & InjectedIntlProps, IAppMenuState
 
     public render () {
         const { feeds, feedsMap, intl, isCreatingFeed, isUpdatingFeeds, onlineStatus, selectedMenuKey } = this.props
+        const feedsCount = feeds.size
         return (
             <div className="app-menu">
                 <div className="menu-content">
                     <div className="menu-header">
                         <div className="app-logo" />
-                        <p className="date-text">{new Date().toDateString()}</p>
+                        <p className="date-text">
+                            {new Date().toDateString()}
+                        </p>
                     </div>
                     <Menu
                         defaultSelectedKeys={[selectedMenuKey]}
                         defaultOpenKeys={['subscriptions']}
                         mode="inline"
-                        onSelect={this.handleSelect}
-                    >
+                        onSelect={this.handleSelect}>
                         <MenuItem key={MenuKeyEnum.ALL_ITEMS}>
                             <Icon type="profile" />
                             <FormattedMessage id="menuAllItems" />
@@ -140,26 +145,82 @@ class AppMenu extends Component<IAppMenuProps & InjectedIntlProps, IAppMenuState
                             <Icon type="file-text" />
                             <FormattedMessage id="menuUnread" />
                         </MenuItem>
-                        <SubMenu key="subscriptions" className="feed-list" title={<span><Icon type="folder" /><FormattedMessage id="menuSubscriptions" /></span>}>
+                        <SubMenu
+                            key="subscriptions"
+                            className={`feed-list ${feedsCount ? '' : 'empty'}`}
+                            title={
+                                <span>
+                                    <Icon type="folder" />
+                                    <FormattedMessage id="menuSubscriptions" />
+                                </span>
+                            }>
                             {feeds.map(feed => {
                                 const ifeed = feedsMap.get(feed._id)
-                                return (<MenuItem key={feed._id}>
-                                    <Avatar shape="square" size={22} src={ifeed ? ifeed.favicon : defaultFavicon } onError={() => this.setFeedFaviconDefault(feed._id)}/>
-                                    <span className="feed-title" title={feed.title}>{feed.title}</span>
-                                </MenuItem>)
+                                return (
+                                    <MenuItem key={feed._id}>
+                                        <Avatar
+                                            shape="square"
+                                            size={22}
+                                            src={
+                                                ifeed
+                                                    ? ifeed.favicon
+                                                    : defaultFavicon
+                                            }
+                                            onError={() =>
+                                                this.setFeedFaviconDefault(
+                                                    feed._id
+                                                )
+                                            }
+                                        />
+                                        <span
+                                            className="feed-title"
+                                            title={feed.title}>
+                                            {feed.title}
+                                        </span>
+                                    </MenuItem>
+                                )
                             })}
                         </SubMenu>
                     </Menu>
                 </div>
                 <div className="menu-footer">
                     <div className="menu-footer-left">
-                        {onlineStatus && <Icon type={isUpdatingFeeds || isCreatingFeed ? 'loading' : 'sync'} className="sync-rss" onClick={this.handleUpdateFeedsClick}/>}
+                        {onlineStatus && (
+                            <Icon
+                                type={
+                                    isUpdatingFeeds || isCreatingFeed
+                                        ? 'loading'
+                                        : 'sync'
+                                }
+                                className="sync-rss"
+                                onClick={this.handleUpdateFeedsClick}
+                            />
+                        )}
                     </div>
-                    {!onlineStatus && <span><Icon type="warning" theme="twoTone" twoToneColor="#faad14" /> OFFLINE</span>}
+                    {!onlineStatus && (
+                        <span>
+                            <Icon
+                                type="warning"
+                                theme="twoTone"
+                                twoToneColor="#faad14"
+                            />{' '}
+                            OFFLINE
+                        </span>
+                    )}
                     <div className="menu-footer-right">
-                        {onlineStatus && <Icon type="plus" className="add-rss" onClick={this.handleAddFeedClick} />}
+                        {onlineStatus && (
+                            <Icon
+                                type="plus"
+                                className="add-rss"
+                                onClick={this.handleAddFeedClick}
+                            />
+                        )}
                     </div>
-                    <AddFeedModal visible={this.state.isAddFeedModalVisible} onOk={this.handleAddFeedModalOk} onCancel={this.handleAddFeedModalCancel} />
+                    <AddFeedModal
+                        visible={this.state.isAddFeedModalVisible}
+                        onOk={this.handleAddFeedModalOk}
+                        onCancel={this.handleAddFeedModalCancel}
+                    />
                 </div>
             </div>
         )
