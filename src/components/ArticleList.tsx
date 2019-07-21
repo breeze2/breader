@@ -1,10 +1,11 @@
 import { Icon, Modal, Radio } from 'antd'
+import { RadioChangeEvent } from 'antd/lib/radio'
 import Immutable from 'immutable'
 import React, { Component } from 'react'
 import { InjectedIntlProps, injectIntl } from 'react-intl'
 import ArticleVirtualList from '../containers/ArticleVirtualList'
 import SearchArticleModal from '../containers/SearchArticleModal'
-import { IArticle, MenuKeyEnum } from '../schemas'
+import { EArticleFilter, EMenuKey, IArticle } from '../schemas'
 import ArticleListSkeleton from '../skeletons/ArticleListSkeleton'
 
 import '../styles/ArticleList.less'
@@ -44,9 +45,9 @@ class ArticleList extends Component<IArticleListProps & InjectedIntlProps, IArti
             isSearchArticleModalVisible: false,
         }
     }
-    public handleRadioChange = (e: any) => {
+    public handleRadioChange = (e: RadioChangeEvent) => {
         const target = e.target
-        this.props.asyncFilterArticles(target.value)
+        this.props.asyncFilterArticles(target.value as string)
     }
     public handleSearchClick = () => {
         this.setState({
@@ -83,12 +84,12 @@ class ArticleList extends Component<IArticleListProps & InjectedIntlProps, IArti
         return (
             <div className="article-list">
                 <div className="list-header">
-                    {!(this.props.selectedMenuKey in MenuKeyEnum) &&
+                    {!(this.props.selectedMenuKey in EMenuKey) &&
                     <div className="list-header-right">
                         <RadioGroup defaultValue={this.props.articlesFilter} size="small" onChange={this.handleRadioChange}>
-                            <RadioButton value="STARRED"><Icon type="star" theme="filled" /></RadioButton>
-                            <RadioButton value="UNREAD"><Icon type="file-text" theme="filled" /></RadioButton>
-                            <RadioButton value="ALL"><Icon type="profile" theme="filled" /></RadioButton>
+                            <RadioButton value={EArticleFilter.STARRED}><Icon type="star" theme="filled" /></RadioButton>
+                            <RadioButton value={EArticleFilter.UNREAD}><Icon type="file-text" theme="filled" /></RadioButton>
+                            <RadioButton value={EArticleFilter.ALL}><Icon type="profile" theme="filled" /></RadioButton>
                         </RadioGroup>
                     </div>}
                 </div>
