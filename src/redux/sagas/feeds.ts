@@ -15,6 +15,8 @@ import {
 import { makeSagaWorkersDispatcher } from './helpers'
 import { getArticles, getFeeds, getMenu } from './selectors'
 
+let LAST_UPDATE_FEEDS_AT = 0
+
 export function* fetchFeedsSaga(action: IReduxAction<null>) {
     const feeds: IFeed[] = yield call(Logic.getAllFeeds)
     yield put(setFeedsAction(feeds))
@@ -59,9 +61,16 @@ export function* deleteFeedsSaga(action: IReduxAction<IAsyncDeleteFeedsPayload>)
 }
 
 export function* updateFeedsSaga(action: IReduxAction<null>) {
+    const now = Date.now()
+    if (now < LAST_UPDATE_FEEDS_AT + 60 * 60 * 1000) {
+        return 0
+    }
+
+    LAST_UPDATE_FEEDS_AT = now
     const feedsState: IIFeedsState = yield select(getFeeds)
     const list = feedsState.list.toArray()
     let changes = 0
+
     for (const feed of list) {
         try {
             changes += yield call(Logic.updateFeedArticles, feed)

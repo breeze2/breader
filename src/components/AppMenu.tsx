@@ -73,7 +73,10 @@ class AppMenu extends Component<IAppMenuProps & InjectedIntlProps, IAppMenuState
         }
     }
     public handleUpdateFeedsClick = () => {
-        const { intl, setIsUpdatingFeeds, asyncUpdateFeeds } = this.props
+        const { intl, isUpdatingFeeds, setIsUpdatingFeeds, asyncUpdateFeeds } = this.props
+        if (isUpdatingFeeds) {
+            return
+        }
         setIsUpdatingFeeds(true)
         asyncUpdateFeeds().then(() => {
             setIsUpdatingFeeds(false)
