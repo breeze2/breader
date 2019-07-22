@@ -1,0 +1,181 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ArticleItem Testing snapshot testing 1`] = `
+<Provider
+  store={
+    Object {
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <IntlProvider
+    locale="en-US"
+    messages={
+      Object {
+        "addFeed": "Add Feed",
+        "allArticlesAreReadNow": "All articles are read now.",
+        "delete": "Delete",
+        "doYouWantSetAllArticlesBeRead": "Do you want set all articles be read?",
+        "feedUrl": "Feed Url",
+        "feeds": "Feeds",
+        "feedsAreUpdated": "Feeds are Updated",
+        "invalidFeedUrl": "Invalid Feed Url",
+        "keywords": "Keywords",
+        "languages": "Languages",
+        "menuAllItems": "All Items",
+        "menuStarred": "Starred",
+        "menuSubscriptions": "Subscriptions",
+        "menuUnread": "Unread",
+        "noMatched": "No matched",
+        "settings": "Settings",
+        "somethingWrong": "Something Wrong!",
+        "title": "Breader",
+        "unfoundFeed": "Unfound Feed",
+        "unknown": "Unknown",
+      }
+    }
+  >
+    <Connect(InjectIntl(ArticleItem))
+      author="Author"
+      feedId="feedId"
+      feedsMap={Immutable.Map {}}
+      guid="guid"
+      key="1"
+      summary="summary"
+      time={1563726737427}
+      title="Title"
+    >
+      <InjectIntl(ArticleItem)
+        author="Author"
+        feedId="feedId"
+        feedsMap={Immutable.Map {}}
+        guid="guid"
+        summary="summary"
+        time={1563726737427}
+        title="Title"
+      >
+        <ArticleItem
+          author="Author"
+          feedId="feedId"
+          feedsMap={Immutable.Map {}}
+          guid="guid"
+          intl={
+            Object {
+              "defaultFormats": Object {},
+              "defaultLocale": "en",
+              "formatDate": [Function],
+              "formatHTMLMessage": [Function],
+              "formatMessage": [Function],
+              "formatNumber": [Function],
+              "formatPlural": [Function],
+              "formatRelative": [Function],
+              "formatTime": [Function],
+              "formats": Object {},
+              "formatters": Object {
+                "getDateTimeFormat": [Function],
+                "getMessageFormat": [Function],
+                "getNumberFormat": [Function],
+                "getPluralFormat": [Function],
+                "getRelativeFormat": [Function],
+              },
+              "locale": "en-US",
+              "messages": Object {
+                "addFeed": "Add Feed",
+                "allArticlesAreReadNow": "All articles are read now.",
+                "delete": "Delete",
+                "doYouWantSetAllArticlesBeRead": "Do you want set all articles be read?",
+                "feedUrl": "Feed Url",
+                "feeds": "Feeds",
+                "feedsAreUpdated": "Feeds are Updated",
+                "invalidFeedUrl": "Invalid Feed Url",
+                "keywords": "Keywords",
+                "languages": "Languages",
+                "menuAllItems": "All Items",
+                "menuStarred": "Starred",
+                "menuSubscriptions": "Subscriptions",
+                "menuUnread": "Unread",
+                "noMatched": "No matched",
+                "settings": "Settings",
+                "somethingWrong": "Something Wrong!",
+                "title": "Breader",
+                "unfoundFeed": "Unfound Feed",
+                "unknown": "Unknown",
+              },
+              "now": [Function],
+              "onError": [Function],
+              "textComponent": "span",
+              "timeZone": null,
+            }
+          }
+          summary="summary"
+          time={1563726737427}
+          title="Title"
+        >
+          <div
+            className="article-item undefined"
+          >
+            <div
+              className="item-sider"
+            >
+              <Avatar
+                shape="square"
+                size={22}
+                src="rss.png"
+              >
+                <span
+                  className="ant-avatar ant-avatar-square ant-avatar-image"
+                  style={
+                    Object {
+                      "fontSize": 18,
+                      "height": 22,
+                      "lineHeight": "22px",
+                      "width": 22,
+                    }
+                  }
+                >
+                  <img
+                    onError={[Function]}
+                    src="rss.png"
+                  />
+                </span>
+              </Avatar>
+            </div>
+            <div
+              className="item-main"
+            >
+              <div
+                className="item-header"
+              >
+                <div
+                  className="item-header-left"
+                >
+                  Unknown
+                </div>
+                <div
+                  className="item-header-right"
+                >
+                  00:32
+                </div>
+              </div>
+              <div
+                className="item-content"
+              >
+                Title
+              </div>
+              <div
+                className="item-footer"
+              >
+                summary
+              </div>
+            </div>
+          </div>
+        </ArticleItem>
+      </InjectIntl(ArticleItem)>
+    </Connect(InjectIntl(ArticleItem))>
+  </IntlProvider>
+</Provider>
+`;

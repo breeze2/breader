@@ -40,7 +40,32 @@ exports[`ArticleList Testing snapshot testing 1`] = `
     }
   >
     <Connect(InjectIntl(ArticleList))
-      articles={Immutable.List []}
+      articles={
+        Immutable.List [
+          Object {
+            "_id": "tag:www.ruanyifeng.com,2019:/blog//1.2100",
+            "_rev": "5-ff6fc450616071a8f7d022b7532e85aa",
+            "author": "ruanyifeng",
+            "categories": Array [],
+            "comments": "article comments",
+            "createTime": 1563697765000,
+            "deleteTime": 0,
+            "description": "article description",
+            "enclosures": Array [],
+            "feedId": "http://www.ruanyifeng.com/blog/atom.xml",
+            "image": "",
+            "isDayFirst": true,
+            "isStarred": false,
+            "isUnread": false,
+            "link": "http://www.ruanyifeng.com/blog/2019/07/weekly-issue-65.html",
+            "originLink": "",
+            "publishTime": 1563697765000,
+            "summary": "article summary",
+            "time": 1563697765000,
+            "title": "article title",
+          },
+        ]
+      }
       articlesFilter="ALL"
       asyncFilterArticles={[MockFunction]}
       asyncSetAllArticlesRead={[MockFunction]}

@@ -37,7 +37,7 @@ export interface IAppMenuReduxState {
     onlineStatus: boolean
 }
 
-interface IAppMenuProps extends IAppMenuOwnProps, IAppMenuReduxDispatch, IAppMenuReduxState {
+export interface IAppMenuProps extends IAppMenuOwnProps, IAppMenuReduxDispatch, IAppMenuReduxState {
 }
 
 interface IAppMenuState {

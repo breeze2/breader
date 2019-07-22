@@ -9,13 +9,13 @@ import { IArticleListProps } from '../components/ArticleList'
 import ArticleList from '../containers/ArticleList'
 import store from '../redux'
 import { IArticle } from '../schemas'
-import { intlProviderProps } from './PropsMock'
+import { articleProps, intlProviderProps } from './MockData'
 
 Enzyme.configure({ adapter: new EnzymeAdapter() })
 
 describe('ArticleList Testing', () => {
     const propsMock: IArticleListProps = {
-        articles: Immutable.List<IArticle>([]),
+        articles: Immutable.List<IArticle>([articleProps]),
         articlesFilter: 'ALL',
         asyncFilterArticles: jest.fn(),
         asyncSetAllArticlesRead: jest.fn(),

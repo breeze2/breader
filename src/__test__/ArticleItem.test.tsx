@@ -5,30 +5,31 @@ import Immutable from 'immutable'
 import React from 'react'
 import { IntlProvider } from 'react-intl'
 import { Provider as ReduxProvider } from 'react-redux'
-import { ISettingsModalProps } from '../components/SettingsModal'
-import SettingsModal from '../containers/SettingsModal'
+import { IArticleItemProps } from '../components/ArticleItem'
+import ArticleItem from '../containers/ArticleItem'
 import store from '../redux'
 import { IFeed } from '../schemas'
 import { intlProviderProps } from './MockData'
 
 Enzyme.configure({ adapter: new EnzymeAdapter() })
 
-describe('SettingsModal Testing', () => {
-    const propsMock: ISettingsModalProps = {
-        asyncDeleteFeeds: jest.fn(),
-        feeds: Immutable.List<IFeed>([]),
-        language: 'en-US',
-        onClose: jest.fn(),
-        onLanguageChange: jest.fn(),
-        setLanguage: jest.fn(),
-        visible: true,
+describe('ArticleItem Testing', () => {
+    const propsMock: IArticleItemProps = {
+        author: 'Author',
+        feedId: 'feedId',
+        feedsMap: Immutable.Map<IFeed>({}),
+        guid: 'guid',
+        key: 1,
+        summary: 'summary',
+        time: 1563726737427,
+        title: 'Title',
     }
 
     it('dom testing', () => {
         const component = Enzyme.shallow(
             <ReduxProvider store={store}>
                 <IntlProvider {...intlProviderProps}>
-                    <SettingsModal {...propsMock} />
+                    <ArticleItem {...propsMock} />
                 </IntlProvider>
             </ReduxProvider>
         )
@@ -38,7 +39,7 @@ describe('SettingsModal Testing', () => {
         const component = Enzyme.mount(
             <ReduxProvider store={store}>
                 <IntlProvider {...intlProviderProps}>
-                    <SettingsModal {...propsMock} />
+                    <ArticleItem {...propsMock} />
                 </IntlProvider>
             </ReduxProvider>
         )

@@ -24,7 +24,7 @@ export interface IArticleViewReduxDispatch {
     asyncStarArticle: (articleId: string, isStarred: boolean) => Promise<void>
 }
 
-interface IArticleViewProps extends IArticleViewOwnProps, IArticleViewReduxDispatch, IArticleViewReduxState {
+export interface IArticleViewProps extends IArticleViewOwnProps, IArticleViewReduxDispatch, IArticleViewReduxState {
 }
 
 interface IArticleViewState {
