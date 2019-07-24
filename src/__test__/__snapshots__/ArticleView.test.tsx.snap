@@ -1,514 +1,257 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ArticleView Testing snapshot testing 1`] = `
-<Provider
-  store={
-    Object {
-      "dispatch": [Function],
-      "getState": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-      Symbol(observable): [Function],
-    }
-  }
+<div
+  className="article-view"
 >
-  <IntlProvider
-    locale="en-US"
-    messages={
+  <div
+    className="view-header"
+  >
+    <div
+      className="view-header-right"
+    >
+      <i
+        aria-label="icon: star"
+        className="anticon anticon-star"
+        onClick={[Function]}
+        tabIndex={-1}
+      >
+        <svg
+          aria-hidden="true"
+          className=""
+          data-icon="star"
+          fill="currentColor"
+          focusable="false"
+          height="1em"
+          viewBox="64 64 896 896"
+          width="1em"
+        >
+          <path
+            d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3zM664.8 561.6l36.1 210.3L512 672.7 323.1 772l36.1-210.3-152.8-149L417.6 382 512 190.7 606.4 382l211.2 30.7-152.8 148.9z"
+          />
+        </svg>
+      </i>
+    </div>
+  </div>
+  <div
+    className="view-content"
+    onClick={[Function]}
+    onMouseLeave={[Function]}
+  >
+    <div
+      className="article-info"
+      onMouseOver={[Function]}
+    >
+      <div
+        className="article-date"
+      >
+        <p>
+          Sun Jul 21 2019 16:29
+        </p>
+      </div>
+      <div
+        className="article-title"
+      >
+        <h1>
+          article title
+        </h1>
+      </div>
+      <div
+        className="article-author"
+      >
+        <p>
+          ruanyifeng
+           @ 
+          Unknown
+        </p>
+      </div>
+    </div>
+    <div
+      className="article-content"
+      onMouseOver={[Function]}
+    >
+       
+    </div>
+  </div>
+  <div
+    className="view-footer"
+  >
+    <p>
+      
+    </p>
+  </div>
+  <div
+    className="article-view-skeleton "
+    style={
       Object {
-        "addFeed": "Add Feed",
-        "allArticlesAreReadNow": "All articles are read now.",
-        "delete": "Delete",
-        "doYouWantSetAllArticlesBeRead": "Do you want set all articles be read?",
-        "feedUrl": "Feed Url",
-        "feeds": "Feeds",
-        "feedsAreUpdated": "Feeds are Updated",
-        "invalidFeedUrl": "Invalid Feed Url",
-        "keywords": "Keywords",
-        "languages": "Languages",
-        "menuAllItems": "All Items",
-        "menuStarred": "Starred",
-        "menuSubscriptions": "Subscriptions",
-        "menuUnread": "Unread",
-        "noMatched": "No matched",
-        "settings": "Settings",
-        "somethingWrong": "Something Wrong!",
-        "title": "Breader",
-        "unfoundFeed": "Unfound Feed",
-        "unknown": "Unknown",
+        "display": "none",
       }
     }
   >
-    <Connect(InjectIntl(ArticleView))
-      articles={
-        Immutable.List [
-          Object {
-            "_id": "tag:www.ruanyifeng.com,2019:/blog//1.2100",
-            "_rev": "5-ff6fc450616071a8f7d022b7532e85aa",
-            "author": "ruanyifeng",
-            "categories": Array [],
-            "comments": "article comments",
-            "createTime": 1563697765000,
-            "deleteTime": 0,
-            "description": "article description",
-            "enclosures": Array [],
-            "feedId": "http://www.ruanyifeng.com/blog/atom.xml",
-            "image": "",
-            "isDayFirst": true,
-            "isStarred": false,
-            "isUnread": false,
-            "link": "http://www.ruanyifeng.com/blog/2019/07/weekly-issue-65.html",
-            "originLink": "",
-            "publishTime": 1563697765000,
-            "summary": "article summary",
-            "time": 1563697765000,
-            "title": "article title",
-          },
-        ]
-      }
-      asyncStarArticle={[MockFunction]}
-      currentArticle={
-        Object {
-          "_id": "tag:www.ruanyifeng.com,2019:/blog//1.2100",
-          "_rev": "5-ff6fc450616071a8f7d022b7532e85aa",
-          "author": "ruanyifeng",
-          "categories": Array [],
-          "comments": "article comments",
-          "createTime": 1563697765000,
-          "deleteTime": 0,
-          "description": "article description",
-          "enclosures": Array [],
-          "feedId": "http://www.ruanyifeng.com/blog/atom.xml",
-          "image": "",
-          "isDayFirst": true,
-          "isStarred": false,
-          "isUnread": false,
-          "link": "http://www.ruanyifeng.com/blog/2019/07/weekly-issue-65.html",
-          "originLink": "",
-          "publishTime": 1563697765000,
-          "summary": "article summary",
-          "time": 1563697765000,
-          "title": "article title",
-        }
-      }
-      feedsMap={Immutable.Map {}}
-      isUpdatingCurrentArticle={false}
+    <div
+      className="view-content"
     >
-      <InjectIntl(ArticleView)
-        articles={Immutable.List []}
-        asyncStarArticle={[Function]}
-        currentArticle={null}
-        feedsMap={Immutable.Map {}}
-        isUpdatingCurrentArticle={false}
+      <div
+        className="article-info"
       >
-        <ArticleView
-          articles={Immutable.List []}
-          asyncStarArticle={[Function]}
-          currentArticle={null}
-          feedsMap={Immutable.Map {}}
-          intl={
-            Object {
-              "defaultFormats": Object {},
-              "defaultLocale": "en",
-              "formatDate": [Function],
-              "formatHTMLMessage": [Function],
-              "formatMessage": [Function],
-              "formatNumber": [Function],
-              "formatPlural": [Function],
-              "formatRelative": [Function],
-              "formatTime": [Function],
-              "formats": Object {},
-              "formatters": Object {
-                "getDateTimeFormat": [Function],
-                "getMessageFormat": [Function],
-                "getNumberFormat": [Function],
-                "getPluralFormat": [Function],
-                "getRelativeFormat": [Function],
-              },
-              "locale": "en-US",
-              "messages": Object {
-                "addFeed": "Add Feed",
-                "allArticlesAreReadNow": "All articles are read now.",
-                "delete": "Delete",
-                "doYouWantSetAllArticlesBeRead": "Do you want set all articles be read?",
-                "feedUrl": "Feed Url",
-                "feeds": "Feeds",
-                "feedsAreUpdated": "Feeds are Updated",
-                "invalidFeedUrl": "Invalid Feed Url",
-                "keywords": "Keywords",
-                "languages": "Languages",
-                "menuAllItems": "All Items",
-                "menuStarred": "Starred",
-                "menuSubscriptions": "Subscriptions",
-                "menuUnread": "Unread",
-                "noMatched": "No matched",
-                "settings": "Settings",
-                "somethingWrong": "Something Wrong!",
-                "title": "Breader",
-                "unfoundFeed": "Unfound Feed",
-                "unknown": "Unknown",
-              },
-              "now": [Function],
-              "onError": [Function],
-              "textComponent": "span",
-              "timeZone": null,
+        <div
+          className="article-date"
+        >
+          <span
+            className="span-skeleton skeleton-active "
+            style={
+              Object {
+                "width": 138,
+              }
             }
-          }
-          isUpdatingCurrentArticle={false}
+          />
+        </div>
+        <div
+          className="article-title"
         >
           <div
-            className="article-view"
-          >
-            <div
-              className="view-header"
-            >
-              <div
-                className="view-header-right"
-              />
-            </div>
-            <div
-              className="view-content"
-            >
-              <div
-                style={
-                  Object {
-                    "marginTop": "128px",
-                  }
-                }
-              >
-                <OriginEmpty
-                  description=" "
-                  image="grey-logo.png"
-                >
-                  <LocaleReceiver
-                    componentName="Empty"
-                  >
-                    <div
-                      className="ant-empty"
-                    >
-                      <div
-                        className="ant-empty-image"
-                      >
-                        <img
-                          alt=" "
-                          src="grey-logo.png"
-                        />
-                      </div>
-                      <p
-                        className="ant-empty-description"
-                      >
-                         
-                      </p>
-                    </div>
-                  </LocaleReceiver>
-                </OriginEmpty>
-              </div>
-            </div>
-            <div
-              className="view-footer"
-            >
-              <p />
-            </div>
-            <WebviewDrawer
-              onClose={[Function]}
-              src=""
-              visible={false}
-              width="calc(100vw - 490px)"
-            >
-              <withConfigConsumer(Drawer)
-                className="webview-drawer"
-                closable={false}
-                onClose={[Function]}
-                visible={false}
-                width="calc(100vw - 490px)"
-              >
-                <Drawer
-                  className="webview-drawer"
-                  closable={false}
-                  getPrefixCls={[Function]}
-                  height={256}
-                  level={null}
-                  mask={true}
-                  maskClosable={true}
-                  onClose={[Function]}
-                  placement="right"
-                  prefixCls="ant-drawer"
-                  renderEmpty={[Function]}
-                  visible={false}
-                  width="calc(100vw - 490px)"
-                >
-                  <Drawer
-                    afterVisibleChange={[Function]}
-                    className="webview-drawer"
-                    closable={false}
-                    duration=".3s"
-                    ease="cubic-bezier(0.78, 0.14, 0.15, 0.86)"
-                    firstEnter={false}
-                    getContainer="body"
-                    getPrefixCls={[Function]}
-                    handler={false}
-                    keyboard={true}
-                    level={null}
-                    mask={true}
-                    maskClosable={true}
-                    maskStyle={Object {}}
-                    onChange={[Function]}
-                    onClose={[Function]}
-                    onMaskClick={[Function]}
-                    open={false}
-                    placement="right"
-                    prefixCls="ant-drawer"
-                    renderEmpty={[Function]}
-                    showMask={true}
-                    style={
-                      Object {
-                        "transform": undefined,
-                        "zIndex": undefined,
-                      }
-                    }
-                    visible={false}
-                    width="calc(100vw - 490px)"
-                    wrapperClassName=""
-                  />
-                </Drawer>
-              </withConfigConsumer(Drawer)>
-            </WebviewDrawer>
-            <ArticleViewSkeleton
-              style={
-                Object {
-                  "display": "none",
-                }
+            className="text-skeleton skeleton-active "
+            style={
+              Object {
+                "height": 40,
+                "marginBottom": 8,
+                "width": undefined,
               }
-            >
-              <div
-                className="article-view-skeleton "
-                style={
-                  Object {
-                    "display": "none",
-                  }
-                }
-              >
-                <div
-                  className="view-content"
-                >
-                  <div
-                    className="article-info"
-                  >
-                    <div
-                      className="article-date"
-                    >
-                      <SpanSkeleton
-                        width={138}
-                      >
-                        <span
-                          className="span-skeleton skeleton-active "
-                          style={
-                            Object {
-                              "width": 138,
-                            }
-                          }
-                        />
-                      </SpanSkeleton>
-                    </div>
-                    <div
-                      className="article-title"
-                    >
-                      <TextSkeleton
-                        style={
-                          Object {
-                            "height": 40,
-                            "marginBottom": 8,
-                          }
-                        }
-                      >
-                        <div
-                          className="text-skeleton skeleton-active "
-                          style={
-                            Object {
-                              "height": 40,
-                              "marginBottom": 8,
-                              "width": undefined,
-                            }
-                          }
-                        />
-                      </TextSkeleton>
-                    </div>
-                    <div
-                      className="article-author"
-                    >
-                      <SpanSkeleton
-                        width={156}
-                      >
-                        <span
-                          className="span-skeleton skeleton-active "
-                          style={
-                            Object {
-                              "width": 156,
-                            }
-                          }
-                        />
-                      </SpanSkeleton>
-                    </div>
-                  </div>
-                  <div
-                    className="article-content"
-                  >
-                    <TextSkeleton>
-                      <div
-                        className="text-skeleton skeleton-active "
-                        style={
-                          Object {
-                            "width": undefined,
-                          }
-                        }
-                      />
-                    </TextSkeleton>
-                    <TextSkeleton>
-                      <div
-                        className="text-skeleton skeleton-active "
-                        style={
-                          Object {
-                            "width": undefined,
-                          }
-                        }
-                      />
-                    </TextSkeleton>
-                    <TextSkeleton
-                      width="57%"
-                    >
-                      <div
-                        className="text-skeleton skeleton-active "
-                        style={
-                          Object {
-                            "width": "57%",
-                          }
-                        }
-                      />
-                    </TextSkeleton>
-                    <br />
-                    <TextSkeleton>
-                      <div
-                        className="text-skeleton skeleton-active "
-                        style={
-                          Object {
-                            "width": undefined,
-                          }
-                        }
-                      />
-                    </TextSkeleton>
-                    <TextSkeleton>
-                      <div
-                        className="text-skeleton skeleton-active "
-                        style={
-                          Object {
-                            "width": undefined,
-                          }
-                        }
-                      />
-                    </TextSkeleton>
-                    <TextSkeleton>
-                      <div
-                        className="text-skeleton skeleton-active "
-                        style={
-                          Object {
-                            "width": undefined,
-                          }
-                        }
-                      />
-                    </TextSkeleton>
-                    <TextSkeleton>
-                      <div
-                        className="text-skeleton skeleton-active "
-                        style={
-                          Object {
-                            "width": undefined,
-                          }
-                        }
-                      />
-                    </TextSkeleton>
-                    <TextSkeleton
-                      width="83%"
-                    >
-                      <div
-                        className="text-skeleton skeleton-active "
-                        style={
-                          Object {
-                            "width": "83%",
-                          }
-                        }
-                      />
-                    </TextSkeleton>
-                    <br />
-                    <TextSkeleton>
-                      <div
-                        className="text-skeleton skeleton-active "
-                        style={
-                          Object {
-                            "width": undefined,
-                          }
-                        }
-                      />
-                    </TextSkeleton>
-                    <TextSkeleton>
-                      <div
-                        className="text-skeleton skeleton-active "
-                        style={
-                          Object {
-                            "width": undefined,
-                          }
-                        }
-                      />
-                    </TextSkeleton>
-                    <TextSkeleton>
-                      <div
-                        className="text-skeleton skeleton-active "
-                        style={
-                          Object {
-                            "width": undefined,
-                          }
-                        }
-                      />
-                    </TextSkeleton>
-                    <TextSkeleton>
-                      <div
-                        className="text-skeleton skeleton-active "
-                        style={
-                          Object {
-                            "width": undefined,
-                          }
-                        }
-                      />
-                    </TextSkeleton>
-                    <TextSkeleton>
-                      <div
-                        className="text-skeleton skeleton-active "
-                        style={
-                          Object {
-                            "width": undefined,
-                          }
-                        }
-                      />
-                    </TextSkeleton>
-                    <TextSkeleton
-                      width="67%"
-                    >
-                      <div
-                        className="text-skeleton skeleton-active "
-                        style={
-                          Object {
-                            "width": "67%",
-                          }
-                        }
-                      />
-                    </TextSkeleton>
-                  </div>
-                </div>
-              </div>
-            </ArticleViewSkeleton>
-          </div>
-        </ArticleView>
-      </InjectIntl(ArticleView)>
-    </Connect(InjectIntl(ArticleView))>
-  </IntlProvider>
-</Provider>
+            }
+          />
+        </div>
+        <div
+          className="article-author"
+        >
+          <span
+            className="span-skeleton skeleton-active "
+            style={
+              Object {
+                "width": 156,
+              }
+            }
+          />
+        </div>
+      </div>
+      <div
+        className="article-content"
+      >
+        <div
+          className="text-skeleton skeleton-active "
+          style={
+            Object {
+              "width": undefined,
+            }
+          }
+        />
+        <div
+          className="text-skeleton skeleton-active "
+          style={
+            Object {
+              "width": undefined,
+            }
+          }
+        />
+        <div
+          className="text-skeleton skeleton-active "
+          style={
+            Object {
+              "width": "57%",
+            }
+          }
+        />
+        <br />
+        <div
+          className="text-skeleton skeleton-active "
+          style={
+            Object {
+              "width": undefined,
+            }
+          }
+        />
+        <div
+          className="text-skeleton skeleton-active "
+          style={
+            Object {
+              "width": undefined,
+            }
+          }
+        />
+        <div
+          className="text-skeleton skeleton-active "
+          style={
+            Object {
+              "width": undefined,
+            }
+          }
+        />
+        <div
+          className="text-skeleton skeleton-active "
+          style={
+            Object {
+              "width": undefined,
+            }
+          }
+        />
+        <div
+          className="text-skeleton skeleton-active "
+          style={
+            Object {
+              "width": "83%",
+            }
+          }
+        />
+        <br />
+        <div
+          className="text-skeleton skeleton-active "
+          style={
+            Object {
+              "width": undefined,
+            }
+          }
+        />
+        <div
+          className="text-skeleton skeleton-active "
+          style={
+            Object {
+              "width": undefined,
+            }
+          }
+        />
+        <div
+          className="text-skeleton skeleton-active "
+          style={
+            Object {
+              "width": undefined,
+            }
+          }
+        />
+        <div
+          className="text-skeleton skeleton-active "
+          style={
+            Object {
+              "width": undefined,
+            }
+          }
+        />
+        <div
+          className="text-skeleton skeleton-active "
+          style={
+            Object {
+              "width": undefined,
+            }
+          }
+        />
+        <div
+          className="text-skeleton skeleton-active "
+          style={
+            Object {
+              "width": "67%",
+            }
+          }
+        />
+      </div>
+    </div>
+  </div>
+</div>
 `;

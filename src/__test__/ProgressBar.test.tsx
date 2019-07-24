@@ -9,16 +9,19 @@ Enzyme.configure({ adapter: new EnzymeAdapter() })
 describe('ProgressBar Testing', () => {
     const propsMock: IProgressBarProps = {
         max: 80,
+        onEnd: jest.fn(),
         time: 2,
     }
 
     it('dom testing', () => {
-        const component = Enzyme.shallow(<ProgressBar {...propsMock} />)
+        const wrapper = Enzyme.mount(
+            <ProgressBar {...propsMock} />
+        )
     })
 
     it('snapshot testing', () => {
-        const component = Enzyme.mount(<ProgressBar {...propsMock} />)
-        const tree = EnzymeToJson(component)
+        const wrapper = Enzyme.mount(<ProgressBar {...propsMock} />)
+        const tree = EnzymeToJson(wrapper)
         expect(tree).toMatchSnapshot()
     })
 })

@@ -6,7 +6,11 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { IntlProvider } from 'react-intl'
 import { Provider as ReduxProvider } from 'react-redux'
-import SearchArticleModal, { ISearchArticleModalProps } from '../components/SearchArticleModal'
+import TestRenderer from 'react-test-renderer'
+import {
+    ISearchArticleModalOwnProps,
+} from '../components/SearchArticleModal'
+import SearchArticleModal from '../containers/SearchArticleModal'
 import { messages } from '../locales'
 import store from '../redux'
 import { IArticle } from '../schemas'
@@ -18,8 +22,7 @@ const intlProviderProps: IntlProvider.Props = {
 }
 
 describe('SearchArticleModal Testing', () => {
-    const propsMock: ISearchArticleModalProps = {
-        articles: Immutable.List<IArticle>([]),
+    const propsMock: ISearchArticleModalOwnProps = {
         onCancel: jest.fn(),
         onItemChoose: jest.fn(),
         visible: true,
@@ -37,7 +40,7 @@ describe('SearchArticleModal Testing', () => {
     // })
 
     it('dom testing', () => {
-        const component = Enzyme.shallow(
+        const wrapper = Enzyme.mount(
             <ReduxProvider store={store}>
                 <IntlProvider {...intlProviderProps}>
                     <SearchArticleModal {...propsMock} />

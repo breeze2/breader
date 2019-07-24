@@ -3,6 +3,7 @@
 exports[`ProgressBar Testing snapshot testing 1`] = `
 <ProgressBar
   max={80}
+  onEnd={[MockFunction]}
   time={2}
 >
   <Progress

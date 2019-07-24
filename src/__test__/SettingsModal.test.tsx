@@ -25,7 +25,7 @@ describe('SettingsModal Testing', () => {
     }
 
     it('dom testing', () => {
-        const component = Enzyme.shallow(
+        const wrapper = Enzyme.mount(
             <ReduxProvider store={store}>
                 <IntlProvider {...intlProviderProps}>
                     <SettingsModal {...propsMock} />
@@ -35,14 +35,14 @@ describe('SettingsModal Testing', () => {
     })
 
     it('snapshot testing', () => {
-        const component = Enzyme.mount(
+        const wrapper = Enzyme.mount(
             <ReduxProvider store={store}>
                 <IntlProvider {...intlProviderProps}>
                     <SettingsModal {...propsMock} />
                 </IntlProvider>
             </ReduxProvider>
         )
-        const tree = EnzymeToJson(component)
+        const tree = EnzymeToJson(wrapper)
         expect(tree).toMatchSnapshot()
     })
 })

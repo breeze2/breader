@@ -1,47 +1,43 @@
 import Enzyme from 'enzyme'
 import EnzymeAdapter from 'enzyme-adapter-react-16'
-import EnzymeToJson from 'enzyme-to-json'
-import Immutable from 'immutable'
 import React from 'react'
 import { IntlProvider } from 'react-intl'
 import { Provider as ReduxProvider } from 'react-redux'
-import { IArticleListProps } from '../components/ArticleList'
+import TestRenderer from 'react-test-renderer'
+import ArticleItem from '../containers/ArticleItem'
 import ArticleList from '../containers/ArticleList'
 import store from '../redux'
-import { IArticle } from '../schemas'
-import { articleProps, intlProviderProps } from './MockData'
+import { setArticlesAction } from '../redux/actions'
+import { article, intlProviderProps } from './MockData'
 
 Enzyme.configure({ adapter: new EnzymeAdapter() })
 
 describe('ArticleList Testing', () => {
-    const propsMock: IArticleListProps = {
-        articles: Immutable.List<IArticle>([articleProps]),
-        articlesFilter: 'ALL',
-        asyncFilterArticles: jest.fn(),
-        asyncSetAllArticlesRead: jest.fn(),
-        isFetchingArticles: false,
-        selectedMenuKey: 'ALL_ITEMS',
-    }
+    const dispatch = store.dispatch
 
     it('dom testing', () => {
-        const component = Enzyme.shallow(
+        const wrapper = Enzyme.shallow(
             <ReduxProvider store={store}>
                 <IntlProvider {...intlProviderProps}>
-                    <ArticleList {...propsMock} />
+                    <ArticleList />
                 </IntlProvider>
             </ReduxProvider>
         )
+        dispatch(setArticlesAction([article]))
+        const instance = wrapper.find(ArticleList)
+        // instance.find('.check-all').simulate('click')
+        // instance.find('.search-item').simulate('click')
     })
 
     it('snapshot testing', () => {
-        const component = Enzyme.mount(
+        const renderer = TestRenderer.create(
             <ReduxProvider store={store}>
                 <IntlProvider {...intlProviderProps}>
-                    <ArticleList {...propsMock} />
+                    <ArticleList />
                 </IntlProvider>
             </ReduxProvider>
         )
-        const tree = EnzymeToJson(component)
+        const tree = renderer.toJSON()
         expect(tree).toMatchSnapshot()
     })
 })

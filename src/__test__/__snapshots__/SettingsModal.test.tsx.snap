@@ -197,7 +197,7 @@ exports[`SettingsModal Testing snapshot testing 1`] = `
                           class="ant-modal-mask fade-appear"
                         />
                         <div
-                          aria-labelledby="rcDialogTitle0"
+                          aria-labelledby="rcDialogTitle1"
                           class="ant-modal-wrap "
                           role="dialog"
                           tabindex="-1"
@@ -249,7 +249,7 @@ exports[`SettingsModal Testing snapshot testing 1`] = `
                               >
                                 <div
                                   class="ant-modal-title"
-                                  id="rcDialogTitle0"
+                                  id="rcDialogTitle1"
                                 >
                                   <span>
                                     Settings
@@ -496,7 +496,7 @@ exports[`SettingsModal Testing snapshot testing 1`] = `
                         </AnimateChild>
                       </Animate>
                       <div
-                        aria-labelledby="rcDialogTitle0"
+                        aria-labelledby="rcDialogTitle1"
                         className="ant-modal-wrap "
                         onClick={[Function]}
                         onKeyDown={[Function]}
@@ -621,7 +621,7 @@ exports[`SettingsModal Testing snapshot testing 1`] = `
                                   >
                                     <div
                                       className="ant-modal-title"
-                                      id="rcDialogTitle0"
+                                      id="rcDialogTitle1"
                                     >
                                       <FormattedMessage
                                         id="settings"

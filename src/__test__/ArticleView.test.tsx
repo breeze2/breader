@@ -1,47 +1,39 @@
 import Enzyme from 'enzyme'
 import EnzymeAdapter from 'enzyme-adapter-react-16'
-import EnzymeToJson from 'enzyme-to-json'
-import Immutable from 'immutable'
 import React from 'react'
 import { IntlProvider } from 'react-intl'
 import { Provider as ReduxProvider } from 'react-redux'
-import { IArticleViewProps } from '../components/ArticleView'
+import TestRenderer from 'react-test-renderer'
 import ArticleView from '../containers/ArticleView'
 import store from '../redux'
-import { IArticle, IFeed } from '../schemas'
-import { articleProps, intlProviderProps } from './MockData'
+import { setCurrentArticleAction } from '../redux/actions'
+import { article, intlProviderProps } from './MockData'
 
 Enzyme.configure({ adapter: new EnzymeAdapter() })
 
 describe('ArticleView Testing', () => {
-
-    const propsMock: IArticleViewProps = {
-        articles: Immutable.List<IArticle>([articleProps]),
-        asyncStarArticle: jest.fn(),
-        currentArticle: articleProps,
-        feedsMap: Immutable.Map<IFeed>({}),
-        isUpdatingCurrentArticle: false,
-    }
+    const dispatch = store.dispatch
 
     it('dom testing', () => {
-        const component = Enzyme.shallow(
+        const wrapper = Enzyme.mount(
             <ReduxProvider store={store}>
                 <IntlProvider {...intlProviderProps}>
-                    <ArticleView {...propsMock} />
+                    <ArticleView />
                 </IntlProvider>
             </ReduxProvider>
         )
+        dispatch(setCurrentArticleAction(article))
     })
 
     it('snapshot testing', () => {
-        const component = Enzyme.mount(
+        const renderer = TestRenderer.create(
             <ReduxProvider store={store}>
                 <IntlProvider {...intlProviderProps}>
-                    <ArticleView {...propsMock} />
+                    <ArticleView />
                 </IntlProvider>
             </ReduxProvider>
         )
-        const tree = EnzymeToJson(component)
+        const tree = renderer.toJSON()
         expect(tree).toMatchSnapshot()
     })
 })

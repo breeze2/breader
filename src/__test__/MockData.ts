@@ -1,13 +1,20 @@
 import { IntlProvider } from 'react-intl'
+import { createStore } from 'redux'
 import { messages } from '../locales'
+import RootReducer from '../redux/reducers'
 import { IArticle, IFeed } from '../schemas'
+
+export const store = createStore(RootReducer)
 
 export const intlProviderProps: IntlProvider.Props = {
     locale: 'en-US',
     messages: messages['en-US'],
 }
 
-export const feedProps: IFeed = {
+const intlProvider = new IntlProvider(intlProviderProps, {})
+export const intl = intlProvider.getChildContext().intl
+
+export const feed: IFeed = {
     _id: 'http://www.ruanyifeng.com/blog/atom.xml',
     _rev: '5-55772bf2b4d4b74608a60ac3480334e4',
     author: 'ruanyifeng',
@@ -26,7 +33,7 @@ export const feedProps: IFeed = {
     url: 'http://www.ruanyifeng.com/blog/atom.xml',
 }
 
-export const articleProps: IArticle = {
+export const article: IArticle = {
     _id: 'tag:www.ruanyifeng.com,2019:/blog//1.2100',
     _rev: '5-ff6fc450616071a8f7d022b7532e85aa',
     author: 'ruanyifeng',

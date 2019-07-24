@@ -1,23 +1,21 @@
 import Enzyme from 'enzyme'
 import EnzymeAdapter from 'enzyme-adapter-react-16'
 import EnzymeToJson from 'enzyme-to-json'
-import Immutable from 'immutable'
 import React from 'react'
 import { IntlProvider } from 'react-intl'
 import { Provider as ReduxProvider } from 'react-redux'
-import { IArticleItemProps } from '../components/ArticleItem'
+import TestRenderer from 'react-test-renderer'
+import { IArticleItemOwnProps } from '../components/ArticleItem'
 import ArticleItem from '../containers/ArticleItem'
 import store from '../redux'
-import { IFeed } from '../schemas'
 import { intlProviderProps } from './MockData'
 
 Enzyme.configure({ adapter: new EnzymeAdapter() })
 
 describe('ArticleItem Testing', () => {
-    const propsMock: IArticleItemProps = {
+    const propsMock: IArticleItemOwnProps = {
         author: 'Author',
         feedId: 'feedId',
-        feedsMap: Immutable.Map<IFeed>({}),
         guid: 'guid',
         key: 1,
         summary: 'summary',
@@ -26,7 +24,7 @@ describe('ArticleItem Testing', () => {
     }
 
     it('dom testing', () => {
-        const component = Enzyme.shallow(
+        const wrapper = Enzyme.shallow(
             <ReduxProvider store={store}>
                 <IntlProvider {...intlProviderProps}>
                     <ArticleItem {...propsMock} />
@@ -36,14 +34,14 @@ describe('ArticleItem Testing', () => {
     })
 
     it('snapshot testing', () => {
-        const component = Enzyme.mount(
+        const renderer = TestRenderer.create(
             <ReduxProvider store={store}>
                 <IntlProvider {...intlProviderProps}>
                     <ArticleItem {...propsMock} />
                 </IntlProvider>
             </ReduxProvider>
         )
-        const tree = EnzymeToJson(component)
+        const tree = renderer.toJSON()
         expect(tree).toMatchSnapshot()
     })
 })

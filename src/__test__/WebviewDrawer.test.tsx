@@ -15,14 +15,16 @@ describe('WebviewDrawer Testing', () => {
     }
 
     it('dom testing', () => {
-        const component = Enzyme.shallow(
-            <WebviewDrawer {...propsMock} />
-        )
+        const wrapper = Enzyme.mount(<WebviewDrawer {...propsMock} />)
+        // wrapper.find('.drawer-header-left').simulate('click')
+        wrapper.setProps({
+            visible: false,
+        })
     })
 
     it('snapshot testing', () => {
-        const component = Enzyme.mount(<WebviewDrawer {...propsMock} />)
-        const tree = EnzymeToJson(component)
+        const wrapper = Enzyme.mount(<WebviewDrawer {...propsMock} />)
+        const tree = EnzymeToJson(wrapper)
         expect(tree).toMatchSnapshot()
     })
 })
