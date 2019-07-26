@@ -23,6 +23,7 @@ describe('ArticleView Testing', () => {
             </ReduxProvider>
         )
         dispatch(setCurrentArticleAction(article))
+        wrapper.update()
     })
 
     it('snapshot testing', () => {

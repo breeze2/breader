@@ -20,6 +20,9 @@ describe('WebviewDrawer Testing', () => {
         wrapper.setProps({
             visible: false,
         })
+        wrapper.setProps({
+            visible: true,
+        })
     })
 
     it('snapshot testing', () => {

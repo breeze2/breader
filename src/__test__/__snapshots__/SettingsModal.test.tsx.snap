@@ -40,12 +40,8 @@ exports[`SettingsModal Testing snapshot testing 1`] = `
     }
   >
     <Connect(InjectIntl(SettingsModal))
-      asyncDeleteFeeds={[MockFunction]}
-      feeds={Immutable.List []}
-      language="en-US"
       onClose={[MockFunction]}
       onLanguageChange={[MockFunction]}
-      setLanguage={[MockFunction]}
       visible={true}
     >
       <InjectIntl(SettingsModal)

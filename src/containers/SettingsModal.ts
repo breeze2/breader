@@ -16,5 +16,5 @@ const mapDispatchToProps: MapDispatchToProps<ISettingsModalReduxDispatch, ISetti
 
 export default connect(
     mapStateToProps,
-    mapDispatchToProps,
+    mapDispatchToProps
 )(SettingsModal)
