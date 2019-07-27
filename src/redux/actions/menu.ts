@@ -1,27 +1,24 @@
+import { actionCreator } from './helpers'
+
 export const MenuActionTypes = {
     SET_LANGUAGE: 'SET_LANGUAGE',
-    SET_ONLINE_STATUS: 'SET_ONLINE_STATUS',
-    SET_SELECTED_MENU_KEY: 'SET_SELECTED_MENU_KEY',
+    SET_MENU_KEY: 'SET_MENU_KEY',
+    UPDATE_ONLINE_STATUS: 'UPDATE_ONLINE_STATUS',
 
     ASYNC_SELECT_MENU_KEY: 'ASYNC_SELECT_MENU_KEY',
 }
 
-export const setLanguageAction = (language: string) => ({
-    payload: { language },
-    type: MenuActionTypes.SET_LANGUAGE,
-})
+export interface ISetLanguagePayload { language: string }
+export const setLanguageAction = (language: string) =>
+    actionCreator<ISetLanguagePayload>(MenuActionTypes.SET_LANGUAGE)({ language })
 
-export const setOnlineStatusAction = () => ({
-    payload: null,
-    type: MenuActionTypes.SET_ONLINE_STATUS,
-})
+export const updateOnlineStatusAction = () =>
+    actionCreator<void>(MenuActionTypes.UPDATE_ONLINE_STATUS)()
 
-export const setSelectedMenuKeyAction = (key: string) => ({
-    payload: { key },
-    type: MenuActionTypes.SET_SELECTED_MENU_KEY,
-})
+export interface ISetMenuKeyPayload { key: string }
+export const setMenuKeyAction = (key: string) =>
+    actionCreator<ISetMenuKeyPayload>(MenuActionTypes.SET_MENU_KEY)({ key })
 
-export const asyncSelectMenuKeyAction = (key: string) => ({
-    payload: { key },
-    type: MenuActionTypes.ASYNC_SELECT_MENU_KEY,
-})
+export interface IAsyncSelectMenuKeyPayload { key: string }
+export const asyncSelectMenuKeyAction = (key: string) =>
+    actionCreator<IAsyncSelectMenuKeyPayload>(MenuActionTypes.ASYNC_SELECT_MENU_KEY)({ key })

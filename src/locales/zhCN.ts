@@ -15,7 +15,9 @@ const zhCN = {
     menuUnread: '待读',
     noMatched: '没有匹配',
     settings: '设置',
+    somethingWrong: '未知错误',
     title: 'Breader',
     unfoundFeed: '没有找到 Feed',
+    unknown: '未知',
 }
 export default zhCN

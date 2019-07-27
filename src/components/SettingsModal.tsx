@@ -1,8 +1,8 @@
-import { Avatar, Button, Input, List as AntdList, message as Message, Modal, Select } from 'antd'
+import { Avatar, Button, List as AntdList, Modal, Select } from 'antd'
 import Immutable from 'immutable'
 import React, { Component } from 'react'
-import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'react-intl'
-import IFeed from '../schemas/IFeed'
+import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl'
+import { IFeed } from '../schemas'
 
 import '../styles/SettingsModal.less'
 
@@ -14,7 +14,7 @@ export interface ISettingsModalOwnProps {
 
 export interface ISettingsModalReduxDispatch {
     setLanguage: (language: string) => any
-    asyncDeleteFeeds: (feedIds: number[]) => any
+    asyncDeleteFeeds: (feedIds: string[]) => Promise<number>
 }
 
 export interface ISettingsModalReduxState {
@@ -22,67 +22,64 @@ export interface ISettingsModalReduxState {
     language: string,
 }
 
-interface ISettingsModalProps extends ISettingsModalOwnProps, ISettingsModalReduxDispatch, ISettingsModalReduxState {
+export interface ISettingsModalProps extends ISettingsModalOwnProps, ISettingsModalReduxDispatch, ISettingsModalReduxState {
 }
 
 interface ISettingsModalState {
-    needDeleted: any,
+    allFeeds: IFeed[]
+    needDeletedIds: string[]
 }
 
-class SettingsModal extends Component<ISettingsModalProps & InjectedIntlProps, {}> {
-    public static propTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    }
-    public state: ISettingsModalState
-    public constructor(props: any) {
+class SettingsModal extends Component<ISettingsModalProps & InjectedIntlProps, ISettingsModalState> {
+    public constructor(props: ISettingsModalProps & InjectedIntlProps) {
         super(props)
         this.state = {
-            needDeleted: {},
+            allFeeds: props.feeds.toArray(),
+            needDeletedIds: [],
         }
     }
     public handleCancel = (e: any) => {
         this.props.onClose(e)
     }
     public handleOk = (e: any) => {
-        const needDeleted = this.state.needDeleted
-        const ids: number[] = []
-        for (const id in needDeleted) {
-            if (needDeleted[id]) {
-                ids.push(parseInt(id, 10))
-            }
-        }
+        const ids = this.state.needDeletedIds
         if (ids.length) {
             this.props.asyncDeleteFeeds(ids)
         }
         this.props.onClose(e)
     }
-    public handleDeleteClick = (feedId: number) => {
-        const needDeleted = this.state.needDeleted
-        needDeleted[feedId] = true
+    public handleDeleteClick = (feedId: string, feedIndex: number) => {
+        const { allFeeds, needDeletedIds} = this.state
+        if (allFeeds[feedIndex] && allFeeds[feedIndex]._id === feedId) {
+            needDeletedIds.push(feedId)
+            allFeeds.splice(feedIndex, 1)
+        }
         this.setState({
-            needDeleted: { ...needDeleted },
+            allFeeds: [...allFeeds],
+            needDeletedIds: [...needDeletedIds],
         })
     }
     public handleLanguageChange = (value: string) => {
         this.props.setLanguage(value)
         this.props.onLanguageChange(value)
     }
-    public componentWillReceiveProps (props: any) {
+    public componentWillReceiveProps(props: ISettingsModalProps & InjectedIntlProps) {
         if (props.visible === true) {
             this.setState({
-                needDeleted: {},
+                allFeeds: props.feeds.toArray(),
+                needDeletedIds: [],
             })
         }
     }
     public render() {
         return (
             <Modal className="settings-modal"
-                title={<FormattedMessage id="settings" />}
-                width={512}
-                style={{ top: 42 }}
-                visible={this.props.visible}
-                onCancel={this.handleCancel}
-                onOk={this.handleOk}
+            title={<FormattedMessage id="settings" />}
+            width={512}
+            style={{ top: 42 }}
+            visible={this.props.visible}
+            onCancel={this.handleCancel}
+            onOk={this.handleOk}
             >
                 <div className="settings-content">
                     <div className="languages-setting">
@@ -95,25 +92,22 @@ class SettingsModal extends Component<ISettingsModalProps & InjectedIntlProps, {
                     <div className="feeds-setting">
                         <p><FormattedMessage id="feeds" /></p>
                         <AntdList
-                            bordered
-                            split
-                            size="small"
-                            itemLayout="horizontal"
-                            dataSource={this.props.feeds.toArray()}
-                            renderItem={(feed: IFeed) => {
-                                if (feed.id && this.state.needDeleted[feed.id]) {
-                                    return <div />
-                                }
-                                return (<AntdList.Item className="settings-feed-item"
-                                    key={feed.id}
-                                    actions={[
-                                        (<Button size="small" type="danger" onClick={() => this.handleDeleteClick(feed.id as number)}
-                                        ><FormattedMessage id="delete" /></Button>),
-                                    ]}
-                                >
-                                    <p><Avatar shape="square" size={16} src={feed.favicon} /> {feed.title}</p>
-                                </AntdList.Item>)
-                            }}
+                        bordered
+                        split
+                        size="small"
+                        itemLayout="horizontal"
+                        dataSource={this.state.allFeeds}
+                        renderItem={(feed: IFeed, index: number) => (
+                            <AntdList.Item className="settings-feed-item"
+                            key={feed._id}
+                            actions={[
+                                (<Button size="small" type="danger" onClick={() => this.handleDeleteClick(feed._id, index)}
+                                ><FormattedMessage id="delete" /></Button>),
+                            ]}
+                            >
+                                <p title={feed.url} className="feed-item-content"><Avatar shape="square" size={16} src={feed.favicon} /> {feed.title}</p>
+                            </AntdList.Item>
+                        )}
                         />
                     </div>
                 </div>

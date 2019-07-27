@@ -1,11 +1,13 @@
 import { Avatar, Icon, Menu, message as Message } from 'antd'
+import { SelectParam } from 'antd/lib/menu'
 import Immutable from 'immutable'
 import React, { Component } from 'react'
-import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'react-intl'
+import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl'
 import defaultFavicon from '../images/rss.png'
-import IFeed from '../schemas/IFeed'
-import '../styles/AppMenu.less'
+import { EMenuKey, IArticle, IFeed } from '../schemas'
 import AddFeedModal from './AddFeedModal'
+
+import '../styles/AppMenu.less'
 
 const MenuItem = Menu.Item
 const SubMenu = Menu.SubMenu
@@ -14,147 +16,211 @@ export interface IAppMenuOwnProps {
 }
 
 export interface IAppMenuReduxDispatch {
-    setFeedFavicon: (id: number, favicon: string) => any
-    setOnlineStatus: () => any
-    asyncFetchArticles: () => any
-    asyncFetchFeeds: () => any
-    asyncParseFeed: (feedUrl: string) => any
-    asyncSelectMenuKey: (e: any) => any
-    asyncUpdateFeeds: () => any
+    setFeedFavicon: (id: string, favicon: string) => any
+    setIsCreatingFeed: (isCreating: boolean) => any
+    setIsFetchingArticles: (isFetching: boolean) => any
+    setIsUpdatingFeeds: (isUpdating: boolean) => any
+    updateOnlineStatus: () => any
+    asyncFetchArticles: () => Promise<IArticle[]>
+    asyncFetchFeeds: () => Promise<IFeed[]>
+    asyncParseFeed: (feedUrl: string) => Promise<IFeed | null>
+    asyncSelectMenuKey: (key: string) => Promise<void>
+    asyncUpdateFeeds: () => Promise<number>
 }
 
 export interface IAppMenuReduxState {
-    feedFavicons: Immutable.Map<string, string>
+    feedsMap: Immutable.Map<string, IFeed>
     feeds: Immutable.List<IFeed>
-    feedsChanges: number
-    feedsUpdatedAt: number
-    invalidFeedsCount: number
+    isCreatingFeed: boolean
     isUpdatingFeeds: boolean
     selectedMenuKey: string
     onlineStatus: boolean
 }
 
-interface IAppMenuProps extends IAppMenuOwnProps, IAppMenuReduxDispatch, IAppMenuReduxState {
+export interface IAppMenuProps extends IAppMenuOwnProps, IAppMenuReduxDispatch, IAppMenuReduxState {
 }
 
 interface IAppMenuState {
     isAddFeedModalVisible: boolean
 }
 
-class AppMenu extends Component<IAppMenuProps & InjectedIntlProps> {
-    public static propTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    }
-    public state: IAppMenuState
-    public constructor (props: any) {
+class AppMenu extends Component<IAppMenuProps & InjectedIntlProps, IAppMenuState> {
+    public constructor(props: IAppMenuProps & InjectedIntlProps) {
         super(props)
         this.state = {
             isAddFeedModalVisible: false,
         }
     }
     public handleAddFeedClick = () => {
-        this.setState({
-            isAddFeedModalVisible: true,
-        })
+        this.setIsAddFeedModalVisible(true)
     }
     public handleAddFeedModalCancel = () => {
-        this.setState({
-            isAddFeedModalVisible: false,
-        })
+        this.setIsAddFeedModalVisible(false)
     }
     public handleAddFeedModalOk = (feedUrl: string) => {
-        this.setState({
-            isAddFeedModalVisible: false,
-        })
+        this.setIsAddFeedModalVisible(false)
+        const { asyncParseFeed, intl, setIsCreatingFeed } = this.props
         if (feedUrl) {
-            this.props.asyncParseFeed(feedUrl)
+            setIsCreatingFeed(true)
+            asyncParseFeed(feedUrl).then(() => {
+                setIsCreatingFeed(false)
+            }).catch((error) => {
+                setIsCreatingFeed(false)
+                Message.info(intl.formatMessage({ id: 'unfoundFeed' }))
+            })
         } else {
             // TODO
         }
     }
     public handleUpdateFeedsClick = () => {
-        if (this.props.isUpdatingFeeds || this.props.feedsUpdatedAt > Date.now() - 3 * 60 * 60 * 1000) {
-            return Message.success(this.props.intl.formatMessage({ id: 'feedsAreUpdated' }))
-        } else {
-            return this.props.asyncUpdateFeeds()
+        const { intl, isUpdatingFeeds, setIsUpdatingFeeds, asyncUpdateFeeds } = this.props
+        if (isUpdatingFeeds) {
+            return
         }
+        setIsUpdatingFeeds(true)
+        asyncUpdateFeeds().then(() => {
+            setIsUpdatingFeeds(false)
+            Message.success(intl.formatMessage({ id: 'feedsAreUpdated' }))
+        }).catch(() => {
+            setIsUpdatingFeeds(false)
+            Message.error(intl.formatMessage({ id: 'somethingWrong' }))
+        })
     }
-    public handleSelect = (e: any) => {
-        this.props.asyncSelectMenuKey(e.key)
+    public handleSelect = (param: SelectParam) => {
+        this.props.asyncSelectMenuKey(param.key)
     }
-    public setFeedFaviconDefault = (id: number | undefined) => {
+    public setFeedFaviconDefault = (id: string) => {
         if (id) {
             this.props.setFeedFavicon(id, defaultFavicon)
         }
         return true
     }
+    public setIsAddFeedModalVisible(isVisible: boolean = true) {
+        this.setState({
+            isAddFeedModalVisible: isVisible,
+        })
+    }
     public handleOnlineStatus = () => {
-        this.props.setOnlineStatus()
+        this.props.updateOnlineStatus()
     }
     public componentWillMount() {
-        this.props.asyncFetchFeeds()
-        this.props.asyncFetchArticles()
+        this.props.setIsFetchingArticles(true)
+        this.props.asyncFetchFeeds().then(() => {
+            this.props.asyncFetchArticles()
+        })
         window.addEventListener('online', this.handleOnlineStatus)
         window.addEventListener('offline', this.handleOnlineStatus)
     }
-    // public componentWillUnmount () {
-    //     window.removeEventListener('online', this.handleOnlineStatus)
-    //     window.removeEventListener('offline', this.handleOnlineStatus)
-    // }
-    public componentWillReceiveProps (props: any) {
-        if (this.props.invalidFeedsCount !== props.invalidFeedsCount) {
-            Message.info(this.props.intl.formatMessage({ id: 'unfoundFeed' }))
-        }
-        if (this.props.feedsChanges !== props.feedsChanges && props.feedsChanges > -1) {
-            Message.success(this.props.intl.formatMessage({ id: 'feedsAreUpdated' }))
-        }
+    public componentWillUnmount () {
+        window.removeEventListener('online', this.handleOnlineStatus)
+        window.removeEventListener('offline', this.handleOnlineStatus)
     }
+
     public render () {
+        const { feeds, feedsMap, intl, isCreatingFeed, isUpdatingFeeds, onlineStatus, selectedMenuKey } = this.props
+        const feedsCount = feeds.size
         return (
             <div className="app-menu">
                 <div className="menu-content">
                     <div className="menu-header">
                         <div className="app-logo" />
-                        <p className="date-text">{new Date().toDateString()}</p>
+                        <p className="date-text">
+                            {new Date().toDateString()}
+                        </p>
                     </div>
                     <Menu
-                        defaultSelectedKeys={[this.props.selectedMenuKey]}
+                        defaultSelectedKeys={[selectedMenuKey]}
                         defaultOpenKeys={['subscriptions']}
                         mode="inline"
-                        onSelect={this.handleSelect}
-                    >
-                        <MenuItem key="ALL_ITEMS">
+                        onSelect={this.handleSelect}>
+                        <MenuItem key={EMenuKey.ALL_ITEMS}>
                             <Icon type="profile" />
                             <FormattedMessage id="menuAllItems" />
                         </MenuItem>
-                        <MenuItem key="STARRED_ITEMS">
+                        <MenuItem key={EMenuKey.STARRED_ITEMS}>
                             <Icon type="star" />
                             <FormattedMessage id="menuStarred" />
                         </MenuItem>
-                        <MenuItem key="UNREAD_ITEMS">
+                        <MenuItem key={EMenuKey.UNREAD_ITEMS}>
                             <Icon type="file-text" />
                             <FormattedMessage id="menuUnread" />
                         </MenuItem>
-                        <SubMenu key="subscriptions" className="feed-list" title={<span><Icon type="folder" /><FormattedMessage id="menuSubscriptions" /></span>}>
-                            {this.props.feeds.map(feed => {
-                                const favicon = this.props.feedFavicons.get(feed.id + '') || ''
-                                return (<MenuItem key={feed.id}>
-                                    <Avatar shape="square" size={22} src={favicon} onError={() => this.setFeedFaviconDefault(feed.id)}/>
-                                    <span className="feed-title" title={feed.title}>{feed.title}</span>
-                                </MenuItem>)
+                        <SubMenu
+                            key="subscriptions"
+                            className={`feed-list ${feedsCount ? '' : 'empty'}`}
+                            title={
+                                <span>
+                                    <Icon type="folder" />
+                                    <FormattedMessage id="menuSubscriptions" />
+                                </span>
+                            }>
+                            {feeds.map(feed => {
+                                const ifeed = feedsMap.get(feed._id)
+                                return (
+                                    <MenuItem key={feed._id}>
+                                        <Avatar
+                                            shape="square"
+                                            size={22}
+                                            src={
+                                                ifeed
+                                                    ? ifeed.favicon
+                                                    : defaultFavicon
+                                            }
+                                            onError={() =>
+                                                this.setFeedFaviconDefault(
+                                                    feed._id
+                                                )
+                                            }
+                                        />
+                                        <span
+                                            className="feed-title"
+                                            title={feed.title}>
+                                            {feed.title}
+                                        </span>
+                                    </MenuItem>
+                                )
                             })}
                         </SubMenu>
                     </Menu>
                 </div>
                 <div className="menu-footer">
                     <div className="menu-footer-left">
-                        {this.props.onlineStatus && <Icon type={this.props.isUpdatingFeeds ? 'loading' : 'sync'} className="sync-rss" onClick={this.handleUpdateFeedsClick}/>}
+                        {onlineStatus && (
+                            <Icon
+                                type={
+                                    isUpdatingFeeds || isCreatingFeed
+                                        ? 'loading'
+                                        : 'sync'
+                                }
+                                className="sync-rss"
+                                onClick={this.handleUpdateFeedsClick}
+                            />
+                        )}
                     </div>
-                    {!this.props.onlineStatus && <span><Icon type="warning" theme="twoTone" twoToneColor="#faad14" /> OFFLINE</span>}
+                    {!onlineStatus && (
+                        <span>
+                            <Icon
+                                type="warning"
+                                theme="twoTone"
+                                twoToneColor="#faad14"
+                            />{' '}
+                            OFFLINE
+                        </span>
+                    )}
                     <div className="menu-footer-right">
-                        {this.props.onlineStatus && <Icon type="plus" className="add-rss" onClick={this.handleAddFeedClick} />}
+                        {onlineStatus && (
+                            <Icon
+                                type="plus"
+                                className="add-rss"
+                                onClick={this.handleAddFeedClick}
+                            />
+                        )}
                     </div>
-                    <AddFeedModal visible={this.state.isAddFeedModalVisible} onOk={this.handleAddFeedModalOk} onCancel={this.handleAddFeedModalCancel} />
+                    <AddFeedModal
+                        visible={this.state.isAddFeedModalVisible}
+                        onOk={this.handleAddFeedModalOk}
+                        onCancel={this.handleAddFeedModalCancel}
+                    />
                 </div>
             </div>
         )

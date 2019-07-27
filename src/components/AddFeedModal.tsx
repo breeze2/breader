@@ -1,31 +1,27 @@
 import { Input, message as Message, Modal } from 'antd'
 import React, { Component } from 'react'
-import { FormattedMessage, InjectedIntlProps, injectIntl, intlShape } from 'react-intl'
+import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl'
 
 import '../styles/AddFeedModal.less'
 
-interface IAddFeedModalProps {
+export interface IAddFeedModalProps {
     visible: boolean
     onOk: (e: any) => any
     onCancel: (e: any) => any
 }
 
-interface IAddFeedModalState {
+export interface IAddFeedModalState {
     readonly feedUrl: string
 }
 
-class AddFeedModal extends Component<IAddFeedModalProps & InjectedIntlProps, {}> {
-    public static propTypes: React.ValidationMap<any> = {
-        intl: intlShape.isRequired,
-    }
-    public state: IAddFeedModalState
-    public constructor(props: any) {
+class AddFeedModal extends Component<IAddFeedModalProps & InjectedIntlProps, IAddFeedModalState> {
+    public constructor(props: IAddFeedModalProps & InjectedIntlProps) {
         super(props)
         this.state = {
             feedUrl: '',
         }
     }
-    public handleSubmit = (e: any) => {
+    public handleSubmit = () => {
         const feedUrl = this.state.feedUrl
         const a = window.document.createElement('a')
         a.href = feedUrl
@@ -37,12 +33,12 @@ class AddFeedModal extends Component<IAddFeedModalProps & InjectedIntlProps, {}>
             Message.warning(this.props.intl.formatMessage({ id: 'invalidFeedUrl'}))
         }
     }
-    public handleChange = (e: any) => {
+    public handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({
             feedUrl: e.target.value,
         })
     }
-    public componentWillReceiveProps () {
+    public afterClose = () => {
         this.setState({
             feedUrl: '',
         })
@@ -65,6 +61,7 @@ class AddFeedModal extends Component<IAddFeedModalProps & InjectedIntlProps, {}>
                 visible={this.props.visible}
                 onCancel={this.props.onCancel}
                 onOk={this.handleSubmit}
+                afterClose={this.afterClose}
             >
                 {/* <FormattedMessage id="feedUrl" >{ (txt) => {
                     return <Input placeholder={txt as string} value={this.state.feedUrl} onChange={this.handleChange} onPressEnter={this.handleSubmit} />

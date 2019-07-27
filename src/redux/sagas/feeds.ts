@@ -1,93 +1,116 @@
-import { all, call, put, select, takeEvery, takeLatest } from 'redux-saga/effects'
+import { call, put, select, takeEvery } from 'redux-saga/effects'
 import Logic from '../../logic'
-import IFeed from '../../schemas/IFeed'
-import { ArticlesActionTypes, FeedsActionTypes, IAction } from '../actions'
-import { getFeeds, getMenu } from './selectors'
+import {
+    EMenuKey,
+    IFeed,
+    IIArticlesState,
+    IIFeedsState,
+    IIMenuState,
+    IReduxAction,
+} from '../../schemas'
+import {
+    addFeedAction,
+    asyncFetchArticlesAction,
+    asyncFetchFeedsAction,
+    asyncSelectMenuKeyAction,
+    FeedsActionTypes,
+    IAsyncDeleteFeedsPayload,
+    IAsyncParseFeedPayload,
+    setCurrentArticleAction,
+    setFeedsAction,
+} from '../actions'
+import { makeSagaWorkersDispatcher } from './helpers'
+import { getArticles, getFeeds, getMenu } from './selectors'
 
-export function* fetchFeedsSaga(action: IAction) {
-    try {
-        const feeds = yield call(Logic.getAllFeeds)
-        yield put({ type: FeedsActionTypes.SET_FEEDS, payload: { feeds } })
-    } catch (e) {
-        console.error(e)
+let LAST_UPDATE_FEEDS_AT = 0
+
+export function* fetchFeedsSaga(action: IReduxAction<null>) {
+    const feeds: IFeed[] = yield call(Logic.getAllFeeds)
+    yield put(setFeedsAction(feeds))
+    const menuState: IIMenuState = yield select(getMenu)
+    const menuKey = menuState.selectedKey
+    const articlesState: IIArticlesState = yield select(getArticles)
+    const currentArticle = articlesState.current
+    if (menuKey in EMenuKey) {
+        yield put(asyncFetchArticlesAction())
+    } else if (!feeds.some(feed => feed._id === menuKey)) {
+        yield put(asyncSelectMenuKeyAction(EMenuKey.ALL_ITEMS))
     }
+    if (currentArticle && !feeds.some(feed => feed._id === currentArticle.feedId)) {
+        yield put(setCurrentArticleAction(null))
+    }
+    return feeds
 }
 
-export function* parseFeedSaga(action: IAction) {
-    try {
-        const feed = yield call(Logic.createFeed, action.payload.feedUrl)
-        if (feed) {
-            if (feed === 'EXISTS') {
-                return
-            }
-            yield put({ type: FeedsActionTypes.ADD_FEED, payload: { feed } })
-            const menuStore = yield select(getMenu)
-            const menuKey = menuStore.get('selectedKey')
-            if (menuKey === 'ALL_ITEMS' || menuKey === 'UNREAD_ITEMS') {
-                yield put({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null})
-            }
-        } else {
-            yield put({ type: FeedsActionTypes.TIPS_PARSE_INVALID_FEED, payload: null })
+export function* parseFeedSaga(action: IReduxAction<IAsyncParseFeedPayload>) {
+    const feed: IFeed | null = yield call(Logic.createFeed, action.payload.feedUrl)
+    if (feed) {
+        yield put(addFeedAction(feed))
+        const menuState: IIMenuState = yield select(getMenu)
+        const menuKey = menuState.selectedKey
+        if (menuKey === EMenuKey.ALL_ITEMS || menuKey === EMenuKey.UNREAD_ITEMS) {
+            yield put(asyncFetchArticlesAction())
         }
-    } catch (e) {
-        console.error(e)
     }
+    return feed
 }
 
-export function* deleteFeedsSaga(action: IAction) {
-    try {
-        if (action.payload.feedIds.length > 0) {
-            const changes = yield call(Logic.deleteFeeds, action.payload.feedIds)
-            if (changes) {
-                yield put({ type: FeedsActionTypes.ASYNC_FETCH_FEEDS, payload: null })
-                yield put({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null })
-            }
+export function* deleteFeedsSaga(action: IReduxAction<IAsyncDeleteFeedsPayload>) {
+    if (action.payload.feedIds.length > 0) {
+        const feedIds = action.payload.feedIds
+        const changes: number = yield call(Logic.deleteFeeds, feedIds)
+        if (changes) {
+            yield put(asyncFetchFeedsAction())
+            return changes
         }
-    } catch (e) {
-        console.error(e)
     }
+    return 0
 }
 
-export function* updateFeedsSaga(action: IAction) {
-    try {
-        yield put({type: FeedsActionTypes.SET_IS_UPDATING_FEEDS, payload: { isUpdating: true}})
-        const feedsStore = yield select(getFeeds)
-        const list = feedsStore.get('list').toArray()
-        let changes = 0
-        for (const feed of list) {
-            try {
-                changes += yield call(Logic.updateFeedArticles, feed)
-            } catch (err) {
-                console.error(err)
-            }
-        }
-        yield all([
-            put({ type: FeedsActionTypes.ASYNC_FETCH_FEEDS, payload: null}),
-            put({ type: FeedsActionTypes.SET_FEEDS_CHANGES, payload: { changes } }),
-            put({ type: FeedsActionTypes.SET_FEEDS_UPDATED_AT, payload: { updatedAt: Date.now() }}),
-        ])
-        if (changes > 0) {
-            yield put({ type: ArticlesActionTypes.ASYNC_FETCH_ARTICLES, payload: null })
-        }
-    } catch (e) {
-        console.error(e)
-    } finally {
-        yield put({ type: FeedsActionTypes.SET_IS_UPDATING_FEEDS, payload: { isUpdating: false } })
+export function* updateFeedsSaga(action: IReduxAction<null>) {
+    const now = Date.now()
+    if (now < LAST_UPDATE_FEEDS_AT + 60 * 60 * 1000) {
+        return 0
     }
+
+    LAST_UPDATE_FEEDS_AT = now
+    const feedsState: IIFeedsState = yield select(getFeeds)
+    const list = feedsState.list.toArray()
+    let changes = 0
+
+    for (const feed of list) {
+        try {
+            changes += yield call(Logic.updateFeedArticles, feed)
+        } catch (err) {
+            console.error(err)
+        }
+    }
+    if (changes > 0) {
+        yield put(asyncFetchFeedsAction())
+        yield put(asyncFetchArticlesAction())
+    }
+    return changes
 }
+
+const dispatcher = makeSagaWorkersDispatcher({
+    [FeedsActionTypes.ASYNC_PARSE_FEED]: parseFeedSaga,
+    [FeedsActionTypes.ASYNC_FETCH_FEEDS]: fetchFeedsSaga,
+    [FeedsActionTypes.ASYNC_UPDATE_FEEDS]: updateFeedsSaga,
+    [FeedsActionTypes.ASYNC_DELETE_FEEDS]: deleteFeedsSaga,
+})
 
 export function* watchParseFeed() {
-    yield takeEvery(FeedsActionTypes.ASYNC_PARSE_FEED, parseFeedSaga)
+    yield takeEvery(FeedsActionTypes.ASYNC_PARSE_FEED, dispatcher)
 }
 
 export function* watchFetchFeeds() {
-    yield takeEvery(FeedsActionTypes.ASYNC_FETCH_FEEDS, fetchFeedsSaga)
+    yield takeEvery(FeedsActionTypes.ASYNC_FETCH_FEEDS, dispatcher)
 }
 
 export function* watchUpdateFeeds() {
-    yield takeEvery(FeedsActionTypes.ASYNC_UPDATE_FEEDS, updateFeedsSaga)
+    yield takeEvery(FeedsActionTypes.ASYNC_UPDATE_FEEDS, dispatcher)
 }
 
 export function* watchDeleteFeeds() {
-    yield takeEvery(FeedsActionTypes.ASYNC_DELETE_FEEDS, deleteFeedsSaga)
+    yield takeEvery(FeedsActionTypes.ASYNC_DELETE_FEEDS, dispatcher)
 }

@@ -1,14 +1,13 @@
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux'
 import { Dispatch } from 'redux'
 import SearchArticleModal, { ISearchArticleModalOwnProps, ISearchArticleModalReduxDispatch, ISearchArticleModalReduxState } from '../components/SearchArticleModal'
-import { IAction } from '../redux/actions'
-import { IState } from '../redux/reducers'
+import { IReduxAction, IReduxState } from '../schemas'
 
-const mapStateToProps: MapStateToProps<ISearchArticleModalReduxState, ISearchArticleModalOwnProps, IState> = (state: IState) => ({
+const mapStateToProps: MapStateToProps<ISearchArticleModalReduxState, ISearchArticleModalOwnProps, IReduxState> = (state: IReduxState) => ({
     articles: state.articles.list,
 })
 
-const mapDispatchToProps: MapDispatchToProps<ISearchArticleModalReduxDispatch, ISearchArticleModalOwnProps> = (dispatch: Dispatch<IAction>) => ({
+const mapDispatchToProps: MapDispatchToProps<ISearchArticleModalReduxDispatch, ISearchArticleModalOwnProps> = (dispatch: Dispatch<IReduxAction>) => ({
 })
 
 export default connect(

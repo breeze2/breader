@@ -25,7 +25,6 @@
         "no-console": [
             true,
             "debug",
-            "info",
             "log",
             "time",
             "timeEnd",
@@ -64,7 +63,12 @@
             true,
             {
                 "singleline": "never",
-                "multiline": "always",
+                "multiline": {
+                    "objects": "always",
+                    "arrays": "always",
+                    "functions": "never",
+                    "typeLiterals": "ignore"
+                },
                 "esSpecCompliant": true
             }
         ],

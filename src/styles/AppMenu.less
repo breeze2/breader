@@ -11,7 +11,7 @@
     height: 100%;
     width: 226px;
     flex: 0 0 auto;
-    
+
     .ant-menu {
         background-color: @none-color;
         color: @white-text-color;
@@ -50,6 +50,9 @@
     .ant-menu-item-selected {
         color: @white-text-color-light;
     }
+    .ant-menu-submenu-selected {
+        color: @white-text-color;
+    }
     .feed-list {
         .ant-menu-item {
             padding-left: 36px;
@@ -68,6 +71,9 @@
                 text-overflow:ellipsis;
                 white-space:nowrap;
             }
+        }
+        &.empty .ant-menu-submenu-arrow {
+            display: none;
         }
     }
 

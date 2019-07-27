@@ -1,51 +1,76 @@
-import Immutable, { List } from 'immutable'
-import IArticle from '../../schemas/IArticle'
-import { ArticlesActionTypes, IAction } from '../actions'
-
-export interface IArticlesState {
-    allReadAt: number
-    filter: string
-    list: Immutable.List<IArticle>
-    selectedContent: string,
-    selectedId: number,
-    selectedIndex: number,
-}
+import Immutable from 'immutable'
+import {
+    EArticleFilter,
+    IArticle,
+    IArticlesState,
+    IIArticlesState,
+    IReduxAction,
+} from '../../schemas'
+import Utils from '../../utils';
+import {
+    ArticlesActionTypes,
+    ISetArticlesFilterPayload,
+    ISetArticlesPayload,
+    ISetCurrentArticlePayload,
+    ISetIsFetchingArticlesPayload,
+    ISetIsUpdatingCurrentArticlePayload,
+} from '../actions'
 
 const initialArticlesState = Immutable.Record<IArticlesState>({
-    allReadAt: 0,
-    filter: 'ALL',
+    current: null,
+    filter: EArticleFilter.ALL,
+    isFetching: false,
+    isUpdatingCurrent: false,
     list: Immutable.List<IArticle>([]),
-    selectedContent: '',
-    selectedId: 0,
-    selectedIndex: -1,
 })()
 
-let lastDateStr = ''
-const articles = (state = initialArticlesState, action: IAction) => {
+const articlesReducer = (state = initialArticlesState, action: IReduxAction) => {
+    const payload = action.payload;
     switch (action.type) {
-        case ArticlesActionTypes.SET_ALL_ARTICLES_READ_AT:
-            return state.set('allReadAt', action.payload.allReadAt)
-        case ArticlesActionTypes.SET_SELECTED_ARTICLE:
-            return state.set('selectedId', action.payload.articleId).set('selectedIndex', action.payload.articleIndex)
+        case ArticlesActionTypes.SET_CURRENT_ARTICLE:
+            return handleSetCurrentArticle(state, payload)
         case ArticlesActionTypes.SET_ARTICLES_FILTER:
-            return state.set('filter', action.payload.filter)
-        case ArticlesActionTypes.SET_SELECTED_ARTICLE_CONTENT:
-            return state.set('selectedContent', action.payload.articleContent)
+            return handleSetArticlesFilter(state, payload)
+        case ArticlesActionTypes.SET_IS_FETCHING:
+            return handleSetIsFetchingArticle(state, payload)
+        case ArticlesActionTypes.SET_IS_UPDATING_CURRENT:
+            return handleSetIsUpdatingCurrentArticle(state, payload)
         case ArticlesActionTypes.SET_ARTICLES:
-            lastDateStr = ''
-            action.payload.articles.forEach((article: IArticle) => {
-                if (lastDateStr !== article.date) {
-                    lastDateStr = article.date
-                    article.is_dayfirst = true
-                }
-            })
-            return state.set('list', List<IArticle>(action.payload.articles))
-                .set('selectedId', 0)
-                .set('selectedIndex', -1)
-                .set('selectedContent', '')
+            return handleSetArticles(state, payload)
+
         default:
             return state
     }
 }
 
-export default articles
+function handleSetArticles(state: IIArticlesState, payload: ISetArticlesPayload) {
+    let lastDateTime = ''
+    payload.articles.forEach((article: IArticle) => {
+        const dateTime = Utils.timeToDateString(article.time)
+        if (lastDateTime !== dateTime) {
+            lastDateTime = dateTime
+            article.isDayFirst = true
+        }
+    })
+    return state.set('list', Immutable.List<IArticle>(payload.articles))
+        // .set('current', null)
+
+}
+
+function handleSetCurrentArticle(state: IIArticlesState, payload: ISetCurrentArticlePayload) {
+    return state.set('current', payload.article)
+}
+
+function handleSetArticlesFilter(state: IIArticlesState, payload: ISetArticlesFilterPayload) {
+    return state.set('filter', payload.filter)
+}
+
+function handleSetIsFetchingArticle(state: IIArticlesState, payload: ISetIsFetchingArticlesPayload) {
+    return state.set('isFetching', payload.isFetching)
+}
+
+function handleSetIsUpdatingCurrentArticle(state: IIArticlesState, payload: ISetIsUpdatingCurrentArticlePayload) {
+    return state.set('isUpdatingCurrent', payload.isUpdatingCurrent)
+}
+
+export default articlesReducer

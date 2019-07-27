@@ -1,42 +1,44 @@
 import { Empty, Icon } from 'antd'
 import Immutable from 'immutable'
-import React, { Component, PureComponent } from 'react'
+import React, { PureComponent } from 'react'
+import { InjectedIntlProps, injectIntl } from 'react-intl'
 import greyLogo from '../images/grey-logo.png'
-import IArticle from '../schemas/IArticle'
-import '../styles/ArticleView.less'
+import { IArticle, IFeed } from '../schemas'
+import ArticleViewSkeleton from '../skeletons/ArticleViewSkeleton'
+import Utils from '../utils'
 import WebviewDrawer from './WebviewDrawer'
+
+import '../styles/ArticleView.less'
 
 export interface IArticleViewOwnProps {
 }
 
 export interface IArticleViewReduxState {
-    articleContent: string
-    articleIndex: number
-    articleId: number
+    currentArticle: IArticle | null
     articles: Immutable.List<IArticle>
+    feedsMap: Immutable.Map<string, IFeed>
+    isUpdatingCurrentArticle: boolean
 }
 
 export interface IArticleViewReduxDispatch {
-    asyncStarArticle: (articleId: number, isStarred: boolean) => any
+    asyncStarArticle: (articleId: string, isStarred: boolean) => Promise<void>
 }
 
-interface IArticleViewProps extends IArticleViewOwnProps, IArticleViewReduxDispatch, IArticleViewReduxState {
+export interface IArticleViewProps extends IArticleViewOwnProps, IArticleViewReduxDispatch, IArticleViewReduxState {
 }
 
 interface IArticleViewState {
     hoverLink: string
     isWebviewDrawerVisible: boolean
     webviewDrawerSrc: string,
-    isStarredsMap: any,
-    article?: IArticle,
+    isStarredsMap: {[_id: string]: boolean},
 }
 
-class ArticleView extends PureComponent<IArticleViewProps> {
-    public state: IArticleViewState
+class ArticleView extends PureComponent<IArticleViewProps & InjectedIntlProps, IArticleViewState> {
     private _articleContentIsAppended: boolean
     private _articleContentElement: HTMLDivElement
     private _articleContentLinks: string[]
-    public constructor(props: any) {
+    public constructor(props: IArticleViewProps & InjectedIntlProps) {
         super(props)
         this.state = {
             hoverLink: '',
@@ -48,28 +50,17 @@ class ArticleView extends PureComponent<IArticleViewProps> {
         this._articleContentElement = document.createElement('div')
         this._articleContentLinks = []
     }
-    public componentWillReceiveProps(props: any) {
-        if (props.articleContent !== this.props.articleContent) {
-            this._parseArticleContent(props.articleContent)
-        }
-        if (props.articleIndex === -1) {
-            return this.setState({
-                article: undefined,
-            })
-        }
-        const article = props.articles.get(props.articleIndex)
-        // TODO
-        if (article) {
-            const map = this.state.isStarredsMap
-            map[article.id] = article.is_starred === 1 ? true : false
-            this.setState({
-                article,
-                isStarredsMap: {...map},
-            })
-        } else {
-            this.setState({
-                article,
-            })
+    public componentWillReceiveProps(props: IArticleViewProps) {
+        const currentArticle = props.currentArticle
+        const isStarredsMap = this.state.isStarredsMap
+        if (currentArticle && currentArticle !== this.props.currentArticle) {
+            this._parseArticleContent(currentArticle.description)
+            if (isStarredsMap[currentArticle._id] === undefined) {
+                isStarredsMap[currentArticle._id] = currentArticle.isStarred
+                this.setState({
+                    isStarredsMap: {...isStarredsMap},
+                })
+            }
         }
     }
     public componentDidUpdate() {
@@ -77,7 +68,9 @@ class ArticleView extends PureComponent<IArticleViewProps> {
             return
         }
         this._articleContentIsAppended = true
-        const div = document.querySelector('.article-content')
+        const div = document.querySelector(
+            '.article-view>.view-content .article-content',
+        )
         if (div && this._articleContentElement) {
             while (div.firstChild) {
                 div.removeChild(div.firstChild);
@@ -90,20 +83,15 @@ class ArticleView extends PureComponent<IArticleViewProps> {
         }
     }
     public handleStarIconClick = () => {
-        if (this.state.isStarredsMap[this.props.articleId]) {
-            const map = this.state.isStarredsMap
-            map[this.props.articleId] = false
+        const currentArticle = this.props.currentArticle
+        const isStarredsMap = this.state.isStarredsMap
+        if (currentArticle) {
+            const articleId = currentArticle._id
+            isStarredsMap[articleId] = !isStarredsMap[articleId]
             this.setState({
-                isStarredsMap: {...map},
+                isStarredsMap: { ...isStarredsMap },
             })
-            this.props.asyncStarArticle(this.props.articleId, false)
-        } else {
-            const map = this.state.isStarredsMap
-            map[this.props.articleId] = true
-            this.setState({
-                isStarredsMap: { ...map },
-            })
-            this.props.asyncStarArticle(this.props.articleId, true)
+            this.props.asyncStarArticle(articleId, isStarredsMap[articleId])
         }
     }
     public handleContentClick = (e: any) => {
@@ -136,22 +124,25 @@ class ArticleView extends PureComponent<IArticleViewProps> {
         }
     }
     public render() {
-        let viewContent: any
-        let starIcon: any
+        let viewContent: JSX.Element
+        let starIcon: JSX.Element | null
 
-        if (this.state.article) {
-            const article = this.state.article
+        if (this.props.currentArticle) {
+            const { currentArticle, feedsMap, intl} = this.props
+            const feed = feedsMap.get(currentArticle.feedId)
             viewContent = (
                 <div className="view-content" onMouseLeave={this.handleMouseLeave} onClick={this.handleContentClick}>
-                    <div className="article-info" onMouseOver={() => this.handleMouseOverInfo(article.link)}>
-                        <div className="article-date"><p>{article.date}</p></div>
-                        <div className="article-title"><h1>{article.title}</h1></div>
-                        <div className="article-author"><p>{article.author} @ {article.feed_title}</p></div>
+                    <div className="article-info" onMouseOver={() => this.handleMouseOverInfo(currentArticle.link)}>
+                        <div className="article-date"><p>{Utils.timeToDateTimeString(currentArticle.time)}</p></div>
+                        <div className="article-title"><h1>{currentArticle.title}</h1></div>
+                        <div className="article-author">
+                            <p>{currentArticle.author} @ {feed ? feed.title : intl.formatMessage({id: 'unknown'})}</p>
+                        </div>
                     </div>
                     <div className="article-content" onMouseOver={this.handleMouseOverContent}>{' '}</div>
                 </div>
             )
-            if (this.state.isStarredsMap[(article.id as number)]) {
+            if (this.state.isStarredsMap[(currentArticle._id as string)]) {
                 starIcon = (<Icon type="star" theme="filled"
                     onClick={this.handleStarIconClick} />)
             } else {
@@ -169,15 +160,31 @@ class ArticleView extends PureComponent<IArticleViewProps> {
             starIcon = null
         }
         return (
-            <div className="article-view" >
+            <div className="article-view">
                 <div className="view-header">
-                    <div className="view-header-right">
-                        {starIcon}
-                    </div>
+                    <div className="view-header-right">{starIcon}</div>
                 </div>
                 {viewContent}
-                <div className="view-footer"><p>{this.state.hoverLink ? 'Open ' + this.state.hoverLink : ''}</p></div>
-                <WebviewDrawer width={'calc(100vw - 490px)'} onClose={this.handelWebviewClose} visible={this.state.isWebviewDrawerVisible} src={this.state.webviewDrawerSrc} />
+                <div className="view-footer">
+                    <p>
+                        {this.state.hoverLink
+                            ? 'Open ' + this.state.hoverLink
+                            : ''}
+                    </p>
+                </div>
+                <WebviewDrawer
+                    width={'calc(100vw - 490px)'}
+                    onClose={this.handelWebviewClose}
+                    visible={this.state.isWebviewDrawerVisible}
+                    src={this.state.webviewDrawerSrc}
+                />
+                <ArticleViewSkeleton
+                    style={{
+                        display: this.props.isUpdatingCurrentArticle
+                            ? 'block'
+                            : 'none',
+                    }}
+                />
             </div>
         )
     }
@@ -206,4 +213,4 @@ class ArticleView extends PureComponent<IArticleViewProps> {
     }
 }
 
-export default ArticleView
+export default injectIntl(ArticleView)
