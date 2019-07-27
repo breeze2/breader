@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProgressBar Testing snapshot testing 1`] = `
+<ProgressBar
+  max={80}
+  onEnd={[MockFunction]}
+  time={2}
+>
+  <Progress
+    gapDegree={0}
+    percent={0}
+    showInfo={false}
+    size="default"
+    status="active"
+    strokeColor={
+      Object {
+        "0%": "#c8af8d",
+        "100%": "#ffa81e",
+      }
+    }
+    strokeLinecap="round"
+    strokeWidth={3}
+    trailColor="#f3f3f3"
+    type="line"
+  >
+    <div
+      className="ant-progress ant-progress-line ant-progress-status-active ant-progress-default"
+    >
+      <Line
+        gapDegree={0}
+        percent={0}
+        prefixCls="ant-progress"
+        showInfo={false}
+        size="default"
+        status="active"
+        strokeColor={
+          Object {
+            "0%": "#c8af8d",
+            "100%": "#ffa81e",
+          }
+        }
+        strokeLinecap="round"
+        strokeWidth={3}
+        trailColor="#f3f3f3"
+        type="line"
+      >
+        <div>
+          <div
+            className="ant-progress-outer"
+          >
+            <div
+              className="ant-progress-inner"
+            >
+              <div
+                className="ant-progress-bg"
+                style={
+                  Object {
+                    "backgroundImage": "linear-gradient(to right, #c8af8d 0%, #ffa81e 100%)",
+                    "borderRadius": "100px",
+                    "height": 3,
+                    "width": "0%",
+                  }
+                }
+              />
+            </div>
+          </div>
+        </div>
+      </Line>
+    </div>
+  </Progress>
+</ProgressBar>
+`;

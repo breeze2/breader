@@ -1,6 +1,13 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects'
 import Logic from '../../logic'
-import { IFeed, IIArticlesState, IIFeedsState, IIMenuState, IReduxAction, MenuKeyEnum } from '../../schemas'
+import {
+    EMenuKey,
+    IFeed,
+    IIArticlesState,
+    IIFeedsState,
+    IIMenuState,
+    IReduxAction,
+} from '../../schemas'
 import {
     addFeedAction,
     asyncFetchArticlesAction,
@@ -24,10 +31,10 @@ export function* fetchFeedsSaga(action: IReduxAction<null>) {
     const menuKey = menuState.selectedKey
     const articlesState: IIArticlesState = yield select(getArticles)
     const currentArticle = articlesState.current
-    if (menuKey in MenuKeyEnum) {
+    if (menuKey in EMenuKey) {
         yield put(asyncFetchArticlesAction())
     } else if (!feeds.some(feed => feed._id === menuKey)) {
-        yield put(asyncSelectMenuKeyAction(MenuKeyEnum.ALL_ITEMS))
+        yield put(asyncSelectMenuKeyAction(EMenuKey.ALL_ITEMS))
     }
     if (currentArticle && !feeds.some(feed => feed._id === currentArticle.feedId)) {
         yield put(setCurrentArticleAction(null))
@@ -41,7 +48,7 @@ export function* parseFeedSaga(action: IReduxAction<IAsyncParseFeedPayload>) {
         yield put(addFeedAction(feed))
         const menuState: IIMenuState = yield select(getMenu)
         const menuKey = menuState.selectedKey
-        if (menuKey === MenuKeyEnum.ALL_ITEMS || menuKey === MenuKeyEnum.UNREAD_ITEMS) {
+        if (menuKey === EMenuKey.ALL_ITEMS || menuKey === EMenuKey.UNREAD_ITEMS) {
             yield put(asyncFetchArticlesAction())
         }
     }

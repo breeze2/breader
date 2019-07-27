@@ -15,5 +15,5 @@ const mapDispatchToProps: MapDispatchToProps<IArticleVirtualListReduxDispatch, I
 
 export default connect(
     mapStateToProps,
-    mapDispatchToProps,
+    mapDispatchToProps
 )(ArticleVirtualList)

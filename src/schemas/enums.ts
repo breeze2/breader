@@ -1,4 +1,4 @@
-export enum LogicErrorEnum {
+export enum ELogicError {
     FEEDPARSER_FETCH_ERROR = 'FEEDPARSER_FETCH_ERROR',
     FEEDPARSER_NOT_FOUND = 'FEEDPARSER_NOT_FOUND',
     FEEDPARSER_WRONG_URL = 'FEEDPARSER_WRONG_URL',
@@ -6,8 +6,14 @@ export enum LogicErrorEnum {
     UNKNOWN = 'UNKNOWN',
 }
 
-export enum MenuKeyEnum {
+export enum EMenuKey {
     ALL_ITEMS = 'ALL_ITEMS',
     STARRED_ITEMS = 'STARRED_ITEMS',
     UNREAD_ITEMS = 'UNREAD_ITEMS',
+}
+
+export enum EArticleFilter {
+    STARRED = 'STARRED',
+    UNREAD = 'UNREAD',
+    ALL = 'ALL',
 }

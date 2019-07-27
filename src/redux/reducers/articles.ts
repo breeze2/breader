@@ -1,5 +1,11 @@
 import Immutable from 'immutable'
-import { IArticle, IArticlesState, IIArticlesState, IReduxAction, } from '../../schemas'
+import {
+    EArticleFilter,
+    IArticle,
+    IArticlesState,
+    IIArticlesState,
+    IReduxAction,
+} from '../../schemas'
 import Utils from '../../utils';
 import {
     ArticlesActionTypes,
@@ -12,7 +18,7 @@ import {
 
 const initialArticlesState = Immutable.Record<IArticlesState>({
     current: null,
-    filter: 'ALL',
+    filter: EArticleFilter.ALL,
     isFetching: false,
     isUpdatingCurrent: false,
     list: Immutable.List<IArticle>([]),

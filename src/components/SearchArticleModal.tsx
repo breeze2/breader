@@ -23,7 +23,7 @@ export interface ISearchArticleModalReduxState {
     articles: Immutable.List<IArticle>
 }
 
-interface ISearchArticleModalProps extends ISearchArticleModalOwnProps, ISearchArticleModalReduxDispatch, ISearchArticleModalReduxState {
+export interface ISearchArticleModalProps extends ISearchArticleModalOwnProps, ISearchArticleModalReduxDispatch, ISearchArticleModalReduxState {
 }
 
 interface ISearchArticleModalState {

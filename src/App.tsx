@@ -1,13 +1,14 @@
 import { Layout } from 'antd'
 import { ipcRenderer } from 'electron'
 import React, { Component } from 'react'
+import { IntlProvider } from 'react-intl'
 import { Provider as ReduxProvider } from 'react-redux'
 
 import SettingsModal from './containers/SettingsModal'
 
 import AppContent from './layouts/AppContent'
 import AppSider from './layouts/AppSider'
-import { IntlProvider, messages } from './locales'
+import { messages } from './locales'
 import './styles/App.less'
 import Utils from './utils';
 

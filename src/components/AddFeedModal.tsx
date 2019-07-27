@@ -4,13 +4,13 @@ import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl'
 
 import '../styles/AddFeedModal.less'
 
-interface IAddFeedModalProps {
+export interface IAddFeedModalProps {
     visible: boolean
     onOk: (e: any) => any
     onCancel: (e: any) => any
 }
 
-interface IAddFeedModalState {
+export interface IAddFeedModalState {
     readonly feedUrl: string
 }
 

@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { IIMenuState, IMenuState, IReduxAction, MenuKeyEnum } from '../../schemas'
+import { EMenuKey, IIMenuState, IMenuState, IReduxAction } from '../../schemas'
 import {
     ISetLanguagePayload,
     ISetMenuKeyPayload,
@@ -7,7 +7,7 @@ import {
 } from '../actions'
 
 const LANGUAGE = 'LANGUAGE'
-const MenuKeyDefault = MenuKeyEnum.ALL_ITEMS
+const MenuKeyDefault = EMenuKey.ALL_ITEMS
 const languageDefault = localStorage.getItem(LANGUAGE) || navigator.language
 
 const initialMenuState = Immutable.Record<IMenuState>({

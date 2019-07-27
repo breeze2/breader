@@ -1,13 +1,21 @@
+import PouchDBAdapterMemory from 'pouchdb-adapter-memory'
 import PouchDB from 'pouchdb-browser'
 import PouchDBFind from 'pouchdb-find'
 
+PouchDB.plugin(PouchDBAdapterMemory)
 PouchDB.plugin(PouchDBFind)
+
+let POUCHDB_ADAPTER = 'idb'
+if (typeof window === 'undefined' || window.indexedDB === undefined) {
+    // for yarn test
+    POUCHDB_ADAPTER = 'memory'
+}
 
 export default class BaseModel<Type> {
     private _db: PouchDB.Database<Type>
     private _createIndexResponseList: Array<Promise<PouchDB.Find.CreateIndexResponse<Type>>>
     public constructor(name: string, createIndexOptionsList: PouchDB.Find.CreateIndexOptions[]) {
-        this._db = new PouchDB<Type>(name, { adapter: 'idb' })
+        this._db = new PouchDB<Type>(name, { adapter: POUCHDB_ADAPTER })
         this._createIndexResponseList = []
         createIndexOptionsList.forEach(options => {
             this._createIndexResponseList.push(this.createIndex(options))

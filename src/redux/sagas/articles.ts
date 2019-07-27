@@ -1,6 +1,12 @@
 import { call, put, select, takeEvery, takeLatest } from 'redux-saga/effects'
 import Logic from '../../logic'
-import { IArticle, IIFeedsState, IIMenuState, IReduxAction, MenuKeyEnum } from '../../schemas'
+import {
+    EMenuKey,
+    IArticle,
+    IIFeedsState,
+    IIMenuState,
+    IReduxAction,
+} from '../../schemas'
 import {
     ArticlesActionTypes,
     asyncFetchArticlesAction,
@@ -25,12 +31,12 @@ export function* fetchArticlesSaga(action: IReduxAction<null>) {
     const feedIds = feedsState.list.map(feed => feed._id).toArray()
     const selector: PouchDB.Find.Selector = { feedId: { $in: feedIds } }
     switch (menuKey) {
-        case MenuKeyEnum.ALL_ITEMS:
+        case EMenuKey.ALL_ITEMS:
             break
-        case MenuKeyEnum.STARRED_ITEMS:
+        case EMenuKey.STARRED_ITEMS:
             selector.isStarred = { $eq: true }
             break
-        case MenuKeyEnum.UNREAD_ITEMS:
+        case EMenuKey.UNREAD_ITEMS:
             selector.isUnread = { $eq: true }
             break
         default:

@@ -12,5 +12,5 @@ const mapDispatchToProps: MapDispatchToProps<IArticleItemReduxDispatch, IArticle
 
 export default connect(
     mapStateToProps,
-    mapDispatchToProps,
+    mapDispatchToProps
 )(ArticleItem)

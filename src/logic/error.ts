@@ -1,16 +1,16 @@
-import { LogicErrorEnum } from '../schemas'
+import { ELogicError } from '../schemas'
 
 const LogicErrorMessages = {
-    [LogicErrorEnum.FEEDPARSER_FETCH_ERROR]: 'Feedparser fetch error.',
-    [LogicErrorEnum.FEEDPARSER_NOT_FOUND]: 'Feedparser feed not error.',
-    [LogicErrorEnum.FEEDPARSER_WRONG_URL]: 'Feedparser wrong url.',
-    [LogicErrorEnum.POUCHDB_EXISTS]: 'PouchDB doc exists.',
-    [LogicErrorEnum.UNKNOWN]: 'Unknown error.',
+    [ELogicError.FEEDPARSER_FETCH_ERROR]: 'Feedparser fetch error.',
+    [ELogicError.FEEDPARSER_NOT_FOUND]: 'Feedparser feed not error.',
+    [ELogicError.FEEDPARSER_WRONG_URL]: 'Feedparser wrong url.',
+    [ELogicError.POUCHDB_EXISTS]: 'PouchDB doc exists.',
+    [ELogicError.UNKNOWN]: 'Unknown error.',
 }
 
 export default class LogicError extends Error {
     public type: string
-    public constructor(type: LogicErrorEnum) {
+    public constructor(type: ELogicError) {
         super(LogicErrorMessages[type])
         this.type = type
     }

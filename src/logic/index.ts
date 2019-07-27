@@ -1,4 +1,4 @@
-import { IFeed, LogicErrorEnum } from '../schemas'
+import { IFeed, ELogicError } from '../schemas'
 import LogicError from './error'
 import { parseFeed } from './feedparser'
 import { articleDB, feedDB } from './pouchdb'
@@ -8,12 +8,12 @@ const Logic = {
     createFeed: async (feedUrl: string) => {
         const isExists = await feedDB.isFeedExists(feedUrl)
         if (isExists && !isExists.deleteTime) {
-            // throw new LogicError(LogicErrorEnum.POUCHDB_EXISTS)
+            // throw new LogicError(ELogicError.POUCHDB_EXISTS)
             return null
         }
         const newFeed = await parseFeed(feedUrl, '')
         if (!newFeed) {
-            throw new LogicError(LogicErrorEnum.FEEDPARSER_NOT_FOUND)
+            throw new LogicError(ELogicError.FEEDPARSER_NOT_FOUND)
         }
         const response = await feedDB.insertFeed(newFeed)
         if (response && response.ok) {
