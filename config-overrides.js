@@ -33,7 +33,7 @@ const setPublicPathPlugin = config => {
     return config
 }
 
-module.exports = override (
+const webpackMaker = override (
     fixBabelImports('import', {
         libraryName: 'antd',
         libraryDirectory: 'es',
@@ -61,3 +61,13 @@ module.exports = override (
     addWebpackTargetPlugin,
     setPublicPathPlugin,
 );
+
+module.exports = {
+    webpack: webpackMaker,
+    jest: function (config) {
+        console.log(config)
+        // config.runner = '@jest-runner/electron';
+        // config.testEnvironment = '@jest-runner/electron/environment';
+        return config;
+    }
+};
