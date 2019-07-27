@@ -1,4 +1,4 @@
-import React, { CSSProperties, PureComponent } from 'react'
+import React, { PureComponent } from 'react'
 import AvatarSkeleton from './AvatarSkeleton'
 import SpanSkeleton from './SpanSkeleton'
 import TextSkeleton from './TextSkeleton'

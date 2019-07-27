@@ -113,8 +113,9 @@ class SearchArticleModal extends Component<ISearchArticleModalProps & InjectedIn
             }
             if (i === len) {
                 article.index = index
-                return article
+                return true
             }
+            return false
         })
         return matched
     }

@@ -1,5 +1,4 @@
 import React, { CSSProperties, PureComponent } from 'react'
-import ArticleItemSkeleton from './ArticleItemSkeleton'
 import SpanSkeleton from './SpanSkeleton'
 import TextSkeleton from './TextSkeleton'
 

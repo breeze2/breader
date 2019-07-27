@@ -1,7 +1,6 @@
-import { Drawer, Icon, Progress } from 'antd'
+import { Drawer, Icon } from 'antd'
 import { shell } from 'electron'
 import React, { Component, createRef, RefObject } from 'react'
-import Utils from '../utils'
 import ProgressBar from './ProgressBar'
 
 import '../styles/WebviewDrawer.less'

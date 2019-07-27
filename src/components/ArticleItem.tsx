@@ -1,6 +1,6 @@
 import { Avatar } from 'antd'
 import Immutable from 'immutable'
-import React, { Component, PureComponent } from 'react'
+import React, { PureComponent } from 'react'
 import { InjectedIntlProps, injectIntl } from 'react-intl'
 import defaultFavicon from '../images/rss.png'
 import { IFeed } from '../schemas'

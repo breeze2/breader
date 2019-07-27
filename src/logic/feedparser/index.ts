@@ -39,7 +39,7 @@ function feedXmlRequest(feedUrl: string, options: http.RequestOptions) {
 
 function makeFaviconUrl(feedUrl: string) {
     const u = url.parse(feedUrl)
-    return u.protocol + '//' + u.host + '/' + 'favicon.ico'
+    return `${u.protocol}//${u.host}/favicon.ico`
 }
 
 function parseEtag(res: http.IncomingMessage) {
