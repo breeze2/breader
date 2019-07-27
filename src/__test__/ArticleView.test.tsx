@@ -26,15 +26,15 @@ describe('ArticleView Testing', () => {
         wrapper.update()
     })
 
-    it('snapshot testing', () => {
-        const renderer = TestRenderer.create(
-            <ReduxProvider store={store}>
-                <IntlProvider {...intlProviderProps}>
-                    <ArticleView />
-                </IntlProvider>
-            </ReduxProvider>
-        )
-        const tree = renderer.toJSON()
-        expect(tree).toMatchSnapshot()
-    })
+    // it('snapshot testing', () => {
+    //     const renderer = TestRenderer.create(
+    //         <ReduxProvider store={store}>
+    //             <IntlProvider {...intlProviderProps}>
+    //                 <ArticleView />
+    //             </IntlProvider>
+    //         </ReduxProvider>
+    //     )
+    //     const tree = renderer.toJSON()
+    //     expect(tree).toMatchSnapshot()
+    // })
 })

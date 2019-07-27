@@ -33,15 +33,15 @@ describe('ArticleItem Testing', () => {
         )
     })
 
-    it('snapshot testing', () => {
-        const renderer = TestRenderer.create(
-            <ReduxProvider store={store}>
-                <IntlProvider {...intlProviderProps}>
-                    <ArticleItem {...propsMock} />
-                </IntlProvider>
-            </ReduxProvider>
-        )
-        const tree = renderer.toJSON()
-        expect(tree).toMatchSnapshot()
-    })
+    // it('snapshot testing', () => {
+    //     const renderer = TestRenderer.create(
+    //         <ReduxProvider store={store}>
+    //             <IntlProvider {...intlProviderProps}>
+    //                 <ArticleItem {...propsMock} />
+    //             </IntlProvider>
+    //         </ReduxProvider>
+    //     )
+    //     const tree = renderer.toJSON()
+    //     expect(tree).toMatchSnapshot()
+    // })
 })
