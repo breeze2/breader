@@ -2296,6 +2296,11 @@ async-limiter@~1.0.0:
   resolved "https://registry.npm.taobao.org/async-limiter/download/async-limiter-1.0.0.tgz#78faed8c3d074ab81f22b4e985d79e8738f720f8"
   integrity sha1-ePrtjD0HSrgfIrTphdeehzj3IPg=
 
+async-task-throttle@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/async-task-throttle/download/async-task-throttle-1.0.0.tgz#fbfdc3e98429f8182edde5a70ca07403244dad25"
+  integrity sha1-+/3D6YQp+Bgu3eWnDKB0AyRNrSU=
+
 async-validator@~1.11.3:
   version "1.11.5"
   resolved "https://registry.npm.taobao.org/async-validator/download/async-validator-1.11.5.tgz?cache=0&sync_timestamp=1564131366235&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fasync-validator%2Fdownload%2Fasync-validator-1.11.5.tgz#9d43cf49ef6bb76be5442388d19fb9a6e47597ea"
