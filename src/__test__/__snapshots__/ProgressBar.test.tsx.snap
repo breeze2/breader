@@ -56,7 +56,7 @@ exports[`ProgressBar Testing snapshot testing 1`] = `
                 style={
                   Object {
                     "backgroundImage": "linear-gradient(to right, #c8af8d 0%, #ffa81e 100%)",
-                    "borderRadius": "100px",
+                    "borderRadius": "",
                     "height": 3,
                     "width": "0%",
                   }
