@@ -2,7 +2,7 @@ import FeedParser from 'feedparser'
 import http from 'http'
 import https from 'https'
 import url from 'url'
-import { IArticle, IFeed, ELogicError } from '../../schemas'
+import { ELogicError, IArticle, IFeed } from '../../schemas'
 import LogicError from '../error'
 import { articleDB, feedDB } from '../pouchdb'
 import IconvTransform from './IconvTransform'
@@ -39,7 +39,7 @@ function feedXmlRequest(feedUrl: string, options: http.RequestOptions) {
 
 function makeFaviconUrl(feedUrl: string) {
     const u = url.parse(feedUrl)
-    return u.protocol + '//' + u.host + '/' + 'favicon.ico'
+    return `${u.protocol}//${u.host}/favicon.ico`
 }
 
 function parseEtag(res: http.IncomingMessage) {

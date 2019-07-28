@@ -1,7 +1,6 @@
-import { Drawer, Icon, Progress } from 'antd'
-import { shell } from 'electron'
-import React, { Component, createRef, RefObject } from 'react'
-import Utils from '../utils'
+import { Drawer, Icon } from 'antd'
+import { shell, WebviewTag } from 'electron'
+import React, { createRef, PureComponent, RefObject } from 'react'
 import ProgressBar from './ProgressBar'
 
 import '../styles/WebviewDrawer.less'
@@ -16,10 +15,14 @@ interface IWebviewDrawerState {
     hasProgressBar: boolean
 }
 
-class WebviewDrawer extends Component<IWebviewDrawerProps, IWebviewDrawerState> {
-    public webview: any
+class WebviewDrawer extends PureComponent<
+    IWebviewDrawerProps,
+    IWebviewDrawerState
+> {
+    public webview?: WebviewTag
     public openTimes: number
-    public userAgent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1'
+    public userAgent =
+        'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1'
     private _progressBar: RefObject<ProgressBar>
     private _needUpdateWebview: boolean
     public constructor(props: IWebviewDrawerProps) {
@@ -38,14 +41,21 @@ class WebviewDrawer extends Component<IWebviewDrawerProps, IWebviewDrawerState> 
         this.props.onClose(e)
         const times = this.openTimes
         const webview = this.webview
-        const src = this.webview.src
-        setTimeout(() => {
-            if (this.webview && this.openTimes === times && this.props.visible === false &&
-                webview === this.webview && this.webview.src === src) {
-                this.webview.remove()
-                this.webview = null
-            }
-        }, 10 * 1000)
+        if (webview) {
+            const src = webview.src
+            setTimeout(() => {
+                if (
+                    this.webview &&
+                    this.openTimes === times &&
+                    this.props.visible === false &&
+                    webview === this.webview &&
+                    this.webview.src === src
+                ) {
+                    this.webview.remove()
+                    this.webview = undefined
+                }
+            }, 10 * 1000)
+        }
     }
     public makeWebView(url: string) {
         if (this.webview) {
@@ -54,8 +64,14 @@ class WebviewDrawer extends Component<IWebviewDrawerProps, IWebviewDrawerState> 
             const div = document.querySelector('.drawer-content')
             if (div) {
                 this.webview = document.createElement('webview')
-                this.webview.addEventListener('did-start-loading', this.showProgressBar)
-                this.webview.addEventListener('did-stop-loading', this.hideProgressBar)
+                this.webview.addEventListener(
+                    'did-start-loading',
+                    this.showProgressBar
+                )
+                this.webview.addEventListener(
+                    'did-stop-loading',
+                    this.hideProgressBar
+                )
                 this.webview.src = url
                 this.webview.useragent = this.userAgent
                 div.appendChild(this.webview)
@@ -63,7 +79,7 @@ class WebviewDrawer extends Component<IWebviewDrawerProps, IWebviewDrawerState> 
         }
     }
     public showProgressBar = () => {
-        this.setState({hasProgressBar: true})
+        this.setState({ hasProgressBar: true })
     }
     public hideProgressBar = () => {
         const bar = this._progressBar.current
@@ -89,10 +105,13 @@ class WebviewDrawer extends Component<IWebviewDrawerProps, IWebviewDrawerState> 
             }
         }
     }
-    public componentWillReceiveProps(props: any) {
+    public componentWillReceiveProps(props: IWebviewDrawerProps) {
+        if (props.visible === this.props.visible && props.src === this.props.src) {
+            return
+        }
         if (props.visible) {
             this.openTimes++
-            if (!this.webview || (this.webview.src !== props.src)) {
+            if (!this.webview || this.webview.src !== props.src) {
                 this._needUpdateWebview = true
             }
         }
@@ -101,19 +120,25 @@ class WebviewDrawer extends Component<IWebviewDrawerProps, IWebviewDrawerState> 
         this.setState = () => null
     }
     public render() {
-        return (<Drawer className="webview-drawer"
-            closable={false}
-            visible={this.props.visible}
-            onClose={this.handleDrawerClose}
-            width={this.props.width}>
-            <div className="drawer-header">
-                <div className="drawer-header-left" onClick={this.handleDrawerClose} >
-                    <Icon type="close" />
-                </div>
-                <div className="drawer-header-right" onClick={this.handleCompassClick} >
-                    <Icon type="compass" />
-                </div>
-                {/* <Progress className="webview-progress" style={{ display: this.state.hasProgressBar ? 'block' : 'none' }}
+        return (
+            <Drawer
+                className="webview-drawer"
+                closable={false}
+                visible={this.props.visible}
+                onClose={this.handleDrawerClose}
+                width={this.props.width}>
+                <div className="drawer-header">
+                    <div
+                        className="drawer-header-left"
+                        onClick={this.handleDrawerClose}>
+                        <Icon type="close" />
+                    </div>
+                    <div
+                        className="drawer-header-right"
+                        onClick={this.handleCompassClick}>
+                        <Icon type="compass" />
+                    </div>
+                    {/* <Progress className="webview-progress" style={{ display: this.state.hasProgressBar ? 'block' : 'none' }}
                     status={this.state.isProgressActive ? 'active' : 'normal'}
                     showInfo={false}
                     strokeColor="#ffa81e"
@@ -121,14 +146,21 @@ class WebviewDrawer extends Component<IWebviewDrawerProps, IWebviewDrawerState> 
                     type="line"
                     strokeWidth={3}
                 /> */}
-                {this.state.hasProgressBar && <ProgressBar ref={this._progressBar}
-                    className="webview-progress"
-                    time={6} max={90} onEnd={this.handleProgressBarEnd} />}
-            </div>
-            <div className="drawer-content">
-                {/* <webview ref={this.wvRef} style={{height: '100%'}} src={this.props.src}/> */}
-            </div>
-        </Drawer>)
+                    {this.state.hasProgressBar && (
+                        <ProgressBar
+                            ref={this._progressBar}
+                            className="webview-progress"
+                            time={6}
+                            max={90}
+                            onEnd={this.handleProgressBarEnd}
+                        />
+                    )}
+                </div>
+                <div className="drawer-content">
+                    {/* <webview ref={this.wvRef} style={{height: '100%'}} src={this.props.src}/> */}
+                </div>
+            </Drawer>
+        )
     }
 }
 

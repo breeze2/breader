@@ -117,7 +117,7 @@ class AppMenu extends Component<IAppMenuProps & InjectedIntlProps, IAppMenuState
     }
 
     public render () {
-        const { feeds, feedsMap, intl, isCreatingFeed, isUpdatingFeeds, onlineStatus, selectedMenuKey } = this.props
+        const { feeds, feedsMap, isCreatingFeed, isUpdatingFeeds, onlineStatus, selectedMenuKey } = this.props
         const feedsCount = feeds.size
         return (
             <div className="app-menu">

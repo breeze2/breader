@@ -34,7 +34,10 @@ interface IArticleViewState {
     isStarredsMap: {[_id: string]: boolean},
 }
 
-class ArticleView extends PureComponent<IArticleViewProps & InjectedIntlProps, IArticleViewState> {
+class ArticleView extends PureComponent<
+    IArticleViewProps & InjectedIntlProps,
+    IArticleViewState
+> {
     private _articleContentIsAppended: boolean
     private _articleContentElement: HTMLDivElement
     private _articleContentLinks: string[]
@@ -58,7 +61,7 @@ class ArticleView extends PureComponent<IArticleViewProps & InjectedIntlProps, I
             if (isStarredsMap[currentArticle._id] === undefined) {
                 isStarredsMap[currentArticle._id] = currentArticle.isStarred
                 this.setState({
-                    isStarredsMap: {...isStarredsMap},
+                    isStarredsMap: { ...isStarredsMap },
                 })
             }
         }
@@ -69,11 +72,11 @@ class ArticleView extends PureComponent<IArticleViewProps & InjectedIntlProps, I
         }
         this._articleContentIsAppended = true
         const div = document.querySelector(
-            '.article-view>.view-content .article-content',
+            '.article-view>.view-content .article-content'
         )
         if (div && this._articleContentElement) {
             while (div.firstChild) {
-                div.removeChild(div.firstChild);
+                div.removeChild(div.firstChild)
             }
             div.appendChild(this._articleContentElement)
             const view = div.closest('.view-content')
@@ -94,7 +97,10 @@ class ArticleView extends PureComponent<IArticleViewProps & InjectedIntlProps, I
             this.props.asyncStarArticle(articleId, isStarredsMap[articleId])
         }
     }
-    public handleContentClick = (e: any) => {
+    public handleContentClick = (
+        e: React.MouseEvent<HTMLDivElement, MouseEvent>
+    ) => {
+        e.preventDefault()
         const link = this.state.hoverLink
         if (link) {
             this.setState({
@@ -103,24 +109,27 @@ class ArticleView extends PureComponent<IArticleViewProps & InjectedIntlProps, I
             })
         }
     }
-    public handelWebviewClose = (e: any) => {
+    public handelWebviewClose = () => {
         this.setState({ isWebviewDrawerVisible: false })
     }
     public handleMouseLeave = () => {
-        this.setState({hoverLink: ''})
+        this.setState({ hoverLink: '' })
     }
     public handleMouseOverInfo = (link: string) => {
         if (link) {
-            this.setState({hoverLink: link})
+            this.setState({ hoverLink: link })
         }
     }
-    public handleMouseOverContent = (e: any) => {
-        const target = e.target
+    public handleMouseOverContent = (
+        e: React.MouseEvent<HTMLDivElement, MouseEvent>
+    ) => {
+        const target = e.target as HTMLDivElement
         if (target.tagName === 'A' && target.dataset.index) {
-            const link = this._articleContentLinks[target.dataset.index]
-            this.setState({hoverLink: link})
+            const index = parseInt(target.dataset.index, 10)
+            const link = this._articleContentLinks[index]
+            this.setState({ hoverLink: link })
         } else {
-            this.setState({hoverLink: ''})
+            this.setState({ hoverLink: '' })
         }
     }
     public render() {
@@ -128,31 +137,65 @@ class ArticleView extends PureComponent<IArticleViewProps & InjectedIntlProps, I
         let starIcon: JSX.Element | null
 
         if (this.props.currentArticle) {
-            const { currentArticle, feedsMap, intl} = this.props
+            const { currentArticle, feedsMap, intl } = this.props
             const feed = feedsMap.get(currentArticle.feedId)
             viewContent = (
-                <div className="view-content" onMouseLeave={this.handleMouseLeave} onClick={this.handleContentClick}>
-                    <div className="article-info" onMouseOver={() => this.handleMouseOverInfo(currentArticle.link)}>
-                        <div className="article-date"><p>{Utils.timeToDateTimeString(currentArticle.time)}</p></div>
-                        <div className="article-title"><h1>{currentArticle.title}</h1></div>
+                <div
+                    className="view-content"
+                    onMouseLeave={this.handleMouseLeave}
+                    onClick={this.handleContentClick}>
+                    <div
+                        className="article-info"
+                        onMouseOver={() =>
+                            this.handleMouseOverInfo(currentArticle.link)
+                        }>
+                        <div className="article-date">
+                            <p>
+                                {Utils.timeToDateTimeString(
+                                    currentArticle.time
+                                )}
+                            </p>
+                        </div>
+                        <div className="article-title">
+                            <h1>{currentArticle.title}</h1>
+                        </div>
                         <div className="article-author">
-                            <p>{currentArticle.author} @ {feed ? feed.title : intl.formatMessage({id: 'unknown'})}</p>
+                            <p>
+                                {currentArticle.author} @{' '}
+                                {feed
+                                    ? feed.title
+                                    : intl.formatMessage({ id: 'unknown' })}
+                            </p>
                         </div>
                     </div>
-                    <div className="article-content" onMouseOver={this.handleMouseOverContent}>{' '}</div>
+                    <div
+                        className="article-content"
+                        onMouseOver={this.handleMouseOverContent}>
+                        {' '}
+                    </div>
                 </div>
             )
-            if (this.state.isStarredsMap[(currentArticle._id as string)]) {
-                starIcon = (<Icon type="star" theme="filled"
-                    onClick={this.handleStarIconClick} />)
+            if (this.state.isStarredsMap[currentArticle._id as string]) {
+                starIcon = (
+                    <Icon
+                        type="star"
+                        theme="filled"
+                        onClick={this.handleStarIconClick}
+                    />
+                )
             } else {
-                starIcon = (<Icon type="star" theme="outlined"
-                    onClick={this.handleStarIconClick} />)
+                starIcon = (
+                    <Icon
+                        type="star"
+                        theme="outlined"
+                        onClick={this.handleStarIconClick}
+                    />
+                )
             }
         } else {
             viewContent = (
                 <div className="view-content">
-                    <div style={{'marginTop': '128px'}}>
+                    <div style={{ marginTop: '128px' }}>
                         <Empty image={greyLogo} description={' '} />
                     </div>
                 </div>
@@ -192,7 +235,7 @@ class ArticleView extends PureComponent<IArticleViewProps & InjectedIntlProps, I
         const div = document.createElement('div')
         div.innerHTML = content
         const scripts = div.querySelectorAll('scripts')
-        scripts.forEach((script) => {
+        scripts.forEach(script => {
             script.remove()
         })
 
@@ -200,12 +243,12 @@ class ArticleView extends PureComponent<IArticleViewProps & InjectedIntlProps, I
         this._articleContentLinks = []
         links.forEach((link, i) => {
             this._articleContentLinks.push(link.href)
-            link.dataset.index = i + ''
-            link.href = 'javascript:void(0);'
+            link.dataset.index = `${i}`
+            link.href = `#link${i}`
         })
 
         const frames = div.querySelectorAll('iframe')
-        frames.forEach((frame) => {
+        frames.forEach(frame => {
             frame.setAttribute('sandbox', '')
         })
         this._articleContentElement = div

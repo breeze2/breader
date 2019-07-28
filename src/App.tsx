@@ -10,9 +10,8 @@ import AppContent from './layouts/AppContent'
 import AppSider from './layouts/AppSider'
 import { messages } from './locales'
 import './styles/App.less'
-import Utils from './utils';
 
-import store from './redux';
+import store from './redux'
 
 interface IAppState {
   isSettingsModalVisible: boolean

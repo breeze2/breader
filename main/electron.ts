@@ -13,6 +13,7 @@ function createWindow() {
         webPreferences: {
             contextIsolation: false,
             nodeIntegration: true,
+            webviewTag: true,
             // preload: path.join(__dirname, './preload.js'),
         },
 
