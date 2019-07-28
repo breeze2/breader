@@ -1,3 +1,5 @@
+import { Enclosure } from 'feedparser'
+
 export interface IArticle {
     _id: string
     _rev: string
@@ -7,7 +9,7 @@ export interface IArticle {
     createTime: number
     deleteTime: number
     description: string
-    enclosures: string[]
+    enclosures: Enclosure[]
     feedId: string
     image: string
     index?: number

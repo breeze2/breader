@@ -1,9 +1,10 @@
+import AsyncTaskThrottle from 'async-task-throttle'
 import FeedParser from 'feedparser'
 import { IArticle } from '../../schemas/'
-import Utils from '../../utils'
 import BaseModel from './BaseModel'
 
 export default class ArticleModel extends BaseModel<IArticle> {
+    public throttleReadArticle: (id: string) => Promise<boolean>
     public constructor() {
         super('articles', [
             {index: {
@@ -13,6 +14,7 @@ export default class ArticleModel extends BaseModel<IArticle> {
                 fields: ['time'], name: 'time',
             }},
         ])
+        this.throttleReadArticle = AsyncTaskThrottle.create(this.singleReadArticle)
     }
     public makeArticleBaseOnItem(item: FeedParser.Item, feedId: string = '') {
         const article: IArticle = {
@@ -53,8 +55,14 @@ export default class ArticleModel extends BaseModel<IArticle> {
         return changes
     }
     public async batchReadArticles(ids: string[]) {
-        const changes = await Utils.batchOperate(this.singleReadArticle, ids)
-        return changes
+        const list: Array<Promise<boolean>> = []
+        ids.forEach(id => {
+            list.push(this.throttleReadArticle(id))
+        })
+        const results = await Promise.all(list)
+        let sum = 0
+        results.forEach(el => sum += el ? 1 : 0)
+        return sum
     }
     public singleReadArticle = async (id: string) => {
         try {

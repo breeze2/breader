@@ -20,6 +20,7 @@ function createWindow() {
         webPreferences: {
             contextIsolation: false,
             nodeIntegration: true,
+            webviewTag: true,
         },
         height: 600,
         width: 960,
