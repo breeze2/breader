@@ -69,7 +69,7 @@ class ArticleView extends PureComponent<IArticleViewProps & InjectedIntlProps, I
         }
         this._articleContentIsAppended = true
         const div = document.querySelector(
-            '.article-view>.view-content .article-content',
+            '.article-view>.view-content .article-content'
         )
         if (div && this._articleContentElement) {
             while (div.firstChild) {
