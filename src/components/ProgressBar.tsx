@@ -8,7 +8,7 @@ export interface IProgressBarProps {
     time: number
     onEnd?: () => any
 }
-interface IProgressBarState {
+export interface IProgressBarState {
     progress: number
 }
 

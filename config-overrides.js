@@ -65,9 +65,8 @@ const webpackMaker = override (
 module.exports = {
     webpack: webpackMaker,
     jest: function (config) {
-        // console.log(config)
-        // config.runner = '@jest-runner/electron';
-        // config.testEnvironment = '@jest-runner/electron/environment';
+        config.runner = '@jest-runner/electron';
+        config.testEnvironment = '@jest-runner/electron/environment';
         return config;
     }
 };

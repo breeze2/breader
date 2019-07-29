@@ -23,7 +23,7 @@ const feedsReducer = (state = initialFeedsState, action: IReduxAction) => {
             return state.set('isUpdating', action.payload.isUpdating)
 
         case FeedsActionTypes.SET_IS_CREATING_FEED:
-            return state.set('isUpdating', action.payload.isCreating)
+            return state.set('isCreating', action.payload.isCreating)
 
         case FeedsActionTypes.SET_FEED_FAVICON:
             return handleSetFeedFavicon(state, payload)
