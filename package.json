@@ -45,6 +45,7 @@
     ]
   },
   "devDependencies": {
+    "@jest-runner/electron": "^2.0.2",
     "@types/chardet": "^0.5.0",
     "@types/enzyme": "^3.10.3",
     "@types/enzyme-adapter-react-16": "^1.0.5",
@@ -64,6 +65,7 @@
     "async-task-throttle": "^1.0.0",
     "babel-plugin-import": "^1.11.0",
     "concurrently": "^4.1.1",
+    "coveralls": "^3.0.5",
     "customize-cra": "^0.2.11",
     "devtron": "^1.4.0",
     "electron": "^5.0.8",
