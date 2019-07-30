@@ -22,7 +22,9 @@ script:
   - yarn test --watchAll false
   - yarn build 
   - if [ "$TRAVIS_BRANCH" = "master" ] || [[ "$TRAVIS_BRANCH" =~ ^release ]]; then yarn electron-pack; fi
-
+after_success:
+  - yarn test --watchAll false --coverage
+  - cat ./coverage/lcov.info | yarn coveralls
 branches:
     - develop
     - master
