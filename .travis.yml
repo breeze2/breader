@@ -18,9 +18,9 @@ cache:
 install:
   - npm i yarn -g
   - yarn install
-script:
   - yarn test --watchAll false
   - yarn build 
+script:
   - if [ "$TRAVIS_BRANCH" = "master" ] || [[ "$TRAVIS_BRANCH" =~ ^release ]]; then yarn electron-pack; fi
 after_success:
   - yarn test --watchAll false --coverage
