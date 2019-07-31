@@ -1,21 +1,19 @@
 import Enzyme from 'enzyme'
 import EnzymeAdapter from 'enzyme-adapter-react-16'
 import EnzymeToJson from 'enzyme-to-json'
+import Immutable from 'immutable'
 import React from 'react'
-import { IntlProvider } from 'react-intl'
-import { Provider as ReduxProvider } from 'react-redux'
-import TestRenderer from 'react-test-renderer'
-import { IArticleItemOwnProps } from '../components/ArticleItem'
-import ArticleItem from '../containers/ArticleItem'
-import store from '../redux'
-import { intlProviderProps } from './MockData'
+import ArticleItem, { IArticleItemProps } from '../components/ArticleItem'
+import { IFeed } from '../schemas'
+import { feed, intl } from './MockData'
 
 Enzyme.configure({ adapter: new EnzymeAdapter() })
 
 describe('ArticleItem Testing', () => {
-    const propsMock: IArticleItemOwnProps = {
+    const propsMock: IArticleItemProps = {
         author: 'Author',
-        feedId: 'feedId',
+        feedId: feed._id,
+        feedsMap: Immutable.Map<IFeed>({[feed._id]: feed}),
         guid: 'guid',
         key: 1,
         summary: 'summary',
@@ -24,24 +22,20 @@ describe('ArticleItem Testing', () => {
     }
 
     it('dom testing', () => {
-        const wrapper = Enzyme.shallow(
-            <ReduxProvider store={store}>
-                <IntlProvider {...intlProviderProps}>
-                    <ArticleItem {...propsMock} />
-                </IntlProvider>
-            </ReduxProvider>
-        )
+        const wrapper = Enzyme.shallow<
+            React.Component,
+            IArticleItemProps
+        >(<ArticleItem {...propsMock} />, {
+            context: { intl },
+        })
+        expect(wrapper.props().author).toBe('Author')
     })
 
-    // it('snapshot testing', () => {
-    //     const renderer = TestRenderer.create(
-    //         <ReduxProvider store={store}>
-    //             <IntlProvider {...intlProviderProps}>
-    //                 <ArticleItem {...propsMock} />
-    //             </IntlProvider>
-    //         </ReduxProvider>
-    //     )
-    //     const tree = renderer.toJSON()
-    //     expect(tree).toMatchSnapshot()
-    // })
+    it('snapshot testing', () => {
+        const wrapper = Enzyme.mount(<ArticleItem {...propsMock} />, {
+            context: { intl },
+        })
+        const tree = EnzymeToJson(wrapper)
+        // expect(tree).toMatchSnapshot()
+    })
 })

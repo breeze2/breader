@@ -1,10 +1,6 @@
 import { IntlProvider } from 'react-intl'
-import { createStore } from 'redux'
 import { messages } from '../locales'
-import RootReducer from '../redux/reducers'
 import { IArticle, IFeed } from '../schemas'
-
-export const store = createStore(RootReducer)
 
 export const intlProviderProps: IntlProvider.Props = {
     locale: 'en-US',
