@@ -1,4 +1,4 @@
-import { IFeed, ELogicError } from '../schemas'
+import { ELogicError, IFeed } from '../schemas'
 import LogicError from './error'
 import { parseFeed } from './feedparser'
 import { articleDB, feedDB } from './pouchdb'
@@ -63,11 +63,13 @@ const Logic = {
     },
     updateFeedArticles: async (feed: IFeed) => {
         const newFeed = await parseFeed(feed.url, feed.etag || '')
-        if (!newFeed) {
+        if (!newFeed || newFeed.publishTime <= feed.publishTime) {
             return 0
         }
         newFeed.createTime = feed.createTime
-        const response = await feedDB.insertFeed(newFeed)
+        newFeed.url = feed.url
+        newFeed._id = feed._id
+        const response = await feedDB.updateFeed(newFeed)
         if (response && response.ok) {
             newFeed._id = response.id
             newFeed._rev = response.rev

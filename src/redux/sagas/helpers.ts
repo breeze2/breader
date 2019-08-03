@@ -17,7 +17,6 @@ export function* handlePromiseWrapper(worker: (a: IReduxAction) => IterableItera
         const result = yield worker(action)
         return action.resolve(result)
     } catch (e) {
-        console.error(e)
         return action.reject(e)
     }
 }

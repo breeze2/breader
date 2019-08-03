@@ -27,23 +27,23 @@ describe('Redux Testing', () => {
         )
         expect(getState().articles.filter).toBe(EArticleFilter.STARRED)
 
-        // try {
-        //     await asyncActionDispatcher<void>(
-        //         dispatch,
-        //         actions.asyncStarArticleAction('not_exists', true)
-        //     )
-        // } catch (error) {
-        //     expect(error).toHaveProperty('status', 404)
-        // }
+        try {
+            await asyncActionDispatcher<void>(
+                dispatch,
+                actions.asyncStarArticleAction('not_exists', true)
+            )
+        } catch (error) {
+            expect(error).toHaveProperty('status', 404)
+        }
 
-        // try {
-        //     await asyncActionDispatcher<void>(
-        //         dispatch,
-        //         actions.asyncSelectAndReadArticleAction('not_exists', 0)
-        //     )
-        // } catch (error) {
-        //     expect(error).toHaveProperty('status', 404)
-        // }
+        try {
+            await asyncActionDispatcher<void>(
+                dispatch,
+                actions.asyncSelectAndReadArticleAction('not_exists', 0)
+            )
+        } catch (error) {
+            expect(error).toHaveProperty('status', 404)
+        }
 
     })
 
