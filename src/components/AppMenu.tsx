@@ -105,9 +105,10 @@ class AppMenu extends Component<IAppMenuProps & InjectedIntlProps, IAppMenuState
     }
     public componentWillMount() {
         this.props.setIsFetchingArticles(true)
-        this.props.asyncFetchFeeds().then(() => {
-            this.props.asyncFetchArticles()
-        })
+        this.props
+            .asyncFetchFeeds()
+            .then(this.props.asyncFetchArticles)
+            .then(this.handleUpdateFeedsClick)
         window.addEventListener('online', this.handleOnlineStatus)
         window.addEventListener('offline', this.handleOnlineStatus)
     }
