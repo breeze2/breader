@@ -60,6 +60,14 @@ export default class FeedModel extends BaseModel<IFeed> {
             return this.post(newFeed)
         }
     }
+    public async updateFeed (feed: IFeed) {
+        const oldFeed = await this.get(feed._id)
+        const newFeed = { ...feed }
+        delete newFeed.articles
+        newFeed._id = oldFeed._id
+        newFeed._rev = oldFeed._rev
+        return this.put(newFeed)
+    }
     public async deleteFeed (id: string) {
         const feed = await this.get(id)
         feed.deleteTime = Date.now()
