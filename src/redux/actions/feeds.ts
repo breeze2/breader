@@ -32,8 +32,8 @@ export interface ISetFeedFaviconPayload {
 }
 export const setFeedFaviconAction = (feedId: string, favicon: string) =>
   actionCreator<ISetFeedFaviconPayload>(FeedsActionTypes.SET_FEED_FAVICON)({
-    feedId,
     favicon,
+    feedId,
   })
 
 export interface ISetIsUpdatingFeedsPayload {
