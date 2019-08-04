@@ -4,13 +4,22 @@
   "version": "1.0.0",
   "private": true,
   "description": "A simple RSS reader.",
-  "dependencies": {
-    "chardet": "^0.8.0",
-    "electron-is-dev": "^1.0.1",
-    "feedparser": "^2.2.9",
-    "iconv-lite": "^0.5.0"
-  },
   "homepage": "https://github.com/breeze2/breader",
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "main": "public/electron.js",
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
@@ -29,20 +38,16 @@
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn check --integrity && pretty-quick --staged"
+    }
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "chardet": "^0.8.0",
+    "electron-is-dev": "^1.0.1",
+    "feedparser": "^2.2.9",
+    "iconv-lite": "^0.5.0"
   },
   "devDependencies": {
     "@jest-runner/electron": "^2.0.2",
@@ -75,12 +80,14 @@
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "enzyme-to-json": "^3.3.5",
+    "husky": "^3.0.2",
     "immutable": "^4.0.0-rc.12",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
     "pouchdb-adapter-memory": "^7.1.1",
     "pouchdb-browser": "^7.1.1",
     "pouchdb-find": "^7.1.1",
+    "pretty-quick": "^1.11.1",
     "react": "^16.8.6",
     "react-app-rewired": "^2.1.0",
     "react-dom": "^16.8.6",
