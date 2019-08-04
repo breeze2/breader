@@ -1,20 +1,18 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "allowJs": true,
-        "skipLibCheck": true,
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
-        "strict": true,
-        "forceConsistentCasingInFileNames": true,
-        "moduleResolution": "node",
-        "resolveJsonModule": true,
-        "isolatedModules": true,
-        "module": "commonjs",
-        "outDir": "../public",
-        "types": []
-    },
-    "files": [
-        "electron.ts"
-    ]
+  "compilerOptions": {
+    "target": "es5",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "module": "commonjs",
+    "outDir": "../public",
+    "types": []
+  },
+  "files": ["electron.ts"]
 }

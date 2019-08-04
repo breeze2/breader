@@ -7,14 +7,14 @@ import '../styles/AppSider.less'
 const LayoutSider = Layout.Sider
 
 class AppSider extends Component {
-    public render() {
-        return (
-            <LayoutSider className="app-sider" width="490">
-                <AppMenu />
-                <ArticleList />
-            </LayoutSider>
-        )
-    }
+  public render() {
+    return (
+      <LayoutSider className="app-sider" width="490">
+        <AppMenu />
+        <ArticleList />
+      </LayoutSider>
+    )
+  }
 }
 
 export default AppSider
