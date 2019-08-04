@@ -117,6 +117,7 @@ class SettingsModal extends Component<
                   key={feed._id}
                   actions={[
                     <Button
+                      key={`${feed._id}_button_1`}
                       size="small"
                       type="danger"
                       onClick={() => this.handleDeleteClick(feed._id, index)}>

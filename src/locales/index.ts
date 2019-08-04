@@ -5,7 +5,8 @@ import enUS from './enUS'
 import zhCN from './zhCN'
 
 addLocaleData([...en, ...zh])
+
 export const messages: { [key: string]: any } = {
-    'en-US': enUS,
-    'zh-CN': zhCN,
+  'en-US': enUS,
+  'zh-CN': zhCN,
 }
