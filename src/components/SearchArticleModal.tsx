@@ -27,7 +27,7 @@ export interface ISearchArticleModalProps
     ISearchArticleModalReduxDispatch,
     ISearchArticleModalReduxState {}
 
-interface ISearchArticleModalState {
+export interface ISearchArticleModalState {
   readonly keywords: string
   readonly matchedArticles: Immutable.List<IArticle>
 }

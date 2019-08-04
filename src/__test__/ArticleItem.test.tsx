@@ -22,7 +22,7 @@ describe('ArticleItem Testing', () => {
   }
 
   it('dom testing', () => {
-    const wrapper = Enzyme.shallow<React.Component, IArticleItemProps>(
+    const wrapper = Enzyme.mount<React.Component, IArticleItemProps>(
       <ArticleItem {...propsMock} />,
       {
         context: { intl },

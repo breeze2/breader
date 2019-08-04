@@ -5,6 +5,7 @@ import Immutable from 'immutable'
 import React from 'react'
 import SearchArticleModal, {
   ISearchArticleModalProps,
+  ISearchArticleModalState,
 } from '../components/SearchArticleModal'
 import { IArticle } from '../schemas'
 import { article, intl } from './MockData'
@@ -20,7 +21,11 @@ describe('SearchArticleModal Testing', () => {
   }
 
   it('dom testing', () => {
-    const wrapper = Enzyme.mount(<SearchArticleModal {...propsMock} />, {
+    const wrapper = Enzyme.mount<
+      React.Component,
+      ISearchArticleModalProps,
+      ISearchArticleModalState
+    >(<SearchArticleModal {...propsMock} />, {
       context: { intl },
     })
     wrapper.setProps({
@@ -29,14 +34,18 @@ describe('SearchArticleModal Testing', () => {
     wrapper.setProps({
       visible: true,
     })
+    wrapper.setProps({
+      articles: Immutable.List<IArticle>([article]),
+    })
     wrapper.update()
-    wrapper.find('input').simulate('change')
     wrapper.setState({
       keywords: 'article title',
     })
+    wrapper.find('input').simulate('change')
     wrapper.setState({
       matchedArticles: Immutable.List<IArticle>([article]),
     })
+    expect(wrapper.state().matchedArticles).toHaveProperty('size', 1)
   })
 
   it('snapshot testing', () => {
