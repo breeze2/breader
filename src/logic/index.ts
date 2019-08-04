@@ -2,7 +2,7 @@ import { ELogicError, IFeed } from '../schemas'
 import LogicError from './error'
 import { parseFeed } from './feedparser'
 import { articleDB, feedDB } from './pouchdb'
-;(window as any).articleDB = articleDB
+
 const Logic = {
   createFeed: async (feedUrl: string) => {
     const isExists = await feedDB.isFeedExists(feedUrl)
