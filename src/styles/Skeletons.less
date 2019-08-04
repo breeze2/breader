@@ -1,59 +1,59 @@
 @import './Values.less';
 
 .article-list-skeleton {
-    position: absolute;
-    top: 42px;
-    bottom: 42px;
-    left: 0;
-    right: 0;
-    background-color: @beige-background-color;
-    overflow: hidden;
+  position: absolute;
+  top: 42px;
+  bottom: 42px;
+  left: 0;
+  right: 0;
+  background-color: @beige-background-color;
+  overflow: hidden;
 }
 
 .article-view-skeleton {
-    position: absolute;
-    top: 42px;
-    bottom: 42px;
-    left: 0;
-    right: 0;
-    background-color: @grey-background-color;
+  position: absolute;
+  top: 42px;
+  bottom: 42px;
+  left: 0;
+  right: 0;
+  background-color: @grey-background-color;
+  overflow: hidden;
+  .view-content {
     overflow: hidden;
-    .view-content {
-        overflow: hidden;
-    }
+  }
 }
 
 .skeleton-active {
-    background: linear-gradient(90deg, #dedede 25%, #e6e6e6 37%, #dedede 63%);
-    background-size: 400% 100%;
-    animation: skeleton-loading 1.4s ease infinite;
+  background: linear-gradient(90deg, #dedede 25%, #e6e6e6 37%, #dedede 63%);
+  background-size: 400% 100%;
+  animation: skeleton-loading 1.4s ease infinite;
 }
 
 .avatar-skeleton {
-    border-radius: 4px;
-    width: 22px;
-    height: 22px;
+  border-radius: 4px;
+  width: 22px;
+  height: 22px;
 }
 
 .text-skeleton {
-    height: 14px;
-    margin-top: 4px;
-    margin-bottom: 4px;
+  height: 14px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .span-skeleton {
-    height: 12px;
-    width: 22px;
-    display: inline-block;
-    margin-top: 2px;
-    margin-bottom: 2px;
+  height: 12px;
+  width: 22px;
+  display: inline-block;
+  margin-top: 2px;
+  margin-bottom: 2px;
 }
 
 @keyframes skeleton-loading {
-    0% {
-        background-position: 100% 50%
-    }
-    100% {
-        background-position: 0 50%
-    }
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
 }

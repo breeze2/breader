@@ -1,60 +1,59 @@
 @import './Values.less';
 
 .webview-drawer {
-
-    .ant-drawer-body {
-        position: relative;
-        background-color: @grey-background-color;
-        padding: 42px 0 0 0;
-        height: 100%;
+  .ant-drawer-body {
+    position: relative;
+    background-color: @grey-background-color;
+    padding: 42px 0 0 0;
+    height: 100%;
+  }
+  .drawer-header {
+    .wrapper-header;
+    .anticon {
+      color: @black-text-color;
+      &:hover {
+        color: @black-text-color-light;
+      }
     }
-    .drawer-header {
-        .wrapper-header;
-        .anticon {
-            color: @black-text-color;
-            &:hover {
-                color: @black-text-color-light;
-            }
-        }
+  }
+  .drawer-header-left {
+    .wrapper-hf-left;
+    .anticon {
+      margin-top: 13px;
+      margin-left: 16px;
     }
-    .drawer-header-left {
-        .wrapper-hf-left;
-        .anticon {
-            margin-top: 13px;
-            margin-left: 16px;
-        }
+  }
+  .drawer-header-right {
+    .wrapper-hf-right;
+    .anticon {
+      margin-top: 13px;
+      margin-right: 16px;
     }
-    .drawer-header-right {
-        .wrapper-hf-right;
-        .anticon {
-            margin-top: 13px;
-            margin-right: 16px;
-        }
+  }
+  .drawer-content {
+    position: relative;
+    background-size: contain;
+    // background-image: url(../images/book.gif);
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+  }
+  .webview-progress {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    left: 0;
+    line-height: 3px;
+    z-index: 99;
+    .ant-progress-bg {
+      border-radius: 0px !important;
     }
-    .drawer-content {
-        position: relative;
-        background-size: contain;
-        // background-image: url(../images/book.gif);
-        background-repeat:no-repeat;
-        background-position: center;
-        width: 100%;
-        height: 100%;
+    .ant-progress-inner {
+      background-color: @none-color;
     }
-    .webview-progress {
-        position: absolute;
-        top: 40px;
-        right: 0;
-        left: 0;
-        line-height: 3px;
-        z-index: 99;
-        .ant-progress-bg {
-            border-radius: 0px!important;
-        }
-        .ant-progress-inner {
-            background-color: @none-color;
-        }
-    }
-    webview {
-        height: 100%;
-    }
+  }
+  webview {
+    height: 100%;
+  }
 }

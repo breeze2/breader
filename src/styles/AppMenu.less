@@ -1,135 +1,168 @@
 @import './Values.less';
 
 .app-menu {
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+  background-color: @dark-background-color;
+  color: @white-text-color;
+  position: relative;
+  padding: 42px 0 42px 0;
+  height: 100%;
+  width: 226px;
+  flex: 0 0 auto;
 
-    -webkit-user-select: none;
-    -webkit-app-region: drag;
-    background-color: @dark-background-color;
+  .ant-menu {
+    background-color: @none-color;
     color: @white-text-color;
-    position: relative;
-    padding: 42px 0 42px 0;
+  }
+  .ant-menu-inline,
+  .ant-menu-vertical,
+  .ant-menu-vertical-left {
+    border-right: none;
+  }
+  .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: @menu-selected-color;
+  }
+  .ant-menu-item:hover,
+  .ant-menu-item-active,
+  .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open,
+  .ant-menu-submenu-active,
+  .ant-menu-submenu-title:hover {
+    color: @white-text-color-light;
+  }
+  .ant-menu-submenu-inline
+    > .ant-menu-submenu-title:hover
+    .ant-menu-submenu-arrow:after,
+  .ant-menu-submenu-inline
+    > .ant-menu-submenu-title:hover
+    .ant-menu-submenu-arrow:before {
+    background: -webkit-linear-gradient(
+      left,
+      @white-text-color-light,
+      @white-text-color-light
+    );
+    background: linear-gradient(
+      to right,
+      @white-text-color-light,
+      @white-text-color-light
+    );
+  }
+  .ant-menu-submenu-inline
+    > .ant-menu-submenu-title
+    .ant-menu-submenu-arrow:before,
+  .ant-menu-submenu-inline
+    > .ant-menu-submenu-title
+    .ant-menu-submenu-arrow:after {
+    background: none;
+    background-image: -webkit-linear-gradient(
+      left,
+      @white-text-color,
+      @white-text-color
+    );
+    background-image: linear-gradient(
+      to right,
+      @white-text-color,
+      @white-text-color
+    );
+  }
+  .ant-menu-inline .ant-menu-item:after {
+    border-right: none;
+  }
+  .ant-menu-inline > .ant-menu-item,
+  .ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 32px;
+    height: 32px;
+  }
+  .ant-menu-sub.ant-menu-inline > .ant-menu-item,
+  .ant-menu-sub.ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title {
+    height: 32px;
+    line-height: 32px;
+  }
+  .ant-menu-item-selected {
+    color: @white-text-color-light;
+  }
+  .ant-menu-submenu-selected {
+    color: @white-text-color;
+  }
+  .feed-list {
+    .ant-menu-item {
+      padding-left: 36px;
+      line-height: 32px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      .ant-avatar {
+        display: inline-block;
+        margin-right: 5px;
+      }
+      .feed-title {
+        width: 108px;
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+    &.empty .ant-menu-submenu-arrow {
+      display: none;
+    }
+  }
+
+  .menu-header {
+    padding: 0 0 16px 0;
+    .app-logo {
+      height: 64px;
+      background-size: contain;
+      background-image: url(../images/logo.png);
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .date-text {
+      margin: 8px 0;
+      text-align: center;
+      // font-size: 14px;
+      color: @white-text-color-dark;
+    }
+  }
+  .menu-content {
+    -webkit-app-region: none;
     height: 100%;
-    width: 226px;
-    flex: 0 0 auto;
-
-    .ant-menu {
-        background-color: @none-color;
-        color: @white-text-color;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+  .menu-footer {
+    .wrapper-footer;
+    border-top: none;
+    text-align: center;
+    span {
+      font-size: 14px;
+      color: @white-text-color;
+      .anticon {
+        line-height: 41px;
+        font-size: 20px;
+      }
     }
-    .ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left {
-        border-right: none;
-    }
-    .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
-        background-color: @menu-selected-color;
-    }
-    .ant-menu-item:hover, .ant-menu-item-active, .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open, .ant-menu-submenu-active, .ant-menu-submenu-title:hover {
+    .anticon {
+      color: @white-text-color;
+      &:hover {
         color: @white-text-color-light;
+      }
     }
-    .ant-menu-submenu-inline > .ant-menu-submenu-title:hover .ant-menu-submenu-arrow:after, .ant-menu-submenu-inline > .ant-menu-submenu-title:hover .ant-menu-submenu-arrow:before {
-        background: -webkit-linear-gradient(left, @white-text-color-light, @white-text-color-light);
-        background: linear-gradient(to right, @white-text-color-light, @white-text-color-light);
+  }
+  .menu-footer-left {
+    float: left;
+    .anticon {
+      margin-top: 13px;
+      margin-left: 16px;
     }
-    .ant-menu-submenu-inline > .ant-menu-submenu-title .ant-menu-submenu-arrow:before, .ant-menu-submenu-inline > .ant-menu-submenu-title .ant-menu-submenu-arrow:after {
-        background: none;
-        background-image: -webkit-linear-gradient(left,@white-text-color, @white-text-color);
-        background-image: linear-gradient(to right, @white-text-color, @white-text-color);
+  }
+  .menu-footer-right {
+    float: right;
+    .anticon {
+      margin-top: 13px;
+      margin-right: 16px;
     }
-    .ant-menu-inline .ant-menu-item:after {
-        border-right: none;
-    }
-    .ant-menu-inline > .ant-menu-item, .ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title {
-        margin-top: 0;
-        margin-bottom: 0;
-        line-height: 32px;
-        height: 32px;
-    }
-    .ant-menu-sub.ant-menu-inline > .ant-menu-item, .ant-menu-sub.ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title {
-        height: 32px;
-        line-height: 32px;
-    }
-    .ant-menu-item-selected {
-        color: @white-text-color-light;
-    }
-    .ant-menu-submenu-selected {
-        color: @white-text-color;
-    }
-    .feed-list {
-        .ant-menu-item {
-            padding-left: 36px;
-            line-height: 32px;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            .ant-avatar {
-                display: inline-block;
-                margin-right: 5px; 
-            }
-            .feed-title {
-                width: 108px;
-                display: inline-block;
-                overflow:hidden;
-                text-overflow:ellipsis;
-                white-space:nowrap;
-            }
-        }
-        &.empty .ant-menu-submenu-arrow {
-            display: none;
-        }
-    }
-
-    .menu-header {
-        padding: 0 0 16px 0;
-        .app-logo {
-            height: 64px;
-            background-size: contain;
-            background-image: url(../images/logo.png);
-            background-repeat:no-repeat;
-            background-position: center;
-        }
-        .date-text {
-            margin: 8px 0;
-            text-align: center;
-            // font-size: 14px;
-            color: @white-text-color-dark;
-        }
-    }
-    .menu-content {
-        -webkit-app-region: none;
-        height: 100%;
-        overflow-x: hidden;
-        overflow-y: scroll;
-    }
-    .menu-footer {
-        .wrapper-footer;
-        border-top: none;
-        text-align: center;
-        span {
-            font-size: 14px;
-            color: @white-text-color;
-            .anticon {
-                line-height: 41px;
-                font-size: 20px;
-            }
-        }
-        .anticon {
-            color: @white-text-color;
-            &:hover {
-                color: @white-text-color-light;
-            }
-        }
-    }
-    .menu-footer-left {
-        float: left;
-        .anticon {
-            margin-top: 13px;
-            margin-left: 16px;
-        }
-    }
-    .menu-footer-right {
-        float: right;
-        .anticon {
-            margin-top: 13px;
-            margin-right: 16px;
-        }
-    }
+  }
 }
