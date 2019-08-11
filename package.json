@@ -35,12 +35,12 @@
     "build": "react-app-rewired build",
     "build:main": "yarn webpack --config ./main/webpack.config.js",
     "test": "react-app-rewired test",
-    "test:coverage": "yarn test --coverage",
+    "test:coverage": "react-app-rewired test --coverage",
     "eject": "react-scripts eject"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn check --integrity && pretty-quick --staged"
+      "pre-commit": "yarn check --integrity && pretty-quick --staged && rm ./public/electron.js*"
     }
   },
   "dependencies": {
