@@ -73,6 +73,7 @@ export default class FeedModel extends BaseModel<IFeed> {
   public async updateFeed(feed: IFeed) {
     const oldFeed = await this.get(feed._id)
     const newFeed = { ...feed }
+    newFeed.articles = []
     delete newFeed.articles
     newFeed._id = oldFeed._id
     newFeed._rev = oldFeed._rev
