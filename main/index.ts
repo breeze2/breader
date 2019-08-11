@@ -1,5 +1,7 @@
 // Modules to control application life and create native browser window
+import * as Sentry from '@sentry/electron'
 import { app, BrowserWindow, Menu } from 'electron'
+import isDev from 'electron-is-dev'
 import * as path from 'path'
 import { template as menuTemplate } from './menu'
 
@@ -26,7 +28,6 @@ function createWindow() {
 
   // and load the index.html of the app.
   // mainWindow.loadFile('index.html')
-  const isDev = require('electron-is-dev')
   if (isDev) {
     const {
       default: installExtension,
@@ -86,3 +87,5 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+Sentry.init({})

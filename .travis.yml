@@ -19,13 +19,13 @@ install:
   - npm i yarn -g
   - yarn install
   - yarn test --watchAll false
-  - yarn build 
+  - yarn build
 script:
   - if [ "$TRAVIS_BRANCH" = "master" ] || [[ "$TRAVIS_BRANCH" =~ ^release ]]; then yarn electron-pack; fi
 after_success:
-  - yarn test --watchAll false --coverage
+  - yarn test --coverage --watchAll false
   - cat ./coverage/lcov.info | yarn coveralls
 branches:
-    - develop
-    - master
-    - release/*
+  - develop
+  - master
+  - release/*

@@ -14,5 +14,6 @@
     "outDir": "../public",
     "types": []
   },
-  "files": ["electron.ts"]
+  "files": ["index.ts"],
+  "exclude": ["node_modules"]
 }

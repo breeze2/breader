@@ -23,19 +23,19 @@
   "main": "public/electron.js",
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
-    "prebuild": "yarn tsc-main",
-    "preelectron-dev": "yarn tsc-main",
+    "prebuild": "yarn build:main",
+    "preelectron-dev": "yarn build:main",
     "preelectron-dist": "yarn build",
     "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron-dist": "yarn electron-pack",
     "electron-pack": "electron-builder build",
     "electron-start": "electron .",
     "electron-rebuild": "electron-rebuild",
-    "tsc-main": "tsc --project ./main",
-    "coverage": "yarn test --coverage",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
+    "build:main": "yarn webpack --config ./main/webpack.config.js",
     "test": "react-app-rewired test",
+    "test:coverage": "yarn test --coverage",
     "eject": "react-scripts eject"
   },
   "husky": {
@@ -97,12 +97,14 @@
     "react-virtualized": "^9.21.0",
     "redux": "^4.0.4",
     "redux-saga": "^1.0.5",
+    "ts-loader": "^6.0.4",
     "tslint": "^5.12.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-eslint-rules": "^5.4.0",
     "tslint-react": "^4.0.0",
     "typescript": "3.5.3",
-    "wait-on": "^3.3.0"
+    "wait-on": "^3.3.0",
+    "webpack-cli": "^3.3.6"
   },
   "build": {
     "appId": "io.github.breeze2.breader",
