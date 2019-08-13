@@ -27,20 +27,20 @@
     "preelectron-dev": "yarn build:main",
     "preelectron-dist": "yarn build",
     "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron-dist": "yarn electron-pack",
+    "electron-dist": "electron-builder build",
     "electron-pack": "electron-builder build",
     "electron-start": "electron .",
-    "electron-rebuild": "electron-rebuild",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "build:main": "yarn webpack --config ./main/webpack.config.js",
+    "lint": "tslint --project . src/**/*.ts src/**/*.tsx main/**/*.ts",
     "test": "react-app-rewired test",
     "test:coverage": "react-app-rewired test --coverage",
     "eject": "react-scripts eject"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn check --integrity && pretty-quick --staged && rm ./public/electron.js*"
+      "pre-commit": "yarn check --integrity && pretty-quick --staged && yarn lint && rm ./public/electron.js*"
     }
   },
   "dependencies": {
@@ -76,7 +76,6 @@
     "electron": "^5.0.8",
     "electron-builder": "^21.1.5",
     "electron-devtools-installer": "^2.2.4",
-    "electron-rebuild": "^1.8.4",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "enzyme-to-json": "^3.3.5",

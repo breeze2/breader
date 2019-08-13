@@ -1,12 +1,17 @@
 matrix:
   include:
     - os: osx
-      osx_image: xcode10.2
+      osx_image: xcode10.3
       language: node_js
       node_js: lts/*
       env:
         - ELECTRON_CACHE=$HOME/.cache/electron
         - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
+
+branches:
+  - develop
+  - master
+  - release/*
 
 cache:
   npm: true
@@ -15,17 +20,25 @@ cache:
     - $HOME/.cache/electron
     - $HOME/.cache/electron-builder
 
+before_install:
+  - npm i -g yarn
+  - npm i -g @sentry/cli --unsafe-perm
 install:
-  - npm i yarn -g
   - yarn install
-  - yarn test --watchAll false
-  - yarn build
-script:
-  - if [ "$TRAVIS_BRANCH" = "master" ] || [[ "$TRAVIS_BRANCH" =~ ^release ]]; then yarn electron-pack; fi
-after_success:
-  - yarn test --coverage --watchAll false
-  - cat ./coverage/lcov.info | yarn coveralls
-branches:
-  - develop
-  - master
-  - release/*
+
+jobs:
+  include:
+    - stage: test
+      script:
+        - yarn lint
+        - yarn test --watchAll false
+        - yarn build
+      after_success:
+        - yarn test --coverage --watchAll false
+        - cat ./coverage/lcov.info | yarn coveralls
+    - stage: deploy
+      if: tag IS present
+      script:
+        - yarn electron-dist
+      after_success:
+        - echo 1
