@@ -15,45 +15,40 @@ branches:
     - feature/*
     - release/*
 
-# cache:
-#   npm: true
-#   directories:
-#     - node_modules
-#     - $HOME/.cache/electron
-#     - $HOME/.cache/electron-builder
+cache: false
 
 before_install:
-  - npm i -g yarn
   - npm i -g @sentry/cli --unsafe-perm
 install:
   - yarn install
 
-script:
-  - echo 1
-# script:
-#   - yarn lint
-#   - yarn test --watchAll false
-#   - yarn build
-# after_success:
-#   - yarn test --coverage --watchAll false
-#   - cat ./coverage/lcov.info | yarn coveralls
-
-deploy:
-  - provider: script
-    skip_cleanup: true
-    script:
-      - bash scripts/electron-pack.sh
-      - bash scripts/sentry-release.sh
-    # on:
-    #   tags: true
-  - provider: releases
-    before_deploy:
-      - yarn electron-dist
-    skip_cleanup: true
-    api_key: $GITHUB_REPO_TOKEN
-    file:
-      - './dist/breader*'
-      - './dist/latest*'
-    draft: true
-    on:
-      tags: true
+jobs:
+  include:
+    - stage: test
+      script:
+        - yarn lint
+        - yarn test --watchAll false
+        - yarn build
+      after_success:
+        - yarn test --coverage --watchAll false
+        - cat ./coverage/lcov.info | yarn coveralls
+    - stage: deploy
+      if: tag IS present
+      script:
+        - yarn electron-dist
+      after_success:
+        - sentry-cli releases new $SENTRY_RELEASE
+        - sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps --rewrite ./build
+        - sentry-cli releases finalize $SENTRY_RELEASE
+      deploy:
+        - provider: releases
+          before_deploy:
+            - yarn electron-dist
+          skip_cleanup: true
+          api_key: $GITHUB_REPO_TOKEN
+          file:
+            - './dist/breader*'
+            - './dist/latest*'
+          draft: true
+          on:
+            tags: true

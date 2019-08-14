@@ -1,1 +1,0 @@
-yarn electron-pack
