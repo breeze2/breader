@@ -104,27 +104,5 @@
     "typescript": "3.5.3",
     "wait-on": "^3.3.0",
     "webpack-cli": "^3.3.6"
-  },
-  "build": {
-    "appId": "io.github.breeze2.breader",
-    "npmRebuild": false,
-    "mac": {
-      "category": "news",
-      "icon": "build/icon.png"
-    },
-    "win": {
-      "icon": "build/icon.png",
-      "target": "nsis"
-    },
-    "nsis": {
-      "allowToChangeInstallationDirectory": true,
-      "oneClick": false,
-      "menuCategory": true,
-      "createDesktopShortcut": true,
-      "allowElevation": false
-    },
-    "files": [
-      "build/**/*"
-    ]
   }
 }

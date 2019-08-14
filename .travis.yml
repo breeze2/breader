@@ -26,19 +26,31 @@ before_install:
 install:
   - yarn install
 
-jobs:
-  include:
-    - stage: test
-      script:
-        - yarn lint
-        - yarn test --watchAll false
-        - yarn build
-      after_success:
-        - yarn test --coverage --watchAll false
-        - cat ./coverage/lcov.info | yarn coveralls
-    - stage: deploy
-      if: tag IS present
-      script:
-        - yarn electron-dist
-      after_success:
-        - echo 1
+script:
+  - yarn lint
+  - yarn test --watchAll false
+  - yarn build
+after_success:
+  - yarn test --coverage --watchAll false
+  - cat ./coverage/lcov.info | yarn coveralls
+
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script:
+      - sentry-cli releases new $TRAVIS_TAG
+      - sentry-cli releases files $TRAVIS_TAG upload-sourcemaps --rewrite ./build
+      - sentry-cli releases finalize $TRAVIS_TAG
+    on:
+      tags: true
+  - provider: releases
+    before_deploy:
+      - yarn electron-dist
+    skip_cleanup: true
+    api_key: $GITHUB_API_KEY
+    file:
+      - './dist/breader*'
+      - './dist/latest*'
+    draft: true
+    on:
+      tags: true
