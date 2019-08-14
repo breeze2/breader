@@ -9,10 +9,10 @@ matrix:
         - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
         - SENTRY_RELEASE=$TRAVIS_TAG
 
-branches:
-  - develop
-  - master
-  - release/*
+# branches:
+#   - develop
+#   - master
+#   - release/*
 
 # cache:
 #   npm: true
