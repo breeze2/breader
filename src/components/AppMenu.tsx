@@ -75,17 +75,18 @@ class AppMenu extends Component<
           Message.info(intl.formatMessage({ id: 'unfoundFeed' }))
         })
     } else {
-      // TODO
+      // TODO alert wrong feed url
     }
   }
   public handleUpdateFeedsClick = () => {
     const {
+      feeds,
       intl,
       isUpdatingFeeds,
       setIsUpdatingFeeds,
       asyncUpdateFeeds,
     } = this.props
-    if (isUpdatingFeeds) {
+    if (isUpdatingFeeds || feeds.size === 0) {
       return
     }
     setIsUpdatingFeeds(true)

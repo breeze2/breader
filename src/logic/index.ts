@@ -66,21 +66,18 @@ const Logic = {
   },
   updateFeedArticles: async (feed: IFeed) => {
     const newFeed = await parseFeed(feed.url, feed.etag || '')
+    // TODO newFeed.publishTime should not eq feed.publishTime
     if (!newFeed || newFeed.publishTime <= feed.publishTime) {
       return 0
     }
     newFeed.createTime = feed.createTime
     newFeed.url = feed.url
     newFeed._id = feed._id
+    const articles = newFeed.articles
     const response = await feedDB.updateFeed(newFeed)
-    if (response && response.ok) {
-      newFeed._id = response.id
-      newFeed._rev = response.rev
-      const articles = newFeed.articles
-      if (articles) {
-        articles.forEach(article => (article.feedId = feed._id))
-        await articleDB.batchInsertArticles(articles)
-      }
+    if (response && response.ok && articles && articles.length) {
+      articles.forEach(article => (article.feedId = feed._id))
+      await articleDB.batchInsertArticles(articles)
     }
     return 1
   },

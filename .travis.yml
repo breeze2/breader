@@ -1,12 +1,17 @@
 matrix:
   include:
     - os: osx
-      osx_image: xcode10.2
+      osx_image: xcode10.3
       language: node_js
       node_js: lts/*
       env:
         - ELECTRON_CACHE=$HOME/.cache/electron
         - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
+
+branches:
+  - develop
+  - master
+  - release/*
 
 cache:
   npm: true
@@ -15,17 +20,37 @@ cache:
     - $HOME/.cache/electron
     - $HOME/.cache/electron-builder
 
+before_install:
+  - npm i -g yarn
+  - npm i -g @sentry/cli --unsafe-perm
 install:
-  - npm i yarn -g
   - yarn install
-  - yarn test --watchAll false
-  - yarn build 
+
 script:
-  - if [ "$TRAVIS_BRANCH" = "master" ] || [[ "$TRAVIS_BRANCH" =~ ^release ]]; then yarn electron-pack; fi
+  - yarn lint
+  - yarn test --watchAll false
+  - yarn build
 after_success:
-  - yarn test --watchAll false --coverage
+  - yarn test --coverage --watchAll false
   - cat ./coverage/lcov.info | yarn coveralls
-branches:
-    - develop
-    - master
-    - release/*
+
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script:
+      - sentry-cli releases new $TRAVIS_TAG
+      - sentry-cli releases files $TRAVIS_TAG upload-sourcemaps --rewrite ./build
+      - sentry-cli releases finalize $TRAVIS_TAG
+    on:
+      tags: true
+  - provider: releases
+    before_deploy:
+      - yarn electron-dist
+    skip_cleanup: true
+    api_key: $GITHUB_API_KEY
+    file:
+      - './dist/breader*'
+      - './dist/latest*'
+    draft: true
+    on:
+      tags: true

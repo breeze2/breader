@@ -1,6 +1,12 @@
-const { override, fixBabelImports, addLessLoader } = require('customize-cra')
+const {
+  addWebpackPlugin,
+  override,
+  fixBabelImports,
+  addLessLoader,
+} = require('customize-cra')
+const webpack = require('webpack')
 
-const addWebpackExternalsPlugin = config => {
+const setWebpackExternalsPlugin = config => {
   const external = function(context, request, callback) {
     if (/^(iconv-lite|feedparser)$/.test(request)) {
       return callback(null, 'commonjs ' + request)
@@ -19,7 +25,7 @@ const addWebpackExternalsPlugin = config => {
   return config
 }
 
-const addWebpackTargetPlugin = config => {
+const setWebpackTargetPlugin = config => {
   config.target = 'electron-renderer'
   return config
 }
@@ -57,8 +63,14 @@ const webpackMaker = override(
       '@box-shadow-base': '0 2px 8px rgba(0, 0, 0, .15)', // 浮层阴影
     },
   }),
-  addWebpackExternalsPlugin,
-  addWebpackTargetPlugin,
+  addWebpackPlugin(
+    new webpack.DefinePlugin({
+      'process.env.SENTRY_DSN': JSON.stringify(process.env.SENTRY_DSN),
+      'process.env.SENTRY_RELEASE': JSON.stringify(process.env.SENTRY_RELEASE),
+    })
+  ),
+  setWebpackExternalsPlugin,
+  setWebpackTargetPlugin,
   setPublicPathPlugin
 )
 
@@ -67,6 +79,13 @@ module.exports = {
   jest: function(config) {
     config.runner = '@jest-runner/electron'
     config.testEnvironment = '@jest-runner/electron/environment'
+    config.coveragePathIgnorePatterns = [
+      '<rootDir>/build/',
+      '<rootDir>/main/',
+      '<rootDir>/node_modules/',
+      '<rootDir>/src/sentry.ts',
+      '<rootDir>/src/serviceWorker.ts',
+    ]
     return config
   },
 }
