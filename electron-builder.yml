@@ -1,0 +1,16 @@
+appId: io.github.breeze2.breader
+npmRebuild: true
+mac:
+  category: news,
+  icon: build/icon.png
+win:
+  icon: build/icon.png,
+  target: nsis
+nsis:
+  allowToChangeInstallationDirectory: true
+  oneClick: false
+  menuCategory: true,
+  createDesktopShortcut: true,
+  allowElevation: false
+files:
+  - build/**/*
