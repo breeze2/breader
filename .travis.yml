@@ -14,12 +14,12 @@ branches:
   - master
   - release/*
 
-cache:
-  npm: true
-  directories:
-    - node_modules
-    - $HOME/.cache/electron
-    - $HOME/.cache/electron-builder
+# cache:
+#   npm: true
+#   directories:
+#     - node_modules
+#     - $HOME/.cache/electron
+#     - $HOME/.cache/electron-builder
 
 before_install:
   - npm i -g yarn
