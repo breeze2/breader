@@ -26,6 +26,5 @@ yarn-debug.log*
 yarn-error.log*
 
 # breader
-.sentryclirc
 public/electron.js
 public/electron.js.map

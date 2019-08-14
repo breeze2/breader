@@ -7,6 +7,7 @@ matrix:
       env:
         - ELECTRON_CACHE=$HOME/.cache/electron
         - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
+        - SENTRY_RELEASE=$TRAVIS_TAG
 
 branches:
   - develop
@@ -38,16 +39,16 @@ deploy:
   - provider: script
     skip_cleanup: true
     script:
-      - sentry-cli releases new $TRAVIS_TAG
-      - sentry-cli releases files $TRAVIS_TAG upload-sourcemaps --rewrite ./build
-      - sentry-cli releases finalize $TRAVIS_TAG
+      - sentry-cli releases new $SENTRY_RELEASE
+      - sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps --rewrite ./build
+      - sentry-cli releases finalize $SENTRY_RELEASE
     on:
       tags: true
   - provider: releases
     before_deploy:
       - yarn electron-dist
     skip_cleanup: true
-    api_key: $GITHUB_API_KEY
+    api_key: $GITHUB_REPO_TOKEN
     file:
       - './dist/breader*'
       - './dist/latest*'
