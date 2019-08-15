@@ -2,7 +2,11 @@ appId: io.github.breeze2.breader
 npmRebuild: true
 productName: Breader
 artifactName: ${productName}-${version}.${ext}
+asar: true
 mac:
+  category: news
+  icon: build/icon.png
+linux:
   category: news
   icon: build/icon.png
 win:

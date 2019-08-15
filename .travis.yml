@@ -1,6 +1,5 @@
 env:
-  - SENTRY_RELEASE=v1.6.4
-# - SENTRY_RELEASE=$TRAVIS_TAG
+  - SENTRY_RELEASE=$TRAVIS_TAG
 
 matrix:
   include:
@@ -10,15 +9,11 @@ matrix:
       node_js: lts/*
       if: tag IS present
     - os: linux
-      dist: xenial
+      dist: bionic
       language: node_js
       node_js: lts/*
       services:
         - xvfb
-    - os: windows
-      language: node_js
-      node_js: lts/*
-      if: tag IS present
 
 branches:
   except:
@@ -31,7 +26,6 @@ cache: false
 before_install:
   - npm i -g @sentry/cli --unsafe-perm
 install:
-  # - npm install
   - yarn install
 
 script:
@@ -55,14 +49,15 @@ before_deploy:
 deploy:
   provider: releases
   skip_cleanup: true
-  name: Release $SENTRY_RELEASE
   api_key: $GITHUB_REPO_TOKEN
+  name: Release $SENTRY_RELEASE
+  draft: true
   file_glob: true
   file:
     - ./dist/*.zip
     - ./dist/*.dmg
     - ./dist/*.yml
-    - ./dist/*.exe
-  draft: true
-  # on:
-  #   tags: true
+    - ./dist/*.AppImage
+    - ./dist/*.snap
+  on:
+    tags: true
