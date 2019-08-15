@@ -28,7 +28,6 @@ cache: false
 
 before_install:
   - npm i -g @sentry/cli --unsafe-perm
-  - rm yarn.lock
 install:
   - npm install
 
