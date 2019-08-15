@@ -52,6 +52,7 @@
   },
   "devDependencies": {
     "@jest-runner/electron": "^2.0.2",
+    "@sentry/cli": "^1.47.1",
     "@types/chardet": "^0.5.0",
     "@types/enzyme": "^3.10.3",
     "@types/enzyme-adapter-react-16": "^1.0.5",

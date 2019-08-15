@@ -3,17 +3,21 @@ env:
 
 matrix:
   include:
-    - os: osx
-      osx_image: xcode10.3
-      language: node_js
-      node_js: lts/*
-      if: tag IS present
     - os: linux
       dist: bionic
       language: node_js
       node_js: lts/*
       services:
         - xvfb
+      if: tag IS present
+    - os: osx
+      osx_image: xcode10.3
+      language: node_js
+      node_js: lts/*
+      if: tag IS present
+    - os: windows
+      language: node_js
+      node_js: lts/*
 
 branches:
   except:
@@ -23,10 +27,10 @@ branches:
 
 cache: false
 
-before_install:
-  - npm i -g @sentry/cli --unsafe-perm
 install:
-  - yarn install
+  - if [ $TRAVIS_OS_NAME = osx ]; then yarn install; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; then yarn install; fi
+  - if [ $TRAVIS_OS_NAME = windows ]; then npm install; fi
 
 script:
   - yarn lint
@@ -34,15 +38,14 @@ script:
   - if [ $TRAVIS_OS_NAME = linux ]; then xvfb-run -a yarn test; fi
   - yarn build
 after_success:
-  - if [ $TRAVIS_OS_NAME = osx ]; then yarn test:coverage; fi
   - if [ $TRAVIS_OS_NAME = linux ]; then xvfb-run -a yarn test:coverage; fi
-  - cat ./coverage/lcov.info | yarn coveralls
+  - if [ $TRAVIS_OS_NAME = linux ]; then cat ./coverage/lcov.info | yarn coveralls; fi
 
 before_deploy:
   - yarn electron-pack
-  - sentry-cli releases new $SENTRY_RELEASE
-  - sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps --rewrite ./build
-  - sentry-cli releases finalize $SENTRY_RELEASE
+  - yarn sentry-cli releases new $SENTRY_RELEASE
+  - yarn sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps --rewrite ./build
+  - yarn sentry-cli releases finalize $SENTRY_RELEASE
   - ls ./
   - ls ./dist
 
@@ -56,8 +59,9 @@ deploy:
   file:
     - ./dist/*.zip
     - ./dist/*.dmg
-    - ./dist/*.yml
     - ./dist/*.AppImage
     - ./dist/*.snap
+    - ./dist/*.yml
+    - ./dist/*.exe
   on:
     tags: true
