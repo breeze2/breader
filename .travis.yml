@@ -25,7 +25,7 @@ script:
   - echo 1
 
 deploy:
-  - provider: releases
+  - provider: script
     before_deploy:
       - sentry-cli --help
     script:
