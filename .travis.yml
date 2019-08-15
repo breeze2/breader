@@ -1,5 +1,5 @@
 env:
-  - SENTRY_RELEASE=v1.6.3
+  - SENTRY_RELEASE=v1.6.4
 # - SENTRY_RELEASE=$TRAVIS_TAG
 
 matrix:
@@ -13,10 +13,12 @@ matrix:
       dist: bionic
       language: node_js
       node_js: lts/*
-      if: tag IS present
+      services:
+        - xvfb
     - os: windows
       language: node_js
       node_js: lts/*
+      if: tag IS present
 
 branches:
   except:
@@ -29,14 +31,17 @@ cache: false
 before_install:
   - npm i -g @sentry/cli --unsafe-perm
 install:
-  - npm install
+  # - npm install
+  - yarn install
 
 script:
   - yarn lint
-  - yarn test --watchAll false
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then yarn test --watchAll false; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then xvfb-run yarn test --watchAll false; fi
   - yarn build
 after_success:
-  - yarn test --coverage --watchAll false
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then yarn test --coverage --watchAll false; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then xvfb-run yarn test --coverage --watchAll false; fi
   - cat ./coverage/lcov.info | yarn coveralls
 
 before_deploy:
