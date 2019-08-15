@@ -36,14 +36,19 @@ before_deploy:
   - sentry-cli releases new $SENTRY_RELEASE
   - sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps --rewrite ./build
   - sentry-cli releases finalize $SENTRY_RELEASE
+  - ls ./
+  - ls ./dist
 
 deploy:
   provider: releases
   skip_cleanup: true
+  name: Release $SENTRY_RELEASE
   api_key: $GITHUB_REPO_TOKEN
+  file_glob: true
   file:
-    - './dist/breader*'
-    - './dist/latest*'
+    - ./dist/*.zip
+    - ./dist/*.dmg
+    - ./dist/*.yml
   draft: true
   # on:
   #   tags: true
