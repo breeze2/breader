@@ -27,6 +27,9 @@ branches:
 
 cache: false
 
+before_install:
+  - if [[ $TRAVIS_OS_NAME = linux && ! -z $TRAVIS_TAG ]]; then snap install snapcraft --classic; fi
+
 install:
   - if [ $TRAVIS_OS_NAME = osx ]; then yarn install; fi
   - if [ $TRAVIS_OS_NAME = linux ]; then yarn install; fi
@@ -53,7 +56,7 @@ deploy:
   provider: releases
   skip_cleanup: true
   api_key: $GITHUB_REPO_TOKEN
-  name: Release $SENTRY_RELEASE
+  name: Release $TRAVIS_TAG
   draft: true
   file_glob: true
   file:

@@ -1,10 +1,18 @@
 {
-  "author": "Breeze Lin",
   "name": "breader",
   "version": "1.6.3",
   "private": true,
   "description": "A simple RSS reader.",
   "homepage": "https://github.com/breeze2/breader",
+  "author": {
+    "email": "805511939@qq.com",
+    "name": "breezelin",
+    "url": "https://github.com/breeze2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/breeze2/markdown-it-all.git"
+  },
   "eslintConfig": {
     "extends": "react-app"
   },
