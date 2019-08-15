@@ -1,14 +1,18 @@
+env:
+  - SENTRY_RELEASE=v1.6.3
+# - SENTRY_RELEASE=$TRAVIS_TAG
+
+node_js: lts/*
+
 matrix:
   include:
     - os: osx
       osx_image: xcode10.3
       language: node_js
-      node_js: lts/*
-      env:
-        - ELECTRON_CACHE=$HOME/.cache/electron
-        - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
-        - SENTRY_RELEASE=v1.6.3
-        # - SENTRY_RELEASE=$TRAVIS_TAG
+      if: tag IS present
+    - os: linux
+      dist: bionic
+      language: node_js
 
 branches:
   except:
