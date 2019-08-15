@@ -29,7 +29,8 @@ cache: false
 before_install:
   - npm i -g @sentry/cli --unsafe-perm
 install:
-  - yarn install
+  # - yarn install
+  - npm install
 
 script:
   - yarn lint
