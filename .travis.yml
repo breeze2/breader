@@ -45,7 +45,7 @@ after_success:
   - if [ $TRAVIS_OS_NAME = linux ]; then cat ./coverage/lcov.info | yarn coveralls; fi
 
 before_deploy:
-  - yarn electron-pack
+  - yarn electron-pack --publish never
   - yarn sentry-cli releases new $SENTRY_RELEASE
   - yarn sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps --rewrite ./build
   - yarn sentry-cli releases finalize $SENTRY_RELEASE
