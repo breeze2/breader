@@ -7,7 +7,7 @@ matrix:
       env:
         - ELECTRON_CACHE=$HOME/.cache/electron
         - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
-        - SENTRY_RELEASE=v1.6.2
+        - SENTRY_RELEASE=v1.6.3
         # - SENTRY_RELEASE=$TRAVIS_TAG
 
 branches:

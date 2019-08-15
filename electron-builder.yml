@@ -1,5 +1,7 @@
 appId: io.github.breeze2.breader
 npmRebuild: true
+productName: Breader
+artifactName: ${productName}-${version}.${ext}
 mac:
   category: news
   icon: build/icon.png
