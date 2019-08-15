@@ -13,6 +13,10 @@ matrix:
       dist: bionic
       language: node_js
       node_js: lts/*
+      if: tag IS present
+    - os: windows
+      language: node_js
+      node_js: lts/*
 
 branches:
   except:
