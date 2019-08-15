@@ -1,15 +1,14 @@
-# matrix:
-#   include:
-#     - os: osx
-#       osx_image: xcode10.3
-#       language: node_js
-#       node_js: lts/*
-#       env:
-#         - ELECTRON_CACHE=$HOME/.cache/electron
-#         - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
-#         - SENTRY_RELEASE=$TRAVIS_TAG
-language: node_js
-node_js: stable
+matrix:
+  include:
+    - os: osx
+      osx_image: xcode10.3
+      language: node_js
+      node_js: lts/*
+      env:
+        - ELECTRON_CACHE=$HOME/.cache/electron
+        - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
+        - SENTRY_RELEASE=v1.6.2
+        # - SENTRY_RELEASE=$TRAVIS_TAG
 
 branches:
   except:
@@ -19,16 +18,32 @@ branches:
 
 cache: false
 
-install:
+before_install:
   - npm i -g @sentry/cli --unsafe-perm
+install:
+  - yarn install
+
 script:
-  - echo 1
+  - yarn lint
+  - yarn test --watchAll false
+  - yarn build
+after_success:
+  - yarn test --coverage --watchAll false
+  - cat ./coverage/lcov.info | yarn coveralls
+
+before_deploy:
+  - yarn electron-pack
+  - sentry-cli releases new $SENTRY_RELEASE
+  - sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps --rewrite ./build
+  - sentry-cli releases finalize $SENTRY_RELEASE
 
 deploy:
-  - provider: script
-    skip_cleanup: true
-    before_deploy:
-      - sentry-cli --help
-      - bash --help
-    script:
-      - bash --help
+  provider: releases
+  skip_cleanup: true
+  api_key: $GITHUB_REPO_TOKEN
+  file:
+    - './dist/breader*'
+    - './dist/latest*'
+  draft: true
+  # on:
+  #   tags: true
