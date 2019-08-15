@@ -10,9 +10,11 @@ matrix:
       node_js: lts/*
       if: tag IS present
     - os: linux
-      dist: bionic
+      dist: xenial
       language: node_js
       node_js: lts/*
+      addons:
+        chrome: stable
       services:
         - xvfb
     - os: windows
@@ -36,12 +38,12 @@ install:
 
 script:
   - yarn lint
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then yarn test --watchAll false; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then xvfb-run yarn test --watchAll false; fi
+  - if [ $TRAVIS_OS_NAME = osx ]; then yarn test; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; then xvfb-run yarn test; fi
   - yarn build
 after_success:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then yarn test --coverage --watchAll false; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then xvfb-run yarn test --coverage --watchAll false; fi
+  - if [ $TRAVIS_OS_NAME = osx ]; then yarn test:coverage; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; then xvfb-run yarn test:coverage; fi
   - cat ./coverage/lcov.info | yarn coveralls
 
 before_deploy:
