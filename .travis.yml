@@ -27,8 +27,8 @@ branches:
 
 cache: false
 
-before_install:
-  - if [[ $TRAVIS_OS_NAME = linux && ! -z $TRAVIS_TAG ]]; then snap install snapcraft --classic; fi
+# before_install:
+#   - if [[ $TRAVIS_OS_NAME = linux && ! -z $TRAVIS_TAG ]]; then snap install snapcraft --classic; fi
 
 install:
   - if [ $TRAVIS_OS_NAME = osx ]; then yarn install; fi
