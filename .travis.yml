@@ -28,7 +28,7 @@ deploy:
   - provider: script
     before_deploy:
       - sentry-cli --help
-      - echo 111
+      - bash --help
     script:
+      - bash --help
       - sentry-cli --help
-      - echo 222
