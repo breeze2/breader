@@ -26,9 +26,9 @@ script:
 
 deploy:
   - provider: script
+    skip_cleanup: true
     before_deploy:
       - sentry-cli --help
       - bash --help
     script:
       - bash --help
-      - sentry-cli --help
