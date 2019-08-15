@@ -28,9 +28,9 @@ cache: false
 
 before_install:
   - npm i -g @sentry/cli --unsafe-perm
+  - rm yarn.lock
 install:
-  # - yarn install
-  - npm install
+  - yarn install
 
 script:
   - yarn lint
@@ -58,6 +58,7 @@ deploy:
     - ./dist/*.zip
     - ./dist/*.dmg
     - ./dist/*.yml
+    - ./dist/*.exe
   draft: true
   # on:
   #   tags: true

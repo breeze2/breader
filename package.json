@@ -33,7 +33,7 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "build:main": "yarn webpack --config ./main/webpack.config.js",
-    "lint": "tslint --project . src/**/*.ts src/**/*.tsx main/**/*.ts",
+    "lint": "tslint src/**/*.ts src/**/*.tsx main/**/*.ts",
     "test": "react-app-rewired test",
     "test:coverage": "react-app-rewired test --coverage",
     "eject": "react-scripts eject"
