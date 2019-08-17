@@ -1,6 +1,6 @@
 import { Input, message as Message, Modal } from 'antd'
 import React, { Component } from 'react'
-import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl'
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl'
 
 import '../styles/AddFeedModal.less'
 
@@ -15,10 +15,10 @@ export interface IAddFeedModalState {
 }
 
 class AddFeedModal extends Component<
-  IAddFeedModalProps & InjectedIntlProps,
+  IAddFeedModalProps & WrappedComponentProps,
   IAddFeedModalState
 > {
-  public constructor(props: IAddFeedModalProps & InjectedIntlProps) {
+  public constructor(props: IAddFeedModalProps & WrappedComponentProps) {
     super(props)
     this.state = {
       feedUrl: '',

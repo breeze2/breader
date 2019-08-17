@@ -1,7 +1,7 @@
 import { Empty, Icon } from 'antd'
 import Immutable from 'immutable'
 import React, { PureComponent } from 'react'
-import { InjectedIntlProps, injectIntl } from 'react-intl'
+import { injectIntl, WrappedComponentProps } from 'react-intl'
 import greyLogo from '../images/grey-logo.png'
 import { IArticle, IFeed } from '../schemas'
 import ArticleViewSkeleton from '../skeletons/ArticleViewSkeleton'
@@ -36,13 +36,13 @@ interface IArticleViewState {
 }
 
 class ArticleView extends PureComponent<
-  IArticleViewProps & InjectedIntlProps,
+  IArticleViewProps & WrappedComponentProps,
   IArticleViewState
 > {
   private _articleContentIsAppended: boolean
   private _articleContentElement: HTMLDivElement
   private _articleContentLinks: string[]
-  public constructor(props: IArticleViewProps & InjectedIntlProps) {
+  public constructor(props: IArticleViewProps & WrappedComponentProps) {
     super(props)
     this.state = {
       hoverLink: '',

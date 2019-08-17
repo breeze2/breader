@@ -1,7 +1,7 @@
 import { Input, Modal } from 'antd'
 import Immutable from 'immutable'
 import React, { Component } from 'react'
-import { InjectedIntlProps, injectIntl } from 'react-intl'
+import { injectIntl, WrappedComponentProps } from 'react-intl'
 import ArticleItem from '../containers/ArticleItem'
 import { IArticle } from '../schemas'
 import Utils from '../utils'
@@ -33,11 +33,11 @@ export interface ISearchArticleModalState {
 }
 
 class SearchArticleModal extends Component<
-  ISearchArticleModalProps & InjectedIntlProps,
+  ISearchArticleModalProps & WrappedComponentProps,
   ISearchArticleModalState
 > {
   public searchArticles: (keywords: string[]) => any
-  public constructor(props: ISearchArticleModalProps & InjectedIntlProps) {
+  public constructor(props: ISearchArticleModalProps & WrappedComponentProps) {
     super(props)
     this.state = {
       keywords: '',

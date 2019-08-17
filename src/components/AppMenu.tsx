@@ -2,7 +2,7 @@ import { Avatar, Icon, Menu, message as Message } from 'antd'
 import { SelectParam } from 'antd/lib/menu'
 import Immutable from 'immutable'
 import React, { Component } from 'react'
-import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl'
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl'
 import defaultFavicon from '../images/rss.png'
 import { EMenuKey, IArticle, IFeed } from '../schemas'
 import AddFeedModal from './AddFeedModal'
@@ -46,10 +46,10 @@ interface IAppMenuState {
 }
 
 class AppMenu extends Component<
-  IAppMenuProps & InjectedIntlProps,
+  IAppMenuProps & WrappedComponentProps,
   IAppMenuState
 > {
-  public constructor(props: IAppMenuProps & InjectedIntlProps) {
+  public constructor(props: IAppMenuProps & WrappedComponentProps) {
     super(props)
     this.state = {
       isAddFeedModalVisible: false,

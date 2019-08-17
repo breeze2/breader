@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AddFeedModal Testing snapshot testing 1`] = `
-<InjectIntl(AddFeedModal)
+<injectIntl(AddFeedModal)
   onCancel={[MockFunction]}
   onOk={[MockFunction]}
   visible={true}
@@ -16,15 +16,15 @@ exports[`AddFeedModal Testing snapshot testing 1`] = `
         "formatMessage": [Function],
         "formatNumber": [Function],
         "formatPlural": [Function],
-        "formatRelative": [Function],
+        "formatRelativeTime": [Function],
         "formatTime": [Function],
         "formats": Object {},
         "formatters": Object {
           "getDateTimeFormat": [Function],
           "getMessageFormat": [Function],
           "getNumberFormat": [Function],
-          "getPluralFormat": [Function],
-          "getRelativeFormat": [Function],
+          "getPluralRules": [Function],
+          "getRelativeTimeFormat": [Function],
         },
         "locale": "en-US",
         "messages": Object {
@@ -49,10 +49,9 @@ exports[`AddFeedModal Testing snapshot testing 1`] = `
           "unfoundFeed": "Unfound Feed",
           "unknown": "Unknown",
         },
-        "now": [Function],
         "onError": [Function],
-        "textComponent": "span",
-        "timeZone": null,
+        "textComponent": Symbol(react.fragment),
+        "timeZone": undefined,
       }
     }
     onCancel={[MockFunction]}
@@ -190,9 +189,7 @@ exports[`AddFeedModal Testing snapshot testing 1`] = `
                               class="ant-modal-title"
                               id="rcDialogTitle1"
                             >
-                              <span>
-                                Add Feed
-                              </span>
+                              Add Feed
                             </div>
                           </div>
                           <div
@@ -459,9 +456,7 @@ exports[`AddFeedModal Testing snapshot testing 1`] = `
                                     id="addFeed"
                                     values={Object {}}
                                   >
-                                    <span>
-                                      Add Feed
-                                    </span>
+                                    Add Feed
                                   </FormattedMessage>
                                 </div>
                               </div>
@@ -571,5 +566,5 @@ exports[`AddFeedModal Testing snapshot testing 1`] = `
       </Component>
     </Modal>
   </AddFeedModal>
-</InjectIntl(AddFeedModal)>
+</injectIntl(AddFeedModal)>
 `;
