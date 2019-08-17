@@ -34,11 +34,11 @@ install:
 
 script:
   - yarn lint
-  - if [ $TRAVIS_OS_NAME = osx ]; then TZ=CST yarn test --watchAll false; fi
-  - if [ $TRAVIS_OS_NAME = linux ]; then TZ=CST xvfb-run -a yarn test --watchAll false; fi
+  - if [ $TRAVIS_OS_NAME = osx ]; then TZ=UTC+8 yarn test --watchAll false; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; then TZ=UTC+8 xvfb-run -a yarn test --watchAll false; fi
   - yarn build
 after_success:
-  - if [ $TRAVIS_OS_NAME = linux ]; then TZ=CST xvfb-run -a yarn test:coverage --watchAll false; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; then TZ=UTC+8 xvfb-run -a yarn test:coverage --watchAll false; fi
   - if [ $TRAVIS_OS_NAME = linux ]; then cat ./coverage/lcov.info | yarn coveralls; fi
 
 before_deploy:
