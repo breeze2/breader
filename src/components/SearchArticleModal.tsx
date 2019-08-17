@@ -46,7 +46,7 @@ class SearchArticleModal extends Component<
     this.searchArticles = Utils.debounce(this._searchArticles, 100)
     this.searchArticles = this.searchArticles.bind(this)
   }
-  public handleSubmit = (e: any) => {
+  public handleSubmit = () => {
     const keywords = this.state.keywords
     const matched = this._searchArticles(keywords.split(' '))
     if (keywords) {
@@ -55,19 +55,21 @@ class SearchArticleModal extends Component<
       })
     }
   }
-  public handleChange = (e: any) => {
+  public handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       keywords: e.target.value,
     })
   }
   public componentDidUpdate() {
     if (this.props.visible) {
-      setTimeout(() => {
-        const input: any = document.querySelector('.search-article-keywords')
+      setImmediate(() => {
+        const input: HTMLInputElement | null = document.querySelector(
+          '.search-article-keywords input'
+        )
         if (input) {
           input.focus()
         }
-      }, 200)
+      })
     }
   }
   public render() {

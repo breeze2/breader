@@ -51,12 +51,14 @@ class AddFeedModal extends Component<
   }
   public componentDidUpdate() {
     if (this.props.visible) {
-      setTimeout(() => {
-        const input: any = document.querySelector('.input-feed-url')
+      setImmediate(() => {
+        const input: HTMLInputElement | null = document.querySelector(
+          '.input-feed-url'
+        )
         if (input) {
           input.focus()
         }
-      }, 200)
+      })
     }
   }
   public render() {

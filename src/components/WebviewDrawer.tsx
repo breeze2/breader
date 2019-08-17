@@ -104,13 +104,9 @@ class WebviewDrawer extends PureComponent<
       this.setState({
         hasProgressBar: true,
       })
-      if (this.webview) {
+      setImmediate(() => {
         this.makeWebView(props.src)
-      } else {
-        setTimeout(() => {
-          this.makeWebView(props.src)
-        }, 800)
-      }
+      })
     }
   }
   public componentWillUnmount() {
