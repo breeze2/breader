@@ -14,6 +14,7 @@ import { article, intlProviderProps } from './MockData'
 Enzyme.configure({ adapter: new EnzymeAdapter() })
 
 describe('SearchArticleModal Testing', () => {
+  jest.useFakeTimers()
   const mockProps: ISearchArticleModalProps = {
     articles: Immutable.List<IArticle>([article]),
     onCancel: jest.fn(),

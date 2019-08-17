@@ -7,6 +7,7 @@ import WebviewDrawer, { IWebviewDrawerProps } from '../components/WebviewDrawer'
 Enzyme.configure({ adapter: new EnzymeAdapter() })
 
 describe('WebviewDrawer Testing', () => {
+  jest.useFakeTimers()
   const mockProps: IWebviewDrawerProps = {
     onClose: jest.fn(),
     src: 'https://github.com',

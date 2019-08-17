@@ -12,6 +12,7 @@ import { intlProviderProps } from './MockData'
 Enzyme.configure({ adapter: new EnzymeAdapter() })
 
 describe('AddFeedModal Testing', () => {
+  jest.useFakeTimers()
   jest.setTimeout(20 * 1000)
   const mockProps: IAddFeedModalProps = {
     onCancel: jest.fn(),
