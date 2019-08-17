@@ -34,8 +34,8 @@ install:
 
 script:
   - yarn lint
-  - if [ $TRAVIS_OS_NAME = osx ]; then TZ=CST yarn test; fi
-  - if [ $TRAVIS_OS_NAME = linux ]; then TZ=CST xvfb-run -a yarn test; fi
+  - if [ $TRAVIS_OS_NAME = osx ]; then TZ=CST yarn test --watchAll false; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; then TZ=CST xvfb-run -a yarn test --watchAll false; fi
   - yarn build
 after_success:
   - if [ $TRAVIS_OS_NAME = linux ]; then TZ=CST xvfb-run -a yarn test:coverage --watchAll false; fi
