@@ -21,9 +21,9 @@ matrix:
 
 branches:
   except:
-    - hotfix/*
-    - feature/*
-    - release/*
+    - /^hotfix*$/
+    - /^feature*$/
+    - /^release*$/
 
 cache: false
 
