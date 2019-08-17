@@ -1,14 +1,13 @@
-import { IntlProvider } from 'react-intl'
+import { createIntl, createIntlCache } from 'react-intl'
 import { messages } from '../locales'
 import { IArticle, IFeed } from '../schemas'
 
-export const intlProviderProps: IntlProvider.Props = {
+const cache = createIntlCache()
+export const intlProviderProps = {
   locale: 'en-US',
   messages: messages['en-US'],
 }
-
-const intlProvider = new IntlProvider(intlProviderProps, {})
-export const intl = intlProvider.getChildContext().intl
+export const intl = createIntl(intlProviderProps, cache)
 
 export const feed: IFeed = {
   _id: 'http://www.ruanyifeng.com/blog/atom.xml',

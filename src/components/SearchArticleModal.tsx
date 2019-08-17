@@ -1,7 +1,7 @@
 import { Input, Modal } from 'antd'
 import Immutable from 'immutable'
 import React, { Component } from 'react'
-import { InjectedIntlProps, injectIntl } from 'react-intl'
+import { injectIntl, WrappedComponentProps } from 'react-intl'
 import ArticleItem from '../containers/ArticleItem'
 import { IArticle } from '../schemas'
 import Utils from '../utils'
@@ -33,11 +33,11 @@ export interface ISearchArticleModalState {
 }
 
 class SearchArticleModal extends Component<
-  ISearchArticleModalProps & InjectedIntlProps,
+  ISearchArticleModalProps & WrappedComponentProps,
   ISearchArticleModalState
 > {
   public searchArticles: (keywords: string[]) => any
-  public constructor(props: ISearchArticleModalProps & InjectedIntlProps) {
+  public constructor(props: ISearchArticleModalProps & WrappedComponentProps) {
     super(props)
     this.state = {
       keywords: '',
@@ -46,7 +46,7 @@ class SearchArticleModal extends Component<
     this.searchArticles = Utils.debounce(this._searchArticles, 100)
     this.searchArticles = this.searchArticles.bind(this)
   }
-  public handleSubmit = (e: any) => {
+  public handleSubmit = () => {
     const keywords = this.state.keywords
     const matched = this._searchArticles(keywords.split(' '))
     if (keywords) {
@@ -55,19 +55,21 @@ class SearchArticleModal extends Component<
       })
     }
   }
-  public handleChange = (e: any) => {
+  public handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       keywords: e.target.value,
     })
   }
   public componentDidUpdate() {
     if (this.props.visible) {
-      setTimeout(() => {
-        const input: any = document.querySelector('.search-article-keywords')
+      setImmediate(() => {
+        const input: HTMLInputElement | null = document.querySelector(
+          '.search-article-keywords input'
+        )
         if (input) {
           input.focus()
         }
-      }, 200)
+      })
     }
   }
   public render() {

@@ -1,7 +1,7 @@
 import { Empty, Icon } from 'antd'
 import Immutable from 'immutable'
 import React, { PureComponent } from 'react'
-import { InjectedIntlProps, injectIntl } from 'react-intl'
+import { injectIntl, WrappedComponentProps } from 'react-intl'
 import greyLogo from '../images/grey-logo.png'
 import { IArticle, IFeed } from '../schemas'
 import ArticleViewSkeleton from '../skeletons/ArticleViewSkeleton'
@@ -36,13 +36,27 @@ interface IArticleViewState {
 }
 
 class ArticleView extends PureComponent<
-  IArticleViewProps & InjectedIntlProps,
+  IArticleViewProps & WrappedComponentProps,
   IArticleViewState
 > {
+  public static getDerivedStateFromProps(
+    nextProps: IArticleViewProps,
+    prevState: IArticleViewState
+  ) {
+    const currentArticle = nextProps.currentArticle
+    const isStarredsMap = prevState.isStarredsMap
+    if (currentArticle && isStarredsMap[currentArticle._id] === undefined) {
+      isStarredsMap[currentArticle._id] = currentArticle.isStarred
+      return {
+        isStarredsMap: { ...isStarredsMap },
+      }
+    }
+    return null
+  }
   private _articleContentIsAppended: boolean
   private _articleContentElement: HTMLDivElement
   private _articleContentLinks: string[]
-  public constructor(props: IArticleViewProps & InjectedIntlProps) {
+  public constructor(props: IArticleViewProps & WrappedComponentProps) {
     super(props)
     this.state = {
       hoverLink: '',
@@ -54,18 +68,13 @@ class ArticleView extends PureComponent<
     this._articleContentElement = document.createElement('div')
     this._articleContentLinks = []
   }
-  public componentWillReceiveProps(props: IArticleViewProps) {
+  public getSnapshotBeforeUpdate(prevProps: IArticleViewProps) {
+    const props = this.props
     const currentArticle = props.currentArticle
-    const isStarredsMap = this.state.isStarredsMap
-    if (currentArticle && currentArticle !== this.props.currentArticle) {
+    if (currentArticle && currentArticle !== prevProps.currentArticle) {
       this._parseArticleContent(currentArticle.description)
-      if (isStarredsMap[currentArticle._id] === undefined) {
-        isStarredsMap[currentArticle._id] = currentArticle.isStarred
-        this.setState({
-          isStarredsMap: { ...isStarredsMap },
-        })
-      }
     }
+    return null
   }
   public componentDidUpdate() {
     if (this._articleContentIsAppended) {

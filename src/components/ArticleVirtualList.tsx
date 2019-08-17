@@ -21,37 +21,55 @@ export interface IArticleVirtualListReduxDispatch {
 }
 
 export interface IArticleVirtualListReduxState {
-  currentArticle: IArticle | null
   articles: Immutable.List<IArticle>
+  currentArticle: IArticle | null
+  selectedMenuKey: string
 }
 
-interface IArticleVirtualListProps
+export interface IArticleVirtualListProps
   extends IArticleVirtualListOwnProps,
     IArticleVirtualListReduxDispatch,
     IArticleVirtualListReduxState {}
 
-interface IArticleVirtualListState {
-  renderStartDate: string
+export interface IArticleVirtualListState {
+  cellCache: CellMeasurerCache
   isAffixVisible: boolean
+  lastArticles: Immutable.List<IArticle>
   readItems: { [_id: string]: boolean }
+  renderStartDate: string
 }
 
 class ArticleVirtualList extends PureComponent<
   IArticleVirtualListProps,
   IArticleVirtualListState
 > {
+  public static getDerivedStateFromProps(
+    nextProps: IArticleVirtualListProps,
+    prevState: IArticleVirtualListState
+  ) {
+    if (nextProps.articles !== prevState.lastArticles) {
+      return {
+        cellCache: new CellMeasurerCache({
+          defaultHeight: 80,
+          fixedWidth: true,
+        }),
+        lastArticles: nextProps.articles,
+      }
+    }
+    return null
+  }
   public vlist: RefObject<VList>
-  public cellCache: CellMeasurerCache
   public updateRenderStartDate: (...params: any[]) => void
   public constructor(props: IArticleVirtualListProps) {
     super(props)
     this.vlist = React.createRef()
-    this.cellCache = new CellMeasurerCache({
-      defaultHeight: 80,
-      fixedWidth: true,
-    })
     this.state = {
+      cellCache: new CellMeasurerCache({
+        defaultHeight: 80,
+        fixedWidth: true,
+      }),
       isAffixVisible: false,
+      lastArticles: props.articles,
       readItems: {},
       renderStartDate: '',
     }
@@ -62,24 +80,24 @@ class ArticleVirtualList extends PureComponent<
 
     // Object.defineProperty(window, 'updateRenderStartDate', {value: this.updateRenderStartDate})
   }
-  public componentWillReceiveProps(props: IArticleVirtualListProps) {
-    if (props.articles !== this.props.articles) {
-      this.cellCache = new CellMeasurerCache({
-        defaultHeight: 80,
-        fixedWidth: true,
-      })
+  public componentDidUpdate(prevProps: IArticleVirtualListProps) {
+    const props = this.props
+    const vlist = this.vlist.current
+    const index = props.scrollToIndex
+    if (props.selectedMenuKey !== prevProps.selectedMenuKey) {
+      if (vlist) {
+        vlist.scrollToRow(0)
+      }
+      return
     }
     if (
-      props.scrollToIndex !== undefined &&
-      props.scrollToIndex !== undefined &&
-      props.scrollToIndex > -1 &&
-      this.props.scrollToIndex !== props.scrollToIndex
+      index !== undefined &&
+      index > -1 &&
+      index !== prevProps.scrollToIndex
     ) {
-      const vlist = this.vlist.current
-      const index = props.scrollToIndex
       if (vlist) {
-        vlist.scrollToRow(props.scrollToIndex + 3)
-        setTimeout(() => {
+        vlist.scrollToRow(index)
+        setImmediate(() => {
           const items = document.querySelectorAll('.vlist-item')
           items.forEach((item: any) => {
             if (
@@ -89,7 +107,7 @@ class ArticleVirtualList extends PureComponent<
               item.click()
             }
           })
-        }, 200)
+        })
       }
     }
   }
@@ -123,9 +141,9 @@ class ArticleVirtualList extends PureComponent<
               ref={this.vlist}
               width={width}
               height={height}
-              deferredMeasurementCache={this.cellCache}
+              deferredMeasurementCache={this.state.cellCache}
               rowCount={this.props.articles.size}
-              rowHeight={this.cellCache.rowHeight}
+              rowHeight={this.state.cellCache.rowHeight}
               rowRenderer={(info: any) => this._rowRenderer(info)}
               noRowsRenderer={() => this._noRowsRenderer()}
               onScroll={(info: any) => this._onScroll(info)}
@@ -181,7 +199,7 @@ class ArticleVirtualList extends PureComponent<
     return (
       <CellMeasurer
         key={key}
-        cache={this.cellCache}
+        cache={this.state.cellCache}
         parent={parent}
         columnIndex={0}
         rowIndex={index}>

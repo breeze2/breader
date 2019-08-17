@@ -84,30 +84,29 @@ class WebviewDrawer extends PureComponent<
   public handleProgressBarEnd = () => {
     this.setState({ hasProgressBar: false })
   }
-  public componentDidUpdate = () => {
+  public getSnapshotBeforeUpdate(prevProps: IWebviewDrawerProps) {
+    // for the legacy componentWillReceiveProps
+    const props = this.props
+    if (props.visible) {
+      if (!prevProps.visible || prevProps.src !== props.src) {
+        this.openTimes++
+        if (!this.webview || this.webview.src !== props.src) {
+          this._needUpdateWebview = true
+        }
+      }
+    }
+    return null
+  }
+  public componentDidUpdate(prevProps: IWebviewDrawerProps) {
+    const props = this.props
     if (this._needUpdateWebview) {
       this._needUpdateWebview = false
       this.setState({
         hasProgressBar: true,
       })
-      if (this.webview) {
-        this.makeWebView(this.props.src)
-      } else {
-        setTimeout(() => {
-          this.makeWebView(this.props.src)
-        }, 800)
-      }
-    }
-  }
-  public componentWillReceiveProps(props: IWebviewDrawerProps) {
-    if (props.visible === this.props.visible && props.src === this.props.src) {
-      return
-    }
-    if (props.visible) {
-      this.openTimes++
-      if (!this.webview || this.webview.src !== props.src) {
-        this._needUpdateWebview = true
-      }
+      setImmediate(() => {
+        this.makeWebView(props.src)
+      })
     }
   }
   public componentWillUnmount() {
@@ -130,14 +129,6 @@ class WebviewDrawer extends PureComponent<
             onClick={this.handleCompassClick}>
             <Icon type="compass" />
           </div>
-          {/* <Progress className="webview-progress" style={{ display: this.state.hasProgressBar ? 'block' : 'none' }}
-                    status={this.state.isProgressActive ? 'active' : 'normal'}
-                    showInfo={false}
-                    strokeColor="#ffa81e"
-                    percent={this.state.progress}
-                    type="line"
-                    strokeWidth={3}
-                /> */}
           {this.state.hasProgressBar && (
             <ProgressBar
               ref={this._progressBar}

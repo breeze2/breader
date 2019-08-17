@@ -3,17 +3,19 @@ import EnzymeAdapter from 'enzyme-adapter-react-16'
 import EnzymeToJson from 'enzyme-to-json'
 import Immutable from 'immutable'
 import React from 'react'
+import { IntlProvider } from 'react-intl'
 import SearchArticleModal, {
   ISearchArticleModalProps,
   ISearchArticleModalState,
 } from '../components/SearchArticleModal'
 import { IArticle } from '../schemas'
-import { article, intl } from './MockData'
+import { article, intlProviderProps } from './MockData'
 
 Enzyme.configure({ adapter: new EnzymeAdapter() })
 
 describe('SearchArticleModal Testing', () => {
-  const propsMock: ISearchArticleModalProps = {
+  jest.useFakeTimers()
+  const mockProps: ISearchArticleModalProps = {
     articles: Immutable.List<IArticle>([article]),
     onCancel: jest.fn(),
     onItemChoose: jest.fn(),
@@ -25,9 +27,11 @@ describe('SearchArticleModal Testing', () => {
       React.Component,
       ISearchArticleModalProps,
       ISearchArticleModalState
-    >(<SearchArticleModal {...propsMock} />, {
-      context: { intl },
-    })
+    >(
+      <IntlProvider {...intlProviderProps}>
+        <SearchArticleModal {...mockProps} />
+      </IntlProvider>
+    )
     wrapper.setProps({
       visible: false,
     })
@@ -49,9 +53,11 @@ describe('SearchArticleModal Testing', () => {
   })
 
   it('snapshot testing', () => {
-    const component = Enzyme.mount(<SearchArticleModal {...propsMock} />, {
-      context: { intl },
-    })
+    const component = Enzyme.mount(
+      <IntlProvider {...intlProviderProps}>
+        <SearchArticleModal {...mockProps} />
+      </IntlProvider>
+    )
     const tree = EnzymeToJson(component)
     expect(tree).toMatchSnapshot()
   })

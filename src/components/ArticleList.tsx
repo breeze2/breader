@@ -2,7 +2,7 @@ import { Icon, Modal, Radio } from 'antd'
 import { RadioChangeEvent } from 'antd/lib/radio'
 import Immutable from 'immutable'
 import React, { Component } from 'react'
-import { InjectedIntlProps, injectIntl } from 'react-intl'
+import { injectIntl, WrappedComponentProps } from 'react-intl'
 import ArticleVirtualList from '../containers/ArticleVirtualList'
 import SearchArticleModal from '../containers/SearchArticleModal'
 import { EArticleFilter, EMenuKey, IArticle } from '../schemas'
@@ -39,10 +39,10 @@ interface IArticleListState {
 }
 
 class ArticleList extends Component<
-  IArticleListProps & InjectedIntlProps,
+  IArticleListProps & WrappedComponentProps,
   IArticleListState
 > {
-  public constructor(props: IArticleListProps & InjectedIntlProps) {
+  public constructor(props: IArticleListProps & WrappedComponentProps) {
     super(props)
     this.state = {
       chooseItemIndex: -1,

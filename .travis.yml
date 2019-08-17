@@ -21,15 +21,14 @@ matrix:
 
 branches:
   except:
-    - hotfix/*
-    - feature/*
-    - release/*
+    - /^hotfix*$/
+    - /^feature*$/
+    - /^release*$/
 
 cache: false
 
-# before_install:
-#   - if [[ $TRAVIS_OS_NAME = linux && ! -z $TRAVIS_TAG ]]; then snap install snapcraft --classic; fi
-
+before_install:
+  - export TZ='Asia/Shanghai'
 install:
   - if [ $TRAVIS_OS_NAME = osx ]; then yarn install; fi
   - if [ $TRAVIS_OS_NAME = linux ]; then yarn install; fi
@@ -37,11 +36,11 @@ install:
 
 script:
   - yarn lint
-  - if [ $TRAVIS_OS_NAME = osx ]; then yarn test; fi
-  - if [ $TRAVIS_OS_NAME = linux ]; then xvfb-run -a yarn test; fi
+  - if [ $TRAVIS_OS_NAME = osx ]; then yarn test --watchAll false; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; then xvfb-run -a yarn test --watchAll false; fi
   - yarn build
 after_success:
-  - if [ $TRAVIS_OS_NAME = linux ]; then xvfb-run -a yarn test:coverage; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; then xvfb-run -a yarn test:coverage --watchAll false; fi
   - if [ $TRAVIS_OS_NAME = linux ]; then cat ./coverage/lcov.info | yarn coveralls; fi
 
 before_deploy:
