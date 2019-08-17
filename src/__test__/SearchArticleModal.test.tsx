@@ -14,7 +14,7 @@ import { article, intlProviderProps } from './MockData'
 Enzyme.configure({ adapter: new EnzymeAdapter() })
 
 describe('SearchArticleModal Testing', () => {
-  const propsMock: ISearchArticleModalProps = {
+  const mockProps: ISearchArticleModalProps = {
     articles: Immutable.List<IArticle>([article]),
     onCancel: jest.fn(),
     onItemChoose: jest.fn(),
@@ -28,7 +28,7 @@ describe('SearchArticleModal Testing', () => {
       ISearchArticleModalState
     >(
       <IntlProvider {...intlProviderProps}>
-        <SearchArticleModal {...propsMock} />
+        <SearchArticleModal {...mockProps} />
       </IntlProvider>
     )
     wrapper.setProps({
@@ -54,7 +54,7 @@ describe('SearchArticleModal Testing', () => {
   it('snapshot testing', () => {
     const component = Enzyme.mount(
       <IntlProvider {...intlProviderProps}>
-        <SearchArticleModal {...propsMock} />
+        <SearchArticleModal {...mockProps} />
       </IntlProvider>
     )
     const tree = EnzymeToJson(component)

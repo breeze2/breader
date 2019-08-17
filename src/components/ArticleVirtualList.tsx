@@ -21,16 +21,17 @@ export interface IArticleVirtualListReduxDispatch {
 }
 
 export interface IArticleVirtualListReduxState {
-  currentArticle: IArticle | null
   articles: Immutable.List<IArticle>
+  currentArticle: IArticle | null
+  selectedMenuKey: string
 }
 
-interface IArticleVirtualListProps
+export interface IArticleVirtualListProps
   extends IArticleVirtualListOwnProps,
     IArticleVirtualListReduxDispatch,
     IArticleVirtualListReduxState {}
 
-interface IArticleVirtualListState {
+export interface IArticleVirtualListState {
   cellCache: CellMeasurerCache
   isAffixVisible: boolean
   lastArticles: Immutable.List<IArticle>
@@ -81,15 +82,21 @@ class ArticleVirtualList extends PureComponent<
   }
   public componentDidUpdate(prevProps: IArticleVirtualListProps) {
     const props = this.props
-    if (
-      props.scrollToIndex !== undefined &&
-      props.scrollToIndex > -1 &&
-      props.scrollToIndex !== prevProps.scrollToIndex
-    ) {
-      const vlist = this.vlist.current
-      const index = props.scrollToIndex
+    const vlist = this.vlist.current
+    const index = props.scrollToIndex
+    if (props.selectedMenuKey !== prevProps.selectedMenuKey) {
       if (vlist) {
-        vlist.scrollToRow(props.scrollToIndex)
+        vlist.scrollToRow(0)
+      }
+      return
+    }
+    if (
+      index !== undefined &&
+      index > -1 &&
+      index !== prevProps.scrollToIndex
+    ) {
+      if (vlist) {
+        vlist.scrollToRow(index)
         setImmediate(() => {
           const items = document.querySelectorAll('.vlist-item')
           items.forEach((item: any) => {

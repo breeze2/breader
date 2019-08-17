@@ -13,14 +13,14 @@ Enzyme.configure({ adapter: new EnzymeAdapter() })
 
 describe('AddFeedModal Testing', () => {
   jest.setTimeout(10 * 1000)
-  const propsMock: IAddFeedModalProps = {
+  const mockProps: IAddFeedModalProps = {
     onCancel: jest.fn(),
     onOk: jest.fn(),
     visible: true,
   }
 
   it('dom testing', () => {
-    const wrapper = Enzyme.mount(<AddFeedModal {...propsMock} />, {
+    const wrapper = Enzyme.mount(<AddFeedModal {...mockProps} />, {
       wrappingComponent: IntlProvider,
       wrappingComponentProps: intlProviderProps,
     })
@@ -41,7 +41,7 @@ describe('AddFeedModal Testing', () => {
   })
 
   it('snapshot testing', () => {
-    const wrapper = Enzyme.mount(<AddFeedModal {...propsMock} />, {
+    const wrapper = Enzyme.mount(<AddFeedModal {...mockProps} />, {
       wrappingComponent: IntlProvider,
       wrappingComponentProps: intlProviderProps,
     })

@@ -11,7 +11,7 @@ import { feed, intlProviderProps } from './MockData'
 Enzyme.configure({ adapter: new EnzymeAdapter() })
 
 describe('ArticleItem Testing', () => {
-  const propsMock: IArticleItemProps = {
+  const mockProps: IArticleItemProps = {
     author: 'Author',
     feedId: feed._id,
     feedsMap: Immutable.Map<IFeed>({ [feed._id]: feed }),
@@ -23,7 +23,7 @@ describe('ArticleItem Testing', () => {
   }
 
   it('dom testing', () => {
-    const wrapper = Enzyme.mount(<ArticleItem {...propsMock} />, {
+    const wrapper = Enzyme.mount(<ArticleItem {...mockProps} />, {
       wrappingComponent: IntlProvider,
       wrappingComponentProps: intlProviderProps,
     })
@@ -33,7 +33,7 @@ describe('ArticleItem Testing', () => {
   })
 
   it('snapshot testing', () => {
-    const wrapper = Enzyme.mount(<ArticleItem {...propsMock} />, {
+    const wrapper = Enzyme.mount(<ArticleItem {...mockProps} />, {
       wrappingComponent: IntlProvider,
       wrappingComponentProps: intlProviderProps,
     })

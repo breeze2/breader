@@ -18,6 +18,7 @@ const mapStateToProps: MapStateToProps<
 > = (state: IReduxState) => ({
   articles: state.articles.list,
   currentArticle: state.articles.current,
+  selectedMenuKey: state.menu.selectedKey,
 })
 
 const mapDispatchToProps: MapDispatchToProps<

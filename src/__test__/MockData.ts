@@ -1,4 +1,4 @@
-import { createIntl, createIntlCache, IntlProvider } from 'react-intl'
+import { createIntl, createIntlCache } from 'react-intl'
 import { messages } from '../locales'
 import { IArticle, IFeed } from '../schemas'
 
