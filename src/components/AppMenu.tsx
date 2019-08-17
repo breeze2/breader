@@ -117,7 +117,7 @@ class AppMenu extends Component<
   public handleOnlineStatus = () => {
     this.props.updateOnlineStatus()
   }
-  public componentWillMount() {
+  public componentDidMount() {
     this.props.setIsFetchingArticles(true)
     this.props
       .asyncFetchFeeds()
