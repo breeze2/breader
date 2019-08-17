@@ -29,7 +29,7 @@ class App extends Component<IAppProps, IAppState> {
       language: store.getState().menu.get('language'),
     }
   }
-  public componentWillMount() {
+  public componentDidMount() {
     ipcRenderer.on('PREFERENCES_MODAL', (event: any, args: any) => {
       if (args === 'OPEN') {
         this.setState({

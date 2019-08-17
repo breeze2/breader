@@ -42,7 +42,7 @@ export const template: MenuItemConstructorOptions[] = [
       {
         accelerator: 'CmdOrCtrl+A',
         label: 'Select All',
-        role: 'selectall',
+        role: 'selectAll',
       },
     ],
   },
@@ -59,7 +59,7 @@ export const template: MenuItemConstructorOptions[] = [
       {
         accelerator: 'CmdOrCtrl+Alt+I',
         label: 'Toggle Developer Tools',
-        role: 'toggledevtools',
+        role: 'toggleDevTools',
       },
     ],
   },
@@ -136,7 +136,7 @@ if (process.platform === 'darwin') {
       {
         accelerator: 'Command+Alt+H',
         label: 'Hide Others',
-        role: 'hideothers',
+        role: 'hideOthers',
       },
       {
         label: 'Show All',

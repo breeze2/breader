@@ -1,0 +1,420 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ArticleView Testing snapshot testing 1`] = `
+<injectIntl(ArticleView)
+  articles={Immutable.List []}
+  asyncStarArticle={[MockFunction]}
+  currentArticle={null}
+  feedsMap={Immutable.Map {}}
+  isUpdatingCurrentArticle={false}
+>
+  <ArticleView
+    articles={Immutable.List []}
+    asyncStarArticle={[MockFunction]}
+    currentArticle={null}
+    feedsMap={Immutable.Map {}}
+    intl={
+      Object {
+        "defaultFormats": Object {},
+        "defaultLocale": "en",
+        "formatDate": [Function],
+        "formatHTMLMessage": [Function],
+        "formatMessage": [Function],
+        "formatNumber": [Function],
+        "formatPlural": [Function],
+        "formatRelativeTime": [Function],
+        "formatTime": [Function],
+        "formats": Object {},
+        "formatters": Object {
+          "getDateTimeFormat": [Function],
+          "getMessageFormat": [Function],
+          "getNumberFormat": [Function],
+          "getPluralRules": [Function],
+          "getRelativeTimeFormat": [Function],
+        },
+        "locale": "en-US",
+        "messages": Object {
+          "addFeed": "Add Feed",
+          "allArticlesAreReadNow": "All articles are read now.",
+          "delete": "Delete",
+          "doYouWantSetAllArticlesBeRead": "Do you want set all articles be read?",
+          "feedUrl": "Feed Url",
+          "feeds": "Feeds",
+          "feedsAreUpdated": "Feeds are Updated",
+          "invalidFeedUrl": "Invalid Feed Url",
+          "keywords": "Keywords",
+          "languages": "Languages",
+          "menuAllItems": "All Items",
+          "menuStarred": "Starred",
+          "menuSubscriptions": "Subscriptions",
+          "menuUnread": "Unread",
+          "noMatched": "No matched",
+          "settings": "Settings",
+          "somethingWrong": "Something Wrong!",
+          "title": "Breader",
+          "unfoundFeed": "Unfound Feed",
+          "unknown": "Unknown",
+        },
+        "onError": [Function],
+        "textComponent": Symbol(react.fragment),
+        "timeZone": undefined,
+      }
+    }
+    isUpdatingCurrentArticle={false}
+  >
+    <div
+      className="article-view"
+    >
+      <div
+        className="view-header"
+      >
+        <div
+          className="view-header-right"
+        />
+      </div>
+      <div
+        className="view-content"
+      >
+        <div
+          style={
+            Object {
+              "marginTop": "128px",
+            }
+          }
+        >
+          <Empty
+            description=" "
+            image="grey-logo.png"
+          >
+            <LocaleReceiver
+              componentName="Empty"
+            >
+              <div
+                className="ant-empty"
+              >
+                <div
+                  className="ant-empty-image"
+                >
+                  <img
+                    alt=" "
+                    src="grey-logo.png"
+                  />
+                </div>
+                <p
+                  className="ant-empty-description"
+                >
+                   
+                </p>
+              </div>
+            </LocaleReceiver>
+          </Empty>
+        </div>
+      </div>
+      <div
+        className="view-footer"
+      >
+        <p />
+      </div>
+      <WebviewDrawer
+        onClose={[Function]}
+        src=""
+        visible={false}
+        width="calc(100vw - 490px)"
+      >
+        <withConfigConsumer(Drawer)
+          className="webview-drawer"
+          closable={false}
+          onClose={[Function]}
+          visible={false}
+          width="calc(100vw - 490px)"
+        >
+          <Drawer
+            className="webview-drawer"
+            closable={false}
+            getPrefixCls={[Function]}
+            height={256}
+            keyboard={true}
+            level={null}
+            mask={true}
+            maskClosable={true}
+            onClose={[Function]}
+            placement="right"
+            prefixCls="ant-drawer"
+            renderEmpty={[Function]}
+            visible={false}
+            width="calc(100vw - 490px)"
+          >
+            <DrawerWrapper
+              afterVisibleChange={[Function]}
+              className="webview-drawer"
+              defaultOpen={false}
+              duration=".3s"
+              ease="cubic-bezier(0.78, 0.14, 0.15, 0.86)"
+              forceRender={false}
+              getContainer="body"
+              handler={false}
+              keyboard={true}
+              level={null}
+              maskClosable={true}
+              maskStyle={Object {}}
+              onChange={[Function]}
+              onClose={[Function]}
+              open={false}
+              placement="right"
+              prefixCls="ant-drawer"
+              showMask={true}
+              style={
+                Object {
+                  "transform": undefined,
+                  "zIndex": undefined,
+                }
+              }
+              width="calc(100vw - 490px)"
+              wrapperClassName=""
+            >
+              <PortalWrapper
+                forceRender={false}
+                getContainer="body"
+                visible={false}
+                wrapperClassName=""
+              />
+            </DrawerWrapper>
+          </Drawer>
+        </withConfigConsumer(Drawer)>
+      </WebviewDrawer>
+      <ArticleViewSkeleton
+        style={
+          Object {
+            "display": "none",
+          }
+        }
+      >
+        <div
+          className="article-view-skeleton "
+          style={
+            Object {
+              "display": "none",
+            }
+          }
+        >
+          <div
+            className="view-content"
+          >
+            <div
+              className="article-info"
+            >
+              <div
+                className="article-date"
+              >
+                <SpanSkeleton
+                  width={138}
+                >
+                  <span
+                    className="span-skeleton skeleton-active "
+                    style={
+                      Object {
+                        "width": 138,
+                      }
+                    }
+                  />
+                </SpanSkeleton>
+              </div>
+              <div
+                className="article-title"
+              >
+                <TextSkeleton
+                  style={
+                    Object {
+                      "height": 40,
+                      "marginBottom": 8,
+                    }
+                  }
+                >
+                  <div
+                    className="text-skeleton skeleton-active "
+                    style={
+                      Object {
+                        "height": 40,
+                        "marginBottom": 8,
+                        "width": undefined,
+                      }
+                    }
+                  />
+                </TextSkeleton>
+              </div>
+              <div
+                className="article-author"
+              >
+                <SpanSkeleton
+                  width={156}
+                >
+                  <span
+                    className="span-skeleton skeleton-active "
+                    style={
+                      Object {
+                        "width": 156,
+                      }
+                    }
+                  />
+                </SpanSkeleton>
+              </div>
+            </div>
+            <div
+              className="article-content"
+            >
+              <TextSkeleton>
+                <div
+                  className="text-skeleton skeleton-active "
+                  style={
+                    Object {
+                      "width": undefined,
+                    }
+                  }
+                />
+              </TextSkeleton>
+              <TextSkeleton>
+                <div
+                  className="text-skeleton skeleton-active "
+                  style={
+                    Object {
+                      "width": undefined,
+                    }
+                  }
+                />
+              </TextSkeleton>
+              <TextSkeleton
+                width="57%"
+              >
+                <div
+                  className="text-skeleton skeleton-active "
+                  style={
+                    Object {
+                      "width": "57%",
+                    }
+                  }
+                />
+              </TextSkeleton>
+              <br />
+              <TextSkeleton>
+                <div
+                  className="text-skeleton skeleton-active "
+                  style={
+                    Object {
+                      "width": undefined,
+                    }
+                  }
+                />
+              </TextSkeleton>
+              <TextSkeleton>
+                <div
+                  className="text-skeleton skeleton-active "
+                  style={
+                    Object {
+                      "width": undefined,
+                    }
+                  }
+                />
+              </TextSkeleton>
+              <TextSkeleton>
+                <div
+                  className="text-skeleton skeleton-active "
+                  style={
+                    Object {
+                      "width": undefined,
+                    }
+                  }
+                />
+              </TextSkeleton>
+              <TextSkeleton>
+                <div
+                  className="text-skeleton skeleton-active "
+                  style={
+                    Object {
+                      "width": undefined,
+                    }
+                  }
+                />
+              </TextSkeleton>
+              <TextSkeleton
+                width="83%"
+              >
+                <div
+                  className="text-skeleton skeleton-active "
+                  style={
+                    Object {
+                      "width": "83%",
+                    }
+                  }
+                />
+              </TextSkeleton>
+              <br />
+              <TextSkeleton>
+                <div
+                  className="text-skeleton skeleton-active "
+                  style={
+                    Object {
+                      "width": undefined,
+                    }
+                  }
+                />
+              </TextSkeleton>
+              <TextSkeleton>
+                <div
+                  className="text-skeleton skeleton-active "
+                  style={
+                    Object {
+                      "width": undefined,
+                    }
+                  }
+                />
+              </TextSkeleton>
+              <TextSkeleton>
+                <div
+                  className="text-skeleton skeleton-active "
+                  style={
+                    Object {
+                      "width": undefined,
+                    }
+                  }
+                />
+              </TextSkeleton>
+              <TextSkeleton>
+                <div
+                  className="text-skeleton skeleton-active "
+                  style={
+                    Object {
+                      "width": undefined,
+                    }
+                  }
+                />
+              </TextSkeleton>
+              <TextSkeleton>
+                <div
+                  className="text-skeleton skeleton-active "
+                  style={
+                    Object {
+                      "width": undefined,
+                    }
+                  }
+                />
+              </TextSkeleton>
+              <TextSkeleton
+                width="67%"
+              >
+                <div
+                  className="text-skeleton skeleton-active "
+                  style={
+                    Object {
+                      "width": "67%",
+                    }
+                  }
+                />
+              </TextSkeleton>
+            </div>
+          </div>
+        </div>
+      </ArticleViewSkeleton>
+    </div>
+  </ArticleView>
+</injectIntl(ArticleView)>
+`;

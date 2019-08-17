@@ -7,7 +7,8 @@ import WebviewDrawer, { IWebviewDrawerProps } from '../components/WebviewDrawer'
 Enzyme.configure({ adapter: new EnzymeAdapter() })
 
 describe('WebviewDrawer Testing', () => {
-  const propsMock: IWebviewDrawerProps = {
+  jest.useFakeTimers()
+  const mockProps: IWebviewDrawerProps = {
     onClose: jest.fn(),
     src: 'https://github.com',
     visible: true,
@@ -15,7 +16,7 @@ describe('WebviewDrawer Testing', () => {
   }
 
   it('dom testing', () => {
-    const wrapper = Enzyme.mount(<WebviewDrawer {...propsMock} />)
+    const wrapper = Enzyme.mount(<WebviewDrawer {...mockProps} />)
     // wrapper.find('.drawer-header-left').simulate('click')
     wrapper.setProps({
       visible: false,
@@ -26,7 +27,7 @@ describe('WebviewDrawer Testing', () => {
   })
 
   it('snapshot testing', () => {
-    const wrapper = Enzyme.mount(<WebviewDrawer {...propsMock} />)
+    const wrapper = Enzyme.mount(<WebviewDrawer {...mockProps} />)
     const tree = EnzymeToJson(wrapper)
     expect(tree).toMatchSnapshot()
   })

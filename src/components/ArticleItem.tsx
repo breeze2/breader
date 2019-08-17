@@ -1,7 +1,7 @@
 import { Avatar } from 'antd'
 import Immutable from 'immutable'
 import React, { PureComponent } from 'react'
-import { InjectedIntlProps, injectIntl } from 'react-intl'
+import { injectIntl, WrappedComponentProps } from 'react-intl'
 import defaultFavicon from '../images/rss.png'
 import { IFeed } from '../schemas'
 import '../styles/ArticleItem.less'
@@ -31,9 +31,9 @@ export interface IArticleItemProps
     IArticleItemReduxState {}
 
 class ArticleItem<T extends IArticleItemProps> extends PureComponent<
-  T & InjectedIntlProps
+  T & WrappedComponentProps
 > {
-  public constructor(props: T & InjectedIntlProps) {
+  public constructor(props: T & WrappedComponentProps) {
     super(props)
   }
   public render() {

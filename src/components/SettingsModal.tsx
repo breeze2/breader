@@ -1,7 +1,7 @@
 import { Avatar, Button, List as AntdList, Modal, Select } from 'antd'
 import Immutable from 'immutable'
 import React, { Component } from 'react'
-import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl'
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl'
 import { IFeed } from '../schemas'
 
 import '../styles/SettingsModal.less'
@@ -29,17 +29,37 @@ export interface ISettingsModalProps
 
 interface ISettingsModalState {
   allFeeds: IFeed[]
+  lastVisible: boolean
   needDeletedIds: string[]
 }
 
 class SettingsModal extends Component<
-  ISettingsModalProps & InjectedIntlProps,
+  ISettingsModalProps & WrappedComponentProps,
   ISettingsModalState
 > {
-  public constructor(props: ISettingsModalProps & InjectedIntlProps) {
+  public static getDerivedStateFromProps(
+    nextProps: ISettingsModalProps,
+    prevState: ISettingsModalState
+  ) {
+    if (nextProps.visible && !prevState.lastVisible) {
+      return {
+        allFeeds: nextProps.feeds.toArray(),
+        lastVisible: nextProps.visible,
+        needDeletedIds: [],
+      }
+    }
+    if (!nextProps.visible && prevState.lastVisible) {
+      return {
+        lastVisible: nextProps.visible,
+      }
+    }
+    return null
+  }
+  public constructor(props: ISettingsModalProps & WrappedComponentProps) {
     super(props)
     this.state = {
       allFeeds: props.feeds.toArray(),
+      lastVisible: props.visible,
       needDeletedIds: [],
     }
   }
@@ -67,16 +87,6 @@ class SettingsModal extends Component<
   public handleLanguageChange = (value: string) => {
     this.props.setLanguage(value)
     this.props.onLanguageChange(value)
-  }
-  public componentWillReceiveProps(
-    props: ISettingsModalProps & InjectedIntlProps
-  ) {
-    if (props.visible === true) {
-      this.setState({
-        allFeeds: props.feeds.toArray(),
-        needDeletedIds: [],
-      })
-    }
   }
   public render() {
     return (

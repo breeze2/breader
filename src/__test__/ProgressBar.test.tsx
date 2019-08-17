@@ -10,7 +10,7 @@ import ProgressBar, {
 Enzyme.configure({ adapter: new EnzymeAdapter() })
 
 describe('ProgressBar Testing', () => {
-  const propsMock: IProgressBarProps = {
+  const mockProps: IProgressBarProps = {
     max: 80,
     onEnd: jest.fn(),
     time: 2,
@@ -21,12 +21,12 @@ describe('ProgressBar Testing', () => {
       React.Component,
       IProgressBarProps,
       IProgressBarState
-    >(<ProgressBar {...propsMock} />)
+    >(<ProgressBar {...mockProps} />)
     expect(wrapper.state().progress).toBeLessThanOrEqual(wrapper.props().max)
   })
 
   it('snapshot testing', () => {
-    const wrapper = Enzyme.mount(<ProgressBar {...propsMock} />)
+    const wrapper = Enzyme.mount(<ProgressBar {...mockProps} />)
     const tree = EnzymeToJson(wrapper)
     expect(tree).toMatchSnapshot()
   })

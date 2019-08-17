@@ -4,7 +4,7 @@ import { EArticleFilter, EMenuKey, IArticle, IFeed } from '../schemas'
 import { feed } from './MockData'
 
 describe('Redux Testing', () => {
-  jest.setTimeout(10 * 1000)
+  jest.setTimeout(20 * 1000)
   const asyncActionDispatcher = actions.asyncActionDispatcher
   const { dispatch, getState } = store
 
