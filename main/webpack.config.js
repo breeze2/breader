@@ -18,6 +18,7 @@ module.exports = {
     setExternal('@sentry/electron'),
     setExternal('electron-is-dev'),
     setExternal('electron-devtools-installer'),
+    setExternal('electron-updater'),
   ],
   mode: 'production',
   module: {
@@ -37,6 +38,8 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.SENTRY_DSN': JSON.stringify(process.env.SENTRY_DSN),
       'process.env.SENTRY_RELEASE': JSON.stringify(process.env.SENTRY_RELEASE),
+      __dirname: '__dirname',
+      __filename: '__dirname',
     }),
   ],
   resolve: {

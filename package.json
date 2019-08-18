@@ -1,6 +1,6 @@
 {
   "name": "breader",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "private": true,
   "description": "A simple RSS reader.",
   "homepage": "https://github.com/breeze2/breader",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/breeze2/markdown-it-all.git"
+    "url": "https://github.com/breeze2/breader.git"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -55,6 +55,7 @@
     "@sentry/electron": "^0.17.3",
     "chardet": "^0.8.0",
     "electron-is-dev": "^1.0.1",
+    "electron-updater": "^4.1.2",
     "feedparser": "^2.2.9",
     "iconv-lite": "^0.5.0"
   },
@@ -72,7 +73,6 @@
     "@types/pouchdb-find": "^6.3.4",
     "@types/react": "16.9.2",
     "@types/react-dom": "16.8.5",
-    "@types/react-intl": "^3.0.0",
     "@types/react-redux": "^7.0.1",
     "@types/react-virtualized": "^9.21.4",
     "antd": "^3.21.4",
