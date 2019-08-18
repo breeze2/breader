@@ -18,6 +18,7 @@ module.exports = {
     setExternal('@sentry/electron'),
     setExternal('electron-is-dev'),
     setExternal('electron-devtools-installer'),
+    setExternal('electron-updater'),
   ],
   mode: 'production',
   module: {
