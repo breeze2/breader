@@ -6,6 +6,7 @@ import {
   MenuItemConstructorOptions,
   shell,
 } from 'electron'
+import { checkForUpdates } from './updater'
 
 export const template: MenuItemConstructorOptions[] = [
   {
@@ -73,11 +74,11 @@ function addUpdateMenuItems(
     return
   }
 
-  const version = app.getVersion()
   const updateItems: MenuItemConstructorOptions[] = [
     {
-      enabled: false,
-      label: `Version ${version}`,
+      click: checkForUpdates,
+      enabled: true,
+      label: 'Check for Updates',
     },
   ]
 
