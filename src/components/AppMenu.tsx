@@ -118,6 +118,11 @@ class AppMenu extends Component<
   public handleOnlineStatus = () => {
     this.props.updateOnlineStatus()
   }
+  public handleSubscriptionsClick = () => {
+    if (this.props.feeds.size === 0) {
+      this.handleAddFeedClick()
+    }
+  }
   public componentDidMount() {
     this.props.setIsFetchingArticles(true)
     this.props
@@ -169,6 +174,7 @@ class AppMenu extends Component<
               </MenuItem>
               <SubMenu
                 key="subscriptions"
+                onTitleClick={this.handleSubscriptionsClick}
                 className={`feed-list ${feedsCount ? '' : 'empty'}`}
                 title={
                   <span>

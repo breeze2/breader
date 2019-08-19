@@ -1,5 +1,6 @@
 import { Layout } from 'antd'
-import { ipcRenderer } from 'electron'
+import { ipcRenderer, IpcRendererEvent } from 'electron'
+import { platform } from 'os'
 import React, { Component } from 'react'
 import { IntlProvider } from 'react-intl'
 import { Provider as ReduxProvider } from 'react-redux'
@@ -13,6 +14,7 @@ import './styles/App.less'
 
 import store from './redux'
 
+const isWindows = platform() === 'win32'
 export interface IAppState {
   isSettingsModalVisible: boolean
   language: string
@@ -30,13 +32,16 @@ class App extends Component<IAppProps, IAppState> {
     }
   }
   public componentDidMount() {
-    ipcRenderer.on('PREFERENCES_MODAL', (event: any, args: any) => {
-      if (args === 'OPEN') {
-        this.setState({
-          isSettingsModalVisible: true,
-        })
+    ipcRenderer.on(
+      'PREFERENCES_MODAL',
+      (event: IpcRendererEvent, args: any) => {
+        if (args === 'OPEN') {
+          this.setState({
+            isSettingsModalVisible: true,
+          })
+        }
       }
-    })
+    )
   }
   public handleSettingsModalClose = () => {
     this.setState({
@@ -54,7 +59,7 @@ class App extends Component<IAppProps, IAppState> {
         <IntlProvider
           locale={this.state.language}
           messages={messages[this.state.language]}>
-          <div className="app">
+          <div className={`app ${isWindows ? 'is-windows' : ''}`}>
             <Layout>
               <AppSider />
               <AppContent />
