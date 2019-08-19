@@ -2,6 +2,7 @@ import { Avatar, Icon, Menu, message as Message } from 'antd'
 import { SelectParam } from 'antd/lib/menu'
 import Immutable from 'immutable'
 import React, { Component } from 'react'
+import { Scrollbars } from 'react-custom-scrollbars'
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl'
 import defaultFavicon from '../images/rss.png'
 import { EMenuKey, IArticle, IFeed } from '../schemas'
@@ -143,56 +144,58 @@ class AppMenu extends Component<
     const feedsCount = feeds.size
     return (
       <div className="app-menu">
-        <div className="menu-content">
-          <div className="menu-header">
-            <div className="app-logo" />
-            <p className="date-text">{new Date().toDateString()}</p>
+        <Scrollbars>
+          <div className="menu-content">
+            <div className="menu-header">
+              <div className="app-logo" />
+              <p className="date-text">{new Date().toDateString()}</p>
+            </div>
+            <Menu
+              defaultSelectedKeys={[selectedMenuKey]}
+              defaultOpenKeys={['subscriptions']}
+              mode="inline"
+              onSelect={this.handleSelect}>
+              <MenuItem key={EMenuKey.ALL_ITEMS}>
+                <Icon type="profile" />
+                <FormattedMessage id="menuAllItems" />
+              </MenuItem>
+              <MenuItem key={EMenuKey.STARRED_ITEMS}>
+                <Icon type="star" />
+                <FormattedMessage id="menuStarred" />
+              </MenuItem>
+              <MenuItem key={EMenuKey.UNREAD_ITEMS}>
+                <Icon type="file-text" />
+                <FormattedMessage id="menuUnread" />
+              </MenuItem>
+              <SubMenu
+                key="subscriptions"
+                className={`feed-list ${feedsCount ? '' : 'empty'}`}
+                title={
+                  <span>
+                    <Icon type="folder" />
+                    <FormattedMessage id="menuSubscriptions" />
+                  </span>
+                }>
+                {feeds.map(feed => {
+                  const ifeed = feedsMap.get(feed._id)
+                  return (
+                    <MenuItem key={feed._id}>
+                      <Avatar
+                        shape="square"
+                        size={22}
+                        src={ifeed ? ifeed.favicon : defaultFavicon}
+                        onError={() => this.setFeedFaviconDefault(feed._id)}
+                      />
+                      <span className="feed-title" title={feed.title}>
+                        {feed.title}
+                      </span>
+                    </MenuItem>
+                  )
+                })}
+              </SubMenu>
+            </Menu>
           </div>
-          <Menu
-            defaultSelectedKeys={[selectedMenuKey]}
-            defaultOpenKeys={['subscriptions']}
-            mode="inline"
-            onSelect={this.handleSelect}>
-            <MenuItem key={EMenuKey.ALL_ITEMS}>
-              <Icon type="profile" />
-              <FormattedMessage id="menuAllItems" />
-            </MenuItem>
-            <MenuItem key={EMenuKey.STARRED_ITEMS}>
-              <Icon type="star" />
-              <FormattedMessage id="menuStarred" />
-            </MenuItem>
-            <MenuItem key={EMenuKey.UNREAD_ITEMS}>
-              <Icon type="file-text" />
-              <FormattedMessage id="menuUnread" />
-            </MenuItem>
-            <SubMenu
-              key="subscriptions"
-              className={`feed-list ${feedsCount ? '' : 'empty'}`}
-              title={
-                <span>
-                  <Icon type="folder" />
-                  <FormattedMessage id="menuSubscriptions" />
-                </span>
-              }>
-              {feeds.map(feed => {
-                const ifeed = feedsMap.get(feed._id)
-                return (
-                  <MenuItem key={feed._id}>
-                    <Avatar
-                      shape="square"
-                      size={22}
-                      src={ifeed ? ifeed.favicon : defaultFavicon}
-                      onError={() => this.setFeedFaviconDefault(feed._id)}
-                    />
-                    <span className="feed-title" title={feed.title}>
-                      {feed.title}
-                    </span>
-                  </MenuItem>
-                )
-              })}
-            </SubMenu>
-          </Menu>
-        </div>
+        </Scrollbars>
         <div className="menu-footer">
           <div className="menu-footer-left">
             {onlineStatus && (
