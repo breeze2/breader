@@ -1,6 +1,7 @@
 import { Empty, Icon } from 'antd'
 import Immutable from 'immutable'
 import React, { PureComponent } from 'react'
+import { Scrollbars } from 'react-custom-scrollbars'
 import { injectIntl, WrappedComponentProps } from 'react-intl'
 import greyLogo from '../images/grey-logo.png'
 import { IArticle, IFeed } from '../schemas'
@@ -125,22 +126,19 @@ class ArticleView extends PureComponent<
   public handleMouseLeave = () => {
     this.setState({ hoverLink: '' })
   }
-  public handleMouseOverInfo = (link: string) => {
-    if (link) {
-      this.setState({ hoverLink: link })
-    }
-  }
   public handleMouseOverContent = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     const target = e.target as HTMLDivElement
+    const div = target.closest('.article-info') as HTMLDivElement
+    let link = ''
     if (target.tagName === 'A' && target.dataset.index) {
       const index = parseInt(target.dataset.index, 10)
-      const link = this._articleContentLinks[index]
-      this.setState({ hoverLink: link })
-    } else {
-      this.setState({ hoverLink: '' })
+      link = this._articleContentLinks[index]
+    } else if (div && div.dataset.link) {
+      link = div.dataset.link
     }
+    this.setState({ hoverLink: link })
   }
   public render() {
     let viewContent: JSX.Element
@@ -153,28 +151,25 @@ class ArticleView extends PureComponent<
         <div
           className="view-content"
           onMouseLeave={this.handleMouseLeave}
+          onMouseOver={this.handleMouseOverContent}
           onClick={this.handleContentClick}>
-          <div
-            className="article-info"
-            onMouseOver={() => this.handleMouseOverInfo(currentArticle.link)}>
-            <div className="article-date">
-              <p>{Utils.timeToDateTimeString(currentArticle.time)}</p>
+          <Scrollbars>
+            <div className="article-info" data-link={currentArticle.link}>
+              <div className="article-date">
+                <p>{Utils.timeToDateTimeString(currentArticle.time)}</p>
+              </div>
+              <div className="article-title">
+                <h1>{currentArticle.title}</h1>
+              </div>
+              <div className="article-author">
+                <p>
+                  {currentArticle.author} @{' '}
+                  {feed ? feed.title : intl.formatMessage({ id: 'unknown' })}
+                </p>
+              </div>
             </div>
-            <div className="article-title">
-              <h1>{currentArticle.title}</h1>
-            </div>
-            <div className="article-author">
-              <p>
-                {currentArticle.author} @{' '}
-                {feed ? feed.title : intl.formatMessage({ id: 'unknown' })}
-              </p>
-            </div>
-          </div>
-          <div
-            className="article-content"
-            onMouseOver={this.handleMouseOverContent}>
-            {' '}
-          </div>
+            <div className="article-content" />
+          </Scrollbars>
         </div>
       )
       if (this.state.isStarredsMap[currentArticle._id as string]) {
