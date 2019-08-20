@@ -37,141 +37,241 @@ exports[`ArticleVirtualList Testing snapshot testing 1`] = `
     className="article-virtual-list"
     onClick={[Function]}
   >
-    <AutoSizer
-      disableHeight={false}
-      disableWidth={false}
-      onResize={[Function]}
-      style={Object {}}
+    <Scrollbars
+      autoHeight={false}
+      autoHeightMax={200}
+      autoHeightMin={0}
+      autoHide={false}
+      autoHideDuration={200}
+      autoHideTimeout={1000}
+      hideTracksWhenNotNeeded={false}
+      renderThumbHorizontal={[Function]}
+      renderThumbVertical={[Function]}
+      renderTrackHorizontal={[Function]}
+      renderTrackVertical={[Function]}
+      renderView={[Function]}
+      tagName="div"
+      thumbMinSize={30}
+      universal={false}
     >
       <div
         style={
           Object {
-            "height": 0,
-            "overflow": "visible",
-            "width": 0,
+            "height": "100%",
+            "overflow": "hidden",
+            "position": "relative",
+            "width": "100%",
           }
         }
       >
-        <List
-          autoHeight={false}
-          deferredMeasurementCache={
-            CellMeasurerCache {
-              "_cellHeightCache": Object {},
-              "_cellWidthCache": Object {},
-              "_columnCount": 0,
-              "_columnWidthCache": Object {},
-              "_defaultHeight": 80,
-              "_defaultWidth": 100,
-              "_hasFixedHeight": false,
-              "_hasFixedWidth": true,
-              "_keyMapper": [Function],
-              "_minHeight": 0,
-              "_minWidth": 0,
-              "_rowCount": 0,
-              "_rowHeightCache": Object {},
-              "columnWidth": [Function],
-              "rowHeight": [Function],
+        <div
+          key="view"
+          style={
+            Object {
+              "WebkitOverflowScrolling": "touch",
+              "bottom": 0,
+              "left": 0,
+              "marginBottom": 0,
+              "marginRight": 0,
+              "overflow": "scroll",
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
             }
           }
-          estimatedRowSize={30}
-          height={0}
-          noRowsRenderer={[Function]}
-          onRowsRendered={[Function]}
-          onScroll={[Function]}
-          overscanIndicesGetter={[Function]}
-          overscanRowCount={10}
-          rowCount={1}
-          rowHeight={[Function]}
-          rowRenderer={[Function]}
-          scrollToAlignment="auto"
-          scrollToIndex={-1}
-          style={Object {}}
-          width={0}
         >
-          <Grid
-            aria-label="grid"
-            aria-readonly={true}
-            autoContainerWidth={true}
-            autoHeight={false}
-            autoWidth={false}
-            cellRangeRenderer={[Function]}
-            cellRenderer={[Function]}
-            className="ReactVirtualized__List"
-            columnCount={1}
-            columnWidth={0}
-            containerRole="rowgroup"
-            containerStyle={Object {}}
-            deferredMeasurementCache={
-              CellMeasurerCache {
-                "_cellHeightCache": Object {},
-                "_cellWidthCache": Object {},
-                "_columnCount": 0,
-                "_columnWidthCache": Object {},
-                "_defaultHeight": 80,
-                "_defaultWidth": 100,
-                "_hasFixedHeight": false,
-                "_hasFixedWidth": true,
-                "_keyMapper": [Function],
-                "_minHeight": 0,
-                "_minWidth": 0,
-                "_rowCount": 0,
-                "_rowHeightCache": Object {},
-                "columnWidth": [Function],
-                "rowHeight": [Function],
-              }
-            }
-            estimatedColumnSize={100}
-            estimatedRowSize={30}
-            getScrollbarSize={[Function]}
-            height={0}
-            isScrollingOptOut={false}
-            noContentRenderer={[Function]}
-            noRowsRenderer={[Function]}
-            onRowsRendered={[Function]}
-            onScroll={[Function]}
-            onScrollbarPresenceChange={[Function]}
-            onSectionRendered={[Function]}
-            overscanColumnCount={0}
-            overscanIndicesGetter={[Function]}
-            overscanRowCount={10}
-            role="grid"
-            rowCount={1}
-            rowHeight={[Function]}
-            rowRenderer={[Function]}
-            scrollToAlignment="auto"
-            scrollToColumn={-1}
-            scrollToIndex={-1}
-            scrollToRow={-1}
-            scrollingResetTimeInterval={150}
+          <AutoSizer
+            disableHeight={false}
+            disableWidth={false}
+            onResize={[Function]}
             style={Object {}}
-            tabIndex={0}
-            width={0}
           >
             <div
-              aria-label="grid"
-              aria-readonly={true}
-              className="ReactVirtualized__Grid ReactVirtualized__List"
-              onScroll={[Function]}
-              role="grid"
               style={
                 Object {
-                  "WebkitOverflowScrolling": "touch",
-                  "boxSizing": "border-box",
-                  "direction": "ltr",
                   "height": 0,
-                  "overflowX": "hidden",
-                  "overflowY": "auto",
-                  "position": "relative",
+                  "overflow": "visible",
                   "width": 0,
-                  "willChange": "transform",
                 }
               }
-              tabIndex={0}
-            />
-          </Grid>
-        </List>
+            >
+              <List
+                autoHeight={false}
+                deferredMeasurementCache={
+                  CellMeasurerCache {
+                    "_cellHeightCache": Object {},
+                    "_cellWidthCache": Object {},
+                    "_columnCount": 0,
+                    "_columnWidthCache": Object {},
+                    "_defaultHeight": 80,
+                    "_defaultWidth": 100,
+                    "_hasFixedHeight": false,
+                    "_hasFixedWidth": true,
+                    "_keyMapper": [Function],
+                    "_minHeight": 0,
+                    "_minWidth": 0,
+                    "_rowCount": 0,
+                    "_rowHeightCache": Object {},
+                    "columnWidth": [Function],
+                    "rowHeight": [Function],
+                  }
+                }
+                estimatedRowSize={30}
+                height={0}
+                noRowsRenderer={[Function]}
+                onRowsRendered={[Function]}
+                onScroll={[Function]}
+                overscanIndicesGetter={[Function]}
+                overscanRowCount={10}
+                rowCount={1}
+                rowHeight={[Function]}
+                rowRenderer={[Function]}
+                scrollToAlignment="auto"
+                scrollToIndex={-1}
+                style={Object {}}
+                width={0}
+              >
+                <Grid
+                  aria-label="grid"
+                  aria-readonly={true}
+                  autoContainerWidth={true}
+                  autoHeight={false}
+                  autoWidth={false}
+                  cellRangeRenderer={[Function]}
+                  cellRenderer={[Function]}
+                  className="ReactVirtualized__List"
+                  columnCount={1}
+                  columnWidth={0}
+                  containerRole="rowgroup"
+                  containerStyle={Object {}}
+                  deferredMeasurementCache={
+                    CellMeasurerCache {
+                      "_cellHeightCache": Object {},
+                      "_cellWidthCache": Object {},
+                      "_columnCount": 0,
+                      "_columnWidthCache": Object {},
+                      "_defaultHeight": 80,
+                      "_defaultWidth": 100,
+                      "_hasFixedHeight": false,
+                      "_hasFixedWidth": true,
+                      "_keyMapper": [Function],
+                      "_minHeight": 0,
+                      "_minWidth": 0,
+                      "_rowCount": 0,
+                      "_rowHeightCache": Object {},
+                      "columnWidth": [Function],
+                      "rowHeight": [Function],
+                    }
+                  }
+                  estimatedColumnSize={100}
+                  estimatedRowSize={30}
+                  getScrollbarSize={[Function]}
+                  height={0}
+                  isScrollingOptOut={false}
+                  noContentRenderer={[Function]}
+                  noRowsRenderer={[Function]}
+                  onRowsRendered={[Function]}
+                  onScroll={[Function]}
+                  onScrollbarPresenceChange={[Function]}
+                  onSectionRendered={[Function]}
+                  overscanColumnCount={0}
+                  overscanIndicesGetter={[Function]}
+                  overscanRowCount={10}
+                  role="grid"
+                  rowCount={1}
+                  rowHeight={[Function]}
+                  rowRenderer={[Function]}
+                  scrollToAlignment="auto"
+                  scrollToColumn={-1}
+                  scrollToIndex={-1}
+                  scrollToRow={-1}
+                  scrollingResetTimeInterval={150}
+                  style={Object {}}
+                  tabIndex={0}
+                  width={0}
+                >
+                  <div
+                    aria-label="grid"
+                    aria-readonly={true}
+                    className="ReactVirtualized__Grid ReactVirtualized__List"
+                    onScroll={[Function]}
+                    role="grid"
+                    style={
+                      Object {
+                        "WebkitOverflowScrolling": "touch",
+                        "boxSizing": "border-box",
+                        "direction": "ltr",
+                        "height": 0,
+                        "overflowX": "hidden",
+                        "overflowY": "auto",
+                        "position": "relative",
+                        "width": 0,
+                        "willChange": "transform",
+                      }
+                    }
+                    tabIndex={0}
+                  />
+                </Grid>
+              </List>
+            </div>
+          </AutoSizer>
+        </div>
+        <div
+          key="trackHorizontal"
+          style={
+            Object {
+              "borderRadius": 3,
+              "bottom": 2,
+              "display": "none",
+              "height": 6,
+              "left": 2,
+              "position": "absolute",
+              "right": 2,
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "backgroundColor": "rgba(0,0,0,.2)",
+                "borderRadius": "inherit",
+                "cursor": "pointer",
+                "display": "block",
+                "height": "100%",
+                "position": "relative",
+              }
+            }
+          />
+        </div>
+        <div
+          key="trackVertical"
+          style={
+            Object {
+              "borderRadius": 3,
+              "bottom": 2,
+              "display": "none",
+              "position": "absolute",
+              "right": 2,
+              "top": 2,
+              "width": 6,
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "backgroundColor": "rgba(0,0,0,.2)",
+                "borderRadius": "inherit",
+                "cursor": "pointer",
+                "display": "block",
+                "position": "relative",
+                "width": "100%",
+              }
+            }
+          />
+        </div>
       </div>
-    </AutoSizer>
+    </Scrollbars>
   </div>
 </ArticleVirtualList>
 `;

@@ -1,6 +1,7 @@
 import { Empty } from 'antd'
 import Immutable from 'immutable'
 import React, { PureComponent, RefObject } from 'react'
+import { Scrollbars } from 'react-custom-scrollbars'
 import {
   AutoSizer,
   CellMeasurer,
@@ -135,21 +136,23 @@ class ArticleVirtualList extends PureComponent<
         {this.state.isAffixVisible && (
           <div className="list-affix">{this.state.renderStartDate}</div>
         )}
-        <AutoSizer>
-          {({ width, height }) => (
-            <VList
-              ref={this.vlist}
-              width={width}
-              height={height}
-              deferredMeasurementCache={this.state.cellCache}
-              rowCount={this.props.articles.size}
-              rowHeight={this.state.cellCache.rowHeight}
-              rowRenderer={(info: any) => this._rowRenderer(info)}
-              noRowsRenderer={() => this._noRowsRenderer()}
-              onScroll={(info: any) => this._onScroll(info)}
-            />
-          )}
-        </AutoSizer>
+        <Scrollbars>
+          <AutoSizer>
+            {({ width, height }) => (
+              <VList
+                ref={this.vlist}
+                width={width}
+                height={height}
+                deferredMeasurementCache={this.state.cellCache}
+                rowCount={this.props.articles.size}
+                rowHeight={this.state.cellCache.rowHeight}
+                rowRenderer={(info: any) => this._rowRenderer(info)}
+                noRowsRenderer={() => this._noRowsRenderer()}
+                onScroll={(info: any) => this._onScroll(info)}
+              />
+            )}
+          </AutoSizer>
+        </Scrollbars>
       </div>
     )
   }
