@@ -113,14 +113,16 @@ class ArticleVirtualList extends PureComponent<
             return sbar.getScrollTop() < top
           }
         ).then(() => {
-          const items = document.querySelectorAll('.vlist-item')
-          items.forEach((item: any) => {
-            if (
-              item.dataset.index === index ||
-              item.dataset.index === index + ''
-            ) {
-              item.click()
-            }
+          setImmediate(() => {
+            const items = document.querySelectorAll('.vlist-item')
+            items.forEach((item: any) => {
+              if (
+                item.dataset.index === index ||
+                item.dataset.index === index + ''
+              ) {
+                item.click()
+              }
+            })
           })
         })
       }

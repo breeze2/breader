@@ -1,6 +1,7 @@
 import { Avatar, Button, List as AntdList, Modal, Select } from 'antd'
 import Immutable from 'immutable'
 import React, { Component } from 'react'
+import { Scrollbars } from 'react-custom-scrollbars'
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl'
 import { IFeed } from '../schemas'
 
@@ -115,32 +116,34 @@ class SettingsModal extends Component<
             <p>
               <FormattedMessage id="feeds" />
             </p>
-            <AntdList
-              bordered
-              split
-              size="small"
-              itemLayout="horizontal"
-              dataSource={this.state.allFeeds}
-              renderItem={(feed: IFeed, index: number) => (
-                <AntdList.Item
-                  className="settings-feed-item"
-                  key={feed._id}
-                  actions={[
-                    <Button
-                      key={`${feed._id}_button_1`}
-                      size="small"
-                      type="danger"
-                      onClick={() => this.handleDeleteClick(feed._id, index)}>
-                      <FormattedMessage id="delete" />
-                    </Button>,
-                  ]}>
-                  <p title={feed.url} className="feed-item-content">
-                    <Avatar shape="square" size={16} src={feed.favicon} />{' '}
-                    {feed.title}
-                  </p>
-                </AntdList.Item>
-              )}
-            />
+            <Scrollbars autoHeight autoHeightMax={220} autoHeightMin={220}>
+              <AntdList
+                bordered
+                split
+                size="small"
+                itemLayout="horizontal"
+                dataSource={this.state.allFeeds}
+                renderItem={(feed: IFeed, index: number) => (
+                  <AntdList.Item
+                    className="settings-feed-item"
+                    key={feed._id}
+                    actions={[
+                      <Button
+                        key={`${feed._id}_button_1`}
+                        size="small"
+                        type="danger"
+                        onClick={() => this.handleDeleteClick(feed._id, index)}>
+                        <FormattedMessage id="delete" />
+                      </Button>,
+                    ]}>
+                    <p title={feed.url} className="feed-item-content">
+                      <Avatar shape="square" size={16} src={feed.favicon} />{' '}
+                      {feed.title}
+                    </p>
+                  </AntdList.Item>
+                )}
+              />
+            </Scrollbars>
           </div>
         </div>
       </Modal>
