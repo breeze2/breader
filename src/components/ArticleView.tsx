@@ -83,7 +83,7 @@ class ArticleView extends PureComponent<
     }
     this._articleContentIsAppended = true
     const div = document.querySelector(
-      '.article-view>.view-content .article-content'
+      '.article-view .view-content .article-content'
     )
     if (div && this._articleContentElement) {
       while (div.firstChild) {
@@ -148,12 +148,12 @@ class ArticleView extends PureComponent<
       const { currentArticle, feedsMap, intl } = this.props
       const feed = feedsMap.get(currentArticle.feedId)
       viewContent = (
-        <div
-          className="view-content"
-          onMouseLeave={this.handleMouseLeave}
-          onMouseOver={this.handleMouseOverContent}
-          onClick={this.handleContentClick}>
-          <Scrollbars>
+        <Scrollbars>
+          <div
+            className="view-content"
+            onMouseLeave={this.handleMouseLeave}
+            onMouseOver={this.handleMouseOverContent}
+            onClick={this.handleContentClick}>
             <div className="article-info" data-link={currentArticle.link}>
               <div className="article-date">
                 <p>{Utils.timeToDateTimeString(currentArticle.time)}</p>
@@ -169,8 +169,8 @@ class ArticleView extends PureComponent<
               </div>
             </div>
             <div className="article-content" />
-          </Scrollbars>
-        </div>
+          </div>
+        </Scrollbars>
       )
       if (this.state.isStarredsMap[currentArticle._id as string]) {
         starIcon = (

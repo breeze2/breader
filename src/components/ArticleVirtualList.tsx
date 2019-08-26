@@ -59,11 +59,13 @@ class ArticleVirtualList extends PureComponent<
     }
     return null
   }
+  public scrollbar: RefObject<Scrollbars>
   public vlist: RefObject<VList>
   public updateRenderStartDate: (...params: any[]) => void
   public constructor(props: IArticleVirtualListProps) {
     super(props)
-    this.vlist = React.createRef()
+    this.vlist = React.createRef<VList>()
+    this.scrollbar = React.createRef<Scrollbars>()
     this.state = {
       cellCache: new CellMeasurerCache({
         defaultHeight: 80,
@@ -84,10 +86,11 @@ class ArticleVirtualList extends PureComponent<
   public componentDidUpdate(prevProps: IArticleVirtualListProps) {
     const props = this.props
     const vlist = this.vlist.current
+    const sbar = this.scrollbar.current
     const index = props.scrollToIndex
     if (props.selectedMenuKey !== prevProps.selectedMenuKey) {
-      if (vlist) {
-        vlist.scrollToRow(0)
+      if (sbar) {
+        sbar.scrollToTop()
       }
       return
     }
@@ -96,9 +99,20 @@ class ArticleVirtualList extends PureComponent<
       index > -1 &&
       index !== prevProps.scrollToIndex
     ) {
-      if (vlist) {
-        vlist.scrollToRow(index)
-        setImmediate(() => {
+      if (sbar && vlist && vlist.Grid) {
+        Utils.asyncRedo(
+          () => {
+            return new Promise(resolve => {
+              const top = vlist.getOffsetForRow({ index })
+              sbar.scrollTop(top)
+              setImmediate(resolve)
+            })
+          },
+          () => {
+            const top = vlist.getOffsetForRow({ index })
+            return sbar.getScrollTop() < top
+          }
+        ).then(() => {
           const items = document.querySelectorAll('.vlist-item')
           items.forEach((item: any) => {
             if (
@@ -130,19 +144,32 @@ class ArticleVirtualList extends PureComponent<
       }
     }
   }
+  public handleScrollbarScroll = (event: React.UIEvent) => {
+    const vlist = this.vlist.current
+    if (vlist && vlist.Grid) {
+      const target = event.target
+      const { scrollTop, scrollLeft } = target as HTMLDivElement
+      vlist.Grid.handleScrollEvent({ scrollTop, scrollLeft })
+    }
+  }
   public render() {
     return (
       <div className="article-virtual-list" onClick={this.handleClick}>
         {this.state.isAffixVisible && (
           <div className="list-affix">{this.state.renderStartDate}</div>
         )}
-        <Scrollbars>
-          <AutoSizer>
-            {({ width, height }) => (
+        <AutoSizer>
+          {({ width, height }) => (
+            <Scrollbars
+              autoHide
+              ref={this.scrollbar}
+              style={{ width, height }}
+              onScroll={this.handleScrollbarScroll}>
               <VList
                 ref={this.vlist}
                 width={width}
                 height={height}
+                style={{ overflowX: 'visible', overflowY: 'visible' }}
                 deferredMeasurementCache={this.state.cellCache}
                 rowCount={this.props.articles.size}
                 rowHeight={this.state.cellCache.rowHeight}
@@ -150,9 +177,9 @@ class ArticleVirtualList extends PureComponent<
                 noRowsRenderer={() => this._noRowsRenderer()}
                 onScroll={(info: any) => this._onScroll(info)}
               />
-            )}
-          </AutoSizer>
-        </Scrollbars>
+            </Scrollbars>
+          )}
+        </AutoSizer>
       </div>
     )
   }
@@ -186,7 +213,7 @@ class ArticleVirtualList extends PureComponent<
   }
   private _noRowsRenderer() {
     return (
-      <div style={{ marginTop: '30px' }}>
+      <div style={{ paddingTop: '30px' }}>
         <Empty />
       </div>
     )
