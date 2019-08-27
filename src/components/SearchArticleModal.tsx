@@ -1,6 +1,7 @@
 import { Input, Modal } from 'antd'
 import Immutable from 'immutable'
 import React, { Component } from 'react'
+import { Scrollbars } from 'react-custom-scrollbars'
 import { injectIntl, WrappedComponentProps } from 'react-intl'
 import ArticleItem from '../containers/ArticleItem'
 import { IArticle } from '../schemas'
@@ -90,21 +91,25 @@ class SearchArticleModal extends Component<
           onSearch={this.handleSubmit}
         />
         <div className="matched-list">
-          {this.state.matchedArticles.map((article: IArticle) => (
-            <div
-              key={article._id}
-              onClick={() => this.props.onItemChoose(article.index as number)}>
-              <ArticleItem
-                author={article.author}
-                guid={article._id}
-                time={article.time}
-                feedId={article.feedId}
-                title={article.title}
-                summary={article.summary}
-                className="item-is-unread"
-              />
-            </div>
-          ))}
+          <Scrollbars autoHide autoHeight autoHeightMax={'calc(100vh - 164px)'}>
+            {this.state.matchedArticles.map((article: IArticle) => (
+              <div
+                key={article._id}
+                onClick={() =>
+                  this.props.onItemChoose(article.index as number)
+                }>
+                <ArticleItem
+                  author={article.author}
+                  guid={article._id}
+                  time={article.time}
+                  feedId={article.feedId}
+                  title={article.title}
+                  summary={article.summary}
+                  className="item-is-unread"
+                />
+              </div>
+            ))}
+          </Scrollbars>
         </div>
       </Modal>
     )

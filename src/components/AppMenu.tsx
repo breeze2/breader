@@ -149,8 +149,8 @@ class AppMenu extends Component<
     const feedsCount = feeds.size
     return (
       <div className="app-menu">
-        <Scrollbars>
-          <div className="menu-content">
+        <div className="menu-content">
+          <Scrollbars autoHide>
             <div className="menu-header">
               <div className="app-logo" />
               <p className="date-text">{new Date().toDateString()}</p>
@@ -200,8 +200,8 @@ class AppMenu extends Component<
                 })}
               </SubMenu>
             </Menu>
-          </div>
-        </Scrollbars>
+          </Scrollbars>
+        </div>
         <div className="menu-footer">
           <div className="menu-footer-left">
             {onlineStatus && (

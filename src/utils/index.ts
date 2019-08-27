@@ -55,7 +55,20 @@ export function sleep(sec: number) {
   return new Promise(resolve => setTimeout(resolve, sec * 1000))
 }
 
+export async function asyncRedo<T = any>(
+  todo: () => Promise<T>,
+  until: (t: T) => boolean
+) {
+  let result = await todo()
+  while (until(result)) {
+    result = await todo()
+  }
+  return result
+}
+
 const Utils = {
+  asyncRedo,
+
   debounce,
   throttle,
 
