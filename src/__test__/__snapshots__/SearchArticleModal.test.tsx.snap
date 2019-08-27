@@ -259,7 +259,29 @@ exports[`SearchArticleModal Testing snapshot testing 1`] = `
                               </span>
                               <div
                                 class="matched-list"
-                              />
+                              >
+                                <div
+                                  style="position: relative; overflow: hidden; width: 100%; height: auto; min-height: 0; max-height: calc(100vh - 164px);"
+                                >
+                                  <div
+                                    style="position: relative; overflow: scroll; margin-right: 0px; margin-bottom: 0px; min-height: 0; max-height: calc(calc(100vh - 164px) + 0px);"
+                                  />
+                                  <div
+                                    style="position: absolute; height: 6px; transition: opacity 200ms; opacity: 0; display: none; right: 2px; bottom: 2px; left: 2px; border-radius: 3px;"
+                                  >
+                                    <div
+                                      style="position: relative; display: block; height: 100%; cursor: pointer; border-radius: inherit; background-color: rgba(0, 0, 0, 0.2);"
+                                    />
+                                  </div>
+                                  <div
+                                    style="position: absolute; width: 6px; transition: opacity 200ms; opacity: 0; display: none; right: 2px; bottom: 2px; top: 2px; border-radius: 3px;"
+                                  >
+                                    <div
+                                      style="position: relative; display: block; width: 100%; cursor: pointer; border-radius: inherit; background-color: rgba(0, 0, 0, 0.2);"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
                             </div>
                           </div>
                           <div
@@ -510,7 +532,115 @@ exports[`SearchArticleModal Testing snapshot testing 1`] = `
                                   <div
                                     className="matched-list"
                                   >
-                                    <Component />
+                                    <Scrollbars
+                                      autoHeight={true}
+                                      autoHeightMax="calc(100vh - 164px)"
+                                      autoHeightMin={0}
+                                      autoHide={true}
+                                      autoHideDuration={200}
+                                      autoHideTimeout={1000}
+                                      hideTracksWhenNotNeeded={false}
+                                      renderThumbHorizontal={[Function]}
+                                      renderThumbVertical={[Function]}
+                                      renderTrackHorizontal={[Function]}
+                                      renderTrackVertical={[Function]}
+                                      renderView={[Function]}
+                                      tagName="div"
+                                      thumbMinSize={30}
+                                      universal={false}
+                                    >
+                                      <div
+                                        style={
+                                          Object {
+                                            "height": "auto",
+                                            "maxHeight": "calc(100vh - 164px)",
+                                            "minHeight": 0,
+                                            "overflow": "hidden",
+                                            "position": "relative",
+                                            "width": "100%",
+                                          }
+                                        }
+                                      >
+                                        <div
+                                          key="view"
+                                          style={
+                                            Object {
+                                              "WebkitOverflowScrolling": "touch",
+                                              "bottom": undefined,
+                                              "left": undefined,
+                                              "marginBottom": 0,
+                                              "marginRight": 0,
+                                              "maxHeight": "calc(calc(100vh - 164px) + 0px)",
+                                              "minHeight": 0,
+                                              "overflow": "scroll",
+                                              "position": "relative",
+                                              "right": undefined,
+                                              "top": undefined,
+                                            }
+                                          }
+                                        >
+                                          <Component />
+                                        </div>
+                                        <div
+                                          key="trackHorizontal"
+                                          style={
+                                            Object {
+                                              "borderRadius": 3,
+                                              "bottom": 2,
+                                              "display": "none",
+                                              "height": 6,
+                                              "left": 2,
+                                              "opacity": 0,
+                                              "position": "absolute",
+                                              "right": 2,
+                                              "transition": "opacity 200ms",
+                                            }
+                                          }
+                                        >
+                                          <div
+                                            style={
+                                              Object {
+                                                "backgroundColor": "rgba(0,0,0,.2)",
+                                                "borderRadius": "inherit",
+                                                "cursor": "pointer",
+                                                "display": "block",
+                                                "height": "100%",
+                                                "position": "relative",
+                                              }
+                                            }
+                                          />
+                                        </div>
+                                        <div
+                                          key="trackVertical"
+                                          style={
+                                            Object {
+                                              "borderRadius": 3,
+                                              "bottom": 2,
+                                              "display": "none",
+                                              "opacity": 0,
+                                              "position": "absolute",
+                                              "right": 2,
+                                              "top": 2,
+                                              "transition": "opacity 200ms",
+                                              "width": 6,
+                                            }
+                                          }
+                                        >
+                                          <div
+                                            style={
+                                              Object {
+                                                "backgroundColor": "rgba(0,0,0,.2)",
+                                                "borderRadius": "inherit",
+                                                "cursor": "pointer",
+                                                "display": "block",
+                                                "position": "relative",
+                                                "width": "100%",
+                                              }
+                                            }
+                                          />
+                                        </div>
+                                      </div>
+                                    </Scrollbars>
                                   </div>
                                 </div>
                               </div>

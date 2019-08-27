@@ -206,61 +206,68 @@ exports[`ArticleList Testing snapshot testing 1`] = `
                     className="article-virtual-list"
                     onClick={[Function]}
                   >
-                    <Scrollbars
-                      autoHeight={false}
-                      autoHeightMax={200}
-                      autoHeightMin={0}
-                      autoHide={false}
-                      autoHideDuration={200}
-                      autoHideTimeout={1000}
-                      hideTracksWhenNotNeeded={false}
-                      renderThumbHorizontal={[Function]}
-                      renderThumbVertical={[Function]}
-                      renderTrackHorizontal={[Function]}
-                      renderTrackVertical={[Function]}
-                      renderView={[Function]}
-                      tagName="div"
-                      thumbMinSize={30}
-                      universal={false}
+                    <AutoSizer
+                      disableHeight={false}
+                      disableWidth={false}
+                      onResize={[Function]}
+                      style={Object {}}
                     >
                       <div
                         style={
                           Object {
-                            "height": "100%",
-                            "overflow": "hidden",
-                            "position": "relative",
-                            "width": "100%",
+                            "height": 0,
+                            "overflow": "visible",
+                            "width": 0,
                           }
                         }
                       >
-                        <div
-                          key="view"
+                        <Scrollbars
+                          autoHeight={false}
+                          autoHeightMax={200}
+                          autoHeightMin={0}
+                          autoHide={true}
+                          autoHideDuration={200}
+                          autoHideTimeout={1000}
+                          hideTracksWhenNotNeeded={false}
+                          onScroll={[Function]}
+                          renderThumbHorizontal={[Function]}
+                          renderThumbVertical={[Function]}
+                          renderTrackHorizontal={[Function]}
+                          renderTrackVertical={[Function]}
+                          renderView={[Function]}
                           style={
                             Object {
-                              "WebkitOverflowScrolling": "touch",
-                              "bottom": 0,
-                              "left": 0,
-                              "marginBottom": 0,
-                              "marginRight": 0,
-                              "overflow": "scroll",
-                              "position": "absolute",
-                              "right": 0,
-                              "top": 0,
+                              "height": 0,
+                              "width": 0,
                             }
                           }
+                          tagName="div"
+                          thumbMinSize={30}
+                          universal={false}
                         >
-                          <AutoSizer
-                            disableHeight={false}
-                            disableWidth={false}
-                            onResize={[Function]}
-                            style={Object {}}
+                          <div
+                            style={
+                              Object {
+                                "height": 0,
+                                "overflow": "hidden",
+                                "position": "relative",
+                                "width": 0,
+                              }
+                            }
                           >
                             <div
+                              key="view"
                               style={
                                 Object {
-                                  "height": 0,
-                                  "overflow": "visible",
-                                  "width": 0,
+                                  "WebkitOverflowScrolling": "touch",
+                                  "bottom": 0,
+                                  "left": 0,
+                                  "marginBottom": 0,
+                                  "marginRight": 0,
+                                  "overflow": "scroll",
+                                  "position": "absolute",
+                                  "right": 0,
+                                  "top": 0,
                                 }
                               }
                             >
@@ -297,7 +304,12 @@ exports[`ArticleList Testing snapshot testing 1`] = `
                                 rowRenderer={[Function]}
                                 scrollToAlignment="auto"
                                 scrollToIndex={-1}
-                                style={Object {}}
+                                style={
+                                  Object {
+                                    "overflowX": "visible",
+                                    "overflowY": "visible",
+                                  }
+                                }
                                 width={0}
                               >
                                 <Grid
@@ -355,7 +367,12 @@ exports[`ArticleList Testing snapshot testing 1`] = `
                                   scrollToIndex={-1}
                                   scrollToRow={-1}
                                   scrollingResetTimeInterval={150}
-                                  style={Object {}}
+                                  style={
+                                    Object {
+                                      "overflowX": "visible",
+                                      "overflowY": "visible",
+                                    }
+                                  }
                                   tabIndex={0}
                                   width={0}
                                 >
@@ -371,8 +388,8 @@ exports[`ArticleList Testing snapshot testing 1`] = `
                                         "boxSizing": "border-box",
                                         "direction": "ltr",
                                         "height": 0,
-                                        "overflowX": "hidden",
-                                        "overflowY": "auto",
+                                        "overflowX": "visible",
+                                        "overflowY": "visible",
                                         "position": "relative",
                                         "width": 0,
                                         "willChange": "transform",
@@ -383,64 +400,68 @@ exports[`ArticleList Testing snapshot testing 1`] = `
                                 </Grid>
                               </List>
                             </div>
-                          </AutoSizer>
-                        </div>
-                        <div
-                          key="trackHorizontal"
-                          style={
-                            Object {
-                              "borderRadius": 3,
-                              "bottom": 2,
-                              "display": "none",
-                              "height": 6,
-                              "left": 2,
-                              "position": "absolute",
-                              "right": 2,
-                            }
-                          }
-                        >
-                          <div
-                            style={
-                              Object {
-                                "backgroundColor": "rgba(0,0,0,.2)",
-                                "borderRadius": "inherit",
-                                "cursor": "pointer",
-                                "display": "block",
-                                "height": "100%",
-                                "position": "relative",
+                            <div
+                              key="trackHorizontal"
+                              style={
+                                Object {
+                                  "borderRadius": 3,
+                                  "bottom": 2,
+                                  "display": "none",
+                                  "height": 6,
+                                  "left": 2,
+                                  "opacity": 0,
+                                  "position": "absolute",
+                                  "right": 2,
+                                  "transition": "opacity 200ms",
+                                }
                               }
-                            }
-                          />
-                        </div>
-                        <div
-                          key="trackVertical"
-                          style={
-                            Object {
-                              "borderRadius": 3,
-                              "bottom": 2,
-                              "display": "none",
-                              "position": "absolute",
-                              "right": 2,
-                              "top": 2,
-                              "width": 6,
-                            }
-                          }
-                        >
-                          <div
-                            style={
-                              Object {
-                                "backgroundColor": "rgba(0,0,0,.2)",
-                                "borderRadius": "inherit",
-                                "cursor": "pointer",
-                                "display": "block",
-                                "position": "relative",
-                                "width": "100%",
+                            >
+                              <div
+                                style={
+                                  Object {
+                                    "backgroundColor": "rgba(0,0,0,.2)",
+                                    "borderRadius": "inherit",
+                                    "cursor": "pointer",
+                                    "display": "block",
+                                    "height": "100%",
+                                    "position": "relative",
+                                  }
+                                }
+                              />
+                            </div>
+                            <div
+                              key="trackVertical"
+                              style={
+                                Object {
+                                  "borderRadius": 3,
+                                  "bottom": 2,
+                                  "display": "none",
+                                  "opacity": 0,
+                                  "position": "absolute",
+                                  "right": 2,
+                                  "top": 2,
+                                  "transition": "opacity 200ms",
+                                  "width": 6,
+                                }
                               }
-                            }
-                          />
-                        </div>
+                            >
+                              <div
+                                style={
+                                  Object {
+                                    "backgroundColor": "rgba(0,0,0,.2)",
+                                    "borderRadius": "inherit",
+                                    "cursor": "pointer",
+                                    "display": "block",
+                                    "position": "relative",
+                                    "width": "100%",
+                                  }
+                                }
+                              />
+                            </div>
+                          </div>
+                        </Scrollbars>
                       </div>
-                    </Scrollbars>
+                    </AutoSizer>
                   </div>
                 </ArticleVirtualList>
               </Connect(ArticleVirtualList)>
