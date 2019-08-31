@@ -54,7 +54,6 @@
   "dependencies": {
     "@sentry/electron": "^0.17.3",
     "chardet": "^0.8.0",
-    "custom-electron-titlebar": "^3.1.0",
     "electron-is-dev": "^1.0.1",
     "electron-updater": "^4.1.2",
     "feedparser": "^2.2.9",
@@ -82,6 +81,7 @@
     "babel-plugin-import": "^1.11.0",
     "concurrently": "^4.1.1",
     "coveralls": "^3.0.5",
+    "custom-electron-titlebar": "^3.1.0",
     "customize-cra": "^0.2.11",
     "electron": "^6.0.2",
     "electron-builder": "^21.1.5",
