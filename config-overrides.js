@@ -8,7 +8,7 @@ const webpack = require('webpack')
 
 const setWebpackExternalsPlugin = config => {
   const external = function(context, request, callback) {
-    if (/^(iconv-lite|feedparser)$/.test(request)) {
+    if (/^(iconv-lite|feedparser|custom-electron-titlebar)$/.test(request)) {
       return callback(null, 'commonjs ' + request)
     }
     callback()
