@@ -3,6 +3,7 @@ import Immutable from 'immutable'
 import React, { Component } from 'react'
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl'
 import { IFeed } from '../schemas'
+import Utils from '../utils'
 
 import '../styles/SettingsModal.less'
 
@@ -121,6 +122,9 @@ class SettingsModal extends Component<
               size="small"
               itemLayout="horizontal"
               dataSource={this.state.allFeeds}
+              style={{
+                maxHeight: `calc(${Utils.getClientHightForCalc()} - 330px)`,
+              }}
               renderItem={(feed: IFeed, index: number) => (
                 <AntdList.Item
                   className="settings-feed-item"
