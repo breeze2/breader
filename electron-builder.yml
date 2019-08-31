@@ -5,12 +5,12 @@ artifactName: ${productName}-${version}.${ext}
 asar: true
 mac:
   category: news
-  icon: build/icon.png
+  icon: build/icons/mac/app.icns
 linux:
   category: news
-  icon: build/icon.png
+  icon: build/icons/png
 win:
-  icon: build/icon.png
+  icon: build/icons/win/app.ico
   target: nsis
 nsis:
   allowToChangeInstallationDirectory: true
