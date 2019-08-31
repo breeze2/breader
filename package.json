@@ -54,6 +54,7 @@
   "dependencies": {
     "@sentry/electron": "^0.17.3",
     "chardet": "^0.8.0",
+    "custom-electron-titlebar": "^3.1.0",
     "electron-is-dev": "^1.0.1",
     "electron-updater": "^4.1.2",
     "feedparser": "^2.2.9",
