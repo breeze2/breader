@@ -3,6 +3,7 @@
 .app-menu {
   -webkit-user-select: none;
   -webkit-app-region: drag;
+
   background-color: @dark-background-color;
   color: @white-text-color;
   position: relative;
@@ -164,4 +165,7 @@
       margin-right: 16px;
     }
   }
+}
+.is-windows .app-menu {
+  -webkit-app-region: none;
 }

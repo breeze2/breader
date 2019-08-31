@@ -91,7 +91,10 @@ class SearchArticleModal extends Component<
           onSearch={this.handleSubmit}
         />
         <div className="matched-list">
-          <Scrollbars autoHide autoHeight autoHeightMax={'calc(100vh - 164px)'}>
+          <Scrollbars
+            autoHide
+            autoHeight
+            autoHeightMax={`calc(${Utils.getClientHightForCalc()} - 164px)`}>
             {this.state.matchedArticles.map((article: IArticle) => (
               <div
                 key={article._id}
