@@ -26,6 +26,7 @@ function createWindow() {
     minWidth: 960,
     width: 960,
 
+    show: false,
     titleBarStyle: 'hiddenInset',
     vibrancy: 'dark',
   })
@@ -60,6 +61,11 @@ function createWindow() {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     mainWindow = null
+  })
+  mainWindow.once('ready-to-show', () => {
+    if (mainWindow) {
+      mainWindow.show()
+    }
   })
 }
 

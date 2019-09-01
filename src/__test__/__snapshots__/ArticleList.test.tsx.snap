@@ -75,6 +75,7 @@ exports[`ArticleList Testing snapshot testing 1`] = `
         articlesFilter="ALL"
         asyncFilterArticles={[Function]}
         asyncSetAllArticlesRead={[Function]}
+        feeds={Immutable.List []}
         isFetchingArticles={false}
         selectedMenuKey="ALL_ITEMS"
       >
@@ -108,6 +109,7 @@ exports[`ArticleList Testing snapshot testing 1`] = `
           articlesFilter="ALL"
           asyncFilterArticles={[Function]}
           asyncSetAllArticlesRead={[Function]}
+          feeds={Immutable.List []}
           intl={
             Object {
               "defaultFormats": Object {},

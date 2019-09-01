@@ -5,7 +5,7 @@ import React, { Component } from 'react'
 import { injectIntl, WrappedComponentProps } from 'react-intl'
 import ArticleVirtualList from '../containers/ArticleVirtualList'
 import SearchArticleModal from '../containers/SearchArticleModal'
-import { EArticleFilter, EMenuKey, IArticle } from '../schemas'
+import { EArticleFilter, EMenuKey, IArticle, IFeed } from '../schemas'
 import ArticleListSkeleton from '../skeletons/ArticleListSkeleton'
 
 import '../styles/ArticleList.less'
@@ -19,6 +19,7 @@ export interface IArticleListOwnProps {}
 export interface IArticleListReduxState {
   articles: Immutable.List<IArticle>
   articlesFilter: string
+  feeds: Immutable.List<IFeed>
   isFetchingArticles: boolean
   selectedMenuKey: string
 }
@@ -89,13 +90,20 @@ class ArticleList extends Component<
   }
 
   public render() {
+    const {
+      articlesFilter,
+      feeds,
+      isFetchingArticles,
+      selectedMenuKey,
+    } = this.props
+    const { chooseItemIndex, isSearchArticleModalVisible } = this.state
     return (
       <div className="article-list">
         <div className="list-header">
-          {!(this.props.selectedMenuKey in EMenuKey) && (
+          {!(selectedMenuKey in EMenuKey) && (
             <div className="list-header-right">
               <RadioGroup
-                defaultValue={this.props.articlesFilter}
+                defaultValue={articlesFilter}
                 size="small"
                 onChange={this.handleRadioChange}>
                 <RadioButton value={EArticleFilter.STARRED}>
@@ -112,7 +120,7 @@ class ArticleList extends Component<
           )}
         </div>
         <div className="list-content">
-          <ArticleVirtualList scrollToIndex={this.state.chooseItemIndex} />
+          <ArticleVirtualList scrollToIndex={chooseItemIndex} />
         </div>
         <div className="list-footer">
           <div className="list-footer-left">
@@ -135,11 +143,11 @@ class ArticleList extends Component<
         <ArticleListSkeleton
           row={8}
           style={{
-            display: this.props.isFetchingArticles ? 'block' : 'none',
+            display: isFetchingArticles && feeds.size ? 'block' : 'none',
           }}
         />
         <SearchArticleModal
-          visible={this.state.isSearchArticleModalVisible}
+          visible={isSearchArticleModalVisible}
           onCancel={this.handleSearchCancel}
           onItemChoose={this.handleSearchItemChoose}
         />
