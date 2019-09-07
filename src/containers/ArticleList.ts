@@ -19,6 +19,7 @@ const mapStateToProps: MapStateToProps<
 > = (state: IReduxState) => ({
   articles: state.articles.list,
   articlesFilter: state.articles.filter,
+  feeds: state.feeds.list,
   isFetchingArticles: state.articles.isFetching,
   selectedMenuKey: state.menu.selectedKey,
 })

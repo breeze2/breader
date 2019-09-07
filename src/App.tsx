@@ -1,6 +1,5 @@
 import { Layout } from 'antd'
 import { ipcRenderer, IpcRendererEvent } from 'electron'
-import { platform } from 'os'
 import React, { Component } from 'react'
 import { IntlProvider } from 'react-intl'
 import { Provider as ReduxProvider } from 'react-redux'
@@ -13,14 +12,16 @@ import { messages } from './locales'
 import './styles/App.less'
 
 import store from './redux'
+import Utils from './utils'
 
-const isWindows = platform() === 'win32'
 export interface IAppState {
   isSettingsModalVisible: boolean
   language: string
 }
 
-export interface IAppProps {}
+export interface IAppProps {
+  className?: string
+}
 
 class App extends Component<IAppProps, IAppState> {
   public state: IAppState
@@ -59,7 +60,9 @@ class App extends Component<IAppProps, IAppState> {
         <IntlProvider
           locale={this.state.language}
           messages={messages[this.state.language]}>
-          <div className={`app ${isWindows ? 'is-windows' : ''}`}>
+          <div
+            className={`app ${this.props.className || ''}`}
+            style={{ height: `calc(${Utils.getClientHightForCalc()})` }}>
             <Layout>
               <AppSider />
               <AppContent />

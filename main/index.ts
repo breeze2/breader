@@ -8,6 +8,7 @@ import { template as menuTemplate } from './menu'
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: BrowserWindow | null = null
+const isWindows = process.platform === 'win32'
 
 function createWindow() {
   // Create the browser window.
@@ -19,9 +20,13 @@ function createWindow() {
       // preload: path.join(__dirname, './preload.js'),
     },
 
+    frame: !isWindows,
     height: 600,
+    minHeight: 600,
+    minWidth: 960,
     width: 960,
 
+    show: false,
     titleBarStyle: 'hiddenInset',
     vibrancy: 'dark',
   })
@@ -56,6 +61,11 @@ function createWindow() {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     mainWindow = null
+  })
+  mainWindow.once('ready-to-show', () => {
+    if (mainWindow) {
+      mainWindow.show()
+    }
   })
 }
 

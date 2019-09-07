@@ -58,50 +58,57 @@ export function parseFeed(feedUrl: string, etag: string) {
         accept: 'text/html,application/xhtml+xml',
         'if-none-match': etag,
       },
-    }).then((res: http.IncomingMessage) => {
-      if (res.statusCode === 200) {
-        const cv = new IconvTransform()
-        const fp = new FeedParser({})
-        const articles: IArticle[] = []
-        let feed: IFeed
-        let item: FeedParser.Item
-        res.pipe(cv)
-        res.pipe(fp)
-        fp.on('meta', (meta: FeedParser.Meta) => {
-          meta.favicon = meta.favicon ? meta.favicon : makeFaviconUrl(meta.link)
-          feed = feedDB.makeFeedBaseOnMate(meta, parseEtag(res))
-        })
-        fp.on('readable', () => {
-          item = fp.read()
-          while (item) {
-            articles.push(articleDB.makeArticleBaseOnItem(item))
-            item = fp.read()
-          }
-        })
-        fp.on('end', (err: any) => {
-          if (err) {
-            return reject(err)
-          } else {
-            feed.articles = articles
-            return resolve(feed)
-          }
-        })
-        fp.on('error', (err: any) => {
-          // TODO
-          return reject(err)
-        })
-      } else if (res.statusCode === 301) {
-        const newUrl = res.headers.location
-        if (newUrl) {
-          feedDB.updateFeedUrl(feedUrl, newUrl)
-        }
-        return resolve(null)
-      } else if (res.statusCode === 304) {
-        return resolve(null)
-      } else {
-        console.error(res)
-        return reject(new LogicError(ELogicError.FEEDPARSER_FETCH_ERROR))
-      }
     })
+      .then((res: http.IncomingMessage) => {
+        if (res.statusCode === 200) {
+          const cv = new IconvTransform()
+          const fp = new FeedParser({})
+          const articles: IArticle[] = []
+          let feed: IFeed
+          let item: FeedParser.Item
+          res.pipe(cv)
+          res.pipe(fp)
+          fp.on('meta', (meta: FeedParser.Meta) => {
+            meta.favicon = meta.favicon
+              ? meta.favicon
+              : makeFaviconUrl(meta.link)
+            feed = feedDB.makeFeedBaseOnMate(meta, parseEtag(res))
+          })
+          fp.on('readable', () => {
+            item = fp.read()
+            while (item) {
+              articles.push(articleDB.makeArticleBaseOnItem(item))
+              item = fp.read()
+            }
+          })
+          fp.on('end', (err: any) => {
+            if (err) {
+              return reject(err)
+            } else {
+              feed.articles = articles
+              return resolve(feed)
+            }
+          })
+          fp.on('error', (err: any) => {
+            // TODO
+            return reject(err)
+          })
+        } else if (res.statusCode === 301) {
+          const newUrl = res.headers.location
+          if (newUrl) {
+            feedDB.updateFeedUrl(feedUrl, newUrl)
+          }
+          return resolve(null)
+        } else if (res.statusCode === 304) {
+          return resolve(null)
+        } else {
+          console.error(res)
+          return reject(new LogicError(ELogicError.FEEDPARSER_FETCH_ERROR))
+        }
+      })
+      .catch(err => {
+        console.error(err)
+        return reject(new LogicError(ELogicError.FEEDPARSER_FETCH_ERROR))
+      })
   })
 }

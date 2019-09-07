@@ -3,6 +3,7 @@
 .app-menu {
   -webkit-user-select: none;
   -webkit-app-region: drag;
+
   background-color: @dark-background-color;
   color: @white-text-color;
   position: relative;
@@ -96,6 +97,12 @@
       .ant-avatar {
         display: inline-block;
         margin-right: 5px;
+        background-image: url('../images/rss.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      img:not([src]) {
+        opacity: 0;
       }
       .feed-title {
         width: 108px;
@@ -129,8 +136,7 @@
   .menu-content {
     -webkit-app-region: none;
     height: 100%;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    overflow: hidden;
   }
   .menu-footer {
     .wrapper-footer;
@@ -165,4 +171,7 @@
       margin-right: 16px;
     }
   }
+}
+.is-windows .app-menu {
+  -webkit-app-region: none;
 }

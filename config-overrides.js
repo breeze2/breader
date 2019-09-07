@@ -6,9 +6,25 @@ const {
 } = require('customize-cra')
 const webpack = require('webpack')
 
+process.env.REACT_APP_PAGE_LOADING_STYLE = `
+<style type="text/css">
+.page-loading {
+  position: fixed;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+</style>
+`
+
 const setWebpackExternalsPlugin = config => {
   const external = function(context, request, callback) {
-    if (/^(iconv-lite|feedparser)$/.test(request)) {
+    if (
+      ['iconv-lite', 'feedparser', 'custom-electron-titlebar'].some(
+        name => name === request
+      )
+    ) {
       return callback(null, 'commonjs ' + request)
     }
     callback()
