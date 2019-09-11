@@ -44,11 +44,15 @@
     "lint": "tslint src/**/*.ts src/**/*.tsx main/**/*.ts -e src/serviceWorker.ts",
     "test": "react-app-rewired test",
     "test:coverage": "react-app-rewired test --coverage",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "commit": "git cz",
+    "commit:amend": "git commit --amend --no-edit",
+    "release": "standard-version"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn check --integrity && pretty-quick --staged && yarn lint && rm -f ./public/electron.js*"
+      "pre-commit": "yarn check --integrity && pretty-quick --staged && yarn lint && rm -f ./public/electron.js*",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "dependencies": {
@@ -61,6 +65,8 @@
     "iconv-lite": "^0.5.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0",
     "@jest-runner/electron": "^2.0.2",
     "@sentry/cli": "^1.47.1",
     "@types/chardet": "^0.5.0",
@@ -84,6 +90,7 @@
     "coveralls": "^3.0.5",
     "cross-env": "^5.2.0",
     "customize-cra": "^0.2.11",
+    "cz-conventional-changelog": "3.0.2",
     "electron": "^6.0.2",
     "electron-builder": "^21.1.5",
     "electron-devtools-installer": "^2.2.4",
@@ -108,6 +115,7 @@
     "react-virtualized": "^9.21.0",
     "redux": "^4.0.4",
     "redux-saga": "^1.0.5",
+    "standard-version": "^7.0.0",
     "ts-loader": "^6.0.4",
     "tslint": "^5.12.1",
     "tslint-config-prettier": "^1.18.0",
