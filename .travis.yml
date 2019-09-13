@@ -52,18 +52,25 @@ before_deploy:
   - ls ./dist
 
 deploy:
-  provider: releases
-  skip_cleanup: true
-  api_key: $GITHUB_REPO_TOKEN
-  name: Release $TRAVIS_TAG
-  draft: true
-  file_glob: true
-  file:
-    - ./dist/*.zip
-    - ./dist/*.dmg
-    - ./dist/*.AppImage
-    - ./dist/*.snap
-    - ./dist/*.yml
-    - ./dist/*.exe
-  on:
-    tags: true
+  - provider: releases
+    skip_cleanup: true
+    api_key: $GITHUB_REPO_TOKEN
+    name: Release $TRAVIS_TAG
+    draft: true
+    file_glob: true
+    file:
+      - ./dist/*.zip
+      - ./dist/*.dmg
+      - ./dist/*.AppImage
+      - ./dist/*.snap
+      - ./dist/*.yml
+      - ./dist/*.exe
+    on:
+      tags: true
+  - provider: snap
+    skip_cleanup: true
+    channel: edge
+    snap: ./dist/*.snap
+    on:
+      tags: true
+      condition: $TRAVIS_OS_NAME = linux

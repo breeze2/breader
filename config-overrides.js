@@ -1,8 +1,9 @@
 const {
+  addLessLoader,
+  addWebpackExternals,
   addWebpackPlugin,
   override,
   fixBabelImports,
-  addLessLoader,
 } = require('customize-cra')
 const webpack = require('webpack')
 
@@ -18,27 +19,14 @@ process.env.REACT_APP_PAGE_LOADING_STYLE = `
 </style>
 `
 
-const setWebpackExternalsPlugin = config => {
-  const external = function(context, request, callback) {
-    if (
-      ['iconv-lite', 'feedparser', 'custom-electron-titlebar'].some(
-        name => name === request
-      )
-    ) {
-      return callback(null, 'commonjs ' + request)
-    }
-    callback()
-  }
-  if (config.externals) {
-    if (Array.isArray(config.externals)) {
-      config.externals.push(external)
-    } else {
-      config.externals = [config.externals, external]
-    }
-  } else {
-    config.externals = [external]
-  }
-  return config
+if (process.env.NODE_ENV === 'production') {
+  process.env.REACT_APP_CONTENT_SECURITY_POLICY = `
+<meta http-equiv="Content-Security-Policy"
+  content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src * data: filesystem:; media-src * data: filesystem:"
+/>
+`
+} else {
+  process.env.REACT_APP_CONTENT_SECURITY_POLICY = ''
 }
 
 const setWebpackTargetPlugin = config => {
@@ -85,7 +73,14 @@ const webpackMaker = override(
       'process.env.SENTRY_RELEASE': JSON.stringify(process.env.SENTRY_RELEASE),
     })
   ),
-  setWebpackExternalsPlugin,
+  addWebpackExternals((context, request, callback) => {
+    if (
+      ['iconv-lite', 'feedparser', 'custom-electron-titlebar'].includes(request)
+    ) {
+      return callback(null, 'commonjs ' + request)
+    }
+    callback()
+  }),
   setWebpackTargetPlugin,
   setPublicPathPlugin
 )

@@ -1,6 +1,6 @@
 import { Empty, Icon } from 'antd'
 import Immutable from 'immutable'
-import React, { PureComponent } from 'react'
+import React, { PureComponent, RefObject } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { injectIntl, WrappedComponentProps } from 'react-intl'
 import greyLogo from '../images/grey-logo.png'
@@ -57,6 +57,7 @@ class ArticleView extends PureComponent<
   private _articleContentIsAppended: boolean
   private _articleContentElement: HTMLDivElement
   private _articleContentLinks: string[]
+  private _scrollbar: RefObject<Scrollbars>
   public constructor(props: IArticleViewProps & WrappedComponentProps) {
     super(props)
     this.state = {
@@ -68,6 +69,7 @@ class ArticleView extends PureComponent<
     this._articleContentIsAppended = false
     this._articleContentElement = document.createElement('div')
     this._articleContentLinks = []
+    this._scrollbar = React.createRef<Scrollbars>()
   }
   public getSnapshotBeforeUpdate(prevProps: IArticleViewProps) {
     const props = this.props
@@ -82,17 +84,14 @@ class ArticleView extends PureComponent<
       return
     }
     this._articleContentIsAppended = true
-    const div = document.querySelector(
-      '.article-view .view-content .article-content'
-    )
+    const div = document.querySelector('.article-content.real-content')
     if (div && this._articleContentElement) {
       while (div.firstChild) {
         div.removeChild(div.firstChild)
       }
       div.appendChild(this._articleContentElement)
-      const view = div.closest('.view-content')
-      if (view) {
-        view.scrollTo(0, 0)
+      if (this._scrollbar.current) {
+        this._scrollbar.current.scrollToTop()
       }
     }
   }
@@ -148,7 +147,7 @@ class ArticleView extends PureComponent<
       const { currentArticle, feedsMap, intl } = this.props
       const feed = feedsMap.get(currentArticle.feedId)
       viewContent = (
-        <Scrollbars>
+        <Scrollbars ref={this._scrollbar}>
           <div
             className="view-content"
             onMouseLeave={this.handleMouseLeave}
@@ -168,7 +167,7 @@ class ArticleView extends PureComponent<
                 </p>
               </div>
             </div>
-            <div className="article-content" />
+            <div className="article-content real-content" />
           </div>
         </Scrollbars>
       )
