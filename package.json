@@ -34,7 +34,7 @@
     "prebuild": "yarn build:main",
     "preelectron-dev": "yarn build:main",
     "preelectron-dist": "yarn build",
-    "electron-dev": "cross-env BROWSER=none concurrently \"yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron-dev": "cross-env BROWSER=none concurrently \"yarn start\" \"wait-on http://127.0.0.1:3000 && electron .\"",
     "electron-dist": "electron-builder build",
     "electron-pack": "electron-builder build",
     "electron-start": "electron .",

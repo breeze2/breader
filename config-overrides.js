@@ -19,6 +19,16 @@ process.env.REACT_APP_PAGE_LOADING_STYLE = `
 </style>
 `
 
+if (process.env.NODE_ENV === 'production') {
+  process.env.REACT_APP_CONTENT_SECURITY_POLICY = `
+<meta http-equiv="Content-Security-Policy"
+  content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src * data: filesystem:; media-src * data: filesystem:"
+/>
+`
+} else {
+  process.env.REACT_APP_CONTENT_SECURITY_POLICY = ''
+}
+
 const setWebpackTargetPlugin = config => {
   config.target = 'electron-renderer'
   return config
