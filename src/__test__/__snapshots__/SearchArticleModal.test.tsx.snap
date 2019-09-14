@@ -15,6 +15,7 @@ exports[`SearchArticleModal Testing snapshot testing 1`] = `
       "feedUrl": "Feed Url",
       "feeds": "Feeds",
       "feedsAreUpdated": "Feeds are Updated",
+      "inputKeywords": "Please input the keywords",
       "invalidFeedUrl": "Invalid Feed Url",
       "keywords": "Keywords",
       "languages": "Languages",
@@ -22,7 +23,8 @@ exports[`SearchArticleModal Testing snapshot testing 1`] = `
       "menuStarred": "Starred",
       "menuSubscriptions": "Subscriptions",
       "menuUnread": "Unread",
-      "noMatched": "No matched",
+      "noFeeds": "No Feeds",
+      "noMatched": "No Matched",
       "settings": "Settings",
       "somethingWrong": "Something Wrong!",
       "title": "Breader",
@@ -33,7 +35,7 @@ exports[`SearchArticleModal Testing snapshot testing 1`] = `
   onError={[Function]}
   textComponent={Symbol(react.fragment)}
 >
-  <injectIntl(SearchArticleModal)
+  <injectIntl(SearchArticleModalComponent)
     articles={
       Immutable.List [
         Object {
@@ -64,7 +66,7 @@ exports[`SearchArticleModal Testing snapshot testing 1`] = `
     onItemChoose={[MockFunction]}
     visible={true}
   >
-    <SearchArticleModal
+    <SearchArticleModalComponent
       articles={
         Immutable.List [
           Object {
@@ -122,6 +124,7 @@ exports[`SearchArticleModal Testing snapshot testing 1`] = `
             "feedUrl": "Feed Url",
             "feeds": "Feeds",
             "feedsAreUpdated": "Feeds are Updated",
+            "inputKeywords": "Please input the keywords",
             "invalidFeedUrl": "Invalid Feed Url",
             "keywords": "Keywords",
             "languages": "Languages",
@@ -129,7 +132,8 @@ exports[`SearchArticleModal Testing snapshot testing 1`] = `
             "menuStarred": "Starred",
             "menuSubscriptions": "Subscriptions",
             "menuUnread": "Unread",
-            "noMatched": "No matched",
+            "noFeeds": "No Feeds",
+            "noMatched": "No Matched",
             "settings": "Settings",
             "somethingWrong": "Something Wrong!",
             "title": "Breader",
@@ -284,6 +288,11 @@ exports[`SearchArticleModal Testing snapshot testing 1`] = `
                                     />
                                   </div>
                                 </div>
+                                <p
+                                  class="empty-list"
+                                >
+                                  Please input the keywords
+                                </p>
                               </div>
                             </div>
                           </div>
@@ -454,7 +463,6 @@ exports[`SearchArticleModal Testing snapshot testing 1`] = `
                                     className="search-article-keywords"
                                     enterButton={false}
                                     onChange={[Function]}
-                                    onSearch={[Function]}
                                     placeholder="Keywords"
                                     value=""
                                   >
@@ -644,6 +652,16 @@ exports[`SearchArticleModal Testing snapshot testing 1`] = `
                                         </div>
                                       </div>
                                     </Scrollbars>
+                                    <p
+                                      className="empty-list"
+                                    >
+                                      <FormattedMessage
+                                        id="inputKeywords"
+                                        values={Object {}}
+                                      >
+                                        Please input the keywords
+                                      </FormattedMessage>
+                                    </p>
                                   </div>
                                 </div>
                               </div>
@@ -670,7 +688,7 @@ exports[`SearchArticleModal Testing snapshot testing 1`] = `
           </PortalWrapper>
         </Component>
       </Modal>
-    </SearchArticleModal>
-  </injectIntl(SearchArticleModal)>
+    </SearchArticleModalComponent>
+  </injectIntl(SearchArticleModalComponent)>
 </IntlProvider>
 `;

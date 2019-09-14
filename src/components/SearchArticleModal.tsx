@@ -1,8 +1,8 @@
 import { Input, Modal } from 'antd'
 import Immutable from 'immutable'
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
-import { injectIntl, WrappedComponentProps } from 'react-intl'
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl'
 import ArticleItem from '../containers/ArticleItem'
 import { IArticle } from '../schemas'
 import Utils from '../utils'
@@ -33,33 +33,23 @@ export interface ISearchArticleModalState {
   readonly matchedArticles: Immutable.List<IArticle>
 }
 
-class SearchArticleModal extends Component<
+class SearchArticleModalComponent extends PureComponent<
   ISearchArticleModalProps & WrappedComponentProps,
   ISearchArticleModalState
 > {
-  public searchArticles: (keywords: string[]) => any
+  public searchArticles: (keywords: string) => void
   public constructor(props: ISearchArticleModalProps & WrappedComponentProps) {
     super(props)
     this.state = {
       keywords: '',
       matchedArticles: Immutable.List<IArticle>([]),
     }
-    this.searchArticles = Utils.debounce(this._searchArticles, 100)
-    this.searchArticles = this.searchArticles.bind(this)
-  }
-  public handleSubmit = () => {
-    const keywords = this.state.keywords
-    const matched = this._searchArticles(keywords.split(' '))
-    if (keywords) {
-      this.setState({
-        matchedArticles: matched,
-      })
-    }
+    this.searchArticles = Utils.debounce(this._searchArticles, 600)
   }
   public handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      keywords: e.target.value,
-    })
+    const keywords = e.target.value
+    this.setState({ keywords })
+    this.searchArticles(keywords)
   }
   public componentDidUpdate() {
     if (this.props.visible) {
@@ -74,28 +64,29 @@ class SearchArticleModal extends Component<
     }
   }
   public render() {
+    const { keywords, matchedArticles } = this.state
+    const { intl, onCancel, visible } = this.props
     return (
       <Modal
         className="search-article-modal"
         closable={false}
         width={376}
-        style={{ top: 42 }}
-        visible={this.props.visible}
+        style={{ top: Utils.getModalTop(42) }}
+        visible={visible}
         footer={null}
-        onCancel={this.props.onCancel}>
+        onCancel={onCancel}>
         <Search
           className="search-article-keywords"
-          placeholder={this.props.intl.formatMessage({ id: 'keywords' })}
-          value={this.state.keywords}
+          placeholder={intl.formatMessage({ id: 'keywords' })}
+          value={keywords}
           onChange={this.handleChange}
-          onSearch={this.handleSubmit}
         />
         <div className="matched-list">
           <Scrollbars
             autoHide
             autoHeight
             autoHeightMax={`calc(${Utils.getClientHightForCalc()} - 164px)`}>
-            {this.state.matchedArticles.map((article: IArticle) => (
+            {matchedArticles.map((article: IArticle) => (
               <div
                 key={article._id}
                 onClick={() =>
@@ -113,33 +104,46 @@ class SearchArticleModal extends Component<
               </div>
             ))}
           </Scrollbars>
+          {!matchedArticles.size && (
+            <p className="empty-list">
+              <FormattedMessage id={keywords ? 'noMatched' : 'inputKeywords'} />
+            </p>
+          )}
         </div>
       </Modal>
     )
   }
-  private _searchArticles(keys: string[]) {
+  private _searchArticles = (keywords: string) => {
+    const keys = keywords
+      .split(' ')
+      .map(key => key.trim())
+      .filter(key => !!key)
     const len = keys.length
+    let matched
     if (len < 1) {
-      return Immutable.List<IArticle>([])
-    }
-    const matched = this.props.articles.filter(
-      (article: IArticle, index: number) => {
-        const str = article.title + article.author + article.summary
-        let i = 0
-        for (; i < len; i++) {
-          if (str.indexOf(keys[i]) === -1) {
-            break
+      matched = Immutable.List<IArticle>([])
+    } else {
+      matched = this.props.articles.filter(
+        (article: IArticle, index: number) => {
+          const str = article.title + article.author + article.summary
+          let i = 0
+          for (; i < len; i++) {
+            if (str.indexOf(keys[i]) === -1) {
+              break
+            }
           }
+          if (i === len) {
+            article.index = index
+            return true
+          }
+          return false
         }
-        if (i === len) {
-          article.index = index
-          return true
-        }
-        return false
-      }
-    )
-    return matched
+      )
+    }
+    this.setState({
+      matchedArticles: matched,
+    })
   }
 }
 
-export default injectIntl(SearchArticleModal)
+export default injectIntl(SearchArticleModalComponent)

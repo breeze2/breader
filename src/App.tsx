@@ -33,16 +33,13 @@ class App extends Component<IAppProps, IAppState> {
     }
   }
   public componentDidMount() {
-    ipcRenderer.on(
-      'PREFERENCES_MODAL',
-      (event: IpcRendererEvent, args: any) => {
-        if (args === 'OPEN') {
-          this.setState({
-            isSettingsModalVisible: true,
-          })
-        }
+    ipcRenderer.on('SETTINGS_MODAL', (event: IpcRendererEvent, args: any) => {
+      if (args === 'OPEN') {
+        this.setState({
+          isSettingsModalVisible: true,
+        })
       }
-    )
+    })
   }
   public handleSettingsModalClose = () => {
     this.setState({
