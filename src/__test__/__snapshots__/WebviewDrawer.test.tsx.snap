@@ -2,7 +2,21 @@
 
 exports[`WebviewDrawer Testing snapshot testing 1`] = `
 <WebviewDrawer
-  onClose={[MockFunction]}
+  onClose={
+    [MockFunction] {
+      "calls": Array [
+        Array [
+          Object {},
+        ],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": undefined,
+        },
+      ],
+    }
+  }
   src="https://github.com"
   visible={true}
   width={100}

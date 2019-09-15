@@ -4,30 +4,14 @@ import EnzymeToJson from 'enzyme-to-json'
 import React from 'react'
 import { IntlProvider } from 'react-intl'
 import { Provider as ReduxProvider } from 'react-redux'
+
 import ArticleList from '../containers/ArticleList'
 import store from '../redux'
-import { setArticlesAction } from '../redux/actions'
-import { article, intlProviderProps } from './MockData'
+import { intlProviderProps } from './MockData'
 
 Enzyme.configure({ adapter: new EnzymeAdapter() })
 
 describe('ArticleList Testing', () => {
-  const dispatch = store.dispatch
-
-  it('dom testing', () => {
-    const wrapper = Enzyme.shallow(
-      <ReduxProvider store={store}>
-        <IntlProvider {...intlProviderProps}>
-          <ArticleList />
-        </IntlProvider>
-      </ReduxProvider>
-    )
-    dispatch(setArticlesAction([article]))
-    wrapper.update()
-    // wrapper.find('.check-all').simulate('click')
-    // instance.find('.search-item').simulate('click')
-  })
-
   it('snapshot testing', () => {
     const wrapper = Enzyme.mount(
       <ReduxProvider store={store}>

@@ -11,7 +11,7 @@ export interface IWebviewDrawerProps {
   width: string | number
   onClose: (e: any) => any
 }
-interface IWebviewDrawerState {
+export interface IWebviewDrawerState {
   hasProgressBar: boolean
 }
 

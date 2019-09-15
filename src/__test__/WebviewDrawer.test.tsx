@@ -2,7 +2,10 @@ import Enzyme from 'enzyme'
 import EnzymeAdapter from 'enzyme-adapter-react-16'
 import EnzymeToJson from 'enzyme-to-json'
 import React from 'react'
-import WebviewDrawer, { IWebviewDrawerProps } from '../components/WebviewDrawer'
+import WebviewDrawer, {
+  IWebviewDrawerProps,
+  IWebviewDrawerState,
+} from '../components/WebviewDrawer'
 
 Enzyme.configure({ adapter: new EnzymeAdapter() })
 
@@ -16,14 +19,17 @@ describe('WebviewDrawer Testing', () => {
   }
 
   it('dom testing', () => {
-    const wrapper = Enzyme.mount(<WebviewDrawer {...mockProps} />)
-    // wrapper.find('.drawer-header-left').simulate('click')
-    wrapper.setProps({
-      visible: false,
-    })
-    wrapper.setProps({
-      visible: true,
-    })
+    const wrapper = Enzyme.mount(
+      <WebviewDrawer {...mockProps} />
+    ) as Enzyme.ReactWrapper<
+      IWebviewDrawerProps,
+      IWebviewDrawerState,
+      WebviewDrawer
+    >
+    wrapper.instance().handleDrawerClose({})
+    wrapper.instance().makeWebView(mockProps.src)
+    wrapper.instance().showProgressBar()
+    wrapper.instance().hideProgressBar()
   })
 
   it('snapshot testing', () => {

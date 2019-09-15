@@ -10,7 +10,7 @@ exports[`AddFeedModal Testing snapshot testing 1`] = `
     intl={
       Object {
         "defaultFormats": Object {},
-        "defaultLocale": "en",
+        "defaultLocale": "en-US",
         "formatDate": [Function],
         "formatDateToParts": [Function],
         "formatHTMLMessage": [Function],
