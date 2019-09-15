@@ -4,3 +4,10 @@ export function getClientHightForCalc() {
   }
   return '100vh'
 }
+
+export function getModalTop(top: number) {
+  if (process.platform === 'win32') {
+    return top + 30
+  }
+  return top
+}

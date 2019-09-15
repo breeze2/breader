@@ -99,7 +99,7 @@ function addPreferencesMenu(
           event: Event
         ) => {
           if (browserWindow) {
-            browserWindow.webContents.send('PREFERENCES_MODAL', 'OPEN')
+            browserWindow.webContents.send('SETTINGS_MODAL', 'OPEN')
           }
         },
         label: 'Settings',
