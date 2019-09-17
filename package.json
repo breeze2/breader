@@ -1,9 +1,9 @@
 {
   "name": "breader",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "description": "A simple RSS reader.",
-  "homepage": "https://github.com/breeze2/breader",
+  "homepage": "https://breeze2.github.io/breader",
   "author": {
     "email": "805511939@qq.com",
     "name": "breezelin",
@@ -34,7 +34,7 @@
     "prebuild": "yarn build:main",
     "preelectron-dev": "yarn build:main",
     "preelectron-dist": "yarn build",
-    "electron-dev": "cross-env BROWSER=none concurrently \"yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron-dev": "cross-env BROWSER=none concurrently \"yarn start\" \"wait-on http://127.0.0.1:3000 && electron .\"",
     "electron-dist": "electron-builder build",
     "electron-pack": "electron-builder build",
     "electron-start": "electron .",
@@ -44,11 +44,15 @@
     "lint": "tslint src/**/*.ts src/**/*.tsx main/**/*.ts -e src/serviceWorker.ts",
     "test": "react-app-rewired test",
     "test:coverage": "react-app-rewired test --coverage",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "commit": "git cz",
+    "commit:amend": "git commit --amend --no-edit",
+    "release": "standard-version"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn check --integrity && pretty-quick --staged && yarn lint && rm -f ./public/electron.js*"
+      "pre-commit": "yarn check --integrity && pretty-quick --staged && yarn lint && rm -f ./public/electron.js*",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "dependencies": {
@@ -61,20 +65,22 @@
     "iconv-lite": "^0.5.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0",
     "@jest-runner/electron": "^2.0.2",
     "@sentry/cli": "^1.47.1",
     "@types/chardet": "^0.5.0",
     "@types/enzyme": "^3.10.3",
     "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/feedparser": "^2.2.3",
-    "@types/jest": "24.0.17",
-    "@types/node": "12.7.2",
+    "@types/jest": "24.0.18",
+    "@types/node": "12.7.5",
     "@types/pouchdb-adapter-memory": "^6.1.3",
     "@types/pouchdb-browser": "^6.1.3",
     "@types/pouchdb-find": "^6.3.4",
     "@types/react": "16.9.2",
     "@types/react-custom-scrollbars": "^4.0.6",
-    "@types/react-dom": "16.8.5",
+    "@types/react-dom": "16.9.0",
     "@types/react-redux": "^7.0.1",
     "@types/react-virtualized": "^9.21.4",
     "antd": "^3.21.4",
@@ -83,7 +89,8 @@
     "concurrently": "^4.1.1",
     "coveralls": "^3.0.5",
     "cross-env": "^5.2.0",
-    "customize-cra": "^0.2.11",
+    "customize-cra": "^0.6.1",
+    "cz-conventional-changelog": "3.0.2",
     "electron": "^6.0.2",
     "electron-builder": "^21.1.5",
     "electron-devtools-installer": "^2.2.4",
@@ -108,6 +115,7 @@
     "react-virtualized": "^9.21.0",
     "redux": "^4.0.4",
     "redux-saga": "^1.0.5",
+    "standard-version": "^7.0.0",
     "ts-loader": "^6.0.4",
     "tslint": "^5.12.1",
     "tslint-config-prettier": "^1.18.0",

@@ -10,6 +10,7 @@ import ProgressBar, {
 Enzyme.configure({ adapter: new EnzymeAdapter() })
 
 describe('ProgressBar Testing', () => {
+  jest.useFakeTimers()
   const mockProps: IProgressBarProps = {
     max: 80,
     onEnd: jest.fn(),
@@ -18,11 +19,12 @@ describe('ProgressBar Testing', () => {
 
   it('dom testing', () => {
     const wrapper = Enzyme.mount<
-      React.Component,
+      ProgressBar,
       IProgressBarProps,
       IProgressBarState
     >(<ProgressBar {...mockProps} />)
     expect(wrapper.state().progress).toBeLessThanOrEqual(wrapper.props().max)
+    wrapper.instance().toEnd()
   })
 
   it('snapshot testing', () => {

@@ -1,9 +1,10 @@
-import { Avatar, Button, List as AntdList, Modal, Select } from 'antd'
+import { Modal, Select } from 'antd'
 import Immutable from 'immutable'
 import React, { Component } from 'react'
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl'
 import { IFeed } from '../schemas'
 import Utils from '../utils'
+import SettingFeedList from './SettingFeedList'
 
 import '../styles/SettingsModal.less'
 
@@ -28,13 +29,13 @@ export interface ISettingsModalProps
     ISettingsModalReduxDispatch,
     ISettingsModalReduxState {}
 
-interface ISettingsModalState {
+export interface ISettingsModalState {
   allFeeds: IFeed[]
   lastVisible: boolean
   needDeletedIds: string[]
 }
 
-class SettingsModal extends Component<
+export class SettingsModalComponent extends Component<
   ISettingsModalProps & WrappedComponentProps,
   ISettingsModalState
 > {
@@ -64,22 +65,20 @@ class SettingsModal extends Component<
       needDeletedIds: [],
     }
   }
-  public handleCancel = (e: any) => {
+  public handleCancel = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     this.props.onClose(e)
   }
-  public handleOk = (e: any) => {
+  public handleOk = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     const ids = this.state.needDeletedIds
     if (ids.length) {
       this.props.asyncDeleteFeeds(ids)
     }
     this.props.onClose(e)
   }
-  public handleDeleteClick = (feedId: string, feedIndex: number) => {
+  public handleDeleteFeed = (feedId: string, feedIndex: number) => {
     const { allFeeds, needDeletedIds } = this.state
-    if (allFeeds[feedIndex] && allFeeds[feedIndex]._id === feedId) {
-      needDeletedIds.push(feedId)
-      allFeeds.splice(feedIndex, 1)
-    }
+    allFeeds.splice(feedIndex, 1)
+    needDeletedIds.push(feedId)
     this.setState({
       allFeeds: [...allFeeds],
       needDeletedIds: [...needDeletedIds],
@@ -95,13 +94,16 @@ class SettingsModal extends Component<
         className="settings-modal"
         title={<FormattedMessage id="settings" />}
         width={512}
-        style={{ top: 42 }}
+        style={{ top: Utils.getModalTop(42) }}
+        bodyStyle={{
+          maxHeight: `calc(${Utils.getClientHightForCalc()} - 192px)`,
+        }}
         visible={this.props.visible}
         onCancel={this.handleCancel}
         onOk={this.handleOk}>
         <div className="settings-content">
           <div className="languages-setting">
-            <p>
+            <p className="settings-item-title">
               <FormattedMessage id="languages" />
             </p>
             <Select
@@ -113,37 +115,12 @@ class SettingsModal extends Component<
             </Select>
           </div>
           <div className="feeds-setting">
-            <p>
+            <p className="settings-item-title">
               <FormattedMessage id="feeds" />
             </p>
-            <AntdList
-              bordered
-              split
-              size="small"
-              itemLayout="horizontal"
-              dataSource={this.state.allFeeds}
-              style={{
-                maxHeight: `calc(${Utils.getClientHightForCalc()} - 330px)`,
-              }}
-              renderItem={(feed: IFeed, index: number) => (
-                <AntdList.Item
-                  className="settings-feed-item"
-                  key={feed._id}
-                  actions={[
-                    <Button
-                      key={`${feed._id}_button_1`}
-                      size="small"
-                      type="danger"
-                      onClick={() => this.handleDeleteClick(feed._id, index)}>
-                      <FormattedMessage id="delete" />
-                    </Button>,
-                  ]}>
-                  <p title={feed.url} className="feed-item-content">
-                    <Avatar shape="square" size={16} src={feed.favicon} />{' '}
-                    {feed.title}
-                  </p>
-                </AntdList.Item>
-              )}
+            <SettingFeedList
+              feeds={this.state.allFeeds}
+              onDeleteFeed={this.handleDeleteFeed}
             />
           </div>
         </div>
@@ -152,4 +129,4 @@ class SettingsModal extends Component<
   }
 }
 
-export default injectIntl(SettingsModal)
+export default injectIntl(SettingsModalComponent)

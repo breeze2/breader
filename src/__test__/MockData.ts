@@ -3,7 +3,12 @@ import { messages } from '../locales'
 import { IArticle, IFeed } from '../schemas'
 
 const cache = createIntlCache()
+
+export const domNode = document.createElement('div')
+document.body.appendChild(domNode)
+
 export const intlProviderProps = {
+  defaultLocale: 'en-US',
   locale: 'en-US',
   messages: messages['en-US'],
 }
