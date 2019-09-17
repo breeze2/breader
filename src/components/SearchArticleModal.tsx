@@ -33,7 +33,7 @@ export interface ISearchArticleModalState {
   readonly matchedArticles: Immutable.List<IArticle>
 }
 
-class SearchArticleModalComponent extends PureComponent<
+export class SearchArticleModalComponent extends PureComponent<
   ISearchArticleModalProps & WrappedComponentProps,
   ISearchArticleModalState
 > {

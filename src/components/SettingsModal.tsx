@@ -29,13 +29,13 @@ export interface ISettingsModalProps
     ISettingsModalReduxDispatch,
     ISettingsModalReduxState {}
 
-interface ISettingsModalState {
+export interface ISettingsModalState {
   allFeeds: IFeed[]
   lastVisible: boolean
   needDeletedIds: string[]
 }
 
-class SettingsModal extends Component<
+export class SettingsModalComponent extends Component<
   ISettingsModalProps & WrappedComponentProps,
   ISettingsModalState
 > {
@@ -65,10 +65,10 @@ class SettingsModal extends Component<
       needDeletedIds: [],
     }
   }
-  public handleCancel = (e: any) => {
+  public handleCancel = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     this.props.onClose(e)
   }
-  public handleOk = (e: any) => {
+  public handleOk = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     const ids = this.state.needDeletedIds
     if (ids.length) {
       this.props.asyncDeleteFeeds(ids)
@@ -129,4 +129,4 @@ class SettingsModal extends Component<
   }
 }
 
-export default injectIntl(SettingsModal)
+export default injectIntl(SettingsModalComponent)

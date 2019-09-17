@@ -34,12 +34,12 @@ export interface IArticleListProps
     IArticleListReduxState,
     IArticleListReduxDispatch {}
 
-interface IArticleListState {
+export interface IArticleListState {
   isSearchArticleModalVisible: boolean
   chooseItemIndex: number
 }
 
-class ArticleList extends Component<
+export class ArticleListComponent extends Component<
   IArticleListProps & WrappedComponentProps,
   IArticleListState
 > {
@@ -64,7 +64,7 @@ class ArticleList extends Component<
       isSearchArticleModalVisible: false,
     })
   }
-  public handleCheckClick = (e: any) => {
+  public handleCheckClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     Confirm({
       onOk: () => {
         const ids = this.props.articles
@@ -156,4 +156,4 @@ class ArticleList extends Component<
   }
 }
 
-export default injectIntl(ArticleList)
+export default injectIntl(ArticleListComponent)

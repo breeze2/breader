@@ -29,14 +29,14 @@ export interface IArticleViewProps
     IArticleViewReduxDispatch,
     IArticleViewReduxState {}
 
-interface IArticleViewState {
+export interface IArticleViewState {
   hoverLink: string
   isWebviewDrawerVisible: boolean
   webviewDrawerSrc: string
   isStarredsMap: { [_id: string]: boolean }
 }
 
-class ArticleView extends PureComponent<
+export class ArticleViewComponent extends PureComponent<
   IArticleViewProps & WrappedComponentProps,
   IArticleViewState
 > {
@@ -220,7 +220,7 @@ class ArticleView extends PureComponent<
   private _parseArticleContent(content: string) {
     const div = document.createElement('div')
     div.innerHTML = content
-    const scripts = div.querySelectorAll('scripts')
+    const scripts = div.querySelectorAll('script')
     scripts.forEach(script => {
       script.remove()
     })
@@ -242,4 +242,4 @@ class ArticleView extends PureComponent<
   }
 }
 
-export default injectIntl(ArticleView)
+export default injectIntl(ArticleViewComponent)

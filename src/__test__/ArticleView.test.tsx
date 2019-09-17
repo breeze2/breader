@@ -6,29 +6,18 @@ import React from 'react'
 import { IntlProvider } from 'react-intl'
 import ArticleView, { IArticleViewProps } from '../components/ArticleView'
 import { IArticle, IFeed } from '../schemas'
-import { article, intlProviderProps } from './MockData'
+import { article, feed, intlProviderProps } from './MockData'
 
 Enzyme.configure({ adapter: new EnzymeAdapter() })
 
 describe('ArticleView Testing', () => {
   const mockProps: IArticleViewProps = {
-    articles: Immutable.List<IArticle>([]),
+    articles: Immutable.List<IArticle>([article]),
     asyncStarArticle: jest.fn(),
-    currentArticle: null,
-    feedsMap: Immutable.Map<IFeed>({}),
+    currentArticle: article,
+    feedsMap: Immutable.Map<IFeed>({ [feed._id]: feed }),
     isUpdatingCurrentArticle: false,
   }
-
-  it('dom testing', () => {
-    const wrapper = Enzyme.mount(<ArticleView {...mockProps} />, {
-      wrappingComponent: IntlProvider,
-      wrappingComponentProps: intlProviderProps,
-    })
-    wrapper.setProps({
-      currentArticle: article,
-    })
-    wrapper.update()
-  })
 
   it('snapshot testing', () => {
     const wrapper = Enzyme.mount(<ArticleView {...mockProps} />, {

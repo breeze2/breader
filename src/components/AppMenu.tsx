@@ -42,11 +42,11 @@ export interface IAppMenuProps
     IAppMenuReduxDispatch,
     IAppMenuReduxState {}
 
-interface IAppMenuState {
+export interface IAppMenuState {
   isAddFeedModalVisible: boolean
 }
 
-class AppMenu extends Component<
+export class AppMenuComponent extends Component<
   IAppMenuProps & WrappedComponentProps,
   IAppMenuState
 > {
@@ -238,4 +238,4 @@ class AppMenu extends Component<
   }
 }
 
-export default injectIntl(AppMenu)
+export default injectIntl(AppMenuComponent)
