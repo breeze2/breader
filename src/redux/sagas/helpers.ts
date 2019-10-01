@@ -1,7 +1,7 @@
 import { IReduxAction, IReduxAsyncAction } from '../../schemas'
 
 export function* nerverThrowWrapper(
-  worker: (a: IReduxAction) => IterableIterator<any>,
+  worker: (a: IReduxAction) => Generator<any>,
   action: IReduxAction
 ) {
   try {
@@ -12,14 +12,14 @@ export function* nerverThrowWrapper(
 }
 
 export function* noWrapper(
-  worker: (a: IReduxAction) => IterableIterator<any>,
+  worker: (a: IReduxAction) => Generator<any>,
   action: IReduxAction
 ) {
   yield worker(action)
 }
 
 export function* handlePromiseWrapper(
-  worker: (a: IReduxAction) => IterableIterator<any>,
+  worker: (a: IReduxAction) => Generator<any>,
   action: IReduxAsyncAction
 ) {
   try {
@@ -31,7 +31,7 @@ export function* handlePromiseWrapper(
 }
 
 export function makeSagaWorkersDispatcher(workersMap: {
-  [key: string]: (action: IReduxAction) => IterableIterator<any>
+  [key: string]: (action: IReduxAction) => Generator<any>
 }) {
   return function*(action: IReduxAction) {
     const worker = workersMap[action.type]
