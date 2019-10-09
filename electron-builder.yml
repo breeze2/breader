@@ -4,10 +4,10 @@ productName: Breader
 artifactName: ${productName}-${version}.${ext}
 asar: true
 mac:
-  category: news
+  category: public.app-category.news
   icon: build/icons/mac/app.icns
 linux:
-  category: news
+  category: Network
   icon: build/icons/png
 win:
   icon: build/icons/win/app.ico
