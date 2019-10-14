@@ -2,13 +2,14 @@ import {
   app,
   BrowserWindow,
   Event,
+  Menu,
   MenuItem,
   MenuItemConstructorOptions,
   shell,
 } from 'electron'
-import { checkForUpdates } from './updater'
+import { checkForUpdates, restartToUpdate, UPDATER_STATUS_MAP } from './updater'
 
-export const template: MenuItemConstructorOptions[] = [
+const template: MenuItemConstructorOptions[] = [
   {
     label: 'Edit',
     submenu: [
@@ -66,6 +67,17 @@ export const template: MenuItemConstructorOptions[] = [
   },
 ]
 
+function addAboutMenuItem(
+  items: MenuItemConstructorOptions[],
+  position: number
+) {
+  const aboutItem: MenuItemConstructorOptions = {
+    label: `About ${app.getName()}`,
+    role: 'about',
+  }
+  items.splice.apply(items, [position, 0, aboutItem])
+}
+
 function addUpdateMenuItems(
   items: MenuItemConstructorOptions[],
   position: number
@@ -78,7 +90,34 @@ function addUpdateMenuItems(
     {
       click: checkForUpdates,
       enabled: true,
+      id: UPDATER_STATUS_MAP.NORMAL,
       label: 'Check for Updates',
+      visible: true,
+    },
+    {
+      enabled: false,
+      id: UPDATER_STATUS_MAP.CHECKING,
+      label: 'Checking updates...',
+      visible: false,
+    },
+    {
+      enabled: false,
+      id: UPDATER_STATUS_MAP.DOWNLOADING,
+      label: 'Downloading updates...',
+      visible: false,
+    },
+    {
+      enabled: false,
+      id: UPDATER_STATUS_MAP.ERROR,
+      label: 'Update Failed',
+      visible: false,
+    },
+    {
+      click: restartToUpdate,
+      enabled: true,
+      id: UPDATER_STATUS_MAP.READY,
+      label: 'Restart to update',
+      visible: false,
     },
   ]
 
@@ -110,14 +149,10 @@ function addPreferencesMenu(
 }
 
 if (process.platform === 'darwin') {
-  const name = app.getName()
+  const appName = app.getName()
   template.unshift({
-    label: name,
+    label: appName,
     submenu: [
-      {
-        label: `About ${name}`,
-        role: 'about',
-      },
       {
         type: 'separator',
       },
@@ -131,7 +166,7 @@ if (process.platform === 'darwin') {
       },
       {
         accelerator: 'Command+H',
-        label: `Hide ${name}`,
+        label: `Hide ${appName}`,
         role: 'hide',
       },
       {
@@ -155,15 +190,21 @@ if (process.platform === 'darwin') {
       },
     ],
   })
-
+  addAboutMenuItem(template[0].submenu as MenuItemConstructorOptions[], 0)
   addPreferencesMenu(template[0].submenu as MenuItemConstructorOptions[], 1)
   addUpdateMenuItems(template[0].submenu as MenuItemConstructorOptions[], 1)
-  // addPreferencesMenu(template, template.length - 1)
 }
 
 if (process.platform === 'win32' || process.platform === 'linux') {
   const helpMenu = template[template.length - 1].submenu
 
-  addUpdateMenuItems(helpMenu as MenuItemConstructorOptions[], 0)
   addPreferencesMenu(template, template.length - 1)
+  addUpdateMenuItems(helpMenu as MenuItemConstructorOptions[], 0)
+  // showAboutPanel not working in windows
+  // addAboutMenuItem(helpMenu as MenuItemConstructorOptions[], 0)
+}
+
+export function initMenu() {
+  const menu = Menu.buildFromTemplate(template)
+  Menu.setApplicationMenu(menu)
 }

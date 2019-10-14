@@ -1,5 +1,6 @@
 env:
-  - SENTRY_RELEASE=$TRAVIS_TAG
+  global:
+    - SENTRY_RELEASE=$TRAVIS_TAG
 
 matrix:
   include:
@@ -9,6 +10,7 @@ matrix:
       node_js: lts/*
       if: tag IS present
     - os: windows
+      env: YARN_GPG=no
       language: node_js
       node_js: lts/*
       if: tag IS present
@@ -44,11 +46,13 @@ after_success:
   - if [ $TRAVIS_OS_NAME = linux ]; then cat ./coverage/lcov.info | yarn coveralls; fi
 
 before_deploy:
-  - yarn electron-pack --publish never
+  - ls ./build
+  - ls ./build/static/js
   - yarn sentry-cli releases new $SENTRY_RELEASE
   - yarn sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps --rewrite ./build
   - yarn sentry-cli releases finalize $SENTRY_RELEASE
-  - ls ./
+  - find ./build -name "*.map" -exec rm -f {} \;
+  - yarn electron-pack --publish never
   - ls ./dist
 
 deploy:

@@ -1,116 +1,116 @@
 import { ProgressInfo, UpdateInfo } from 'builder-util-runtime'
-import { BrowserWindow, dialog, KeyboardEvent, MenuItem } from 'electron'
+import { dialog, Menu } from 'electron'
 import { autoUpdater } from 'electron-updater'
-enum EUpdaterStatus {
-  CHECKING,
-  DOWNLOADING,
-  PROGRESS,
-  ERROR,
-  NORMAL,
-  READY,
+export type IUpdaterStatus =
+  | 'UPDATER_CHECKING'
+  | 'UPDATER_DOWNLOADING'
+  | 'UPDATER_ERROR'
+  | 'UPDATER_NORMAL'
+  | 'UPDATER_READY'
+export const UPDATER_STATUS_MAP: { [key: string]: IUpdaterStatus } = {
+  CHECKING: 'UPDATER_CHECKING',
+  DOWNLOADING: 'UPDATER_DOWNLOADING',
+  ERROR: 'UPDATER_ERROR',
+  NORMAL: 'UPDATER_NORMAL',
+  READY: 'UPDATER_READY',
 }
+
 autoUpdater.autoDownload = false
 autoUpdater.autoInstallOnAppQuit = false
 
-let updateMenuItem: MenuItem
-let updaterStatus: EUpdaterStatus = EUpdaterStatus.NORMAL
+let updaterStatus: IUpdaterStatus = UPDATER_STATUS_MAP.NORMAL
 
-function setUpdaterStatus(status: EUpdaterStatus, meta?: any) {
+function setUpdaterStatus(status: IUpdaterStatus, meta?: any) {
   updaterStatus = status
-  switch (status) {
-    case EUpdaterStatus.NORMAL:
-      updateMenuItem.label = 'Check For Updates'
-      updateMenuItem.enabled = true
-      break
-    case EUpdaterStatus.ERROR:
-      updateMenuItem.label = 'Checking Failed'
-      updateMenuItem.enabled = false
-      break
-    case EUpdaterStatus.CHECKING:
-      updateMenuItem.label = 'Checking updates...'
-      updateMenuItem.enabled = false
-      break
-    case EUpdaterStatus.DOWNLOADING:
-      updateMenuItem.label = 'Downloading updates...'
-      updateMenuItem.enabled = false
-      break
-    case EUpdaterStatus.PROGRESS:
-      updateMenuItem.label = `Downloading ${meta.progress}`
-      updateMenuItem.enabled = false
-    case EUpdaterStatus.READY:
-      updateMenuItem.label = 'Restart to update'
-      updateMenuItem.enabled = true
-      break
-
-    default:
-      break
+  const menu = Menu.getApplicationMenu()
+  if (!menu) {
+    return
   }
+  for (const i in UPDATER_STATUS_MAP) {
+    if (UPDATER_STATUS_MAP[i]) {
+      const item = menu.getMenuItemById(UPDATER_STATUS_MAP[i])
+      item.visible = item.id === updaterStatus
+    }
+  }
+  Menu.setApplicationMenu(menu)
 }
 
-autoUpdater.autoDownload = false
-autoUpdater.autoInstallOnAppQuit = false
+function quitAndInstall() {
+  setImmediate(() => autoUpdater.quitAndInstall())
+}
 
-autoUpdater.on('error', error => {
-  setUpdaterStatus(EUpdaterStatus.ERROR)
-
-  dialog.showErrorBox(
-    'Error: ',
-    error == null ? 'unknown' : (error.stack || error).toString()
-  )
-})
-
-autoUpdater.on('update-available', (info: UpdateInfo) => {
-  dialog
-    .showMessageBox({
-      buttons: ['Sure', 'No'],
-      message: `Found updates v${info.version}, do you want update now?`,
-      title: 'Found Updates',
-      type: 'info',
-    })
-    .then(data => {
-      const buttonIndex = data.response
-      if (buttonIndex === 0) {
-        setUpdaterStatus(EUpdaterStatus.DOWNLOADING)
-        autoUpdater.downloadUpdate()
-      } else {
-        setUpdaterStatus(EUpdaterStatus.NORMAL)
-      }
-    })
-})
-
-autoUpdater.on('update-not-available', () => {
-  dialog.showMessageBox({
-    message: 'Current version is up-to-date.',
-    title: 'No Updates',
+function initAutoUpdater() {
+  autoUpdater.on('error', error => {
+    setUpdaterStatus(UPDATER_STATUS_MAP.ERROR)
+    dialog.showErrorBox(
+      'Error: ',
+      error == null ? 'unknown' : (error.stack || error).toString()
+    )
   })
-  setUpdaterStatus(EUpdaterStatus.NORMAL)
-})
 
-autoUpdater.on('download-progress', (info: ProgressInfo) => {
-  setUpdaterStatus(EUpdaterStatus.PROGRESS, { progress: ~~info.percent })
-})
+  autoUpdater.on('checking-for-update', () => {
+    setUpdaterStatus(UPDATER_STATUS_MAP.CHECKING)
+  })
 
-autoUpdater.on('update-downloaded', (info: UpdateInfo) => {
-  dialog
-    .showMessageBox({
-      message: `Updates v${info.version} downloaded, application will be quit for update...`,
-      title: 'Install Updates',
+  autoUpdater.on('update-available', (info: UpdateInfo) => {
+    dialog
+      .showMessageBox({
+        buttons: ['Yes', 'No'],
+        message: `Found updates v${info.version}, do you want update now?`,
+        title: 'Found Updates',
+        type: 'info',
+      })
+      .then(data => {
+        const buttonIndex = data.response
+        if (buttonIndex === 0) {
+          setUpdaterStatus(UPDATER_STATUS_MAP.DOWNLOADING)
+          autoUpdater.downloadUpdate()
+        } else {
+          setUpdaterStatus(UPDATER_STATUS_MAP.NORMAL)
+        }
+      })
+  })
+
+  autoUpdater.on('update-not-available', () => {
+    dialog.showMessageBox({
+      message: 'Current version is up-to-date.',
+      title: 'No Updates',
     })
-    .then(data => {
-      setImmediate(() => autoUpdater.quitAndInstall())
-    })
-})
+    setUpdaterStatus(UPDATER_STATUS_MAP.NORMAL)
+  })
 
-// export this to MenuItem click callback
-export function checkForUpdates(
-  menuItem: MenuItem,
-  focusedWindow: BrowserWindow,
-  event: KeyboardEvent
-) {
-  if (updaterStatus === EUpdaterStatus.READY) {
-    return setImmediate(() => autoUpdater.quitAndInstall())
-  }
-  updateMenuItem = menuItem
-  setUpdaterStatus(EUpdaterStatus.CHECKING)
+  autoUpdater.on('download-progress', (info: ProgressInfo) => {
+    // Do Nothing
+    // setUpdaterStatus(UPDATER_STATUS_MAP.PROGRESS, { progress: ~~info.percent })
+  })
+
+  autoUpdater.on('update-downloaded', (info: UpdateInfo) => {
+    dialog
+      .showMessageBox({
+        buttons: ['Yes', 'No'],
+        message: `Updates v${info.version} downloaded, application will be quit for update...`,
+        title: 'Install Updates',
+      })
+      .then(data => {
+        const buttonIndex = data.response
+        if (buttonIndex === 0) {
+          quitAndInstall()
+        }
+      })
+    setUpdaterStatus(UPDATER_STATUS_MAP.READY)
+  })
+}
+
+export function initUpdaterMenuItems() {
+  initAutoUpdater()
+}
+
+export function checkForUpdates() {
   autoUpdater.checkForUpdates()
+}
+
+export function restartToUpdate() {
+  if (updaterStatus === UPDATER_STATUS_MAP.READY) {
+    return quitAndInstall()
+  }
 }
