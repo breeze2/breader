@@ -1,14 +1,18 @@
 // Modules to control application life and create native browser window
 import * as Sentry from '@sentry/electron'
-import { app, BrowserWindow, Menu } from 'electron'
+import { app, BrowserWindow } from 'electron'
 import isDev from 'electron-is-dev'
 import path from 'path'
-import { template as menuTemplate } from './menu'
+import { initMenu } from './menu'
+import { initUpdaterMenuItems } from './updater'
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: BrowserWindow | null = null
 const isWindows = process.platform === 'win32'
+
+initMenu()
+initUpdaterMenuItems()
 
 function createWindow() {
   // Create the browser window.
@@ -48,7 +52,7 @@ function createWindow() {
       .catch((err: any) => console.error('An error occurred: ', err))
     // require('devtron').install()
 
-    mainWindow.loadURL('http://localhost:3000/?react_perf')
+    mainWindow.loadURL('http://localhost:3000')
   } else {
     mainWindow.loadFile(path.join(__dirname, '/../build/index.html'))
   }
@@ -74,10 +78,6 @@ function createWindow() {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow)
-app.on('ready', () => {
-  const menu = Menu.buildFromTemplate(menuTemplate)
-  Menu.setApplicationMenu(menu)
-})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {

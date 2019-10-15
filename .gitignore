@@ -28,3 +28,6 @@ yarn-error.log*
 # breader
 public/electron.js
 public/electron.js.map
+
+# electron
+dev-app-update.yml
