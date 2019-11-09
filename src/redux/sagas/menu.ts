@@ -22,6 +22,6 @@ const dispatcher = makeSagaWorkersDispatcher({
   [MenuActionTypes.ASYNC_SELECT_MENU_KEY]: selectMenuKeySaga,
 })
 
-export function* watchSelectMenuKey() {
+export function* watchMenuSagas() {
   yield takeLatest(MenuActionTypes.ASYNC_SELECT_MENU_KEY, dispatcher)
 }

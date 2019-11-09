@@ -19,16 +19,16 @@ export interface IArticleItemOwnProps {
   summary: string
 }
 
-export interface IArticleItemReduxDispatch {}
+export interface IArticleItemDispatchProps {}
 
-export interface IArticleItemReduxState {
+export interface IArticleItemStateProps {
   feedsMap: Immutable.Map<string, IFeed>
 }
 
 export interface IArticleItemProps
   extends IArticleItemOwnProps,
-    IArticleItemReduxDispatch,
-    IArticleItemReduxState {}
+    IArticleItemDispatchProps,
+    IArticleItemStateProps {}
 
 class ArticleItem<T extends IArticleItemProps> extends PureComponent<
   T & WrappedComponentProps

@@ -112,22 +112,10 @@ const dispatcher = makeSagaWorkersDispatcher({
   [ArticlesActionTypes.ASYNC_SET_ALL_ARTICLES_READ]: setAllArticlesReadSaga,
 })
 
-export function* watchFetchArticles() {
+export function* watchArticlesSagas() {
   yield takeLatest(ArticlesActionTypes.ASYNC_FETCH_ARTICLES, dispatcher)
-}
-
-export function* watchFilterArticles() {
   yield takeLatest(ArticlesActionTypes.ASYNC_FILTER_ARTICLES, dispatcher)
-}
-
-export function* watchSelectAndReadArticles() {
   yield takeEvery(ArticlesActionTypes.ASYNC_SELECT_AND_READ_ARTICLE, dispatcher)
-}
-
-export function* watchStarArticle() {
   yield takeLatest(ArticlesActionTypes.ASYNC_STAR_ARTICLE, dispatcher)
-}
-
-export function* watchSetAllArticlesRead() {
   yield takeLatest(ArticlesActionTypes.ASYNC_SET_ALL_ARTICLES_READ, dispatcher)
 }

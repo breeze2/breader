@@ -13,21 +13,21 @@ import '../styles/ArticleView.less'
 
 export interface IArticleViewOwnProps {}
 
-export interface IArticleViewReduxState {
+export interface IArticleViewStateProps {
   currentArticle: IArticle | null
   articles: Immutable.List<IArticle>
   feedsMap: Immutable.Map<string, IFeed>
   isUpdatingCurrentArticle: boolean
 }
 
-export interface IArticleViewReduxDispatch {
+export interface IArticleViewDispatchProps {
   asyncStarArticle: (articleId: string, isStarred: boolean) => Promise<void>
 }
 
 export interface IArticleViewProps
   extends IArticleViewOwnProps,
-    IArticleViewReduxDispatch,
-    IArticleViewReduxState {}
+    IArticleViewDispatchProps,
+    IArticleViewStateProps {}
 
 export interface IArticleViewState {
   hoverLink: string

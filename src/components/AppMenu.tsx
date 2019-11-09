@@ -15,7 +15,7 @@ const SubMenu = Menu.SubMenu
 
 export interface IAppMenuOwnProps {}
 
-export interface IAppMenuReduxDispatch {
+export interface IAppMenuDispatchProps {
   setFeedFavicon: (id: string, favicon: string) => any
   setIsCreatingFeed: (isCreating: boolean) => any
   setIsFetchingArticles: (isFetching: boolean) => any
@@ -28,7 +28,7 @@ export interface IAppMenuReduxDispatch {
   asyncUpdateFeeds: () => Promise<number>
 }
 
-export interface IAppMenuReduxState {
+export interface IAppMenuStateProps {
   feedsMap: Immutable.Map<string, IFeed>
   feeds: Immutable.List<IFeed>
   isCreatingFeed: boolean
@@ -39,8 +39,8 @@ export interface IAppMenuReduxState {
 
 export interface IAppMenuProps
   extends IAppMenuOwnProps,
-    IAppMenuReduxDispatch,
-    IAppMenuReduxState {}
+    IAppMenuDispatchProps,
+    IAppMenuStateProps {}
 
 export interface IAppMenuState {
   isAddFeedModalVisible: boolean

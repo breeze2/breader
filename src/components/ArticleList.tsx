@@ -16,7 +16,7 @@ const Confirm = Modal.confirm
 
 export interface IArticleListOwnProps {}
 
-export interface IArticleListReduxState {
+export interface IArticleListStateProps {
   articles: Immutable.List<IArticle>
   articlesFilter: string
   feeds: Immutable.List<IFeed>
@@ -24,15 +24,15 @@ export interface IArticleListReduxState {
   selectedMenuKey: string
 }
 
-export interface IArticleListReduxDispatch {
+export interface IArticleListDispatchProps {
   asyncFilterArticles: (filter: string) => Promise<void>
   asyncSetAllArticlesRead: (ids: string[]) => Promise<number>
 }
 
 export interface IArticleListProps
   extends IArticleListOwnProps,
-    IArticleListReduxState,
-    IArticleListReduxDispatch {}
+    IArticleListStateProps,
+    IArticleListDispatchProps {}
 
 export interface IArticleListState {
   isSearchArticleModalVisible: boolean

@@ -107,18 +107,14 @@ const dispatcher = makeSagaWorkersDispatcher({
   [FeedsActionTypes.ASYNC_DELETE_FEEDS]: deleteFeedsSaga,
 })
 
-export function* watchParseFeed() {
-  yield takeEvery(FeedsActionTypes.ASYNC_PARSE_FEED, dispatcher)
-}
-
-export function* watchFetchFeeds() {
-  yield takeEvery(FeedsActionTypes.ASYNC_FETCH_FEEDS, dispatcher)
-}
-
-export function* watchUpdateFeeds() {
-  yield takeEvery(FeedsActionTypes.ASYNC_UPDATE_FEEDS, dispatcher)
-}
-
-export function* watchDeleteFeeds() {
-  yield takeEvery(FeedsActionTypes.ASYNC_DELETE_FEEDS, dispatcher)
+export function* watchFeedsSagas() {
+  yield takeEvery(
+    [
+      FeedsActionTypes.ASYNC_PARSE_FEED,
+      FeedsActionTypes.ASYNC_FETCH_FEEDS,
+      FeedsActionTypes.ASYNC_UPDATE_FEEDS,
+      FeedsActionTypes.ASYNC_DELETE_FEEDS,
+    ],
+    dispatcher
+  )
 }

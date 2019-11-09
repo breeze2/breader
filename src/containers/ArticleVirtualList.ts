@@ -1,9 +1,9 @@
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux'
 import { Dispatch } from 'redux'
 import ArticleVirtualList, {
+  IArticleVirtualListDispatchProps,
   IArticleVirtualListOwnProps,
-  IArticleVirtualListReduxDispatch,
-  IArticleVirtualListReduxState,
+  IArticleVirtualListStateProps,
 } from '../components/ArticleVirtualList'
 import {
   asyncActionDispatcher,
@@ -12,7 +12,7 @@ import {
 import { IReduxAction, IReduxState } from '../schemas'
 
 const mapStateToProps: MapStateToProps<
-  IArticleVirtualListReduxState,
+  IArticleVirtualListStateProps,
   IArticleVirtualListOwnProps,
   IReduxState
 > = (state: IReduxState) => ({
@@ -22,7 +22,7 @@ const mapStateToProps: MapStateToProps<
 })
 
 const mapDispatchToProps: MapDispatchToProps<
-  IArticleVirtualListReduxDispatch,
+  IArticleVirtualListDispatchProps,
   IArticleVirtualListOwnProps
 > = (dispatch: Dispatch<IReduxAction>) => ({
   selectArticle: (id: string, index: number) =>

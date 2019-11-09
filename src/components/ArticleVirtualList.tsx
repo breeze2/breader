@@ -17,11 +17,11 @@ export interface IArticleVirtualListOwnProps {
   scrollToIndex?: number
 }
 
-export interface IArticleVirtualListReduxDispatch {
+export interface IArticleVirtualListDispatchProps {
   selectArticle: (id: string, index: number) => Promise<IArticle | null>
 }
 
-export interface IArticleVirtualListReduxState {
+export interface IArticleVirtualListStateProps {
   articles: Immutable.List<IArticle>
   currentArticle: IArticle | null
   selectedMenuKey: string
@@ -29,8 +29,8 @@ export interface IArticleVirtualListReduxState {
 
 export interface IArticleVirtualListProps
   extends IArticleVirtualListOwnProps,
-    IArticleVirtualListReduxDispatch,
-    IArticleVirtualListReduxState {}
+    IArticleVirtualListDispatchProps,
+    IArticleVirtualListStateProps {}
 
 export interface IArticleVirtualListState {
   cellCache: CellMeasurerCache

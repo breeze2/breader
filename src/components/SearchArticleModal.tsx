@@ -17,16 +17,16 @@ export interface ISearchArticleModalOwnProps {
   onItemChoose: (index: number) => any
 }
 
-export interface ISearchArticleModalReduxDispatch {}
+export interface ISearchArticleModalDispatchProps {}
 
-export interface ISearchArticleModalReduxState {
+export interface ISearchArticleModalStateProps {
   articles: Immutable.List<IArticle>
 }
 
 export interface ISearchArticleModalProps
   extends ISearchArticleModalOwnProps,
-    ISearchArticleModalReduxDispatch,
-    ISearchArticleModalReduxState {}
+    ISearchArticleModalDispatchProps,
+    ISearchArticleModalStateProps {}
 
 export interface ISearchArticleModalState {
   readonly keywords: string
