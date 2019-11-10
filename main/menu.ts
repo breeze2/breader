@@ -7,7 +7,13 @@ import {
   MenuItemConstructorOptions,
   shell,
 } from 'electron'
-import { checkForUpdates, restartToUpdate, UPDATER_STATUS_MAP } from './updater'
+import * as fs from 'fs'
+import {
+  checkForUpdates,
+  getUpdaterConfigPath,
+  restartToUpdate,
+  UPDATER_STATUS_MAP,
+} from './updater'
 
 const template: MenuItemConstructorOptions[] = [
   {
@@ -83,6 +89,11 @@ function addUpdateMenuItems(
   position: number
 ) {
   if (process.mas) {
+    // build for app store
+    return
+  }
+  if (!fs.existsSync(getUpdaterConfigPath())) {
+    // updater config not found
     return
   }
 

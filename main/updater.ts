@@ -1,6 +1,8 @@
 import { ProgressInfo, UpdateInfo } from 'builder-util-runtime'
-import { dialog, Menu } from 'electron'
+import { app, dialog, Menu } from 'electron'
 import { autoUpdater } from 'electron-updater'
+import * as path from 'path'
+
 export type IUpdaterStatus =
   | 'UPDATER_CHECKING'
   | 'UPDATER_DOWNLOADING'
@@ -113,4 +115,10 @@ export function restartToUpdate() {
   if (updaterStatus === UPDATER_STATUS_MAP.READY) {
     return quitAndInstall()
   }
+}
+
+export function getUpdaterConfigPath() {
+  return app.isPackaged
+    ? path.join(process.resourcesPath, 'app-update.yml')
+    : path.join(app.getAppPath(), 'dev-app-update.yml')
 }
