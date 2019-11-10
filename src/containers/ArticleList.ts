@@ -1,9 +1,9 @@
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux'
 import { Dispatch } from 'redux'
 import ArticleList, {
+  IArticleListDispatchProps,
   IArticleListOwnProps,
-  IArticleListReduxDispatch,
-  IArticleListReduxState,
+  IArticleListStateProps,
 } from '../components/ArticleList'
 import {
   asyncActionDispatcher,
@@ -13,7 +13,7 @@ import {
 import { IReduxAction, IReduxState } from '../schemas'
 
 const mapStateToProps: MapStateToProps<
-  IArticleListReduxState,
+  IArticleListStateProps,
   IArticleListOwnProps,
   IReduxState
 > = (state: IReduxState) => ({
@@ -25,7 +25,7 @@ const mapStateToProps: MapStateToProps<
 })
 
 const mapDispatchToProps: MapDispatchToProps<
-  IArticleListReduxDispatch,
+  IArticleListDispatchProps,
   IArticleListOwnProps
 > = (dispatch: Dispatch<IReduxAction>) => ({
   asyncFilterArticles: (filter: string) =>

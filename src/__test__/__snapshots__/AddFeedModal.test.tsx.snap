@@ -476,14 +476,36 @@ exports[`AddFeedModal Testing snapshot testing 1`] = `
                                   type="text"
                                   value=""
                                 >
-                                  <input
-                                    className="ant-input input-feed-url"
+                                  <ClearableLabeledInput
+                                    className="input-feed-url"
+                                    element={
+                                      <input
+                                        className="ant-input input-feed-url"
+                                        onChange={[Function]}
+                                        onKeyDown={[Function]}
+                                        placeholder="Feed Url"
+                                        type="text"
+                                        value=""
+                                      />
+                                    }
+                                    handleReset={[Function]}
+                                    inputType="input"
                                     onChange={[Function]}
-                                    onKeyDown={[Function]}
+                                    onPressEnter={[Function]}
                                     placeholder="Feed Url"
+                                    prefixCls="ant-input"
                                     type="text"
                                     value=""
-                                  />
+                                  >
+                                    <input
+                                      className="ant-input input-feed-url"
+                                      onChange={[Function]}
+                                      onKeyDown={[Function]}
+                                      placeholder="Feed Url"
+                                      type="text"
+                                      value=""
+                                    />
+                                  </ClearableLabeledInput>
                                 </Input>
                               </div>
                               <div

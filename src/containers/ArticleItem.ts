@@ -1,14 +1,14 @@
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux'
 import { Dispatch } from 'redux'
 import ArticleItem, {
+  IArticleItemDispatchProps,
   IArticleItemOwnProps,
-  IArticleItemReduxDispatch,
-  IArticleItemReduxState,
+  IArticleItemStateProps,
 } from '../components/ArticleItem'
 import { IReduxAction, IReduxState } from '../schemas'
 
 const mapStateToProps: MapStateToProps<
-  IArticleItemReduxState,
+  IArticleItemStateProps,
   IArticleItemOwnProps,
   IReduxState
 > = (state: IReduxState) => ({
@@ -16,7 +16,7 @@ const mapStateToProps: MapStateToProps<
 })
 
 const mapDispatchToProps: MapDispatchToProps<
-  IArticleItemReduxDispatch,
+  IArticleItemDispatchProps,
   IArticleItemOwnProps
 > = (dispatch: Dispatch<IReduxAction>) => ({})
 

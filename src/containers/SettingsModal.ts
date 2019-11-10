@@ -1,9 +1,9 @@
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux'
 import { Dispatch } from 'redux'
 import SettingsModal, {
+  ISettingsModalDispatchProps,
   ISettingsModalOwnProps,
-  ISettingsModalReduxDispatch,
-  ISettingsModalReduxState,
+  ISettingsModalStateProps,
 } from '../components/SettingsModal'
 import {
   asyncActionDispatcher,
@@ -13,7 +13,7 @@ import {
 import { IReduxAction, IReduxState } from '../schemas'
 
 const mapStateToProps: MapStateToProps<
-  ISettingsModalReduxState,
+  ISettingsModalStateProps,
   ISettingsModalOwnProps,
   IReduxState
 > = (state: IReduxState) => ({
@@ -22,7 +22,7 @@ const mapStateToProps: MapStateToProps<
 })
 
 const mapDispatchToProps: MapDispatchToProps<
-  ISettingsModalReduxDispatch,
+  ISettingsModalDispatchProps,
   ISettingsModalOwnProps
 > = (dispatch: Dispatch<IReduxAction>) => ({
   asyncDeleteFeeds: (feedIds: string[]) =>
