@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.1](https://github.com/breeze2/breader/compare/v2.2.0...v2.2.1) (2019-11-30)
+
+### Bug Fixes
+
+- **sentry:** fix sentry sourcemaps prefix ([77bbd62](https://github.com/breeze2/breader/commit/77bbd62ac9f7c3b7e579dfd2906c6f68e65bf139))
+
 ## [2.2.0](https://github.com/breeze2/breader/compare/v2.1.1...v2.2.0) (2019-11-30)
 
 ### Features
