@@ -5,73 +5,71 @@ exports[`ArticleView Testing snapshot testing 1`] = `
   articles={
     Immutable.List [
       Object {
-        "_id": "tag:www.ruanyifeng.com,2019:/blog//1.2100",
-        "_rev": "5-ff6fc450616071a8f7d022b7532e85aa",
-        "author": "ruanyifeng",
+        "_id": "https://breeze2.github.io/blog/scheme-refresh-timeliness-cache.html",
+        "_rev": "2-d02f6ea35c34e71d79d98e08df251181",
+        "author": "Linyifeng",
         "categories": Array [],
         "comments": "article comments",
-        "createTime": 1563697765000,
+        "createTime": 1575123478266,
         "deleteTime": 0,
         "description": "article description",
         "enclosures": Array [],
-        "feedId": "http://www.ruanyifeng.com/blog/atom.xml",
+        "feedId": "https://breeze2.github.io/blog/atom.xml",
         "image": "",
-        "isDayFirst": true,
         "isStarred": false,
-        "isUnread": false,
-        "link": "http://www.ruanyifeng.com/blog/2019/07/weekly-issue-65.html",
+        "isUnread": true,
+        "link": "https://breeze2.github.io/blog/scheme-refresh-timeliness-cache.html",
         "originLink": "",
-        "publishTime": 1563697765000,
+        "publishTime": 1515403382000,
         "summary": "article summary",
-        "time": 1563697765000,
-        "title": "article title",
+        "time": 1569810157086,
+        "title": "动态更新时效性缓存的一个解决方案",
       },
     ]
   }
   asyncStarArticle={[MockFunction]}
   currentArticle={
     Object {
-      "_id": "tag:www.ruanyifeng.com,2019:/blog//1.2100",
-      "_rev": "5-ff6fc450616071a8f7d022b7532e85aa",
-      "author": "ruanyifeng",
+      "_id": "https://breeze2.github.io/blog/scheme-refresh-timeliness-cache.html",
+      "_rev": "2-d02f6ea35c34e71d79d98e08df251181",
+      "author": "Linyifeng",
       "categories": Array [],
       "comments": "article comments",
-      "createTime": 1563697765000,
+      "createTime": 1575123478266,
       "deleteTime": 0,
       "description": "article description",
       "enclosures": Array [],
-      "feedId": "http://www.ruanyifeng.com/blog/atom.xml",
+      "feedId": "https://breeze2.github.io/blog/atom.xml",
       "image": "",
-      "isDayFirst": true,
       "isStarred": false,
-      "isUnread": false,
-      "link": "http://www.ruanyifeng.com/blog/2019/07/weekly-issue-65.html",
+      "isUnread": true,
+      "link": "https://breeze2.github.io/blog/scheme-refresh-timeliness-cache.html",
       "originLink": "",
-      "publishTime": 1563697765000,
+      "publishTime": 1515403382000,
       "summary": "article summary",
-      "time": 1563697765000,
-      "title": "article title",
+      "time": 1569810157086,
+      "title": "动态更新时效性缓存的一个解决方案",
     }
   }
   feedsMap={
     Immutable.Map {
-      "http://www.ruanyifeng.com/blog/atom.xml": Object {
-        "_id": "http://www.ruanyifeng.com/blog/atom.xml",
-        "_rev": "5-55772bf2b4d4b74608a60ac3480334e4",
-        "author": "ruanyifeng",
+      "https://breeze2.github.io/blog/atom.xml": Object {
+        "_id": "https://breeze2.github.io/blog/atom.xml",
+        "_rev": "2-0af48b1987682ae7d7128fecbd0feb4a",
+        "author": "Linyifeng",
         "categories": Array [],
-        "createTime": 1563686468437,
+        "createTime": 1575123471750,
         "deleteTime": 0,
-        "description": "Ruan YiFeng's Blog",
-        "etag": "\\"11d86-58e2cc1eab031\\"",
-        "favicon": "http://www.ruanyifeng.com/favicon.ico",
-        "generator": "Movable Type 5.2.2 (http://www.sixapart.com/movabletype/)",
+        "description": "林柏格",
+        "etag": "5d91672a-72e58\\"",
+        "favicon": "https://breeze2.github.io/favicon.ico",
+        "generator": "Hexo (http://hexo.io/)",
         "language": "",
-        "link": "http://www.ruanyifeng.com/blog/",
-        "publishTime": 1563697765000,
-        "time": 1563697765000,
-        "title": "阮一峰的网络日志",
-        "url": "http://www.ruanyifeng.com/blog/atom.xml",
+        "link": "https://breeze2.github.io/blog/",
+        "publishTime": 1569810157082,
+        "time": 1569810157082,
+        "title": "Lin Blog",
+        "url": "https://breeze2.github.io/blog/atom.xml",
       },
     }
   }
@@ -81,73 +79,71 @@ exports[`ArticleView Testing snapshot testing 1`] = `
     articles={
       Immutable.List [
         Object {
-          "_id": "tag:www.ruanyifeng.com,2019:/blog//1.2100",
-          "_rev": "5-ff6fc450616071a8f7d022b7532e85aa",
-          "author": "ruanyifeng",
+          "_id": "https://breeze2.github.io/blog/scheme-refresh-timeliness-cache.html",
+          "_rev": "2-d02f6ea35c34e71d79d98e08df251181",
+          "author": "Linyifeng",
           "categories": Array [],
           "comments": "article comments",
-          "createTime": 1563697765000,
+          "createTime": 1575123478266,
           "deleteTime": 0,
           "description": "article description",
           "enclosures": Array [],
-          "feedId": "http://www.ruanyifeng.com/blog/atom.xml",
+          "feedId": "https://breeze2.github.io/blog/atom.xml",
           "image": "",
-          "isDayFirst": true,
           "isStarred": false,
-          "isUnread": false,
-          "link": "http://www.ruanyifeng.com/blog/2019/07/weekly-issue-65.html",
+          "isUnread": true,
+          "link": "https://breeze2.github.io/blog/scheme-refresh-timeliness-cache.html",
           "originLink": "",
-          "publishTime": 1563697765000,
+          "publishTime": 1515403382000,
           "summary": "article summary",
-          "time": 1563697765000,
-          "title": "article title",
+          "time": 1569810157086,
+          "title": "动态更新时效性缓存的一个解决方案",
         },
       ]
     }
     asyncStarArticle={[MockFunction]}
     currentArticle={
       Object {
-        "_id": "tag:www.ruanyifeng.com,2019:/blog//1.2100",
-        "_rev": "5-ff6fc450616071a8f7d022b7532e85aa",
-        "author": "ruanyifeng",
+        "_id": "https://breeze2.github.io/blog/scheme-refresh-timeliness-cache.html",
+        "_rev": "2-d02f6ea35c34e71d79d98e08df251181",
+        "author": "Linyifeng",
         "categories": Array [],
         "comments": "article comments",
-        "createTime": 1563697765000,
+        "createTime": 1575123478266,
         "deleteTime": 0,
         "description": "article description",
         "enclosures": Array [],
-        "feedId": "http://www.ruanyifeng.com/blog/atom.xml",
+        "feedId": "https://breeze2.github.io/blog/atom.xml",
         "image": "",
-        "isDayFirst": true,
         "isStarred": false,
-        "isUnread": false,
-        "link": "http://www.ruanyifeng.com/blog/2019/07/weekly-issue-65.html",
+        "isUnread": true,
+        "link": "https://breeze2.github.io/blog/scheme-refresh-timeliness-cache.html",
         "originLink": "",
-        "publishTime": 1563697765000,
+        "publishTime": 1515403382000,
         "summary": "article summary",
-        "time": 1563697765000,
-        "title": "article title",
+        "time": 1569810157086,
+        "title": "动态更新时效性缓存的一个解决方案",
       }
     }
     feedsMap={
       Immutable.Map {
-        "http://www.ruanyifeng.com/blog/atom.xml": Object {
-          "_id": "http://www.ruanyifeng.com/blog/atom.xml",
-          "_rev": "5-55772bf2b4d4b74608a60ac3480334e4",
-          "author": "ruanyifeng",
+        "https://breeze2.github.io/blog/atom.xml": Object {
+          "_id": "https://breeze2.github.io/blog/atom.xml",
+          "_rev": "2-0af48b1987682ae7d7128fecbd0feb4a",
+          "author": "Linyifeng",
           "categories": Array [],
-          "createTime": 1563686468437,
+          "createTime": 1575123471750,
           "deleteTime": 0,
-          "description": "Ruan YiFeng's Blog",
-          "etag": "\\"11d86-58e2cc1eab031\\"",
-          "favicon": "http://www.ruanyifeng.com/favicon.ico",
-          "generator": "Movable Type 5.2.2 (http://www.sixapart.com/movabletype/)",
+          "description": "林柏格",
+          "etag": "5d91672a-72e58\\"",
+          "favicon": "https://breeze2.github.io/favicon.ico",
+          "generator": "Hexo (http://hexo.io/)",
           "language": "",
-          "link": "http://www.ruanyifeng.com/blog/",
-          "publishTime": 1563697765000,
-          "time": 1563697765000,
-          "title": "阮一峰的网络日志",
-          "url": "http://www.ruanyifeng.com/blog/atom.xml",
+          "link": "https://breeze2.github.io/blog/",
+          "publishTime": 1569810157082,
+          "time": 1569810157082,
+          "title": "Lin Blog",
+          "url": "https://breeze2.github.io/blog/atom.xml",
         },
       }
     }
@@ -307,30 +303,30 @@ exports[`ArticleView Testing snapshot testing 1`] = `
             >
               <div
                 className="article-info"
-                data-link="http://www.ruanyifeng.com/blog/2019/07/weekly-issue-65.html"
+                data-link="https://breeze2.github.io/blog/scheme-refresh-timeliness-cache.html"
               >
                 <div
                   className="article-date"
                 >
                   <p>
-                    Sun Jul 21 2019 16:29
+                    Mon Sep 30 2019 10:22
                   </p>
                 </div>
                 <div
                   className="article-title"
                 >
                   <h1>
-                    article title
+                    动态更新时效性缓存的一个解决方案
                   </h1>
                 </div>
                 <div
                   className="article-author"
                 >
                   <p>
-                    ruanyifeng
+                    Linyifeng
                      @
                      
-                    阮一峰的网络日志
+                    Lin Blog
                   </p>
                 </div>
               </div>
