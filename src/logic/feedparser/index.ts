@@ -46,6 +46,16 @@ function makeFaviconUrl(feedUrl: string) {
   return `${u.protocol}//${u.host}/favicon.ico`
 }
 
+function fixFeedUrl(feedUrl: string, meta: FeedParser.Meta) {
+  if (meta.xmlurl && meta.xmlurl.length > 2 && meta.xmlurl[0] === '/') {
+    const u = url.parse(feedUrl)
+    if (u) {
+      meta.xmlurl = u.protocol + '//' + u.host + meta.xmlurl
+    }
+  }
+  return meta
+}
+
 function parseEtag(res: http.IncomingMessage) {
   let etag = res.headers.etag ? res.headers.etag : ''
   etag = etag.toString()
@@ -74,7 +84,10 @@ export function parseFeed(feedUrl: string, etag: string) {
             meta.favicon = meta.favicon
               ? meta.favicon
               : makeFaviconUrl(meta.link)
-            feed = feedDB.makeFeedBaseOnMate(meta, parseEtag(res))
+            feed = feedDB.makeFeedBaseOnMate(
+              fixFeedUrl(feedUrl, meta),
+              parseEtag(res)
+            )
           })
           fp.on('readable', () => {
             item = fp.read()

@@ -3,26 +3,26 @@
 exports[`ArticleItem Testing snapshot testing 1`] = `
 <injectIntl(ArticleItem)
   author="Author"
-  feedId="http://www.ruanyifeng.com/blog/atom.xml"
+  feedId="https://breeze2.github.io/blog/atom.xml"
   feedsMap={
     Immutable.Map {
-      "http://www.ruanyifeng.com/blog/atom.xml": Object {
-        "_id": "http://www.ruanyifeng.com/blog/atom.xml",
-        "_rev": "5-55772bf2b4d4b74608a60ac3480334e4",
-        "author": "ruanyifeng",
+      "https://breeze2.github.io/blog/atom.xml": Object {
+        "_id": "https://breeze2.github.io/blog/atom.xml",
+        "_rev": "2-0af48b1987682ae7d7128fecbd0feb4a",
+        "author": "Linyifeng",
         "categories": Array [],
-        "createTime": 1563686468437,
+        "createTime": 1575123471750,
         "deleteTime": 0,
-        "description": "Ruan YiFeng's Blog",
-        "etag": "\\"11d86-58e2cc1eab031\\"",
-        "favicon": "http://www.ruanyifeng.com/favicon.ico",
-        "generator": "Movable Type 5.2.2 (http://www.sixapart.com/movabletype/)",
+        "description": "林柏格",
+        "etag": "5d91672a-72e58\\"",
+        "favicon": "https://breeze2.github.io/favicon.ico",
+        "generator": "Hexo (http://hexo.io/)",
         "language": "",
-        "link": "http://www.ruanyifeng.com/blog/",
-        "publishTime": 1563697765000,
-        "time": 1563697765000,
-        "title": "阮一峰的网络日志",
-        "url": "http://www.ruanyifeng.com/blog/atom.xml",
+        "link": "https://breeze2.github.io/blog/",
+        "publishTime": 1569810157082,
+        "time": 1569810157082,
+        "title": "Lin Blog",
+        "url": "https://breeze2.github.io/blog/atom.xml",
       },
     }
   }
@@ -33,26 +33,26 @@ exports[`ArticleItem Testing snapshot testing 1`] = `
 >
   <ArticleItem
     author="Author"
-    feedId="http://www.ruanyifeng.com/blog/atom.xml"
+    feedId="https://breeze2.github.io/blog/atom.xml"
     feedsMap={
       Immutable.Map {
-        "http://www.ruanyifeng.com/blog/atom.xml": Object {
-          "_id": "http://www.ruanyifeng.com/blog/atom.xml",
-          "_rev": "5-55772bf2b4d4b74608a60ac3480334e4",
-          "author": "ruanyifeng",
+        "https://breeze2.github.io/blog/atom.xml": Object {
+          "_id": "https://breeze2.github.io/blog/atom.xml",
+          "_rev": "2-0af48b1987682ae7d7128fecbd0feb4a",
+          "author": "Linyifeng",
           "categories": Array [],
-          "createTime": 1563686468437,
+          "createTime": 1575123471750,
           "deleteTime": 0,
-          "description": "Ruan YiFeng's Blog",
-          "etag": "\\"11d86-58e2cc1eab031\\"",
-          "favicon": "http://www.ruanyifeng.com/favicon.ico",
-          "generator": "Movable Type 5.2.2 (http://www.sixapart.com/movabletype/)",
+          "description": "林柏格",
+          "etag": "5d91672a-72e58\\"",
+          "favicon": "https://breeze2.github.io/favicon.ico",
+          "generator": "Hexo (http://hexo.io/)",
           "language": "",
-          "link": "http://www.ruanyifeng.com/blog/",
-          "publishTime": 1563697765000,
-          "time": 1563697765000,
-          "title": "阮一峰的网络日志",
-          "url": "http://www.ruanyifeng.com/blog/atom.xml",
+          "link": "https://breeze2.github.io/blog/",
+          "publishTime": 1569810157082,
+          "time": 1569810157082,
+          "title": "Lin Blog",
+          "url": "https://breeze2.github.io/blog/atom.xml",
         },
       }
     }
@@ -124,7 +124,7 @@ exports[`ArticleItem Testing snapshot testing 1`] = `
         <Avatar
           shape="square"
           size={22}
-          src="http://www.ruanyifeng.com/favicon.ico"
+          src="https://breeze2.github.io/favicon.ico"
         >
           <span
             className="ant-avatar ant-avatar-square ant-avatar-image"
@@ -139,7 +139,7 @@ exports[`ArticleItem Testing snapshot testing 1`] = `
           >
             <img
               onError={[Function]}
-              src="http://www.ruanyifeng.com/favicon.ico"
+              src="https://breeze2.github.io/favicon.ico"
             />
           </span>
         </Avatar>
@@ -153,7 +153,7 @@ exports[`ArticleItem Testing snapshot testing 1`] = `
           <div
             className="item-header-left"
           >
-            阮一峰的网络日志
+            Lin Blog
           </div>
           <div
             className="item-header-right"
