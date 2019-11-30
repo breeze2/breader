@@ -100,7 +100,6 @@ exports[`WebviewDrawer Testing snapshot testing 1`] = `
                       >
                         <div
                           class="ant-drawer-wrapper-body"
-                          style="overflow: auto; height: 100%;"
                         >
                           <div
                             class="ant-drawer-body"
@@ -229,12 +228,7 @@ exports[`WebviewDrawer Testing snapshot testing 1`] = `
                       <div
                         className="ant-drawer-wrapper-body"
                         onTransitionEnd={[Function]}
-                        style={
-                          Object {
-                            "height": "100%",
-                            "overflow": "auto",
-                          }
-                        }
+                        style={Object {}}
                       >
                         <div
                           className="ant-drawer-body"
