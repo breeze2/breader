@@ -41,8 +41,8 @@ exports[`SettingsModal Testing snapshot testing 1`] = `
         "calls": Array [
           Array [
             Array [
-              "http://www.ruanyifeng.com/blog/atom.xml",
-              "http://www.ruanyifeng.com/blog/atom.xml",
+              "https://breeze2.github.io/blog/atom.xml",
+              "https://breeze2.github.io/blog/atom.xml",
             ],
           ],
         ],
@@ -57,22 +57,22 @@ exports[`SettingsModal Testing snapshot testing 1`] = `
     feeds={
       Immutable.List [
         Object {
-          "_id": "http://www.ruanyifeng.com/blog/atom.xml",
-          "_rev": "5-55772bf2b4d4b74608a60ac3480334e4",
-          "author": "ruanyifeng",
+          "_id": "https://breeze2.github.io/blog/atom.xml",
+          "_rev": "2-0af48b1987682ae7d7128fecbd0feb4a",
+          "author": "Linyifeng",
           "categories": Array [],
-          "createTime": 1563686468437,
+          "createTime": 1575123471750,
           "deleteTime": 0,
-          "description": "Ruan YiFeng's Blog",
-          "etag": "\\"11d86-58e2cc1eab031\\"",
-          "favicon": "http://www.ruanyifeng.com/favicon.ico",
-          "generator": "Movable Type 5.2.2 (http://www.sixapart.com/movabletype/)",
+          "description": "林柏格",
+          "etag": "5d91672a-72e58\\"",
+          "favicon": "https://breeze2.github.io/favicon.ico",
+          "generator": "Hexo (http://hexo.io/)",
           "language": "",
-          "link": "http://www.ruanyifeng.com/blog/",
-          "publishTime": 1563697765000,
-          "time": 1563697765000,
-          "title": "阮一峰的网络日志",
-          "url": "http://www.ruanyifeng.com/blog/atom.xml",
+          "link": "https://breeze2.github.io/blog/",
+          "publishTime": 1569810157082,
+          "time": 1569810157082,
+          "title": "Lin Blog",
+          "url": "https://breeze2.github.io/blog/atom.xml",
         },
       ]
     }
@@ -137,8 +137,8 @@ exports[`SettingsModal Testing snapshot testing 1`] = `
           "calls": Array [
             Array [
               Array [
-                "http://www.ruanyifeng.com/blog/atom.xml",
-                "http://www.ruanyifeng.com/blog/atom.xml",
+                "https://breeze2.github.io/blog/atom.xml",
+                "https://breeze2.github.io/blog/atom.xml",
               ],
             ],
           ],
@@ -153,22 +153,22 @@ exports[`SettingsModal Testing snapshot testing 1`] = `
       feeds={
         Immutable.List [
           Object {
-            "_id": "http://www.ruanyifeng.com/blog/atom.xml",
-            "_rev": "5-55772bf2b4d4b74608a60ac3480334e4",
-            "author": "ruanyifeng",
+            "_id": "https://breeze2.github.io/blog/atom.xml",
+            "_rev": "2-0af48b1987682ae7d7128fecbd0feb4a",
+            "author": "Linyifeng",
             "categories": Array [],
-            "createTime": 1563686468437,
+            "createTime": 1575123471750,
             "deleteTime": 0,
-            "description": "Ruan YiFeng's Blog",
-            "etag": "\\"11d86-58e2cc1eab031\\"",
-            "favicon": "http://www.ruanyifeng.com/favicon.ico",
-            "generator": "Movable Type 5.2.2 (http://www.sixapart.com/movabletype/)",
+            "description": "林柏格",
+            "etag": "5d91672a-72e58\\"",
+            "favicon": "https://breeze2.github.io/favicon.ico",
+            "generator": "Hexo (http://hexo.io/)",
             "language": "",
-            "link": "http://www.ruanyifeng.com/blog/",
-            "publishTime": 1563697765000,
-            "time": 1563697765000,
-            "title": "阮一峰的网络日志",
-            "url": "http://www.ruanyifeng.com/blog/atom.xml",
+            "link": "https://breeze2.github.io/blog/",
+            "publishTime": 1569810157082,
+            "time": 1569810157082,
+            "title": "Lin Blog",
+            "url": "https://breeze2.github.io/blog/atom.xml",
           },
         ]
       }
@@ -526,18 +526,18 @@ exports[`SettingsModal Testing snapshot testing 1`] = `
                                           >
                                             <p
                                               class="feed-item-content"
-                                              title="http://www.ruanyifeng.com/blog/atom.xml"
+                                              title="https://breeze2.github.io/blog/atom.xml"
                                             >
                                               <span
                                                 class="ant-avatar ant-avatar-square ant-avatar-image"
                                                 style="width: 16px; height: 16px; line-height: 16px; font-size: 18px;"
                                               >
                                                 <img
-                                                  src="http://www.ruanyifeng.com/favicon.ico"
+                                                  src="https://breeze2.github.io/favicon.ico"
                                                 />
                                               </span>
                                                
-                                              阮一峰的网络日志
+                                              Lin Blog
                                             </p>
                                             <ul
                                               class="ant-list-item-action"
@@ -1226,22 +1226,22 @@ exports[`SettingsModal Testing snapshot testing 1`] = `
                                         feeds={
                                           Array [
                                             Object {
-                                              "_id": "http://www.ruanyifeng.com/blog/atom.xml",
-                                              "_rev": "5-55772bf2b4d4b74608a60ac3480334e4",
-                                              "author": "ruanyifeng",
+                                              "_id": "https://breeze2.github.io/blog/atom.xml",
+                                              "_rev": "2-0af48b1987682ae7d7128fecbd0feb4a",
+                                              "author": "Linyifeng",
                                               "categories": Array [],
-                                              "createTime": 1563686468437,
+                                              "createTime": 1575123471750,
                                               "deleteTime": 0,
-                                              "description": "Ruan YiFeng's Blog",
-                                              "etag": "\\"11d86-58e2cc1eab031\\"",
-                                              "favicon": "http://www.ruanyifeng.com/favicon.ico",
-                                              "generator": "Movable Type 5.2.2 (http://www.sixapart.com/movabletype/)",
+                                              "description": "林柏格",
+                                              "etag": "5d91672a-72e58\\"",
+                                              "favicon": "https://breeze2.github.io/favicon.ico",
+                                              "generator": "Hexo (http://hexo.io/)",
                                               "language": "",
-                                              "link": "http://www.ruanyifeng.com/blog/",
-                                              "publishTime": 1563697765000,
-                                              "time": 1563697765000,
-                                              "title": "阮一峰的网络日志",
-                                              "url": "http://www.ruanyifeng.com/blog/atom.xml",
+                                              "link": "https://breeze2.github.io/blog/",
+                                              "publishTime": 1569810157082,
+                                              "time": 1569810157082,
+                                              "title": "Lin Blog",
+                                              "url": "https://breeze2.github.io/blog/atom.xml",
                                             },
                                           ]
                                         }
@@ -1251,22 +1251,22 @@ exports[`SettingsModal Testing snapshot testing 1`] = `
                                           feeds={
                                             Array [
                                               Object {
-                                                "_id": "http://www.ruanyifeng.com/blog/atom.xml",
-                                                "_rev": "5-55772bf2b4d4b74608a60ac3480334e4",
-                                                "author": "ruanyifeng",
+                                                "_id": "https://breeze2.github.io/blog/atom.xml",
+                                                "_rev": "2-0af48b1987682ae7d7128fecbd0feb4a",
+                                                "author": "Linyifeng",
                                                 "categories": Array [],
-                                                "createTime": 1563686468437,
+                                                "createTime": 1575123471750,
                                                 "deleteTime": 0,
-                                                "description": "Ruan YiFeng's Blog",
-                                                "etag": "\\"11d86-58e2cc1eab031\\"",
-                                                "favicon": "http://www.ruanyifeng.com/favicon.ico",
-                                                "generator": "Movable Type 5.2.2 (http://www.sixapart.com/movabletype/)",
+                                                "description": "林柏格",
+                                                "etag": "5d91672a-72e58\\"",
+                                                "favicon": "https://breeze2.github.io/favicon.ico",
+                                                "generator": "Hexo (http://hexo.io/)",
                                                 "language": "",
-                                                "link": "http://www.ruanyifeng.com/blog/",
-                                                "publishTime": 1563697765000,
-                                                "time": 1563697765000,
-                                                "title": "阮一峰的网络日志",
-                                                "url": "http://www.ruanyifeng.com/blog/atom.xml",
+                                                "link": "https://breeze2.github.io/blog/",
+                                                "publishTime": 1569810157082,
+                                                "time": 1569810157082,
+                                                "title": "Lin Blog",
+                                                "url": "https://breeze2.github.io/blog/atom.xml",
                                               },
                                             ]
                                           }
@@ -1400,19 +1400,19 @@ exports[`SettingsModal Testing snapshot testing 1`] = `
                                                         ]
                                                       }
                                                       className="setting-feed-item"
-                                                      key="http://www.ruanyifeng.com/blog/atom.xml"
+                                                      key="https://breeze2.github.io/blog/atom.xml"
                                                     >
                                                       <li
                                                         className="ant-list-item setting-feed-item"
                                                       >
                                                         <p
                                                           className="feed-item-content"
-                                                          title="http://www.ruanyifeng.com/blog/atom.xml"
+                                                          title="https://breeze2.github.io/blog/atom.xml"
                                                         >
                                                           <Avatar
                                                             shape="square"
                                                             size={16}
-                                                            src="http://www.ruanyifeng.com/favicon.ico"
+                                                            src="https://breeze2.github.io/favicon.ico"
                                                           >
                                                             <span
                                                               className="ant-avatar ant-avatar-square ant-avatar-image"
@@ -1427,12 +1427,12 @@ exports[`SettingsModal Testing snapshot testing 1`] = `
                                                             >
                                                               <img
                                                                 onError={[Function]}
-                                                                src="http://www.ruanyifeng.com/favicon.ico"
+                                                                src="https://breeze2.github.io/favicon.ico"
                                                               />
                                                             </span>
                                                           </Avatar>
                                                            
-                                                          阮一峰的网络日志
+                                                          Lin Blog
                                                         </p>
                                                         <ul
                                                           className="ant-list-item-action"
@@ -1445,7 +1445,7 @@ exports[`SettingsModal Testing snapshot testing 1`] = `
                                                               block={false}
                                                               ghost={false}
                                                               htmlType="button"
-                                                              key="http://www.ruanyifeng.com/blog/atom.xml"
+                                                              key="https://breeze2.github.io/blog/atom.xml"
                                                               loading={false}
                                                               onClick={[Function]}
                                                               size="small"
