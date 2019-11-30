@@ -14,6 +14,7 @@ exports[`AddFeedModal Testing snapshot testing 1`] = `
         "formatDate": [Function],
         "formatDateToParts": [Function],
         "formatHTMLMessage": [Function],
+        "formatList": [Function],
         "formatMessage": [Function],
         "formatNumber": [Function],
         "formatNumberToParts": [Function],
@@ -24,6 +25,7 @@ exports[`AddFeedModal Testing snapshot testing 1`] = `
         "formats": Object {},
         "formatters": Object {
           "getDateTimeFormat": [Function],
+          "getListFormat": [Function],
           "getMessageFormat": [Function],
           "getNumberFormat": [Function],
           "getPluralRules": [Function],
@@ -476,14 +478,36 @@ exports[`AddFeedModal Testing snapshot testing 1`] = `
                                   type="text"
                                   value=""
                                 >
-                                  <input
-                                    className="ant-input input-feed-url"
+                                  <ClearableLabeledInput
+                                    className="input-feed-url"
+                                    element={
+                                      <input
+                                        className="ant-input input-feed-url"
+                                        onChange={[Function]}
+                                        onKeyDown={[Function]}
+                                        placeholder="Feed Url"
+                                        type="text"
+                                        value=""
+                                      />
+                                    }
+                                    handleReset={[Function]}
+                                    inputType="input"
                                     onChange={[Function]}
-                                    onKeyDown={[Function]}
+                                    onPressEnter={[Function]}
                                     placeholder="Feed Url"
+                                    prefixCls="ant-input"
                                     type="text"
                                     value=""
-                                  />
+                                  >
+                                    <input
+                                      className="ant-input input-feed-url"
+                                      onChange={[Function]}
+                                      onKeyDown={[Function]}
+                                      placeholder="Feed Url"
+                                      type="text"
+                                      value=""
+                                    />
+                                  </ClearableLabeledInput>
                                 </Input>
                               </div>
                               <div

@@ -1,4 +1,5 @@
 import { Empty, Icon } from 'antd'
+import hljs from 'highlight.js'
 import Immutable from 'immutable'
 import React, { PureComponent, RefObject } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
@@ -9,25 +10,26 @@ import ArticleViewSkeleton from '../skeletons/ArticleViewSkeleton'
 import Utils from '../utils'
 import WebviewDrawer from './WebviewDrawer'
 
+import 'highlight.js/styles/solarized-light.css'
 import '../styles/ArticleView.less'
 
 export interface IArticleViewOwnProps {}
 
-export interface IArticleViewReduxState {
+export interface IArticleViewStateProps {
   currentArticle: IArticle | null
   articles: Immutable.List<IArticle>
   feedsMap: Immutable.Map<string, IFeed>
   isUpdatingCurrentArticle: boolean
 }
 
-export interface IArticleViewReduxDispatch {
+export interface IArticleViewDispatchProps {
   asyncStarArticle: (articleId: string, isStarred: boolean) => Promise<void>
 }
 
 export interface IArticleViewProps
   extends IArticleViewOwnProps,
-    IArticleViewReduxDispatch,
-    IArticleViewReduxState {}
+    IArticleViewDispatchProps,
+    IArticleViewStateProps {}
 
 export interface IArticleViewState {
   hoverLink: string
@@ -94,6 +96,11 @@ export class ArticleViewComponent extends PureComponent<
         this._scrollbar.current.scrollToTop()
       }
     }
+    setImmediate(() => {
+      document.querySelectorAll('.article-content pre code').forEach(block => {
+        hljs.highlightBlock(block)
+      })
+    })
   }
   public handleStarIconClick = () => {
     const currentArticle = this.props.currentArticle

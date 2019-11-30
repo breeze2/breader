@@ -1,14 +1,14 @@
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux'
 import { Dispatch } from 'redux'
 import SearchArticleModal, {
+  ISearchArticleModalDispatchProps,
   ISearchArticleModalOwnProps,
-  ISearchArticleModalReduxDispatch,
-  ISearchArticleModalReduxState,
+  ISearchArticleModalStateProps,
 } from '../components/SearchArticleModal'
 import { IReduxAction, IReduxState } from '../schemas'
 
 const mapStateToProps: MapStateToProps<
-  ISearchArticleModalReduxState,
+  ISearchArticleModalStateProps,
   ISearchArticleModalOwnProps,
   IReduxState
 > = (state: IReduxState) => ({
@@ -16,7 +16,7 @@ const mapStateToProps: MapStateToProps<
 })
 
 const mapDispatchToProps: MapDispatchToProps<
-  ISearchArticleModalReduxDispatch,
+  ISearchArticleModalDispatchProps,
   ISearchArticleModalOwnProps
 > = (dispatch: Dispatch<IReduxAction>) => ({})
 

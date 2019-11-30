@@ -1,9 +1,9 @@
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux'
 import { Dispatch } from 'redux'
 import AppMenu, {
+  IAppMenuDispatchProps,
   IAppMenuOwnProps,
-  IAppMenuReduxDispatch,
-  IAppMenuReduxState,
+  IAppMenuStateProps,
 } from '../components/AppMenu'
 import {
   asyncActionDispatcher,
@@ -21,7 +21,7 @@ import {
 import { IReduxAction, IReduxState } from '../schemas'
 
 const mapStateToProps: MapStateToProps<
-  IAppMenuReduxState,
+  IAppMenuStateProps,
   IAppMenuOwnProps,
   IReduxState
 > = state => ({
@@ -34,7 +34,7 @@ const mapStateToProps: MapStateToProps<
 })
 
 const mapDispatchToProps: MapDispatchToProps<
-  IAppMenuReduxDispatch,
+  IAppMenuDispatchProps,
   IAppMenuOwnProps
 > = (dispatch: Dispatch<IReduxAction>) => ({
   asyncFetchArticles: () =>

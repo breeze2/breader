@@ -14,20 +14,20 @@ export interface ISettingsModalOwnProps {
   onLanguageChange: (language: string) => any
 }
 
-export interface ISettingsModalReduxDispatch {
+export interface ISettingsModalDispatchProps {
   setLanguage: (language: string) => any
   asyncDeleteFeeds: (feedIds: string[]) => Promise<number>
 }
 
-export interface ISettingsModalReduxState {
+export interface ISettingsModalStateProps {
   feeds: Immutable.List<IFeed>
   language: string
 }
 
 export interface ISettingsModalProps
   extends ISettingsModalOwnProps,
-    ISettingsModalReduxDispatch,
-    ISettingsModalReduxState {}
+    ISettingsModalDispatchProps,
+    ISettingsModalStateProps {}
 
 export interface ISettingsModalState {
   allFeeds: IFeed[]

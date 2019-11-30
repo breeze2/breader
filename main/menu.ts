@@ -7,7 +7,13 @@ import {
   MenuItemConstructorOptions,
   shell,
 } from 'electron'
-import { checkForUpdates, restartToUpdate, UPDATER_STATUS_MAP } from './updater'
+import * as fs from 'fs'
+import {
+  checkForUpdates,
+  getUpdaterConfigPath,
+  restartToUpdate,
+  UPDATER_STATUS_MAP,
+} from './updater'
 
 const template: MenuItemConstructorOptions[] = [
   {
@@ -72,7 +78,7 @@ function addAboutMenuItem(
   position: number
 ) {
   const aboutItem: MenuItemConstructorOptions = {
-    label: `About ${app.getName()}`,
+    label: `About ${app.name}`,
     role: 'about',
   }
   items.splice.apply(items, [position, 0, aboutItem])
@@ -83,6 +89,11 @@ function addUpdateMenuItems(
   position: number
 ) {
   if (process.mas) {
+    // build for app store
+    return
+  }
+  if (!fs.existsSync(getUpdaterConfigPath())) {
+    // updater config not found
     return
   }
 
@@ -149,7 +160,7 @@ function addPreferencesMenu(
 }
 
 if (process.platform === 'darwin') {
-  const appName = app.getName()
+  const appName = app.name
   template.unshift({
     label: appName,
     submenu: [

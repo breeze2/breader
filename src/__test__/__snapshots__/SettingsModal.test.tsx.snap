@@ -179,6 +179,7 @@ exports[`SettingsModal Testing snapshot testing 1`] = `
           "formatDate": [Function],
           "formatDateToParts": [Function],
           "formatHTMLMessage": [Function],
+          "formatList": [Function],
           "formatMessage": [Function],
           "formatNumber": [Function],
           "formatNumberToParts": [Function],
@@ -189,6 +190,7 @@ exports[`SettingsModal Testing snapshot testing 1`] = `
           "formats": Object {},
           "formatters": Object {
             "getDateTimeFormat": [Function],
+            "getListFormat": [Function],
             "getMessageFormat": [Function],
             "getNumberFormat": [Function],
             "getPluralRules": [Function],
@@ -1275,6 +1277,7 @@ exports[`SettingsModal Testing snapshot testing 1`] = `
                                               "formatDate": [Function],
                                               "formatDateToParts": [Function],
                                               "formatHTMLMessage": [Function],
+                                              "formatList": [Function],
                                               "formatMessage": [Function],
                                               "formatNumber": [Function],
                                               "formatNumberToParts": [Function],
@@ -1285,6 +1288,7 @@ exports[`SettingsModal Testing snapshot testing 1`] = `
                                               "formats": Object {},
                                               "formatters": Object {
                                                 "getDateTimeFormat": [Function],
+                                                "getListFormat": [Function],
                                                 "getMessageFormat": [Function],
                                                 "getNumberFormat": [Function],
                                                 "getPluralRules": [Function],

@@ -17,7 +17,9 @@ function feedXmlRequest(feedUrl: string, options: http.RequestOptions) {
     const headers = options.headers ? options.headers : {}
     headers['user-agent'] =
       'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36'
-    headers.host = u.host
+    if (u.host) {
+      headers.host = u.host
+    }
     headers.origin = headers.referer = u.protocol + '//' + u.host + '/'
     const o: http.RequestOptions = {
       headers,
