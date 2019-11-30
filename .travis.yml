@@ -49,7 +49,7 @@ before_deploy:
   - ls ./build
   - ls ./build/static/js
   - yarn sentry-cli releases new $SENTRY_RELEASE
-  - yarn sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps --rewrite ./build
+  - yarn sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps --rewrite ./build --url-prefix ~/build/
   - yarn sentry-cli releases finalize $SENTRY_RELEASE
   - find ./build -name "*.map" -exec rm -f {} \;
   - yarn electron-pack --publish never
