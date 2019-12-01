@@ -76,6 +76,28 @@ exports[`SettingsModal Testing snapshot testing 1`] = `
         },
       ]
     }
+    feedsMap={
+      Immutable.Map {
+        "https://breeze2.github.io/blog/atom.xml": Object {
+          "_id": "https://breeze2.github.io/blog/atom.xml",
+          "_rev": "2-0af48b1987682ae7d7128fecbd0feb4a",
+          "author": "Linyifeng",
+          "categories": Array [],
+          "createTime": 1575123471750,
+          "deleteTime": 0,
+          "description": "林柏格",
+          "etag": "5d91672a-72e58\\"",
+          "favicon": "https://breeze2.github.io/favicon.ico",
+          "generator": "Hexo (http://hexo.io/)",
+          "language": "",
+          "link": "https://breeze2.github.io/blog/",
+          "publishTime": 1569810157082,
+          "time": 1569810157082,
+          "title": "Lin Blog",
+          "url": "https://breeze2.github.io/blog/atom.xml",
+        },
+      }
+    }
     language="en-US"
     onClose={
       [MockFunction] {
@@ -171,6 +193,28 @@ exports[`SettingsModal Testing snapshot testing 1`] = `
             "url": "https://breeze2.github.io/blog/atom.xml",
           },
         ]
+      }
+      feedsMap={
+        Immutable.Map {
+          "https://breeze2.github.io/blog/atom.xml": Object {
+            "_id": "https://breeze2.github.io/blog/atom.xml",
+            "_rev": "2-0af48b1987682ae7d7128fecbd0feb4a",
+            "author": "Linyifeng",
+            "categories": Array [],
+            "createTime": 1575123471750,
+            "deleteTime": 0,
+            "description": "林柏格",
+            "etag": "5d91672a-72e58\\"",
+            "favicon": "https://breeze2.github.io/favicon.ico",
+            "generator": "Hexo (http://hexo.io/)",
+            "language": "",
+            "link": "https://breeze2.github.io/blog/",
+            "publishTime": 1569810157082,
+            "time": 1569810157082,
+            "title": "Lin Blog",
+            "url": "https://breeze2.github.io/blog/atom.xml",
+          },
+        }
       }
       intl={
         Object {
@@ -1245,6 +1289,28 @@ exports[`SettingsModal Testing snapshot testing 1`] = `
                                             },
                                           ]
                                         }
+                                        feedsMap={
+                                          Immutable.Map {
+                                            "https://breeze2.github.io/blog/atom.xml": Object {
+                                              "_id": "https://breeze2.github.io/blog/atom.xml",
+                                              "_rev": "2-0af48b1987682ae7d7128fecbd0feb4a",
+                                              "author": "Linyifeng",
+                                              "categories": Array [],
+                                              "createTime": 1575123471750,
+                                              "deleteTime": 0,
+                                              "description": "林柏格",
+                                              "etag": "5d91672a-72e58\\"",
+                                              "favicon": "https://breeze2.github.io/favicon.ico",
+                                              "generator": "Hexo (http://hexo.io/)",
+                                              "language": "",
+                                              "link": "https://breeze2.github.io/blog/",
+                                              "publishTime": 1569810157082,
+                                              "time": 1569810157082,
+                                              "title": "Lin Blog",
+                                              "url": "https://breeze2.github.io/blog/atom.xml",
+                                            },
+                                          }
+                                        }
                                         onDeleteFeed={[Function]}
                                       >
                                         <SettingFeedListComponent
@@ -1269,6 +1335,28 @@ exports[`SettingsModal Testing snapshot testing 1`] = `
                                                 "url": "https://breeze2.github.io/blog/atom.xml",
                                               },
                                             ]
+                                          }
+                                          feedsMap={
+                                            Immutable.Map {
+                                              "https://breeze2.github.io/blog/atom.xml": Object {
+                                                "_id": "https://breeze2.github.io/blog/atom.xml",
+                                                "_rev": "2-0af48b1987682ae7d7128fecbd0feb4a",
+                                                "author": "Linyifeng",
+                                                "categories": Array [],
+                                                "createTime": 1575123471750,
+                                                "deleteTime": 0,
+                                                "description": "林柏格",
+                                                "etag": "5d91672a-72e58\\"",
+                                                "favicon": "https://breeze2.github.io/favicon.ico",
+                                                "generator": "Hexo (http://hexo.io/)",
+                                                "language": "",
+                                                "link": "https://breeze2.github.io/blog/",
+                                                "publishTime": 1569810157082,
+                                                "time": 1569810157082,
+                                                "title": "Lin Blog",
+                                                "url": "https://breeze2.github.io/blog/atom.xml",
+                                              },
+                                            }
                                           }
                                           intl={
                                             Object {
