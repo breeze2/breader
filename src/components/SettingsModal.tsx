@@ -21,6 +21,7 @@ export interface ISettingsModalDispatchProps {
 
 export interface ISettingsModalStateProps {
   feeds: Immutable.List<IFeed>
+  feedsMap: Immutable.Map<string, IFeed>
   language: string
 }
 
@@ -120,6 +121,7 @@ export class SettingsModalComponent extends Component<
             </p>
             <SettingFeedList
               feeds={this.state.allFeeds}
+              feedsMap={this.props.feedsMap}
               onDeleteFeed={this.handleDeleteFeed}
             />
           </div>
