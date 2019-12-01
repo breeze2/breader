@@ -43,15 +43,13 @@ function handleSetFeedFavicon(
   state: IIFeedsState,
   payload: ISetFeedFaviconPayload
 ) {
-  return state.update('map', (map: Immutable.Map<string, IFeed>) => {
-    const feed = map.get(payload.feedId)
-    if (feed) {
-      feed.favicon = payload.favicon
-      return map.set(payload.feedId, feed)
-    } else {
-      return map
-    }
-  })
+  return state.update('map', (map: Immutable.Map<string, IFeed>) =>
+    map.update(payload.feedId, (feed: IFeed) => {
+      const newFeed = { ...feed }
+      newFeed.favicon = payload.favicon
+      return newFeed
+    })
+  )
 }
 
 function handleAddFeed(state: IIFeedsState, payload: IAddFeedPayload) {

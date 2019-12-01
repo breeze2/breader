@@ -1,12 +1,15 @@
 import { Avatar, Button, List as AntdList } from 'antd'
+import Immutable from 'immutable'
 import React, { PureComponent } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl'
+import defaultFavicon from '../images/rss.png'
 import { IFeed } from '../schemas'
 import '../styles/SettingFeedList.less'
 import Utils from '../utils'
 
 export interface ISettingFeedListProps {
+  feedsMap: Immutable.Map<string, IFeed>
   feeds: IFeed[]
   onDeleteFeed?: (feedId: string, feedIndex: number) => void
 }
@@ -37,7 +40,7 @@ export class SettingFeedListComponent extends PureComponent<
     }
   }
   public render() {
-    const { feeds } = this.props
+    const { feeds, feedsMap } = this.props
     return (
       <div className="ant-list ant-list-sm ant-list-split ant-list-bordered setting-feed-list">
         <Scrollbars
@@ -46,25 +49,32 @@ export class SettingFeedListComponent extends PureComponent<
           autoHeightMax={`calc(${Utils.getClientHightForCalc()} - 332px)`}
           onScrollStart={this.handleScrollStart}>
           <ul className="ant-list-items setting-feed-items">
-            {feeds.map((feed, index) => (
-              <AntdList.Item
-                className="setting-feed-item"
-                key={feed._id}
-                actions={[
-                  <Button
-                    key={feed._id}
-                    size="small"
-                    type="danger"
-                    onClick={() => this.handleDeleteClick(feed._id, index)}>
-                    <FormattedMessage id="delete" />
-                  </Button>,
-                ]}>
-                <p title={feed.url} className="feed-item-content">
-                  <Avatar shape="square" size={16} src={feed.favicon} />{' '}
-                  {feed.title}
-                </p>
-              </AntdList.Item>
-            ))}
+            {feeds.map((feed, index) => {
+              const ifeed = feedsMap.get(feed._id)
+              return (
+                <AntdList.Item
+                  className="setting-feed-item"
+                  key={feed._id}
+                  actions={[
+                    <Button
+                      key={feed._id}
+                      size="small"
+                      type="danger"
+                      onClick={() => this.handleDeleteClick(feed._id, index)}>
+                      <FormattedMessage id="delete" />
+                    </Button>,
+                  ]}>
+                  <p title={feed.url} className="feed-item-content">
+                    <Avatar
+                      shape="square"
+                      size={16}
+                      src={ifeed ? ifeed.favicon : defaultFavicon}
+                    />{' '}
+                    {feed.title}
+                  </p>
+                </AntdList.Item>
+              )
+            })}
           </ul>
         </Scrollbars>
         {!feeds.length && (

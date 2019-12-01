@@ -44,6 +44,7 @@ export interface IAppMenuProps
 
 export interface IAppMenuState {
   isAddFeedModalVisible: boolean
+  openedSubmenuKeys: string[]
 }
 
 export class AppMenuComponent extends Component<
@@ -54,6 +55,7 @@ export class AppMenuComponent extends Component<
     super(props)
     this.state = {
       isAddFeedModalVisible: false,
+      openedSubmenuKeys: ['subscriptions'],
     }
   }
   public handleAddFeedClick = () => {
@@ -105,8 +107,12 @@ export class AppMenuComponent extends Component<
     this.props.asyncSelectMenuKey(param.key)
   }
   public setFeedFaviconDefault = (id: string) => {
+    const { feedsMap, setFeedFavicon } = this.props
     if (id) {
-      this.props.setFeedFavicon(id, defaultFavicon)
+      const ifeed = feedsMap.get(id)
+      if (ifeed && ifeed.favicon !== defaultFavicon) {
+        setFeedFavicon(id, defaultFavicon)
+      }
     }
     return true
   }
@@ -119,9 +125,18 @@ export class AppMenuComponent extends Component<
     this.props.updateOnlineStatus()
   }
   public handleSubscriptionsClick = () => {
+    const { openedSubmenuKeys } = this.state
+    const index = openedSubmenuKeys.indexOf('subscriptions')
+    if (index > -1) {
+      openedSubmenuKeys.splice(index, 1)
+    }
     if (this.props.feeds.size === 0) {
       this.handleAddFeedClick()
+      openedSubmenuKeys.push('subscriptions')
+    } else if (index === -1) {
+      openedSubmenuKeys.push('subscriptions')
     }
+    this.setState({ openedSubmenuKeys })
   }
   public componentDidMount() {
     this.props.setIsFetchingArticles(true)
@@ -146,6 +161,7 @@ export class AppMenuComponent extends Component<
       onlineStatus,
       selectedMenuKey,
     } = this.props
+    const { openedSubmenuKeys } = this.state
     const feedsCount = feeds.size
     return (
       <div className="app-menu">
@@ -158,6 +174,7 @@ export class AppMenuComponent extends Component<
             <Menu
               defaultSelectedKeys={[selectedMenuKey]}
               defaultOpenKeys={['subscriptions']}
+              openKeys={openedSubmenuKeys}
               mode="inline"
               onSelect={this.handleSelect}>
               <MenuItem key={EMenuKey.ALL_ITEMS}>

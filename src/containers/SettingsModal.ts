@@ -18,6 +18,7 @@ const mapStateToProps: MapStateToProps<
   IReduxState
 > = (state: IReduxState) => ({
   feeds: state.feeds.list,
+  feedsMap: state.feeds.map,
   language: state.menu.language,
 })
 
