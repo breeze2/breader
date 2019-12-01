@@ -27,6 +27,7 @@ describe('SettingsModal Testing', () => {
   const mockProps: ISettingsModalProps = {
     asyncDeleteFeeds: jest.fn(),
     feeds: Immutable.List<IFeed>([feed]),
+    feedsMap: Immutable.Map<IFeed>({ [feed._id]: feed }),
     language: 'en-US',
     onClose: jest.fn(),
     onLanguageChange: jest.fn(),
