@@ -92,7 +92,7 @@
     "cross-env": "^6.0.3",
     "customize-cra": "^0.9.1",
     "cz-conventional-changelog": "3.0.2",
-    "electron": "^7.1.2",
+    "electron": "^7.2.4",
     "electron-builder": "^22.2.0",
     "electron-devtools-installer": "^2.2.4",
     "enzyme": "^3.10.0",
